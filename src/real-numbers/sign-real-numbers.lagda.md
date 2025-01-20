@@ -9,8 +9,10 @@ module real-numbers.sign-real-numbers where
 ```agda
 open import elementary-number-theory.positive-rational-numbers
 open import elementary-number-theory.rational-numbers
+open import elementary-number-theory.strict-inequality-rational-numbers
 
 open import foundation.cartesian-product-types
+open import foundation.conjunction
 open import foundation.coproduct-types
 open import foundation.dependent-pair-types
 open import foundation.empty-types
@@ -21,6 +23,7 @@ open import foundation.negation
 open import foundation.propositional-truncations
 open import foundation.propositions
 open import foundation.subtypes
+open import foundation.transport-along-identifications
 open import foundation.universe-levels
 
 open import real-numbers.dedekind-real-numbers
@@ -56,11 +59,48 @@ module _
 
   not-is-zero-and-positive : ¬ (is-zero-ℝ × is-positive-ℝ)
   not-is-zero-and-positive (is-zero , is-pos) =
-    (elim-exists
+    elim-exists
       empty-Prop
       (λ q (0<q , in-lower-q) →
           is-disjoint-cut-ℝ x q (in-lower-q , forward-implication (is-zero q) (is-positive-le-zero-ℚ q 0<q)))
-      (forward-implication (is-rounded-lower-cut-ℝ x zero-ℚ) is-pos))
+      (forward-implication (is-rounded-lower-cut-ℝ x zero-ℚ) is-pos)
+
+  neg-lower-cut-ℝ : subtype l ℚ
+  neg-lower-cut-ℝ q = upper-cut-ℝ x (neg-ℚ q)
+
+  neg-upper-cut-ℝ : subtype l ℚ
+  neg-upper-cut-ℝ q = lower-cut-ℝ x (neg-ℚ q)
+
+  inhabited-neg-lower-cut-ℝ : exists ℚ neg-lower-cut-ℝ
+  inhabited-neg-lower-cut-ℝ =
+    elim-exists
+      (∃ ℚ neg-lower-cut-ℝ)
+      (λ q q-in-upper →
+        intro-exists
+          (neg-ℚ q)
+          (tr (is-in-upper-cut-ℝ x) (inv (neg-neg-ℚ q)) q-in-upper))
+      (is-inhabited-upper-cut-ℝ x)
+
+  inhabited-neg-upper-cut-ℝ : exists ℚ neg-upper-cut-ℝ
+  inhabited-neg-upper-cut-ℝ =
+    elim-exists
+      (∃ ℚ neg-upper-cut-ℝ)
+      (λ q q-in-lower →
+        intro-exists
+          (neg-ℚ q)
+          (tr (is-in-lower-cut-ℝ x) (inv (neg-neg-ℚ q)) q-in-lower))
+      (is-inhabited-lower-cut-ℝ x)
+
+  is-rounded-neg-lower-cut-ℝ :
+    (q : ℚ) →
+    is-in-subtype neg-lower-cut-ℝ q ↔
+    exists ℚ (λ r → (le-ℚ-Prop q r) ∧ (neg-lower-cut-ℝ r))
+  pr1 (is-rounded-neg-lower-cut-ℝ q) in-neg-lower =
+    elim-exists
+      (∃ ℚ (λ r → (le-ℚ-Prop q r) ∧ (neg-lower-cut-ℝ r)))
+      (λ r s → intro-exists q {!   !})
+      (forward-implication (is-rounded-upper-cut-ℝ x (neg-ℚ q)) in-neg-lower)
+  pr2 (is-rounded-neg-lower-cut-ℝ q) = {!   !}
 
 signed-ℝ : (l : Level) → UU (lsuc l)
 signed-ℝ l = Σ (ℝ l) sign-ℝ
