@@ -24,7 +24,6 @@ open import foundation.subtypes
 open import foundation.universe-levels
 
 open import real-numbers.dedekind-real-numbers
-open import real-numbers.rational-real-numbers
 ```
 
 </details>
@@ -32,9 +31,6 @@ open import real-numbers.rational-real-numbers
 ## Idea
 
 ```agda
-zero-ℝ : ℝ lzero
-zero-ℝ = real-ℚ zero-ℚ
-
 module _
   {l : Level} (x : ℝ l)
   where
