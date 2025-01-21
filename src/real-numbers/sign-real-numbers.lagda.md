@@ -15,6 +15,7 @@ open import foundation.cartesian-product-types
 open import foundation.conjunction
 open import foundation.coproduct-types
 open import foundation.dependent-pair-types
+open import foundation.disjunction
 open import foundation.empty-types
 open import foundation.existential-quantification
 open import foundation.identity-types
@@ -65,39 +66,39 @@ module _
           is-disjoint-cut-ℝ x q (in-lower-q , forward-implication (is-zero q) (is-positive-le-zero-ℚ q 0<q)))
       (forward-implication (is-rounded-lower-cut-ℝ x zero-ℚ) is-pos)
 
-  neg-lower-cut-ℝ : subtype l ℚ
-  neg-lower-cut-ℝ q = upper-cut-ℝ x (neg-ℚ q)
+  lower-cut-neg-ℝ : subtype l ℚ
+  lower-cut-neg-ℝ q = upper-cut-ℝ x (neg-ℚ q)
 
-  neg-upper-cut-ℝ : subtype l ℚ
-  neg-upper-cut-ℝ q = lower-cut-ℝ x (neg-ℚ q)
+  upper-cut-neg-ℝ : subtype l ℚ
+  upper-cut-neg-ℝ q = lower-cut-ℝ x (neg-ℚ q)
 
-  inhabited-neg-lower-cut-ℝ : exists ℚ neg-lower-cut-ℝ
-  inhabited-neg-lower-cut-ℝ =
+  inhabited-lower-cut-neg-ℝ : exists ℚ lower-cut-neg-ℝ
+  inhabited-lower-cut-neg-ℝ =
     elim-exists
-      (∃ ℚ neg-lower-cut-ℝ)
+      (∃ ℚ lower-cut-neg-ℝ)
       (λ q q-in-upper →
         intro-exists
           (neg-ℚ q)
           (tr (is-in-upper-cut-ℝ x) (inv (neg-neg-ℚ q)) q-in-upper))
       (is-inhabited-upper-cut-ℝ x)
 
-  inhabited-neg-upper-cut-ℝ : exists ℚ neg-upper-cut-ℝ
-  inhabited-neg-upper-cut-ℝ =
+  inhabited-upper-cut-neg-ℝ : exists ℚ upper-cut-neg-ℝ
+  inhabited-upper-cut-neg-ℝ =
     elim-exists
-      (∃ ℚ neg-upper-cut-ℝ)
+      (∃ ℚ upper-cut-neg-ℝ)
       (λ q q-in-lower →
         intro-exists
           (neg-ℚ q)
           (tr (is-in-lower-cut-ℝ x) (inv (neg-neg-ℚ q)) q-in-lower))
       (is-inhabited-lower-cut-ℝ x)
 
-  is-rounded-neg-lower-cut-ℝ :
+  is-rounded-lower-cut-neg-ℝ :
     (q : ℚ) →
-    is-in-subtype neg-lower-cut-ℝ q ↔
-    exists ℚ (λ r → (le-ℚ-Prop q r) ∧ (neg-lower-cut-ℝ r))
-  pr1 (is-rounded-neg-lower-cut-ℝ q) in-neg-lower =
+    is-in-subtype lower-cut-neg-ℝ q ↔
+    exists ℚ (λ r → (le-ℚ-Prop q r) ∧ (lower-cut-neg-ℝ r))
+  pr1 (is-rounded-lower-cut-neg-ℝ q) in-neg-lower =
     elim-exists
-      (∃ ℚ (λ r → le-ℚ-Prop q r ∧ neg-lower-cut-ℝ r))
+      (∃ ℚ (λ r → le-ℚ-Prop q r ∧ lower-cut-neg-ℝ r))
       (λ r (r<-q , in-upper-r) →
         intro-exists
           (neg-ℚ r)
@@ -107,7 +108,7 @@ module _
             (neg-le-ℚ r (neg-ℚ q) r<-q) ,
            tr (is-in-upper-cut-ℝ x) (inv (neg-neg-ℚ r)) in-upper-r))
       (forward-implication (is-rounded-upper-cut-ℝ x (neg-ℚ q)) in-neg-lower)
-  pr2 (is-rounded-neg-lower-cut-ℝ q) exists-r =
+  pr2 (is-rounded-lower-cut-neg-ℝ q) exists-r =
     backward-implication
       (is-rounded-upper-cut-ℝ x (neg-ℚ q))
       (elim-exists
@@ -116,20 +117,20 @@ module _
           intro-exists (neg-ℚ r) (neg-le-ℚ q r q<r , in-neg-lower-r))
         exists-r)
 
-  is-rounded-neg-upper-cut-ℝ :
+  is-rounded-upper-cut-neg-ℝ :
     (r : ℚ) →
-    is-in-subtype neg-upper-cut-ℝ r ↔
-    exists ℚ (λ q → (le-ℚ-Prop q r) ∧ (neg-upper-cut-ℝ q))
-  pr1 (is-rounded-neg-upper-cut-ℝ r) in-neg-upper =
+    is-in-subtype upper-cut-neg-ℝ r ↔
+    exists ℚ (λ q → (le-ℚ-Prop q r) ∧ (upper-cut-neg-ℝ q))
+  pr1 (is-rounded-upper-cut-neg-ℝ r) in-neg-upper =
     elim-exists
-      (∃ ℚ (λ q → le-ℚ-Prop q r ∧ neg-upper-cut-ℝ q))
+      (∃ ℚ (λ q → le-ℚ-Prop q r ∧ upper-cut-neg-ℝ q))
       (λ q (-r<q , in-lower-q) →
         intro-exists
           (neg-ℚ q)
           (tr (le-ℚ (neg-ℚ q)) (neg-neg-ℚ r) (neg-le-ℚ (neg-ℚ r) q -r<q) ,
             tr (is-in-lower-cut-ℝ x) (inv (neg-neg-ℚ q)) in-lower-q))
       (forward-implication (is-rounded-lower-cut-ℝ x (neg-ℚ r)) in-neg-upper)
-  pr2 (is-rounded-neg-upper-cut-ℝ r) exists-q =
+  pr2 (is-rounded-upper-cut-neg-ℝ r) exists-q =
     backward-implication
       (is-rounded-lower-cut-ℝ x (neg-ℚ r))
       (elim-exists
@@ -137,6 +138,22 @@ module _
         (λ q (q<r , in-neg-upper-q) →
           intro-exists (neg-ℚ q) (neg-le-ℚ q r q<r , in-neg-upper-q))
         exists-q)
+
+  is-disjoint-cut-neg-ℝ :
+    (q : ℚ) →
+      ¬ (is-in-subtype lower-cut-neg-ℝ q × is-in-subtype upper-cut-neg-ℝ q)
+  is-disjoint-cut-neg-ℝ q (in-lower-neg , in-upper-neg) =
+    is-disjoint-cut-ℝ x (neg-ℚ q) (in-upper-neg , in-lower-neg)
+
+  is-located-lower-upper-cut-neg-ℝ :
+    (q r : ℚ) → le-ℚ q r →
+      type-disjunction-Prop (lower-cut-neg-ℝ q) (upper-cut-neg-ℝ r)
+  is-located-lower-upper-cut-neg-ℝ q r q<r =
+    elim-disjunction
+      (disjunction-Prop (lower-cut-neg-ℝ q) (upper-cut-neg-ℝ r))
+      inr-disjunction
+      inl-disjunction
+      (is-located-lower-upper-cut-ℝ x (neg-ℚ r) (neg-ℚ q) (neg-le-ℚ q r q<r))
 
 signed-ℝ : (l : Level) → UU (lsuc l)
 signed-ℝ l = Σ (ℝ l) sign-ℝ
