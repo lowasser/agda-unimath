@@ -98,9 +98,23 @@ module _
   pr1 (is-rounded-neg-lower-cut-ℝ q) in-neg-lower =
     elim-exists
       (∃ ℚ (λ r → (le-ℚ-Prop q r) ∧ (neg-lower-cut-ℝ r)))
-      (λ r s → intro-exists q {!   !})
+      (λ r (r<-q , in-upper-r) →
+        intro-exists
+          (neg-ℚ r)
+          (tr
+            (λ x → le-ℚ x (neg-ℚ r))
+            (neg-neg-ℚ q)
+            (neg-le-ℚ r (neg-ℚ q) r<-q) ,
+           tr (is-in-upper-cut-ℝ x) (inv (neg-neg-ℚ r)) in-upper-r))
       (forward-implication (is-rounded-upper-cut-ℝ x (neg-ℚ q)) in-neg-lower)
-  pr2 (is-rounded-neg-lower-cut-ℝ q) = {!   !}
+  pr2 (is-rounded-neg-lower-cut-ℝ q) exists-r =
+    backward-implication
+      (is-rounded-upper-cut-ℝ x (neg-ℚ q))
+      (elim-exists
+        (∃ ℚ (λ r → le-ℚ-Prop r (neg-ℚ q) ∧ upper-cut-ℝ x r))
+        (λ r (q<r , in-neg-lower-r) →
+          intro-exists (neg-ℚ r) (neg-le-ℚ q r q<r , in-neg-lower-r))
+        exists-r)
 
 signed-ℝ : (l : Level) → UU (lsuc l)
 signed-ℝ l = Σ (ℝ l) sign-ℝ
