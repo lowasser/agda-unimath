@@ -140,4 +140,16 @@ module _
       ((inhabited-lower-cut-neg-ℝ , inhabited-upper-cut-neg-ℝ) ,
         (is-rounded-lower-cut-neg-ℝ , is-rounded-upper-cut-neg-ℝ) ,
           is-disjoint-cut-neg-ℝ , is-located-lower-upper-cut-neg-ℝ)
+
+neg-neg-ℝ : {l : Level} → (x : ℝ l) → neg-ℝ (neg-ℝ x) ＝ x
+neg-neg-ℝ x =
+  eq-eq-lower-cut-ℝ
+    (neg-ℝ (neg-ℝ x))
+    x
+    (eq-has-same-elements-subtype
+      (lower-cut-ℝ (neg-ℝ (neg-ℝ x)))
+      (lower-cut-ℝ x)
+      (λ q →
+        tr (is-in-lower-cut-ℝ x) (neg-neg-ℚ q) ,
+        tr (is-in-lower-cut-ℝ x) (inv (neg-neg-ℚ q))))
 ```
