@@ -8,6 +8,8 @@ module real-numbers.addition-real-numbers where
 
 ```agda
 open import elementary-number-theory.addition-rational-numbers
+open import elementary-number-theory.difference-rational-numbers
+open import elementary-number-theory.monoid-of-natural-numbers-with-addition
 open import elementary-number-theory.rational-numbers
 open import elementary-number-theory.strict-inequality-rational-numbers
 
@@ -21,6 +23,8 @@ open import foundation.sets
 open import foundation.subtypes
 open import foundation.transport-along-identifications
 open import foundation.universe-levels
+
+open import group-theory.commutative-monoids
 
 open import real-numbers.dedekind-real-numbers
 ```
@@ -112,6 +116,17 @@ module _
         (elim-exists
           (lower-cut-add-ℝ a)
           (λ (p , q) (p-in-lower-x , q-in-lower-y , p+q=b) →
-              {!   !})
+              intro-exists
+                (p +ℚ (a -ℚ b) , q)
+                (backward-implication
+                  (is-rounded-lower-cut-ℝ x (p +ℚ (a -ℚ b)))
+                  (intro-exists p ({!   !} , p-in-lower-x)) ,
+              q-in-lower-y ,
+              (equational-reasoning
+                (p +ℚ (a -ℚ b)) +ℚ q
+                ＝ (p +ℚ q) +ℚ (a -ℚ b) by {!   !}
+                ＝ {!   !} by {!   !})))
           b-in-lower-add))
+
+  -- a < b = p + q.  b - a is positive, so (p - b + a) < p, and ((p - b + a) + q) = a, and that's a sum of two rationals.
 ```
