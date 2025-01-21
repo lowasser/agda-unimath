@@ -9,14 +9,17 @@ module real-numbers.addition-real-numbers where
 ```agda
 open import elementary-number-theory.addition-rational-numbers
 open import elementary-number-theory.rational-numbers
+open import elementary-number-theory.strict-inequality-rational-numbers
 
 open import foundation.cartesian-product-types
 open import foundation.conjunction
 open import foundation.existential-quantification
 open import foundation.dependent-pair-types
 open import foundation.identity-types
+open import foundation.logical-equivalences
 open import foundation.sets
 open import foundation.subtypes
+open import foundation.transport-along-identifications
 open import foundation.universe-levels
 
 open import real-numbers.dedekind-real-numbers
@@ -70,4 +73,45 @@ module _
           (is-inhabited-upper-cut-ℝ y)
         )
       (is-inhabited-upper-cut-ℝ x)
+
+  is-rounded-lower-cut-add-ℝ :
+    (a : ℚ) →
+    is-in-subtype lower-cut-add-ℝ a ↔
+    exists ℚ (λ b → (le-ℚ-Prop a b) ∧ (lower-cut-add-ℝ b))
+  pr1 (is-rounded-lower-cut-add-ℝ a) in-add-lower =
+    elim-exists
+      (∃ ℚ (λ b → (le-ℚ-Prop a b) ∧ (lower-cut-add-ℝ b)))
+      (λ (p , q) (p-in-lower-x , q-in-lower-y , p+q=a) →
+        elim-exists
+          (∃ ℚ (λ b → (le-ℚ-Prop a b) ∧ (lower-cut-add-ℝ b)))
+          (λ p' (p<p' , p'-in-lower-x) →
+            elim-exists
+              (∃ ℚ (λ b → (le-ℚ-Prop a b) ∧ (lower-cut-add-ℝ b)))
+              (λ q' (q<q' , q'-in-lower-y) →
+                intro-exists
+                  (p' +ℚ q')
+                  (transp-leq-sum a p p' q q' p+q=a p<p' q<q' ,
+                    intro-exists
+                      (p' , q')
+                      (p'-in-lower-x , q'-in-lower-y , refl)))
+              (forward-implication (is-rounded-lower-cut-ℝ y q) q-in-lower-y))
+          (forward-implication (is-rounded-lower-cut-ℝ x p) p-in-lower-x))
+      in-add-lower
+    where
+      abstract
+        transp-leq-sum : (a p p' q q' : ℚ) → p +ℚ q ＝ a → le-ℚ p p' → le-ℚ q q' → le-ℚ a (p' +ℚ q')
+        transp-leq-sum a p p' q q' p+q=a p<p' q<q' =
+          tr
+            (λ r → le-ℚ r (p' +ℚ q'))
+            p+q=a
+            (preserves-le-add-ℚ {p} {p'} {q} {q'} p<p' q<q')
+  pr2 (is-rounded-lower-cut-add-ℝ a) =
+    elim-exists
+      (lower-cut-add-ℝ a)
+      (λ b (a<b , b-in-lower-add) →
+        (elim-exists
+          (lower-cut-add-ℝ a)
+          (λ (p , q) (p-in-lower-x , q-in-lower-y , p+q=b) →
+              {!   !})
+          b-in-lower-add))
 ```
