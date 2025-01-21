@@ -45,4 +45,29 @@ module _
   upper-cut-add-ℝ = add-subtypes-ℚ (upper-cut-ℝ x) (upper-cut-ℝ y)
 
   lower-cut-inhabited-add-ℝ : exists ℚ lower-cut-add-ℝ
+  lower-cut-inhabited-add-ℝ =
+    elim-exists
+      (∃ ℚ lower-cut-add-ℝ)
+      (λ p p-in-lower-x →
+        elim-exists
+          (∃ ℚ lower-cut-add-ℝ)
+          (λ q q-in-lower-y →
+            intro-exists (p +ℚ q)
+              (intro-exists (p , q) (p-in-lower-x , q-in-lower-y , refl)))
+          (is-inhabited-lower-cut-ℝ y))
+      (is-inhabited-lower-cut-ℝ x)
+
+  upper-cut-inhabited-add-ℝ : exists ℚ upper-cut-add-ℝ
+  upper-cut-inhabited-add-ℝ =
+    elim-exists
+      (∃ ℚ upper-cut-add-ℝ)
+      (λ p p-in-upper-x →
+        elim-exists
+          (∃ ℚ upper-cut-add-ℝ)
+          (λ q q-in-upper-y →
+            intro-exists (p +ℚ q)
+              (intro-exists (p , q) (p-in-upper-x , q-in-upper-y , refl)))
+          (is-inhabited-upper-cut-ℝ y)
+        )
+      (is-inhabited-upper-cut-ℝ x)
 ```
