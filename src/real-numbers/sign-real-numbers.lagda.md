@@ -28,11 +28,15 @@ open import foundation.transport-along-identifications
 open import foundation.universe-levels
 
 open import real-numbers.dedekind-real-numbers
+open import real-numbers.negation-real-numbers
 ```
 
 </details>
 
-## Idea
+## Possible signs
+
+We define what it means for a real number to be zero, positive, or negative, and
+show that those options are mutually exclusive.
 
 ```agda
 module _
@@ -48,9 +52,6 @@ module _
   is-negative-ℝ : UU l
   is-negative-ℝ = is-in-upper-cut-ℝ x zero-ℚ
 
-  sign-ℝ : UU l
-  sign-ℝ = is-negative-ℝ + (is-zero-ℝ + is-positive-ℝ)
-
   not-is-positive-and-negative : ¬ (is-positive-ℝ × is-negative-ℝ)
   not-is-positive-and-negative = is-disjoint-cut-ℝ x zero-ℚ
 
@@ -65,7 +66,26 @@ module _
       (λ q (0<q , in-lower-q) →
           is-disjoint-cut-ℝ x q (in-lower-q , forward-implication (is-zero q) (is-positive-le-zero-ℚ q 0<q)))
       (forward-implication (is-rounded-lower-cut-ℝ x zero-ℚ) is-pos)
+```
+
+### The sign of a real number
+
+```agda
+sign-ℝ : {l : Level} → ℝ l → UU l
+sign-ℝ x = is-negative-ℝ x + (is-zero-ℝ x + is-positive-ℝ x)
 
 signed-ℝ : (l : Level) → UU (lsuc l)
 signed-ℝ l = Σ (ℝ l) sign-ℝ
+```
+
+### The negation of a positive real is negative, and vice versa
+
+```
+neg-positive-is-negative-ℝ :
+  {l : Level} → (x : ℝ l) → is-positive-ℝ x → is-negative-ℝ (neg-ℝ x)
+neg-positive-is-negative-ℝ x H = H
+
+neg-negative-is-positive-ℝ :
+  {l : Level} → (x : ℝ l) → is-negative-ℝ x → is-positive-ℝ (neg-ℝ x)
+neg-negative-is-positive-ℝ x H = H
 ```
