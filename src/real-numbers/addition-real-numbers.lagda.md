@@ -84,7 +84,7 @@ module _
       (a : ℚ) →
       is-in-subtype lower-cut-add-ℝ a ↔
       exists ℚ (λ b → (le-ℚ-Prop a b) ∧ (lower-cut-add-ℝ b))
-    {- pr1 (is-rounded-lower-cut-add-ℝ a) in-add-lower =
+    pr1 (is-rounded-lower-cut-add-ℝ a) in-add-lower =
       elim-exists
         (∃ ℚ (λ b → (le-ℚ-Prop a b) ∧ (lower-cut-add-ℝ b)))
         (λ (p , q) (p-in-lower-x , q-in-lower-y , p+q=a) →
@@ -109,7 +109,7 @@ module _
           tr
             (λ r → le-ℚ r (p' +ℚ q'))
             p+q=a
-            (preserves-le-add-ℚ {p} {p'} {q} {q'} p<p' q<q')-}
+            (preserves-le-add-ℚ {p} {p'} {q} {q'} p<p' q<q')
     pr2 (is-rounded-lower-cut-add-ℝ a) =
       elim-exists
         (lower-cut-add-ℝ a)
@@ -121,7 +121,7 @@ module _
                 ((p +ℚ (a -ℚ b) , q))
                 (backward-implication
                     (is-rounded-lower-cut-ℝ x (p +ℚ (a -ℚ b)))
-                    (intro-exists p ({! plus-neg-le-self-ℚ p (a -ℚ b) ? !} , p-in-lower-x)) ,
+                    (intro-exists p (plus-neg-le-self-ℚ p (a -ℚ b) (translate-diff-zero-le-ℚ a b a<b) , p-in-lower-x)) ,
                   q-in-lower-y ,
                   (right-swap-add-Ab abelian-group-add-ℚ p (a -ℚ b) q ∙
                     ap (_+ℚ (a -ℚ b)) p+q=b ∙
@@ -139,33 +139,6 @@ module _
             translate-diff-zero-le-ℚ s t s<t =
               tr
                 (λ u → le-ℚ u zero-ℚ)
-                ?
-                ?
-                {- intro-exists
-                  (p +ℚ (a -ℚ b) , q)
-                  (backward-implication
-                    (is-rounded-lower-cut-ℝ x (p +ℚ (a -ℚ b)))
-                    (intro-exists p
-                      (forward-implication (iff-translate-diff-le-zero-ℚ (p +ℚ (a -ℚ b)) p)
-                        (tr
-                          (le-ℚ zero-ℚ)
-                          (equational-reasoning
-                            p -ℚ (p +ℚ (a -ℚ b))
-                            ＝ p +ℚ (neg-ℚ p +ℚ neg-ℚ (a -ℚ b)) by ap (p +ℚ_) (distributive-neg-add-ℚ p (a -ℚ b))
-                            ＝ (p +ℚ neg-ℚ p) +ℚ neg-ℚ (a -ℚ b) by inv (associative-add-ℚ p (neg-ℚ p) (neg-ℚ (a -ℚ b)))
-                            ＝ zero-ℚ +ℚ neg-ℚ (a -ℚ b) by ap (_+ℚ neg-ℚ (a -ℚ b)) (right-inverse-law-add-ℚ p)
-                            ＝ neg-ℚ (a -ℚ b) by left-unit-law-add-ℚ (neg-ℚ (a -ℚ b))
-                            ＝ b -ℚ a by distributive-neg-diff-ℚ a b)
-                          (backward-implication (iff-translate-diff-le-zero-ℚ a b) a<b) ,
-                      p-in-lower-x)))) ,
-                q-in-lower-y ,
-                (equational-reasoning
-                  (p +ℚ (a -ℚ b)) +ℚ q
-                  ＝ (p +ℚ q) +ℚ (a -ℚ b) by right-swap-add-Ab abelian-group-add-ℚ p (a -ℚ b) q
-                  ＝ b +ℚ (a -ℚ b) by ap (_+ℚ (a -ℚ b)) p+q=b
-                  ＝ a +ℚ (b -ℚ b) by left-swap-add-Ab abelian-group-add-ℚ b a (neg-ℚ b)
-                  ＝ a +ℚ zero-ℚ by ap (a +ℚ_) (right-inverse-law-add-ℚ b)
-                  ＝ a by right-unit-law-add-ℚ a)) !}
-            b-in-lower-add)-}
-
+                (distributive-neg-diff-ℚ t s)
+                (neg-le-ℚ zero-ℚ (t -ℚ s) (backward-implication (iff-translate-diff-le-zero-ℚ s t) s<t))
 ```
