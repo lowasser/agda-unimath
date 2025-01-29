@@ -84,7 +84,7 @@ module _
       (a : ℚ) →
       is-in-subtype lower-cut-add-ℝ a ↔
       exists ℚ (λ b → (le-ℚ-Prop a b) ∧ (lower-cut-add-ℝ b))
-{-     pr1 (is-rounded-lower-cut-add-ℝ a) in-add-lower =
+    {- pr1 (is-rounded-lower-cut-add-ℝ a) in-add-lower =
       elim-exists
         (∃ ℚ (λ b → (le-ℚ-Prop a b) ∧ (lower-cut-add-ℝ b)))
         (λ (p , q) (p-in-lower-x , q-in-lower-y , p+q=a) →
@@ -104,13 +104,12 @@ module _
             (forward-implication (is-rounded-lower-cut-ℝ x p) p-in-lower-x))
         in-add-lower
       where
-        abstract
-          transp-leq-sum : (a p p' q q' : ℚ) → p +ℚ q ＝ a → le-ℚ p p' → le-ℚ q q' → le-ℚ a (p' +ℚ q')
-          transp-leq-sum a p p' q q' p+q=a p<p' q<q' =
-            tr
-              (λ r → le-ℚ r (p' +ℚ q'))
-              p+q=a
-              (preserves-le-add-ℚ {p} {p'} {q} {q'} p<p' q<q')-}
+        transp-leq-sum : (a p p' q q' : ℚ) → p +ℚ q ＝ a → le-ℚ p p' → le-ℚ q q' → le-ℚ a (p' +ℚ q')
+        transp-leq-sum a p p' q q' p+q=a p<p' q<q' =
+          tr
+            (λ r → le-ℚ r (p' +ℚ q'))
+            p+q=a
+            (preserves-le-add-ℚ {p} {p'} {q} {q'} p<p' q<q')-}
     pr2 (is-rounded-lower-cut-add-ℝ a) =
       elim-exists
         (lower-cut-add-ℝ a)
@@ -122,7 +121,7 @@ module _
                 ((p +ℚ (a -ℚ b) , q))
                 (backward-implication
                     (is-rounded-lower-cut-ℝ x (p +ℚ (a -ℚ b)))
-                    (intro-exists p {!   !}),
+                    (intro-exists p ({! plus-neg-le-self-ℚ p (a -ℚ b) ? !} , p-in-lower-x)) ,
                   q-in-lower-y ,
                   (right-swap-add-Ab abelian-group-add-ℚ p (a -ℚ b) q ∙
                     ap (_+ℚ (a -ℚ b)) p+q=b ∙
@@ -130,6 +129,18 @@ module _
                     ap (a +ℚ_) (right-inverse-law-add-ℚ b) ∙
                     right-unit-law-add-ℚ a)))
             b-in-lower-add)
+      where plus-neg-le-self-ℚ : (s t : ℚ) → le-ℚ t zero-ℚ → le-ℚ (s +ℚ t) s
+            plus-neg-le-self-ℚ s t t<0 =
+              tr
+                (le-ℚ (s +ℚ t))
+                (right-unit-law-add-ℚ s)
+                (preserves-le-right-add-ℚ s t zero-ℚ t<0)
+            translate-diff-zero-le-ℚ : (s t : ℚ) → le-ℚ s t → le-ℚ (s -ℚ t) zero-ℚ
+            translate-diff-zero-le-ℚ s t s<t =
+              tr
+                (λ u → le-ℚ u zero-ℚ)
+                ?
+                ?
                 {- intro-exists
                   (p +ℚ (a -ℚ b) , q)
                   (backward-implication
