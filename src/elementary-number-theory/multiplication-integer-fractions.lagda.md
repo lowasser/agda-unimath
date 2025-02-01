@@ -13,11 +13,13 @@ open import elementary-number-theory.integer-fractions
 open import elementary-number-theory.integers
 open import elementary-number-theory.multiplication-integers
 open import elementary-number-theory.multiplication-positive-and-negative-integers
+open import elementary-number-theory.natural-numbers
 
 open import foundation.action-on-identifications-binary-functions
 open import foundation.action-on-identifications-functions
 open import foundation.dependent-pair-types
 open import foundation.identity-types
+open import foundation.iterating-functions
 ```
 
 </details>
@@ -55,6 +57,22 @@ ap-mul-fraction-ℤ p q = ap-binary mul-fraction-ℤ p q
 ```
 
 ## Properties
+
+### The multiplication of an integer fraction by zero is similar to zero
+
+```agda
+abstract
+  left-zero-law-mul-fraction-ℤ :
+    (x : fraction-ℤ) → sim-fraction-ℤ (zero-fraction-ℤ *fraction-ℤ x) zero-fraction-ℤ
+  left-zero-law-mul-fraction-ℤ _ = refl
+
+  right-zero-law-mul-fraction-ℤ :
+    (x : fraction-ℤ) → sim-fraction-ℤ (x *fraction-ℤ zero-fraction-ℤ) zero-fraction-ℤ
+  right-zero-law-mul-fraction-ℤ (p , q , _) = equational-reasoning
+    (p *ℤ zero-ℤ) *ℤ one-ℤ
+    ＝ p *ℤ zero-ℤ by right-unit-law-mul-ℤ (p *ℤ zero-ℤ)
+    ＝ zero-ℤ by right-zero-law-mul-ℤ p
+```
 
 ### Multiplication on integer fractions respects the similarity relation
 
@@ -146,4 +164,17 @@ left-distributive-mul-add-fraction-ℤ
         ( ap-add-ℤ
           ( interchange-law-mul-mul-ℤ nx dx ny dz))
           ( interchange-law-mul-mul-ℤ nx dx nz dy)))
+```
+
+### Multiplication by an embedded natural number is repeated addition
+
+```agda
+mul-nat-iterate-add-fraction-ℤ :
+  (n : ℕ) → (x : fraction-ℤ) →
+  sim-fraction-ℤ
+    ( in-fraction-ℤ (int-ℕ n) *fraction-ℤ x)
+    ( iterate n (add-fraction-ℤ x) zero-fraction-ℤ)
+mul-nat-iterate-add-fraction-ℤ zero-ℕ x = left-zero-law-mul-fraction-ℤ x
+mul-nat-iterate-add-fraction-ℤ (succ-ℕ n) x = {!   !}
+
 ```
