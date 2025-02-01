@@ -242,7 +242,8 @@ module _
 ### Inclusion of the integers agrees with inclusion via integer fractions
 
 ```agda
-rational-in-fraction-ℤ : (x : ℤ) → rational-ℤ x ＝ rational-fraction-ℤ (in-fraction-ℤ x)
+rational-in-fraction-ℤ :
+  (x : ℤ) → rational-ℤ x ＝ rational-fraction-ℤ (in-fraction-ℤ x)
 rational-in-fraction-ℤ x =
   eq-ℚ
     (rational-ℤ x)
