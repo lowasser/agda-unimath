@@ -106,12 +106,6 @@ pr2 (pr1 (rational-ℤ x)) = one-positive-ℤ
 pr2 (rational-ℤ x) = is-one-gcd-one-ℤ' x
 ```
 
-#### Inclusion of the integers agrees with inclusion via integer fractions
-
-```agda
-rational-in-fraction-ℤ : (x : ℤ) → rational-ℤ x ＝ rational-fraction-ℤ (in-fraction-ℤ x)
-```
-
 ### Negative one, zero and one
 
 ```agda
@@ -243,6 +237,26 @@ module _
         ( fraction-ℚ y)
         ( ap-mul-ℤ H (inv K))) ∙
       ( is-retraction-rational-fraction-ℚ y)
+```
+
+### Inclusion of the integers agrees with inclusion via integer fractions
+
+```agda
+rational-in-fraction-ℤ : (x : ℤ) → rational-ℤ x ＝ rational-fraction-ℤ (in-fraction-ℤ x)
+rational-in-fraction-ℤ x =
+  eq-ℚ
+    (rational-ℤ x)
+    (rational-fraction-ℤ (in-fraction-ℤ x))
+    (ap numerator-fraction-ℤ H)
+    (ap denominator-fraction-ℤ H)
+  where
+    H :
+      fraction-ℚ (rational-ℤ x) ＝ reduce-fraction-ℤ (fraction-ℚ (rational-ℤ x))
+    H =
+      inv
+        ( reduce-is-reduced-fraction-ℤ
+          ( fraction-ℚ (rational-ℤ x))
+          ( is-one-gcd-one-ℤ' x))
 ```
 
 ### A rational number is zero if and only if its numerator is zero
