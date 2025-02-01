@@ -106,6 +106,12 @@ pr2 (pr1 (rational-ℤ x)) = one-positive-ℤ
 pr2 (rational-ℤ x) = is-one-gcd-one-ℤ' x
 ```
 
+#### Inclusion of the integers agrees with inclusion via integer fractions
+
+```agda
+rational-in-fraction-ℤ : (x : ℤ) → rational-ℤ x ＝ rational-fraction-ℤ (in-fraction-ℤ x)
+```
+
 ### Negative one, zero and one
 
 ```agda
