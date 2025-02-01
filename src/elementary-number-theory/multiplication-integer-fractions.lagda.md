@@ -20,6 +20,7 @@ open import foundation.action-on-identifications-functions
 open import foundation.dependent-pair-types
 open import foundation.identity-types
 open import foundation.iterating-functions
+open import foundation.transport-along-identifications
 ```
 
 </details>
@@ -131,50 +132,107 @@ commutative-mul-fraction-ℤ (nx , dx , dxp) (ny , dy , dyp) =
   ap-mul-ℤ (commutative-mul-ℤ nx ny) (commutative-mul-ℤ dy dx)
 ```
 
-### Multiplication on integer fractions distributes on the left over addition
+### Multiplication on integer fractions distributes over addition
 
 ```agda
-left-distributive-mul-add-fraction-ℤ :
-  (x y z : fraction-ℤ) →
-  sim-fraction-ℤ
-    (mul-fraction-ℤ x (add-fraction-ℤ y z))
-    (add-fraction-ℤ (mul-fraction-ℤ x y) (mul-fraction-ℤ x z))
-left-distributive-mul-add-fraction-ℤ
-  (nx , dx , dxp) (ny , dy , dyp) (nz , dz , dzp) =
-    ( ap
-      ( ( nx *ℤ (ny *ℤ dz +ℤ nz *ℤ dy)) *ℤ_)
-      ( ( interchange-law-mul-mul-ℤ dx dy dx dz) ∙
-        ( associative-mul-ℤ dx dx (dy *ℤ dz)))) ∙
-    ( interchange-law-mul-mul-ℤ
-      ( nx)
-      ( ny *ℤ dz +ℤ nz *ℤ dy)
-      ( dx)
-      ( dx *ℤ (dy *ℤ dz))) ∙
-    ( inv
-      ( associative-mul-ℤ
-        ( nx *ℤ dx)
+abstract
+  left-distributive-mul-add-fraction-ℤ :
+    (x y z : fraction-ℤ) →
+    sim-fraction-ℤ
+      (mul-fraction-ℤ x (add-fraction-ℤ y z))
+      (add-fraction-ℤ (mul-fraction-ℤ x y) (mul-fraction-ℤ x z))
+  left-distributive-mul-add-fraction-ℤ
+    (nx , dx , dxp) (ny , dy , dyp) (nz , dz , dzp) =
+      ( ap
+        ( ( nx *ℤ (ny *ℤ dz +ℤ nz *ℤ dy)) *ℤ_)
+        ( ( interchange-law-mul-mul-ℤ dx dy dx dz) ∙
+          ( associative-mul-ℤ dx dx (dy *ℤ dz)))) ∙
+      ( interchange-law-mul-mul-ℤ
+        ( nx)
         ( ny *ℤ dz +ℤ nz *ℤ dy)
-        ( dx *ℤ (dy *ℤ dz)))) ∙
-    ( ap
-      ( _*ℤ (dx *ℤ (dy *ℤ dz)))
-      ( ( left-distributive-mul-add-ℤ
+        ( dx)
+        ( dx *ℤ (dy *ℤ dz))) ∙
+      ( inv
+        ( associative-mul-ℤ
           ( nx *ℤ dx)
-          ( ny *ℤ dz)
-          ( nz *ℤ dy)) ∙
-        ( ap-add-ℤ
-          ( interchange-law-mul-mul-ℤ nx dx ny dz))
-          ( interchange-law-mul-mul-ℤ nx dx nz dy)))
+          ( ny *ℤ dz +ℤ nz *ℤ dy)
+          ( dx *ℤ (dy *ℤ dz)))) ∙
+      ( ap
+        ( _*ℤ (dx *ℤ (dy *ℤ dz)))
+        ( ( left-distributive-mul-add-ℤ
+            ( nx *ℤ dx)
+            ( ny *ℤ dz)
+            ( nz *ℤ dy)) ∙
+          ( ap-add-ℤ
+            ( interchange-law-mul-mul-ℤ nx dx ny dz))
+            ( interchange-law-mul-mul-ℤ nx dx nz dy)))
+
+  right-distributive-mul-add-fraction-ℤ :
+    (x y z : fraction-ℤ) →
+    sim-fraction-ℤ
+      (mul-fraction-ℤ (add-fraction-ℤ x y) z)
+      (add-fraction-ℤ (mul-fraction-ℤ x z) (mul-fraction-ℤ y z))
+  right-distributive-mul-add-fraction-ℤ x y z =
+    transitive-sim-fraction-ℤ
+      ( mul-fraction-ℤ (add-fraction-ℤ x y) z)
+      ( mul-fraction-ℤ z (add-fraction-ℤ x y))
+      ( add-fraction-ℤ (mul-fraction-ℤ x z) (mul-fraction-ℤ y z))
+      ( transitive-sim-fraction-ℤ
+        ( mul-fraction-ℤ z (add-fraction-ℤ x y))
+        ( add-fraction-ℤ (mul-fraction-ℤ z x) (mul-fraction-ℤ z y))
+        ( add-fraction-ℤ (mul-fraction-ℤ x z) (mul-fraction-ℤ y z))
+        ( sim-fraction-add-fraction-ℤ
+          { mul-fraction-ℤ z x}
+          { mul-fraction-ℤ x z}
+          { mul-fraction-ℤ z y}
+          { mul-fraction-ℤ y z}
+          ( commutative-mul-fraction-ℤ z x)
+          ( commutative-mul-fraction-ℤ z y))
+        ( left-distributive-mul-add-fraction-ℤ z x y))
+      ( commutative-mul-fraction-ℤ (add-fraction-ℤ x y) z)
+
 ```
 
 ### Multiplication by an embedded natural number is repeated addition
 
 ```agda
-mul-nat-iterate-add-fraction-ℤ :
-  (n : ℕ) → (x : fraction-ℤ) →
-  sim-fraction-ℤ
-    ( in-fraction-ℤ (int-ℕ n) *fraction-ℤ x)
-    ( iterate n (add-fraction-ℤ x) zero-fraction-ℤ)
-mul-nat-iterate-add-fraction-ℤ zero-ℕ x = left-zero-law-mul-fraction-ℤ x
-mul-nat-iterate-add-fraction-ℤ (succ-ℕ n) x = {!   !}
-
+abstract
+  mul-nat-iterate-add-fraction-ℤ :
+    (n : ℕ) → (x : fraction-ℤ) →
+    sim-fraction-ℤ
+      ( in-fraction-ℤ (int-ℕ n) *fraction-ℤ x)
+      ( iterate n (add-fraction-ℤ x) zero-fraction-ℤ)
+  mul-nat-iterate-add-fraction-ℤ zero-ℕ x = left-zero-law-mul-fraction-ℤ x
+  mul-nat-iterate-add-fraction-ℤ (succ-ℕ n) x =
+    transitive-sim-fraction-ℤ
+      ( in-fraction-ℤ (int-ℕ (succ-ℕ n)) *fraction-ℤ x)
+      ( x +fraction-ℤ (in-fraction-ℤ (int-ℕ n) *fraction-ℤ x))
+      ( x +fraction-ℤ (iterate n (add-fraction-ℤ x) zero-fraction-ℤ))
+      ( sim-fraction-add-fraction-ℤ
+        { x}
+        { x}
+        { in-fraction-ℤ (int-ℕ n) *fraction-ℤ x}
+        { iterate n (add-fraction-ℤ x) zero-fraction-ℤ}
+        ( refl-sim-fraction-ℤ x)
+        ( mul-nat-iterate-add-fraction-ℤ n x))
+      (transitive-sim-fraction-ℤ
+        (in-fraction-ℤ (int-ℕ (succ-ℕ n)) *fraction-ℤ x)
+        ((one-fraction-ℤ +fraction-ℤ in-fraction-ℤ (int-ℕ n)) *fraction-ℤ x)
+        (x +fraction-ℤ (in-fraction-ℤ (int-ℕ n) *fraction-ℤ x))
+        (transitive-sim-fraction-ℤ
+          ((one-fraction-ℤ +fraction-ℤ in-fraction-ℤ (int-ℕ n)) *fraction-ℤ x)
+          ((one-fraction-ℤ *fraction-ℤ x) +fraction-ℤ (in-fraction-ℤ (int-ℕ n) *fraction-ℤ x))
+          (x +fraction-ℤ (in-fraction-ℤ (int-ℕ n) *fraction-ℤ x))
+          (refl)
+          (right-distributive-mul-add-fraction-ℤ one-fraction-ℤ (in-fraction-ℤ (int-ℕ n)) x))
+        (sim-fraction-mul-fraction-ℤ
+          {in-fraction-ℤ (int-ℕ (succ-ℕ n))}
+          {one-fraction-ℤ +fraction-ℤ in-fraction-ℤ (int-ℕ n)}
+          {x}
+          {x}
+          (tr
+            (λ z → sim-fraction-ℤ z (one-fraction-ℤ +fraction-ℤ in-fraction-ℤ (int-ℕ n)))
+            (ap in-fraction-ℤ (inv (left-add-one-ℤ (int-ℕ n)) ∙ succ-int-ℕ n))
+            (inv (add-in-fraction-ℤ one-ℤ (int-ℕ n))))
+          (refl-sim-fraction-ℤ x)))
 ```
