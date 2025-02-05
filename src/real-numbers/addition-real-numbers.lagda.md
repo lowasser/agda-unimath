@@ -379,3 +379,5 @@ infixl 35 _+ℝ_
 _+ℝ_ : {l1 l2 : Level} → ℝ l1 → ℝ l2 → ℝ (l1 ⊔ l2)
 _+ℝ_ = add-ℝ
 ```
+
+## Properties
