@@ -131,6 +131,15 @@ is-one-ℚ : ℚ → UU lzero
 is-one-ℚ x = (x ＝ one-ℚ)
 ```
 
+### Reciprocals of positive integers
+
+```agda
+rational-reciprocal-positive-ℤ : positive-ℤ → ℚ
+pr1 (pr1 (rational-reciprocal-positive-ℤ _)) = one-ℤ
+pr2 (pr1 (rational-reciprocal-positive-ℤ z)) = z
+pr2 (rational-reciprocal-positive-ℤ z) = is-one-gcd-one-ℤ (int-positive-ℤ z)
+```
+
 ### The negative of a rational number
 
 ```agda

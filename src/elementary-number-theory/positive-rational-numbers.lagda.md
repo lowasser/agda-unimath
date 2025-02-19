@@ -47,6 +47,7 @@ open import foundation.propositions
 open import foundation.sets
 open import foundation.subtypes
 open import foundation.transport-along-identifications
+open import foundation.unit-type
 open import foundation.universe-levels
 
 open import group-theory.commutative-monoids
@@ -164,6 +165,30 @@ abstract
     {x : fraction-ℤ} (P : is-positive-fraction-ℤ x) →
     is-positive-ℚ (rational-fraction-ℤ x)
   is-positive-rational-fraction-ℤ = is-positive-reduce-fraction-ℤ
+```
+
+### The rational image of a positive integer is positive
+
+```agda
+is-positive-rational-positive-ℤ :
+  (x : positive-ℤ) → is-positive-ℚ (rational-ℤ (int-positive-ℤ x))
+is-positive-rational-positive-ℤ = is-positive-int-positive-ℤ
+
+positive-rational-positive-ℤ : positive-ℤ → ℚ⁺
+pr1 (positive-rational-positive-ℤ x) = rational-ℤ (int-positive-ℤ x)
+pr2 (positive-rational-positive-ℤ x) = is-positive-rational-positive-ℤ x
+```
+
+### The rational reciprocal of a positive integer is positive
+
+```agda
+is-positive-rational-reciprocal-positive-ℤ :
+  (x : positive-ℤ) → is-positive-ℚ (rational-reciprocal-positive-ℤ x)
+is-positive-rational-reciprocal-positive-ℤ _ = star
+
+positive-rational-reciprocal-positive-ℤ : positive-ℤ → ℚ⁺
+positive-rational-reciprocal-positive-ℤ x =
+  rational-reciprocal-positive-ℤ x , star
 ```
 
 ### A rational number `x` is positive if and only if `0 < x`

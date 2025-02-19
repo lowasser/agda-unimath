@@ -13,19 +13,23 @@ open import elementary-number-theory.addition-integer-fractions
 open import elementary-number-theory.addition-rational-numbers
 open import elementary-number-theory.difference-rational-numbers
 open import elementary-number-theory.greatest-common-divisor-integers
+open import elementary-number-theory.positive-integers
 open import elementary-number-theory.integer-fractions
 open import elementary-number-theory.integers
 open import elementary-number-theory.multiplication-integer-fractions
 open import elementary-number-theory.multiplication-integers
+open import elementary-number-theory.multiplication-positive-and-negative-integers
 open import elementary-number-theory.rational-numbers
 open import elementary-number-theory.reduced-integer-fractions
 
 open import foundation.action-on-identifications-functions
+open import foundation.action-on-identifications-binary-functions
 open import foundation.coproduct-types
 open import foundation.dependent-pair-types
 open import foundation.function-types
 open import foundation.identity-types
 open import foundation.interchange-law
+open import foundation.unit-type
 ```
 
 </details>
@@ -346,6 +350,42 @@ abstract
           ( y)
           ( reduce-fraction-ℤ y)
           ( sim-reduced-fraction-ℤ y)))
+```
+
+### The multiplicative inverse of positive integers embedded as rational numbers is their reciprocal
+
+```agda
+abstract
+  left-inverse-mul-rational-positive-ℤ :
+    (x : positive-ℤ) →
+    rational-reciprocal-positive-ℤ x *ℚ rational-ℤ (int-positive-ℤ x) ＝ one-ℚ
+  left-inverse-mul-rational-positive-ℤ x⁺@(x , pos-x) =
+    equational-reasoning
+      rational-reciprocal-positive-ℤ x⁺ *ℚ rational-ℤ x
+      ＝ rational-fraction-ℤ (one-ℤ , x⁺) *ℚ
+        rational-fraction-ℤ (x , one-positive-ℤ)
+        by
+          inv
+            ( ap-binary
+              ( mul-ℚ)
+              ( is-retraction-rational-fraction-ℚ
+                  ( rational-reciprocal-positive-ℤ x⁺))
+              ( is-retraction-rational-fraction-ℚ (rational-ℤ x)))
+      ＝ rational-fraction-ℤ
+        ( one-ℤ *ℤ x , x *ℤ one-ℤ , is-positive-mul-ℤ pos-x star)
+        by mul-rational-fraction-ℤ _ _
+      ＝ rational-fraction-ℤ one-fraction-ℤ
+        by eq-ℚ-sim-fraction-ℤ
+          ( one-ℤ *ℤ x , x *ℤ one-ℤ , is-positive-mul-ℤ pos-x star)
+          ( one-fraction-ℤ)
+          ( commutative-mul-ℤ _ _ ∙ ap (one-ℤ *ℤ_) (commutative-mul-ℤ _ _))
+      ＝ one-ℚ by is-retraction-rational-fraction-ℚ one-ℚ
+
+  right-inverse-mul-rational-positive-ℤ :
+    (x : positive-ℤ) →
+    rational-ℤ (int-positive-ℤ x) *ℚ rational-reciprocal-positive-ℤ x ＝ one-ℚ
+  right-inverse-mul-rational-positive-ℤ x =
+    commutative-mul-ℚ _ _ ∙ left-inverse-mul-rational-positive-ℤ x
 ```
 
 ### `succ-ℚ p * q = q + (p * q)`
