@@ -29,7 +29,7 @@ open import order-theory.order-reflecting-maps-preorders
 
 A map `f : P → Q` between the underlying types of two
 [posets](order-theory.posets.md) is said to be an
-{{#concept "order reflecting map" Disambiguation="poset" Agda=hom-Poset}}
+{{#concept "order reflecting map" Disambiguation="poset" Agda=order-reflecting-map-Poset}}
 if whenever `f x ≤ f y` in `Q`, `x ≤ y` in `P`.
 
 ## Definition
