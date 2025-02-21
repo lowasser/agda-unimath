@@ -9,10 +9,14 @@ module order-theory.order-reflecting-maps-preorders where
 ```agda
 open import foundation.dependent-pair-types
 open import foundation.function-types
+open import foundation.equivalences
 open import foundation.homotopies
+open import foundation.homotopy-induction
 open import foundation.identity-types
 open import foundation.propositions
+open import foundation.fundamental-theorem-of-identity-types
 open import foundation.torsorial-type-families
+open import foundation.subtype-identity-principle
 open import foundation.universe-levels
 
 open import order-theory.preorders
@@ -50,7 +54,11 @@ module _
               ( leq-prop-Preorder P x y)))
 
   reflects-order-Preorder : UU (l1 ⊔ l2 ⊔ l4)
-  reflects-order-Preorder = type-Prop (reflects-order-prop-Preorder)
+  reflects-order-Preorder = type-Prop reflects-order-prop-Preorder
+
+  is-prop-reflects-order-Preorder : is-prop reflects-order-Preorder
+  is-prop-reflects-order-Preorder =
+    is-prop-type-Prop reflects-order-prop-Preorder
 ```
 
 ### The type of order reflecting maps
@@ -98,7 +106,39 @@ module _
   htpy-eq-order-reflecting-map-Preorder f .f refl =
     refl-htpy-order-reflecting-map-Preorder f
 
+  is-torsorial-htpy-order-reflecting-map-Preorder :
+    (f : order-reflecting-map-Preorder P Q) →
+    is-torsorial (htpy-order-reflecting-map-Preorder f)
+  is-torsorial-htpy-order-reflecting-map-Preorder f =
+    is-torsorial-Eq-subtype
+      ( is-torsorial-htpy (map-order-reflecting-map-Preorder P Q f))
+      ( is-prop-reflects-order-Preorder P Q)
+      ( map-order-reflecting-map-Preorder P Q f)
+      ( refl-htpy)
+      ( reflects-order-order-reflecting-map-Preorder P Q f)
 
+  is-equiv-htpy-eq-order-reflecting-map-Preorder :
+    (f g : order-reflecting-map-Preorder P Q) →
+    is-equiv (htpy-eq-order-reflecting-map-Preorder f g)
+  is-equiv-htpy-eq-order-reflecting-map-Preorder f =
+    fundamental-theorem-id
+      ( is-torsorial-htpy-order-reflecting-map-Preorder f)
+      ( htpy-eq-order-reflecting-map-Preorder f)
+
+  extensionality-order-reflecting-map-Preorder :
+    (f g : order-reflecting-map-Preorder P Q) →
+    Id f g ≃ htpy-order-reflecting-map-Preorder f g
+  pr1 (extensionality-order-reflecting-map-Preorder f g) =
+    htpy-eq-order-reflecting-map-Preorder f g
+  pr2 (extensionality-order-reflecting-map-Preorder f g) =
+    is-equiv-htpy-eq-order-reflecting-map-Preorder f g
+
+  eq-htpy-order-reflecting-map-Preorder :
+    (f g : order-reflecting-map-Preorder P Q) →
+    htpy-order-reflecting-map-Preorder f g →
+    f ＝ g
+  eq-htpy-order-reflecting-map-Preorder f g =
+    map-inv-is-equiv (is-equiv-htpy-eq-order-reflecting-map-Preorder f g)
 ```
 
 ### The identity order reflecting map
@@ -171,5 +211,69 @@ module _
         ( id-order-reflecting-map-Preorder Q)
         ( f))
       ( f)
-  -- left-unit-law-comp-order-reflecting-map-Preorder = {!   !}
+  left-unit-law-comp-order-reflecting-map-Preorder f =
+    eq-htpy-order-reflecting-map-Preorder
+      ( P)
+      ( Q)
+      ( comp-order-reflecting-map-Preorder
+        ( P)
+        ( Q)
+        ( Q)
+        ( id-order-reflecting-map-Preorder Q)
+        ( f))
+      ( f)
+      ( refl-htpy)
+
+  right-unit-law-comp-order-reflecting-map-Preorder :
+    (f : order-reflecting-map-Preorder P Q) →
+    Id
+      ( comp-order-reflecting-map-Preorder
+        ( P)
+        ( P)
+        ( Q)
+        ( f)
+        ( id-order-reflecting-map-Preorder P))
+      ( f)
+  right-unit-law-comp-order-reflecting-map-Preorder f =
+    eq-htpy-order-reflecting-map-Preorder
+      ( P)
+      ( Q)
+      ( comp-order-reflecting-map-Preorder
+        ( P)
+        ( P)
+        ( Q)
+        ( f)
+        ( id-order-reflecting-map-Preorder P))
+      ( f)
+      ( refl-htpy)
+```
+
+### Associativity of composition of order reflecting maps
+
+```agda
+module _
+  {l1 l2 l3 l4 l5 l6 l7 l8 : Level}
+  (P : Preorder l1 l2) (Q : Preorder l3 l4)
+  (R : Preorder l5 l6) (S : Preorder l7 l8)
+  (h : order-reflecting-map-Preorder R S)
+  (g : order-reflecting-map-Preorder Q R)
+  (f : order-reflecting-map-Preorder P Q)
+  where
+
+  associative-comp-order-reflecting-map-Preorder :
+    comp-order-reflecting-map-Preorder P Q S
+      ( comp-order-reflecting-map-Preorder Q R S h g)
+      ( f) ＝
+    comp-order-reflecting-map-Preorder P R S
+      ( h)
+      ( comp-order-reflecting-map-Preorder P Q R g f)
+  associative-comp-order-reflecting-map-Preorder =
+    eq-htpy-order-reflecting-map-Preorder P S
+      ( comp-order-reflecting-map-Preorder P Q S
+        ( comp-order-reflecting-map-Preorder Q R S h g)
+        ( f))
+      ( comp-order-reflecting-map-Preorder P R S
+        ( h)
+        ( comp-order-reflecting-map-Preorder P Q R g f))
+      ( refl-htpy)
 ```
