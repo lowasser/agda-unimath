@@ -28,7 +28,7 @@ open import order-theory.preorders
 
 A map `f : P → Q` between the underlying types of two
 [preorders](order-theory.preorders.md) is said to be an
-{{#concept "order reflecting map" Disambiguation="preorder" Agda=hom-Preorder}}
+{{#concept "order reflecting map" Disambiguation="preorder" Agda=order-reflecting-map-Preorder}}
 if whenever `f x ≤ f y` in `Q`, `x ≤ y` in `P`.
 
 ## Definition
