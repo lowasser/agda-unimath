@@ -307,4 +307,17 @@ module _
     preserves-order-is-order-emb-Preorder is-emb
   pr2 (pr2 is-order-emb-iff-preserves-reflects-order-Preorder is-emb) =
     reflects-order-is-order-emb-Preorder is-emb
+
+module _
+  {l1 l2 l3 l4 : Level} (P : Preorder l1 l2) (Q : Preorder l3 l4)
+  where
+
+  hom-order-emb-Preorder : order-emb-Preorder P Q → hom-Preorder P Q
+  hom-order-emb-Preorder (f , is-emb-f) =
+    (f , preserves-order-is-order-emb-Preorder P Q f is-emb-f)
+
+  order-reflecting-map-order-emb-Preorder :
+    order-emb-Preorder P Q → order-reflecting-map-Preorder P Q
+  order-reflecting-map-order-emb-Preorder (f , is-emb-f) =
+    (f , reflects-order-is-order-emb-Preorder P Q f is-emb-f)
 ```

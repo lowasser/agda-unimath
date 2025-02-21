@@ -87,6 +87,9 @@ module _
   refl-leq-Poset : is-reflexive leq-Poset
   refl-leq-Poset = refl-leq-Preorder preorder-Poset
 
+  leq-eq-Poset : {x y : type-Poset} → x ＝ y → leq-Poset x y
+  leq-eq-Poset refl = refl-leq-Poset _
+
   transitive-leq-Poset : is-transitive leq-Poset
   transitive-leq-Poset = transitive-leq-Preorder preorder-Poset
 
