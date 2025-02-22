@@ -9,6 +9,7 @@ module real-numbers.lower-dedekind-real-numbers where
 <details><summary>Imports</summary>
 
 ```agda
+open import elementary-number-theory.addition-rational-numbers
 open import elementary-number-theory.difference-rational-numbers
 open import elementary-number-theory.inequality-rational-numbers
 open import elementary-number-theory.positive-rational-numbers
@@ -29,6 +30,7 @@ open import foundation.subtypes
 open import foundation.transport-along-identifications
 open import foundation.truncated-types
 open import foundation.truncation-levels
+open import foundation.unit-type
 open import foundation.universal-quantification
 open import foundation.universe-levels
 ```
@@ -99,6 +101,17 @@ module _
 ```
 
 ## Properties
+
+### There is a largest lower Dedekind real, whose cut is all rational numbers
+
+```agda
+∞-lower-ℝ : lower-ℝ lzero
+pr1 ∞-lower-ℝ _ = unit-Prop
+pr1 (pr2 ∞-lower-ℝ) = intro-exists zero-ℚ star
+pr1 (pr2 (pr2 ∞-lower-ℝ) q) _ =
+  intro-exists (q +ℚ one-ℚ) (le-right-add-rational-ℚ⁺ q one-ℚ⁺ , star)
+pr2 (pr2 (pr2 ∞-lower-ℝ) q) _ = star
+```
 
 ### The lower Dedekind reals form a set
 
