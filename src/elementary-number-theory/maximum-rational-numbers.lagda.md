@@ -102,3 +102,11 @@ le-max-le-both-ℚ z x y x<z y<z with decide-le-leq-ℚ x y
     ( right-leq-left-max-Decidable-Total-Order ℚ-Decidable-Total-Order x y y≤x)
     ( x<z)
 ```
+
+### If `a ≤ b` and `c ≤ d`, then `max a c ≤ max b d`
+
+```agda
+max-leq-leq-ℚ :
+  (a b c d : ℚ) → leq-ℚ a b → leq-ℚ c d → leq-ℚ (max-ℚ a c) (max-ℚ b d)
+max-leq-leq-ℚ = max-leq-leq-Decidable-Total-Order ℚ-Decidable-Total-Order
+```

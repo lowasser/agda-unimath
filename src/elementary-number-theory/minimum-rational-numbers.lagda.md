@@ -102,3 +102,11 @@ le-min-le-both-ℚ z x y z<x z<y with decide-le-leq-ℚ x y
     ( right-leq-left-min-Decidable-Total-Order ℚ-Decidable-Total-Order x y y≤x)
     ( z<y)
 ```
+
+### If `a ≤ b` and `c ≤ d`, then `min a c ≤ min b d`
+
+```agda
+min-leq-leq-ℚ :
+  (a b c d : ℚ) → leq-ℚ a b → leq-ℚ c d → leq-ℚ (min-ℚ a c) (min-ℚ b d)
+min-leq-leq-ℚ = min-leq-leq-Decidable-Total-Order ℚ-Decidable-Total-Order
+```
