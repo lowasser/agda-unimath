@@ -14,11 +14,11 @@ open import foundation.decidable-propositions
 open import foundation.dependent-pair-types
 open import foundation.empty-types
 open import foundation.identity-types
+open import foundation.logical-equivalences
 open import foundation.propositions
 open import foundation.sets
-open import foundation.universe-levels
 open import foundation.transport-along-identifications
-open import foundation.logical-equivalences
+open import foundation.universe-levels
 
 open import order-theory.decidable-posets
 open import order-theory.decidable-total-preorders

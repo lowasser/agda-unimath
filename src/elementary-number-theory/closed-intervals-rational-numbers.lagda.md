@@ -35,8 +35,7 @@ open import foundation.universe-levels
 
 ## Idea
 
-A [rational number](elementary-number-theory.rational-numbers.md) `p`
-is in a
+A [rational number](elementary-number-theory.rational-numbers.md) `p` is in a
 {{#concept "closed interval" Disambiguation="rational numbers" WDID=Q78240777 WD="closed interval"}}
 `[q , r]` if `q` is
 [less than or equal to](elementary-number-theory.inequality-rational-numbers.md)
