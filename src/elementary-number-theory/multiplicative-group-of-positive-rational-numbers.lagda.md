@@ -9,11 +9,17 @@ module elementary-number-theory.multiplicative-group-of-positive-rational-number
 <details><summary>Imports</summary>
 
 ```agda
+open import elementary-number-theory.inequality-integers
+open import elementary-number-theory.inequality-rational-numbers
+open import elementary-number-theory.multiplication-integers
 open import elementary-number-theory.multiplication-rational-numbers
 open import elementary-number-theory.multiplicative-monoid-of-rational-numbers
 open import elementary-number-theory.positive-rational-numbers
 open import elementary-number-theory.rational-numbers
+open import elementary-number-theory.strict-inequality-integers
+open import elementary-number-theory.strict-inequality-rational-numbers
 
+open import foundation.binary-transport
 open import foundation.cartesian-product-types
 open import foundation.dependent-pair-types
 open import foundation.identity-types
@@ -87,5 +93,23 @@ pr2 abelian-group-mul-ℚ⁺ = commutative-mul-ℚ⁺
 ### The multiplicative inverse operation on positive rational numbers reverses inequality
 
 ```agda
-inv-leq-ℚ⁺ : (p q : ℚ⁺) → leq-ℚ⁺ p q → leq-ℚ⁺ (inv-ℚ⁺ q) (inv-ℚ⁺ p)
+abstract
+  inv-leq-ℚ⁺ : (p q : ℚ⁺) → leq-ℚ⁺ p q → leq-ℚ⁺ (inv-ℚ⁺ q) (inv-ℚ⁺ p)
+  inv-leq-ℚ⁺ p q =
+    binary-tr
+      ( leq-ℤ)
+      ( commutative-mul-ℤ (numerator-ℚ⁺ p) (denominator-ℚ⁺ q))
+      ( commutative-mul-ℤ (numerator-ℚ⁺ q) (denominator-ℚ⁺ p))
+```
+
+### The multiplicative inverse operation on positive rational numbers reverses strict inequality
+
+```agda
+abstract
+  inv-le-ℚ⁺ : (p q : ℚ⁺) → le-ℚ⁺ p q → le-ℚ⁺ (inv-ℚ⁺ q) (inv-ℚ⁺ p)
+  inv-le-ℚ⁺ _ _ =
+    binary-tr
+      ( le-ℤ)
+      ( commutative-mul-ℤ (numerator-ℚ⁺ p) (denominator-ℚ⁺ q))
+      ( commutative-mul-ℤ (numerator-ℚ⁺ q) (denominator-ℚ⁺ p))
 ```
