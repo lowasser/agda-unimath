@@ -85,3 +85,7 @@ pr2 abelian-group-mul-ℚ⁺ = commutative-mul-ℚ⁺
 ```
 
 ### The multiplicative inverse operation on positive rational numbers reverses inequality
+
+```agda
+inv-leq-ℚ⁺ : (p q : ℚ⁺) → leq-ℚ⁺ p q → leq-ℚ⁺ (inv-ℚ⁺ q) (inv-ℚ⁺ p)
+```
