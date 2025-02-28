@@ -137,19 +137,20 @@ module _
   (x y z : ℚ)
   where
 
-  concatenate-le-leq-ℚ : le-ℚ x y → leq-ℚ y z → le-ℚ x z
-  concatenate-le-leq-ℚ =
-    concatenate-le-leq-fraction-ℤ
-      ( fraction-ℚ x)
-      ( fraction-ℚ y)
-      ( fraction-ℚ z)
+  abstract
+    concatenate-le-leq-ℚ : le-ℚ x y → leq-ℚ y z → le-ℚ x z
+    concatenate-le-leq-ℚ =
+      concatenate-le-leq-fraction-ℤ
+        ( fraction-ℚ x)
+        ( fraction-ℚ y)
+        ( fraction-ℚ z)
 
-  concatenate-leq-le-ℚ : leq-ℚ x y → le-ℚ y z → le-ℚ x z
-  concatenate-leq-le-ℚ =
-    concatenate-leq-le-fraction-ℤ
-      ( fraction-ℚ x)
-      ( fraction-ℚ y)
-      ( fraction-ℚ z)
+    concatenate-leq-le-ℚ : leq-ℚ x y → le-ℚ y z → le-ℚ x z
+    concatenate-leq-le-ℚ =
+      concatenate-leq-le-fraction-ℤ
+        ( fraction-ℚ x)
+        ( fraction-ℚ y)
+        ( fraction-ℚ z)
 ```
 
 ### The canonical map from integer fractions to the rational numbers preserves strict inequality

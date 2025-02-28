@@ -36,6 +36,16 @@ max-ℚ = max-Decidable-Total-Order ℚ-Decidable-Total-Order
 
 ## Properties
 
+### The maximum is an upper bound
+
+```agda
+leq-left-max-ℚ : (x y : ℚ) → x ≤-ℚ max-ℚ x y
+leq-left-max-ℚ = leq-left-max-Decidable-Total-Order ℚ-Decidable-Total-Order
+
+leq-right-max-ℚ : (x y : ℚ) → y ≤-ℚ max-ℚ x y
+leq-right-max-ℚ = leq-right-max-Decidable-Total-Order ℚ-Decidable-Total-Order
+```
+
 ### Associativity of `max-ℚ`
 
 ```agda
