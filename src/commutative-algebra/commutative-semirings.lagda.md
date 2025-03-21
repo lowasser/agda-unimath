@@ -99,6 +99,10 @@ module _
   is-zero-Commutative-Semiring : type-Commutative-Semiring → UU l
   is-zero-Commutative-Semiring = is-zero-Semiring semiring-Commutative-Semiring
 
+  is-zero-Commutative-Semiring-Prop : type-Commutative-Semiring → Prop l
+  is-zero-Commutative-Semiring-Prop =
+    is-zero-semiring-Prop semiring-Commutative-Semiring
+
   is-nonzero-Commutative-Semiring : type-Commutative-Semiring → UU l
   is-nonzero-Commutative-Semiring =
     is-nonzero-Semiring semiring-Commutative-Semiring

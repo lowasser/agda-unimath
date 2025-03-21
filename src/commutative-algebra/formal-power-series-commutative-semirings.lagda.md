@@ -118,6 +118,18 @@ module _
   set-formal-power-series-Commutative-Semiring =
     formal-power-series-Commutative-Semiring ,
     is-set-formal-power-series-Commutative-Semiring
+
+  constant-term-formal-power-series-Commutative-Semiring :
+    formal-power-series-Commutative-Semiring → type-Commutative-Semiring R
+  constant-term-formal-power-series-Commutative-Semiring p =
+    coefficient-formal-power-series-Commutative-Semiring p zero-ℕ
+
+  tail-formal-power-series-Commutative-Semiring :
+    formal-power-series-Commutative-Semiring →
+    formal-power-series-Commutative-Semiring
+  tail-formal-power-series-Commutative-Semiring p =
+    formal-power-series-coefficients-Commutative-Semiring
+      ( coefficient-formal-power-series-Commutative-Semiring p ∘ succ-ℕ)
 ```
 
 ## Operations
@@ -150,6 +162,13 @@ module _
         ( zero-formal-power-series-Commutative-Semiring) ~
       ( λ _ → zero-Commutative-Semiring R)
     htpy-coefficient-zero-formal-power-series-Commutative-Semiring _ = refl
+
+    tail-zero-formal-power-series-Commutative-Semiring :
+      tail-formal-power-series-Commutative-Semiring
+        ( R)
+        zero-formal-power-series-Commutative-Semiring ＝
+      zero-formal-power-series-Commutative-Semiring
+    tail-zero-formal-power-series-Commutative-Semiring = refl
 ```
 
 ### Constant formal power series
@@ -189,6 +208,15 @@ module _
         ( R)
         ( coefficient-constant-formal-power-series-Commutative-Semiring c)
     eq-coefficient-constant-formal-power-series-Commutative-Semiring c = refl
+
+    htpy-coefficient-constant-formal-power-series-Commutative-Semiring :
+      (c : type-Commutative-Semiring R) →
+      coefficient-formal-power-series-Commutative-Semiring
+        ( R)
+        ( constant-formal-power-series-Commutative-Semiring c) ~
+      coefficient-constant-formal-power-series-Commutative-Semiring c
+    htpy-coefficient-constant-formal-power-series-Commutative-Semiring _ _ =
+      refl
 
   one-formal-power-series-Commutative-Semiring :
     formal-power-series-Commutative-Semiring R
