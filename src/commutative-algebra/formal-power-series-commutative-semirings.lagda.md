@@ -175,54 +175,62 @@ module _
 
 ```agda
 module _
-  {l : Level} (R : Commutative-Semiring l)
+  {l : Level} (R : Commutative-Semiring l) (c : type-Commutative-Semiring R)
   where
 
   coefficient-constant-formal-power-series-Commutative-Semiring :
-    type-Commutative-Semiring R → ℕ → type-Commutative-Semiring R
-  coefficient-constant-formal-power-series-Commutative-Semiring c zero-ℕ = c
-  coefficient-constant-formal-power-series-Commutative-Semiring c (succ-ℕ _) =
+    ℕ → type-Commutative-Semiring R
+  coefficient-constant-formal-power-series-Commutative-Semiring zero-ℕ = c
+  coefficient-constant-formal-power-series-Commutative-Semiring (succ-ℕ _) =
     zero-Commutative-Semiring R
 
   coefficient-nonzero-constant-formal-power-series-Commutative-Semiring :
-    (c : type-Commutative-Semiring R) → (n : ℕ) → is-nonzero-ℕ n →
+    (n : ℕ) → is-nonzero-ℕ n →
     is-zero-Commutative-Semiring R
-      ( coefficient-constant-formal-power-series-Commutative-Semiring c n)
+      ( coefficient-constant-formal-power-series-Commutative-Semiring n)
   coefficient-nonzero-constant-formal-power-series-Commutative-Semiring
-    c zero-ℕ H = ex-falso (H refl)
+    zero-ℕ H = ex-falso (H refl)
   coefficient-nonzero-constant-formal-power-series-Commutative-Semiring
-    c (succ-ℕ _) _ = refl
+    (succ-ℕ _) _ = refl
 
   opaque
     unfolding formal-power-series-Commutative-Semiring
+    unfolding zero-formal-power-series-Commutative-Semiring
 
     constant-formal-power-series-Commutative-Semiring :
-      type-Commutative-Semiring R → formal-power-series-Commutative-Semiring R
+      formal-power-series-Commutative-Semiring R
     constant-formal-power-series-Commutative-Semiring =
       coefficient-constant-formal-power-series-Commutative-Semiring
 
     eq-coefficient-constant-formal-power-series-Commutative-Semiring :
-      (c : type-Commutative-Semiring R) →
-      constant-formal-power-series-Commutative-Semiring c ＝
+      constant-formal-power-series-Commutative-Semiring ＝
       formal-power-series-coefficients-Commutative-Semiring
         ( R)
-        ( coefficient-constant-formal-power-series-Commutative-Semiring c)
-    eq-coefficient-constant-formal-power-series-Commutative-Semiring c = refl
+        ( coefficient-constant-formal-power-series-Commutative-Semiring)
+    eq-coefficient-constant-formal-power-series-Commutative-Semiring = refl
 
     htpy-coefficient-constant-formal-power-series-Commutative-Semiring :
-      (c : type-Commutative-Semiring R) →
       coefficient-formal-power-series-Commutative-Semiring
         ( R)
-        ( constant-formal-power-series-Commutative-Semiring c) ~
-      coefficient-constant-formal-power-series-Commutative-Semiring c
-    htpy-coefficient-constant-formal-power-series-Commutative-Semiring _ _ =
+        ( constant-formal-power-series-Commutative-Semiring) ~
+      coefficient-constant-formal-power-series-Commutative-Semiring
+    htpy-coefficient-constant-formal-power-series-Commutative-Semiring _ =
       refl
 
-  one-formal-power-series-Commutative-Semiring :
-    formal-power-series-Commutative-Semiring R
-  one-formal-power-series-Commutative-Semiring =
-    constant-formal-power-series-Commutative-Semiring
-      ( one-Commutative-Semiring R)
+    tail-constant-formal-power-series-Commutative-Semiring :
+      tail-formal-power-series-Commutative-Semiring
+        ( R)
+        ( constant-formal-power-series-Commutative-Semiring) ＝
+      zero-formal-power-series-Commutative-Semiring R
+    tail-constant-formal-power-series-Commutative-Semiring = refl
+
+one-formal-power-series-Commutative-Semiring :
+  {l : Level} (R : Commutative-Semiring l) →
+  formal-power-series-Commutative-Semiring R
+one-formal-power-series-Commutative-Semiring R =
+  constant-formal-power-series-Commutative-Semiring
+    ( R)
+    ( one-Commutative-Semiring R)
 ```
 
 #### The zero formal power series is the constant formal power series for zero

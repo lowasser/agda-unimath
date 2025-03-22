@@ -86,8 +86,8 @@ module _
       htpy-coefficient-zero-formal-power-series-Commutative-Semiring R m
 
   one-degree-bound-iff-constant-formal-power-series-Commutative-Semiring :
-    (p : formal-power-series-Commutative-Semiring R) →
-    (degree-bound-formal-power-series-Commutative-Semiring p 1) ↔
+    ( p : formal-power-series-Commutative-Semiring R) →
+    ( degree-bound-formal-power-series-Commutative-Semiring p 1) ↔
     ( p ＝
       constant-formal-power-series-Commutative-Semiring
         ( R)
@@ -339,19 +339,17 @@ module _
         ( p))
 
   ev-polynomial-degree-bound-Commutative-Semiring :
-    (p : polynomial-Commutative-Semiring R) →
+    (p : polynomial-Commutative-Semiring R) (n : ℕ) →
     (H :
-      Σ
-        ( ℕ)
-        ( degree-bound-formal-power-series-Commutative-Semiring R
-          ( formal-power-series-polynomial-Commutative-Semiring R p))) →
-    (x : type-Commutative-Semiring R) →
-    ev-polynomial-Commutative-Semiring p x ＝
-    ind-Σ
-      ( ev-formal-power-series-degree-bound-Commutative-Semiring
-        ( formal-power-series-polynomial-Commutative-Semiring R p))
+      degree-bound-formal-power-series-Commutative-Semiring
+        ( R)
+        ( formal-power-series-polynomial-Commutative-Semiring R p)
+        ( n)) →
+    ev-polynomial-Commutative-Semiring p ~
+    ev-formal-power-series-degree-bound-Commutative-Semiring
+      ( formal-power-series-polynomial-Commutative-Semiring R p)
+      ( n)
       ( H)
-      ( x)
 ```
 
 ### Constant polynomials
@@ -360,4 +358,53 @@ module _
 module _
   {l : Level} (R : Commutative-Semiring l) (c : type-Commutative-Semiring R)
   where
+
+  one-degree-bound-constant-formal-power-series-Commutative-Semiring :
+    degree-bound-formal-power-series-Commutative-Semiring
+      ( R)
+      ( constant-formal-power-series-Commutative-Semiring R c)
+      1
+  one-degree-bound-constant-formal-power-series-Commutative-Semiring =
+    backward-implication
+      ( one-degree-bound-iff-constant-formal-power-series-Commutative-Semiring
+        ( R)
+        ( constant-formal-power-series-Commutative-Semiring R c))
+      ( ap
+        ( constant-formal-power-series-Commutative-Semiring R)
+        ( inv
+          ( htpy-coefficient-constant-formal-power-series-Commutative-Semiring
+            ( R)
+            ( c)
+            ( 0))))
+
+  constant-polynomial-Commutative-Semiring : polynomial-Commutative-Semiring R
+  constant-polynomial-Commutative-Semiring =
+    polynomial-degree-bound-formal-power-series-Commutative-Semiring
+      ( R)
+      ( constant-formal-power-series-Commutative-Semiring R c)
+      ( 1)
+      ( one-degree-bound-constant-formal-power-series-Commutative-Semiring)
+
+  ev-constant-polynomial-Commutative-Semiring :
+    (x : type-Commutative-Semiring R) →
+    ev-polynomial-Commutative-Semiring
+      ( R)
+      ( constant-polynomial-Commutative-Semiring)
+      ( x) ＝
+    c
+  ev-constant-polynomial-Commutative-Semiring x =
+    equational-reasoning
+      ev-polynomial-Commutative-Semiring
+        ( R)
+        ( constant-polynomial-Commutative-Semiring)
+        ( x)
+      ＝
+        ev-formal-power-series-degree-bound-Commutative-Semiring
+          ( R)
+          {!   !}
+          ( 1)
+          ( one-degree-bound-constant-formal-power-series-Commutative-Semiring)
+          ( x)
+        by {!   !}
+      ＝ {!   !} by {!   !}
 ```
