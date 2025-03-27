@@ -15,7 +15,6 @@ open import elementary-number-theory.natural-numbers
 open import foundation.action-on-identifications-functions
 open import foundation.automorphisms
 open import foundation.cartesian-product-types
-open import foundation.complements-decidable-subtypes
 open import foundation.complements-subtypes
 open import foundation.conjunction
 open import foundation.contractible-types
@@ -37,6 +36,8 @@ open import foundation.subtypes
 open import foundation.type-arithmetic-coproduct-types
 open import foundation.unit-type
 open import foundation.universe-levels
+
+open import logic.complements-decidable-subtypes
 
 open import univalent-combinatorics.counting
 open import univalent-combinatorics.finite-types
@@ -286,38 +287,4 @@ module _
         is-section-map-inv-equiv-permute-components-triple-with-sum-pr2) ,
       ( map-inv-equiv-permute-components-triple-with-sum-pr2 ,
         is-retraction-map-inv-equiv-permute-components-triple-with-sum-pr2))
-```
-
-### Breaking out the zero case
-
-```agda
-module _
-  (n : ℕ)
-  where
-
-  decidable-subtype-zero-pair-with-sum-ℕ :
-    decidable-subtype lzero (pair-with-sum-ℕ n)
-  decidable-subtype-zero-pair-with-sum-ℕ (a , _ , _) =
-    is-zero-ℕ a , is-prop-is-zero-ℕ a , is-decidable-is-zero-ℕ a
-
-  is-contr-decidable-subtype-zero-pair-with-sum-ℕ :
-    is-contr (type-decidable-subtype decidable-subtype-zero-pair-with-sum-ℕ)
-  is-contr-decidable-subtype-zero-pair-with-sum-ℕ =
-    ((zero-ℕ , n , right-unit-law-add-ℕ n) , refl) ,
-    λ ((x , y , y+x=n) , x=0) →
-      eq-type-subtype
-        ( subtype-decidable-subtype decidable-subtype-zero-pair-with-sum-ℕ)
-        ( eq-Eq-pair-with-sum-ℕ n _ _ (inv x=0))
-
-  equiv-pair-with-sum-coproduct-zero-nonzero :
-    pair-with-sum-ℕ n ≃
-      unit +
-      type-decidable-subtype
-        ( complement-decidable-subtype (decidable-subtype-zero-pair-with-sum-ℕ))
-  equiv-pair-with-sum-coproduct-zero-nonzero =
-    equiv-coproduct
-      ( equiv-unit-is-contr is-contr-decidable-subtype-zero-pair-with-sum-ℕ)
-      ( id-equiv) ∘e
-    equiv-coproduct-decidable-subtype-complement
-      ( decidable-subtype-zero-pair-with-sum-ℕ)
 ```

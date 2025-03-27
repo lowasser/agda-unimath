@@ -42,7 +42,9 @@ open import univalent-combinatorics.standard-finite-types
 
 ## Idea
 
-The **sum operation** extends the binary addition operation on a
+The
+{{#concept "sum operation" Disambiguation="in a commutative ring" WD="sum" WDID=Q218005 Agda=sum-Commutative-Ring}}
+extends the binary addition operation on a
 [commutative ring](commutative-algebra.commutative-rings.md) `A` to any family
 of elements of `A` indexed by a
 [standard finite type](univalent-combinatorics.standard-finite-types.md), or by
@@ -83,10 +85,11 @@ module _
   sum-one-element-Commutative-Ring =
     sum-one-element-Ring (ring-Commutative-Ring A)
 
-  sum-unit-Commutative-Ring :
+  sum-unit-finite-Commutative-Ring :
     (f : unit → type-Commutative-Ring A) →
     sum-finite-Commutative-Ring A unit-Finite-Type f ＝ f star
-  sum-unit-Commutative-Ring = sum-unit-Ring (ring-Commutative-Ring A)
+  sum-unit-finite-Commutative-Ring =
+    sum-unit-finite-Ring (ring-Commutative-Ring A)
 
   sum-two-elements-Commutative-Ring :
     (f : functional-vec-Commutative-Ring A 2) →

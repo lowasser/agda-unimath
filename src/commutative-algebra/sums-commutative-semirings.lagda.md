@@ -45,7 +45,9 @@ open import univalent-combinatorics.standard-finite-types
 
 ## Idea
 
-The **sum operation** extends the binary addition operation on a
+The
+{{#concept "sum operation" Disambiguation="in a commutative semiring" WD="sum" WDID=Q218005 Agda=sum-Commutative-Semiring}}
+extends the binary addition operation on a
 [commutative semiring](commutative-algebra.commutative-semirings.md) `R` to any
 family of elements of `R` indexed by a
 [standard finite type](univalent-combinatorics.standard-finite-types.md), or by
@@ -88,11 +90,11 @@ module _
   sum-one-element-Commutative-Semiring =
     sum-one-element-Semiring (semiring-Commutative-Semiring A)
 
-  sum-unit-Commutative-Semiring :
+  sum-unit-finite-Commutative-Semiring :
     (f : unit → type-Commutative-Semiring A) →
     sum-finite-Commutative-Semiring A unit-Finite-Type f ＝ f star
-  sum-unit-Commutative-Semiring =
-    sum-unit-Semiring (semiring-Commutative-Semiring A)
+  sum-unit-finite-Commutative-Semiring =
+    sum-unit-finite-Semiring (semiring-Commutative-Semiring A)
 
   sum-two-elements-Commutative-Semiring :
     (f : functional-vec-Commutative-Semiring A 2) →
@@ -480,6 +482,6 @@ module _
           ( λ i → sum-finite-Commutative-Semiring R A (λ a → h a i))
     where
       h : type-Finite-Type A → Fin 2 → type-Commutative-Semiring R
-      h a (inl (inr star)) = f a
-      h a (inr star) = g a
+      h a (inl (inr _)) = f a
+      h a (inr _) = g a
 ```

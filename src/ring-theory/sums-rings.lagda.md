@@ -38,8 +38,10 @@ open import univalent-combinatorics.standard-finite-types
 
 ## Idea
 
-The sum operation extends the binary addition operation on a
-[ring](ring-theory.rings.md) `R` to any family of elements of `R` indexed by a
+The
+{{#concept "sum operation" Disambiguation="in a ring" WD="sum" WDID=Q218005 Agda=sum-Ring}}
+extends the binary addition operation on a [ring](ring-theory.rings.md) `R` to
+any family of elements of `R` indexed by a
 [standard finite type](univalent-combinatorics.standard-finite-types.md), or by
 a [finite type](univalent-combinatorics.finite-types.md).
 
@@ -74,9 +76,9 @@ module _
     (f : functional-vec-Ring R 1) → sum-Ring R 1 f ＝ head-functional-vec 0 f
   sum-one-element-Ring = sum-one-element-Semiring (semiring-Ring R)
 
-  sum-unit-Ring :
+  sum-unit-finite-Ring :
     (f : unit → type-Ring R) → sum-finite-Ring R unit-Finite-Type f ＝ f star
-  sum-unit-Ring = sum-unit-Semiring (semiring-Ring R)
+  sum-unit-finite-Ring = sum-unit-finite-Semiring (semiring-Ring R)
 
   sum-two-elements-Ring :
     (f : functional-vec-Ring R 2) →
