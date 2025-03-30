@@ -9,9 +9,12 @@ module group-theory.free-groups-on-sets where
 ```agda
 open import foundation.universe-levels
 open import foundation.sets
+open import foundation.existential-quantification
 open import foundation.equivalence-relations
+open import foundation.subtypes
 open import foundation.identity-types
 open import foundation.propositional-truncations
+open import foundation.universal-property-propositional-truncation-into-sets
 open import foundation.binary-functoriality-set-quotients
 open import foundation.equivalence-classes
 open import foundation.set-quotients
@@ -155,36 +158,26 @@ module _
       is-symmetric-relation-prop-base-free-group-Set ,
       is-transitive-relation-prop-base-free-group-Set)
 
-  type-free-group-Set : UU l
+  type-free-group-Set : UU (lsuc l)
   type-free-group-Set =
-    set-quotient
+    equivalence-class
       equivalence-relation-base-free-group-Set
 
-  set-free-group-Set : Set l
-  set-free-group-Set = quotient-Set equivalence-relation-base-free-group-Set
+  set-free-group-Set : Set (lsuc l)
+  set-free-group-Set = equivalence-class-Set equivalence-relation-base-free-group-Set
 
   mul-free-group-Set :
     type-free-group-Set → type-free-group-Set → type-free-group-Set
-  mul-free-group-Set =
-    binary-map-set-quotient
-      ( equivalence-relation-base-free-group-Set)
-      ( equivalence-relation-base-free-group-Set)
-      ( equivalence-relation-base-free-group-Set)
-      ( mul-base-free-group-Set ,
-        λ {x} {x'} {y} {y'} x~x' y~y' →
-          transitive-equivalence-relation
-            ( equivalence-relation-base-free-group-Set)
-            ( _)
-            ( _)
-            ( _)
-            ( rec-trunc-Prop
-              ( relation-prop-base-free-group-Set _ _)
-              ( unit-trunc-Prop ∘ ap-left-mul-Eq-base-free-group-Set x x' y')
-              ( x~x'))
-            ( rec-trunc-Prop
-              ( relation-prop-base-free-group-Set _ _)
-              ( unit-trunc-Prop ∘ ap-right-mul-Eq-base-free-group-Set x y y')
-              ( y~y')))
+  mul-free-group-Set (xsub , x) (ysub , y) =
+    ( λ z →
+      ∃ ( type-subtype xsub)
+        ( λ (x , _) →
+          ∃ ( type-subtype ysub)
+            ( λ (y , _) →
+              relation-prop-base-free-group-Set
+                (mul-base-free-group-Set x y)
+                ( z)))) ,
+    {!   !}
 
   is-associative-mul-free-group-Set :
     (x y z : type-free-group-Set) →
