@@ -30,6 +30,7 @@ open import foundation.binary-relations
 open import foundation.coproduct-types
 open import foundation.equality-coproduct-types
 open import lists.lists
+open import foundation.logical-equivalences
 open import foundation.binary-relations
 ```
 
@@ -68,20 +69,14 @@ data Eq-base-free-group-Set {l : Level} (S : Set l) :
     Eq-base-free-group-Set S y z →
     Eq-base-free-group-Set S x y →
     Eq-base-free-group-Set S x z
-  ap-left-mul-Eq-base-free-group-Set :
-    (x y z : base-free-group-Set S) →
+  ap-mul-Eq-base-free-group-Set :
+    (x y z w : base-free-group-Set S) →
     Eq-base-free-group-Set S x y →
+    Eq-base-free-group-Set S z w →
     Eq-base-free-group-Set
       ( S)
       ( mul-base-free-group-Set x z)
-      ( mul-base-free-group-Set y z)
-  ap-right-mul-Eq-base-free-group-Set :
-    (x y z : base-free-group-Set S) →
-    Eq-base-free-group-Set S y z →
-    Eq-base-free-group-Set
-      ( S)
-      ( mul-base-free-group-Set x y)
-      ( mul-base-free-group-Set x z)
+      ( mul-base-free-group-Set y w)
   ap-inv-Eq-base-free-group-Set :
     (x y : base-free-group-Set S) →
     Eq-base-free-group-Set S x y →
@@ -166,22 +161,41 @@ module _
   set-free-group-Set : Set (lsuc l)
   set-free-group-Set = equivalence-class-Set equivalence-relation-base-free-group-Set
 
-  mul-free-group-Set :
-    type-free-group-Set → type-free-group-Set → type-free-group-Set
-  mul-free-group-Set (xsub , x) (ysub , y) =
-    ( λ z →
-      ∃ ( type-subtype xsub)
-        ( λ (x , _) →
-          ∃ ( type-subtype ysub)
-            ( λ (y , _) →
-              relation-prop-base-free-group-Set
-                (mul-base-free-group-Set x y)
-                ( z)))) ,
-    {!   !}
+  subtype-mul-free-group-Set :
+    type-free-group-Set → type-free-group-Set →
+    subtype l (base-free-group-Set S)
+  subtype-mul-free-group-Set (xsub , x) (ysub , y) z =
+    ∃ ( type-subtype xsub)
+      ( λ (x , _) →
+        ∃ ( type-subtype ysub)
+          ( λ (y , _) →
+            relation-prop-base-free-group-Set
+              (mul-base-free-group-Set x y)
+              ( z)))
 
-  is-associative-mul-free-group-Set :
+  is-equivalence-class-subtype-mul-free-group-Set :
+    (x y : type-free-group-Set) →
+    is-equivalence-class
+      ( equivalence-relation-base-free-group-Set)
+      ( subtype-mul-free-group-Set x y)
+  is-equivalence-class-subtype-mul-free-group-Set
+    x@(xsub , x-class) y@(ysub , y-class) =
+    let
+      open
+        do-syntax-trunc-Prop
+          ( is-equivalence-class-Prop
+            ( equivalence-relation-base-free-group-Set)
+            ( subtype-mul-free-group-Set x y))
+    in do
+      (xrep , xsub=equiv-xrep) ← x-class
+      (yrep , ysub=equiv-yrep) ← y-class
+      intro-exists
+        ( mul-base-free-group-Set xrep yrep)
+        λ w → {!   !} , {!   !}
+
+  {- is-associative-mul-free-group-Set :
     (x y z : type-free-group-Set) →
     mul-free-group-Set (mul-free-group-Set x y) z ＝
     mul-free-group-Set x (mul-free-group-Set y z)
-  is-associative-mul-free-group-Set x y z = {!   !}
+  is-associative-mul-free-group-Set x y z = {!   !} -}
 ```
