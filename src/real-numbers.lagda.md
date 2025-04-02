@@ -38,6 +38,7 @@ open import real-numbers.similarity-real-numbers public
 open import real-numbers.strict-inequality-real-numbers public
 open import real-numbers.transposition-addition-subtraction-cuts-dedekind-real-numbers public
 open import real-numbers.uniformly-continuous-addition-real-numbers public
+open import real-numbers.uniformly-continuous-difference-real-numbers public
 open import real-numbers.uniformly-continuous-maximum-real-numbers public
 open import real-numbers.uniformly-continuous-negation-real-numbers public
 open import real-numbers.upper-dedekind-real-numbers public
