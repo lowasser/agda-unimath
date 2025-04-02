@@ -18,6 +18,8 @@ open import foundation.propositional-truncations
 open import foundation.propositions
 open import foundation.universe-levels
 
+open import logic.functoriality-existential-quantification
+
 open import metric-spaces.continuous-functions-metric-spaces
 open import metric-spaces.functions-metric-spaces
 open import metric-spaces.metric-spaces
@@ -191,4 +193,22 @@ module _
                   ( rational-ℚ⁺ (mg (mf ε)))
                   ( rational-ℚ⁺ (mh (mf ε))))
                 ( c~c'))))
+```
+
+### If `f` is a binary uniformly continuous map, `λ x → f x x` is uniformly continuous
+
+```agda
+module _
+  {l1 l2 l3 l4 : Level} (A : Metric-Space l1 l2) (B : Metric-Space l3 l4)
+  (f : binary-map-type-Metric-Space A A B)
+  where
+
+  abstract
+    diagonal-uniformly-continuous-binary-map-Metric-Space :
+      is-uniformly-continuous-binary-map-Metric-Space A A B f →
+      is-uniformly-continuous-map-Metric-Space A B (λ x → f x x)
+    diagonal-uniformly-continuous-binary-map-Metric-Space =
+      map-tot-exists
+        ( λ mf is-muc-mf a ε a' a~a' →
+          is-muc-mf (a , a) ε (a' , a') (a~a' , a~a'))
 ```
