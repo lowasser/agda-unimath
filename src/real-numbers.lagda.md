@@ -40,6 +40,7 @@ open import real-numbers.transposition-addition-subtraction-cuts-dedekind-real-n
 open import real-numbers.uniformly-continuous-addition-real-numbers public
 open import real-numbers.uniformly-continuous-difference-real-numbers public
 open import real-numbers.uniformly-continuous-maximum-real-numbers public
+open import real-numbers.uniformly-continuous-minimum-real-numbers public
 open import real-numbers.uniformly-continuous-negation-real-numbers public
 open import real-numbers.upper-dedekind-real-numbers public
 ```
