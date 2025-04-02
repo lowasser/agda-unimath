@@ -18,6 +18,7 @@ open import real-numbers.inequality-lower-dedekind-real-numbers public
 open import real-numbers.inequality-real-numbers public
 open import real-numbers.inequality-upper-dedekind-real-numbers public
 open import real-numbers.lower-dedekind-real-numbers public
+open import real-numbers.maxima-minima-real-numbers public
 open import real-numbers.maximum-lower-dedekind-real-numbers public
 open import real-numbers.maximum-real-numbers public
 open import real-numbers.maximum-upper-dedekind-real-numbers public
@@ -37,5 +38,6 @@ open import real-numbers.similarity-real-numbers public
 open import real-numbers.strict-inequality-real-numbers public
 open import real-numbers.transposition-addition-subtraction-cuts-dedekind-real-numbers public
 open import real-numbers.uniformly-continuous-addition-real-numbers public
+open import real-numbers.uniformly-continuous-maximum-real-numbers public
 open import real-numbers.upper-dedekind-real-numbers public
 ```
