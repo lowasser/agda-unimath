@@ -42,12 +42,16 @@ open import metric-spaces.saturated-metric-spaces
 open import metric-spaces.symmetric-premetric-structures
 open import metric-spaces.triangular-premetric-structures
 
+open import real-numbers.absolute-value-real-numbers
 open import real-numbers.addition-real-numbers
 open import real-numbers.dedekind-real-numbers
 open import real-numbers.difference-real-numbers
 open import real-numbers.inequality-real-numbers
+open import real-numbers.maximum-real-numbers
+open import real-numbers.negation-real-numbers
 open import real-numbers.rational-real-numbers
 open import real-numbers.strict-inequality-real-numbers
+open import real-numbers.transposition-cuts-dedekind-real-numbers
 ```
 
 </details>
@@ -99,29 +103,30 @@ is-in-neighborhood-leq-ℝ l d x y = type-Prop (premetric-leq-ℝ l d x y)
 
 ## Properties
 
-### `x` is in a `d`-neighborhood of `y` if `x - d ≤ y ≤ x + d`
+### `x` is in a `d`-neighborhood of `y` iff `x - d ≤ y ≤ x + d`
 
 ```agda
-is-in-lower-neighborhood-real-bound-leq-ℝ :
-  {l : Level} → (d : ℚ⁺) (x y : ℝ l) →
-  leq-ℝ y (x +ℝ real-ℚ (rational-ℚ⁺ d)) →
-  is-in-lower-neighborhood-leq-ℝ d x y
-is-in-lower-neighborhood-real-bound-leq-ℝ d⁺@(d , _) x y y≤x+d q q+d<y =
-  is-in-lower-cut-le-real-ℚ
-    ( q)
-    ( x)
-    ( concatenate-le-leq-ℝ
-      ( real-ℚ q)
-      ( y -ℝ real-ℚ d)
+abstract
+  is-in-lower-neighborhood-real-bound-leq-ℝ :
+    {l : Level} → (d : ℚ⁺) (x y : ℝ l) →
+    leq-ℝ y (x +ℝ real-ℚ (rational-ℚ⁺ d)) →
+    is-in-lower-neighborhood-leq-ℝ d x y
+  is-in-lower-neighborhood-real-bound-leq-ℝ d⁺@(d , _) x y y≤x+d q q+d<y =
+    tr
+      ( is-in-lower-cut-ℝ x)
+      ( is-retraction-diff-ℚ d q)
+      ( transpose-is-in-lower-cut-add-ℝ x d (q +ℚ d) (y≤x+d (q +ℚ d) q+d<y))
+
+  real-bound-is-in-lower-neighborhood-leq-ℝ :
+    {l : Level} → (d : ℚ⁺) (x y : ℝ l) →
+    is-in-lower-neighborhood-leq-ℝ d x y →
+    leq-ℝ y (x +ℝ real-ℚ (rational-ℚ⁺ d))
+  real-bound-is-in-lower-neighborhood-leq-ℝ d⁺@(d , _) x y H q q<y =
+    transpose-diff-is-in-lower-cut-ℝ
       ( x)
-      ( le-transpose-left-add-ℝ
-        ( real-ℚ q)
-        ( real-ℚ d) y
-        ( inv-tr
-          ( λ z → le-ℝ z y)
-          ( add-real-ℚ q d)
-          ( le-real-is-in-lower-cut-ℚ (q +ℚ d) y q+d<y)))
-      ( leq-transpose-right-add-ℝ y x (real-ℚ d) y≤x+d))
+      ( q)
+      ( d)
+      ( H (q -ℚ d) (inv-tr (is-in-lower-cut-ℝ y) (is-section-diff-ℚ d q) q<y))
 
   neighborhood-real-bound-each-leq-ℝ :
     {l : Level} → (d : ℚ⁺) (x y : ℝ l) →
