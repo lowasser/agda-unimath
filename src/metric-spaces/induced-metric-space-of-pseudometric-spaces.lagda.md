@@ -273,58 +273,59 @@ module _
   (M : Metric-Space l1 l2)
   where
 
-  is-isometry-map-induced-metric-space-pseudometric-Metric-Space :
-    is-isometry-Metric-Space
-      ( M)
-      ( induced-metric-space-Pseudometric-Space
-        ( pseudometric-Metric-Space M))
-      ( map-induced-metric-space-Pseudometric-Space
-        ( pseudometric-Metric-Space M))
-  pr1 (is-isometry-map-induced-metric-space-pseudometric-Metric-Space d x y) =
-    neighborhood-map-induced-metric-space-Pseudometric-Space
-      ( pseudometric-Metric-Space M)
-      ( d)
-      ( x)
-      ( y)
-  pr2 (is-isometry-map-induced-metric-space-pseudometric-Metric-Space d x y)
-    Nd⟨X,Y⟩ =
-      Nd⟨X,Y⟩
-        ( x , refl-sim-Pseudometric-Space (pseudometric-Metric-Space M) x)
-        ( y , refl-sim-Pseudometric-Space (pseudometric-Metric-Space M) y)
+  abstract
+    is-isometry-map-induced-metric-space-pseudometric-Metric-Space :
+      is-isometry-Metric-Space
+        ( M)
+        ( induced-metric-space-Pseudometric-Space
+          ( pseudometric-Metric-Space M))
+        ( map-induced-metric-space-Pseudometric-Space
+          ( pseudometric-Metric-Space M))
+    pr1 (is-isometry-map-induced-metric-space-pseudometric-Metric-Space d x y) =
+      neighborhood-map-induced-metric-space-Pseudometric-Space
+        ( pseudometric-Metric-Space M)
+        ( d)
+        ( x)
+        ( y)
+    pr2 (is-isometry-map-induced-metric-space-pseudometric-Metric-Space d x y)
+      Nd⟨X,Y⟩ =
+        Nd⟨X,Y⟩
+          ( x , refl-sim-Pseudometric-Space (pseudometric-Metric-Space M) x)
+          ( y , refl-sim-Pseudometric-Space (pseudometric-Metric-Space M) y)
 
-  map-subtype-inv-induced-metric-space-pseudometric-Metric-Space :
-    ( X :
-      type-induced-metric-space-Pseudometric-Space
-        ( pseudometric-Metric-Space M)) →
-    type-subtype-equivalence-class
-      ( equivalence-sim-Metric-Space M)
-      ( X)
-  map-subtype-inv-induced-metric-space-pseudometric-Metric-Space X =
-    let
-      equiv-sim = equivalence-sim-Metric-Space M
-      open
-        do-syntax-trunc-Prop
-          ( is-contr-Prop (type-subtype-equivalence-class equiv-sim X))
-    in
-      center
-        ( do
-          (x , X≃class⟨x⟩) ←
-            is-equivalence-class-equivalence-class equiv-sim X
-          let
-            x∈X =
-              backward-implication
-                ( X≃class⟨x⟩ x)
-                ( refl-sim-Metric-Space M x)
-          ( ( x , x∈X) ,
-            λ (y , y∈X) →
-              eq-type-subtype
-                ( subtype-equivalence-class equiv-sim X)
-                ( eq-sim-Metric-Space M x y
-                  ( equivalent-members-equivalence-class
-                    ( equiv-sim)
-                    ( X)
-                    ( x , x∈X)
-                    ( y , y∈X)))))
+    map-subtype-inv-induced-metric-space-pseudometric-Metric-Space :
+      ( X :
+        type-induced-metric-space-Pseudometric-Space
+          ( pseudometric-Metric-Space M)) →
+      type-subtype-equivalence-class
+        ( equivalence-sim-Metric-Space M)
+        ( X)
+    map-subtype-inv-induced-metric-space-pseudometric-Metric-Space X =
+      let
+        equiv-sim = equivalence-sim-Metric-Space M
+        open
+          do-syntax-trunc-Prop
+            ( is-contr-Prop (type-subtype-equivalence-class equiv-sim X))
+      in
+        center
+          ( do
+            (x , X≃class⟨x⟩) ←
+              is-equivalence-class-equivalence-class equiv-sim X
+            let
+              x∈X =
+                backward-implication
+                  ( X≃class⟨x⟩ x)
+                  ( refl-sim-Metric-Space M x)
+            ( ( x , x∈X) ,
+              λ (y , y∈X) →
+                eq-type-subtype
+                  ( subtype-equivalence-class equiv-sim X)
+                  ( eq-sim-Metric-Space M x y
+                    ( equivalent-members-equivalence-class
+                      ( equiv-sim)
+                      ( X)
+                      ( x , x∈X)
+                      ( y , y∈X)))))
 
   map-inv-induced-metric-space-pseudometric-Metric-Space :
     ( X :
