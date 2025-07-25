@@ -34,10 +34,11 @@ open import metric-spaces.rational-neighborhoods
 
 ## Idea
 
-An {{#concept "isometry" Disambiguation="between metric spaces" Agda=is-isometry-Metric-Space}}
+An
+{{#concept "isometry" Disambiguation="between metric spaces" Agda=is-isometry-Metric-Space}}
 between two [metric spaces](metric-spaces.metric-spaces.md) is an
-[isometry](metric-spaces.isometries-pseudometric-spaces.md)
-between their [pseudometric spaces](metric-spaces.pseudometric-spaces.md).
+[isometry](metric-spaces.isometries-pseudometric-spaces.md) between their
+[pseudometric spaces](metric-spaces.pseudometric-spaces.md).
 
 ## Definitions
 

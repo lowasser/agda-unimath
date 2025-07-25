@@ -20,6 +20,7 @@ open import foundation.transport-along-identifications
 open import foundation.universe-levels
 
 open import metric-spaces.cauchy-approximations-metric-spaces
+open import metric-spaces.isometries-pseudometric-spaces
 open import metric-spaces.metric-spaces
 open import metric-spaces.pseudometric-spaces
 open import metric-spaces.rational-neighborhoods
@@ -28,6 +29,15 @@ open import metric-spaces.rational-neighborhoods
 </details>
 
 ## Idea
+
+For any [metric space](metric-spaces.metric-spaces.md) `M`, there is a
+[pseudometric space](metric-spaces.pseudometric-spaces.md) of
+[Cauchy approximations](metric-spaces.cauchy-approximations-metric-spaces.md) in
+`M`, whose neighborhood relation defines that two Cauchy approximations `x` and
+`y` are in a `d`-neighborhood of one another if for all `δ ε θ : ℚ⁺`, `x δ` and
+`y θ` are in a `(δ + ε + θ + d)`-neighborhood of one another in `M`.
+
+## Definition
 
 ```agda
 module _
@@ -61,7 +71,13 @@ module _
         ( d)
         ( x)
         ( y))
+```
 
+## Properties
+
+### The neighborhood relation is reflexive
+
+```agda
   abstract
     refl-neighborhood-pseudometric-cauchy-approximation-Metric-Space :
       (d : ℚ⁺) (x : cauchy-approximation-Metric-Space M) →
@@ -85,7 +101,11 @@ module _
             ( x)
             ( δ)
             ( ε))
+```
 
+### The neighborhood relation is symmetric
+
+```agda
     symmetric-neighborhood-pseudometric-cauchy-approximation-Metric-Space :
       (d : ℚ⁺) (x y : cauchy-approximation-Metric-Space M) →
       neighborhood-pseudometric-cauchy-approximation-Metric-Space d x y →
@@ -100,7 +120,11 @@ module _
             ( λ d' → neighborhood-Metric-Space M d' yδ xε)
             ( ap (_+ℚ⁺ d) (ap (_+ℚ⁺ θ) (commutative-add-ℚ⁺ ε δ)))
             ( symmetric-neighborhood-Metric-Space M _ xε yδ (Ndxy ε δ θ))
+```
 
+### The neighborhood relation is triangular
+
+```agda
     triangular-neighborhood-pseudometric-cauchy-approximation-Metric-Space :
       (x y z : cauchy-approximation-Metric-Space M) →
       (dxy dyz : ℚ⁺) →
@@ -163,7 +187,11 @@ module _
               ( θa +ℚ⁺ ε +ℚ⁺ θb +ℚ⁺ dyz)
               ( Ndyz θa ε θb)
               ( Ndxy δ θa θb))
+```
 
+### The neighborhood relation is saturated
+
+```agda
     saturated-neighborhood-pseudometric-cauchy-approximation-Metric-Space :
       (ε : ℚ⁺) (x y : cauchy-approximation-Metric-Space M) →
       ( (δ : ℚ⁺) →
@@ -193,7 +221,11 @@ module _
               ＝ δ +ℚ⁺ ε +ℚ⁺ θ +ℚ⁺ d
                 by inv (associative-add-ℚ⁺ _ _ _))
             ( H θb δ ε θa)
+```
 
+### The pseudometric space of Cauchy approximations
+
+```agda
   structure-pseudometric-cauchy-approximation-Metric-Space :
     Pseudometric-Structure l2 (cauchy-approximation-Metric-Space M)
   structure-pseudometric-cauchy-approximation-Metric-Space =
@@ -208,4 +240,59 @@ module _
   pseudometric-cauchy-approximation-Metric-Space =
     cauchy-approximation-Metric-Space M ,
     structure-pseudometric-cauchy-approximation-Metric-Space
+```
+
+### The isometry from a metric space to the pseudometric space of its Cauchy approximations
+
+```agda
+  map-pseudometric-cauchy-approximation-Metric-Space :
+    type-Metric-Space M → cauchy-approximation-Metric-Space M
+  map-pseudometric-cauchy-approximation-Metric-Space =
+    const-cauchy-approximation-Metric-Space M
+
+  map-neighborhood-pseudometric-cauchy-approximation-Metric-Space :
+    (d : ℚ⁺) → (x y : type-Metric-Space M) →
+    neighborhood-Metric-Space M d x y →
+    neighborhood-pseudometric-cauchy-approximation-Metric-Space
+      ( d)
+      ( map-pseudometric-cauchy-approximation-Metric-Space x)
+      ( map-pseudometric-cauchy-approximation-Metric-Space y)
+  map-neighborhood-pseudometric-cauchy-approximation-Metric-Space
+    d x y Ndxy δ ε θ =
+      monotonic-neighborhood-Metric-Space M x y d (δ +ℚ⁺ ε +ℚ⁺ θ +ℚ⁺ d)
+        ( le-right-add-ℚ⁺ (δ +ℚ⁺ ε +ℚ⁺ θ) d)
+        ( Ndxy)
+
+  abstract
+    is-isometry-map-pseudometric-cauchy-approximation-Metric-Space :
+      is-isometry-Pseudometric-Space
+        ( pseudometric-Metric-Space M)
+        ( pseudometric-cauchy-approximation-Metric-Space)
+        ( map-pseudometric-cauchy-approximation-Metric-Space)
+    pr1 (is-isometry-map-pseudometric-cauchy-approximation-Metric-Space d x y)
+      = map-neighborhood-pseudometric-cauchy-approximation-Metric-Space d x y
+    pr2 (is-isometry-map-pseudometric-cauchy-approximation-Metric-Space d x y)
+      Ndxy' =
+        saturated-neighborhood-Metric-Space M d x y
+          ( λ δ →
+            let
+              (δ₁₂ , δ₃ , δ₁₂+δ₃=δ) = split-ℚ⁺ δ
+              (δ₁ , δ₂ , δ₁+δ₂=δ₁₂) = split-ℚ⁺ δ₁₂
+            in
+              tr
+                ( λ ε → neighborhood-Metric-Space M ε x y)
+                ( equational-reasoning
+                  δ₁ +ℚ⁺ δ₂ +ℚ⁺ δ₃ +ℚ⁺ d
+                  ＝ δ₁₂ +ℚ⁺ δ₃ +ℚ⁺ d by ap (_+ℚ⁺ d) (ap (_+ℚ⁺ δ₃) δ₁+δ₂=δ₁₂)
+                  ＝ δ +ℚ⁺ d by ap (_+ℚ⁺ d) δ₁₂+δ₃=δ
+                  ＝ d +ℚ⁺ δ by commutative-add-ℚ⁺ δ d)
+                ( Ndxy' δ₁ δ₂ δ₃))
+
+  isometry-map-pseudometric-cauchy-approximation-Metric-Space :
+    isometry-Pseudometric-Space
+      ( pseudometric-Metric-Space M)
+      ( pseudometric-cauchy-approximation-Metric-Space)
+  isometry-map-pseudometric-cauchy-approximation-Metric-Space =
+    map-pseudometric-cauchy-approximation-Metric-Space ,
+    is-isometry-map-pseudometric-cauchy-approximation-Metric-Space
 ```
