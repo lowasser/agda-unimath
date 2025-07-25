@@ -29,6 +29,7 @@ open import metric-spaces.equality-of-metric-spaces
 open import metric-spaces.extensional-pseudometric-spaces
 open import metric-spaces.isometries-metric-spaces
 open import metric-spaces.metric-spaces
+open import metric-spaces.isometries-pseudometric-spaces
 open import metric-spaces.pseudometric-spaces
 open import metric-spaces.rational-neighborhoods
 open import metric-spaces.similarity-of-elements-pseudometric-spaces
@@ -265,7 +266,35 @@ module _
           ( preserves-neighborhood-sim-Pseudometric-Space M x≈x' d y d⟨x,y⟩)
 ```
 
-### The induced metric space of a metric space is isometrically equivalent to the original metric space
+### The isometry from a pseudometric space to its induced metric space
+
+```agda
+  is-isometry-map-induced-metric-space-Pseudometric-Space :
+    is-isometry-Pseudometric-Space
+      ( M)
+      ( pseudometric-induced-metric-space-Pseudometric-Space)
+      ( map-induced-metric-space-Pseudometric-Space)
+  pr1 (is-isometry-map-induced-metric-space-Pseudometric-Space d x y)
+    Ndxy (x' , x~x') (y' , y~y') =
+      preserves-neighborhood-sim-Pseudometric-Space M x~x' d y'
+        ( preserves-neighborhood-sim-Pseudometric-Space' M y~y' d x Ndxy)
+  pr2 (is-isometry-map-induced-metric-space-Pseudometric-Space d x y) NdXY =
+    NdXY
+      ( inhabitant-subtype-class-equivalence-class
+        ( equivalence-sim-Pseudometric-Space M) x)
+      ( inhabitant-subtype-class-equivalence-class
+        ( equivalence-sim-Pseudometric-Space M) y)
+
+  isometry-map-induced-metric-space-Pseudometric-Space :
+    isometry-Pseudometric-Space
+      ( M)
+      ( pseudometric-induced-metric-space-Pseudometric-Space)
+  isometry-map-induced-metric-space-Pseudometric-Space =
+    map-induced-metric-space-Pseudometric-Space ,
+    is-isometry-map-induced-metric-space-Pseudometric-Space
+```
+
+### The isometric equivalence between a metric space and the induced metric space of its pseudometric
 
 ```agda
 module _
@@ -281,17 +310,9 @@ module _
           ( pseudometric-Metric-Space M))
         ( map-induced-metric-space-Pseudometric-Space
           ( pseudometric-Metric-Space M))
-    pr1 (is-isometry-map-induced-metric-space-pseudometric-Metric-Space d x y) =
-      neighborhood-map-induced-metric-space-Pseudometric-Space
+    is-isometry-map-induced-metric-space-pseudometric-Metric-Space =
+      is-isometry-map-induced-metric-space-Pseudometric-Space
         ( pseudometric-Metric-Space M)
-        ( d)
-        ( x)
-        ( y)
-    pr2 (is-isometry-map-induced-metric-space-pseudometric-Metric-Space d x y)
-      Nd⟨X,Y⟩ =
-        Nd⟨X,Y⟩
-          ( x , refl-sim-Pseudometric-Space (pseudometric-Metric-Space M) x)
-          ( y , refl-sim-Pseudometric-Space (pseudometric-Metric-Space M) y)
 
     map-subtype-inv-induced-metric-space-pseudometric-Metric-Space :
       ( X :
