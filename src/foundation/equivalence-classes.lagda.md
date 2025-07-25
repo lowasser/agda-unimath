@@ -95,6 +95,14 @@ module _
   subtype-equivalence-class : equivalence-class → subtype l2 A
   subtype-equivalence-class = inclusion-subtype is-equivalence-class-Prop
 
+  type-subtype-equivalence-class : equivalence-class → UU (l1 ⊔ l2)
+  type-subtype-equivalence-class x = type-subtype (subtype-equivalence-class x)
+
+  inhabitant-subtype-class-equivalence-class :
+    (a : A) → type-subtype-equivalence-class (class a)
+  inhabitant-subtype-class-equivalence-class a =
+    a , refl-equivalence-relation R a
+
   is-equivalence-class-equivalence-class :
     (C : equivalence-class) → is-equivalence-class (subtype-equivalence-class C)
   is-equivalence-class-equivalence-class =
@@ -174,6 +182,31 @@ module _
 ```
 
 ## Properties
+
+### Two elements of the same equivalence class are equivalent
+
+```agda
+module _
+  {l1 l2 : Level} {A : UU l1} (R : equivalence-relation l2 A)
+  (X : equivalence-class R)
+  where
+
+  abstract
+    equivalent-members-equivalence-class :
+      (x y : type-subtype-equivalence-class R X) →
+      sim-equivalence-relation R
+        ( inclusion-subtype (subtype-equivalence-class R X) x)
+        ( inclusion-subtype (subtype-equivalence-class R X) y)
+    equivalent-members-equivalence-class (x , x∈X) (y , y∈X) =
+      let
+        open do-syntax-trunc-Prop (prop-equivalence-relation R x y)
+      in do
+        x₀ , X~class⟨x₀⟩ ← is-equivalence-class-equivalence-class R X
+        let x₀≈x = forward-implication (X~class⟨x₀⟩ x) x∈X
+            x₀≈y = forward-implication (X~class⟨x₀⟩ y) y∈X
+            x≈x₀ = symmetric-equivalence-relation R x₀ x x₀≈x
+        transitive-equivalence-relation R x x₀ y x₀≈y x≈x₀
+```
 
 ### Characterization of equality of equivalence classes
 

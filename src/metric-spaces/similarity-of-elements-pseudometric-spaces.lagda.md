@@ -166,36 +166,48 @@ module _
   {l1 l2 : Level} (A : Pseudometric-Space l1 l2)
   where
 
-  preserves-neighborhood-sim-Pseudometric-Space :
-    { x y : type-Pseudometric-Space A} →
-    ( sim-Pseudometric-Space A x y) →
-    ( d : ℚ⁺) (z : type-Pseudometric-Space A) →
-    neighborhood-Pseudometric-Space A d x z →
-    neighborhood-Pseudometric-Space A d y z
-  preserves-neighborhood-sim-Pseudometric-Space {x} {y} x≍y d z Nxz =
-    saturated-neighborhood-Pseudometric-Space
-      ( A)
-      ( d)
-      ( y)
-      ( z)
-      ( λ δ →
-        tr
-          ( is-upper-bound-dist-Pseudometric-Space A y z)
-          ( commutative-add-ℚ⁺ δ d)
-          ( triangular-neighborhood-Pseudometric-Space
-            ( A)
-            ( y)
-            ( x)
-            ( z)
-            ( δ)
-            ( d)
-            ( Nxz)
-            ( symmetric-neighborhood-Pseudometric-Space
+  abstract
+    preserves-neighborhood-sim-Pseudometric-Space :
+      { x y : type-Pseudometric-Space A} →
+      ( sim-Pseudometric-Space A x y) →
+      ( d : ℚ⁺) (z : type-Pseudometric-Space A) →
+      neighborhood-Pseudometric-Space A d x z →
+      neighborhood-Pseudometric-Space A d y z
+    preserves-neighborhood-sim-Pseudometric-Space {x} {y} x≍y d z Nxz =
+      saturated-neighborhood-Pseudometric-Space
+        ( A)
+        ( d)
+        ( y)
+        ( z)
+        ( λ δ →
+          tr
+            ( is-upper-bound-dist-Pseudometric-Space A y z)
+            ( commutative-add-ℚ⁺ δ d)
+            ( triangular-neighborhood-Pseudometric-Space
               ( A)
-              ( δ)
-              ( x)
               ( y)
-              ( x≍y δ))))
+              ( x)
+              ( z)
+              ( δ)
+              ( d)
+              ( Nxz)
+              ( symmetric-neighborhood-Pseudometric-Space
+                ( A)
+                ( δ)
+                ( x)
+                ( y)
+                ( x≍y δ))))
+
+    preserves-neighborhood-sim-Pseudometric-Space' :
+      { x y : type-Pseudometric-Space A} →
+      ( sim-Pseudometric-Space A x y) →
+      ( d : ℚ⁺) (z : type-Pseudometric-Space A) →
+      neighborhood-Pseudometric-Space A d z x →
+      neighborhood-Pseudometric-Space A d z y
+    preserves-neighborhood-sim-Pseudometric-Space' {x} {y} x≍y d z Nzx =
+      symmetric-neighborhood-Pseudometric-Space A d y z
+        (preserves-neighborhood-sim-Pseudometric-Space x≍y d z
+          (symmetric-neighborhood-Pseudometric-Space A d z x Nzx))
 
   iff-same-neighbors-sim-Pseudometric-Space :
     { x y : type-Pseudometric-Space A} →

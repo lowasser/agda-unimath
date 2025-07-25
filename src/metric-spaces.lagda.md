@@ -63,6 +63,7 @@ open import metric-spaces.extensional-pseudometric-spaces public
 open import metric-spaces.functions-metric-spaces public
 open import metric-spaces.functor-category-set-functions-isometry-metric-spaces public
 open import metric-spaces.functor-category-short-isometry-metric-spaces public
+open import metric-spaces.induced-metric-space-of-pseudometric-spaces public
 open import metric-spaces.isometries-metric-spaces public
 open import metric-spaces.limits-of-cauchy-approximations-metric-spaces public
 open import metric-spaces.limits-of-functions-metric-spaces public
