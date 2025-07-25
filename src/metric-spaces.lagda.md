@@ -81,6 +81,7 @@ open import metric-spaces.precategory-of-metric-spaces-and-functions public
 open import metric-spaces.precategory-of-metric-spaces-and-isometries public
 open import metric-spaces.precategory-of-metric-spaces-and-short-functions public
 open import metric-spaces.preimage-rational-neighborhoods public
+open import metric-spaces.pseudometric-space-of-cauchy-approximations-metric-spaces public
 open import metric-spaces.pseudometric-spaces public
 open import metric-spaces.rational-approximations-of-zero public
 open import metric-spaces.rational-cauchy-approximations public

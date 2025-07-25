@@ -390,6 +390,26 @@ interchange-law-add-add-ℚ⁺ x y u v =
       ( rational-ℚ⁺ v))
 ```
 
+### The additive swap laws on positive rational numbers
+
+```agda
+left-swap-add-ℚ⁺ : (p q r : ℚ⁺) → p +ℚ⁺ (q +ℚ⁺ r) ＝ q +ℚ⁺ (p +ℚ⁺ r)
+left-swap-add-ℚ⁺ p q r =
+  eq-ℚ⁺
+    ( left-swap-add-ℚ
+      ( rational-ℚ⁺ p)
+      ( rational-ℚ⁺ q)
+      ( rational-ℚ⁺ r))
+
+right-swap-add-ℚ⁺ : (p q r : ℚ⁺) → (p +ℚ⁺ q) +ℚ⁺ r ＝ (p +ℚ⁺ r) +ℚ⁺ q
+right-swap-add-ℚ⁺ p q r =
+  eq-ℚ⁺
+    ( right-swap-add-ℚ
+      ( rational-ℚ⁺ p)
+      ( rational-ℚ⁺ q)
+      ( rational-ℚ⁺ r))
+```
+
 ### The product of two positive rational numbers is positive
 
 ```agda
@@ -697,6 +717,19 @@ module _
         ( le-zero-is-positive-ℚ
           ( rational-ℚ⁺ x)
           ( is-positive-rational-ℚ⁺ x)))
+```
+
+### Strict inequality on positive rational numbers is preserved by translation
+
+```agda
+abstract
+  preserves-le-right-add-ℚ⁺ :
+    (z x y : ℚ⁺) → le-ℚ⁺ x y → le-ℚ⁺ (z +ℚ⁺ x) (z +ℚ⁺ y)
+  preserves-le-right-add-ℚ⁺ z x y =
+    preserves-le-right-add-ℚ
+      ( rational-ℚ⁺ z)
+      ( rational-ℚ⁺ x)
+      ( rational-ℚ⁺ y)
 ```
 
 ### The positive difference of strictly inequal positive rational numbers
