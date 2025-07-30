@@ -323,3 +323,21 @@ raise-Decidable-Prop l (t , is-prop-t , is-dec-t) =
     is-prop-type-Prop (raise-Prop l (t , is-prop-t)) ,
     rec-coproduct (inl ∘ map-raise) (λ ¬t → inr (¬t ∘ map-inv-raise)) is-dec-t)
 ```
+
+### Merely decidable propositions are decidable propositions
+
+```agda
+is-decidable-prop-is-merely-decidable-type-Prop :
+  {l : Level} (P : Prop l) →
+  is-merely-decidable (type-Prop P) → is-decidable (type-Prop P)
+is-decidable-prop-is-merely-decidable-type-Prop P =
+  rec-trunc-Prop (is-decidable-Prop P) id
+
+decidable-prop-is-merely-decidable-Prop :
+  {l : Level} (P : Prop l) → is-merely-decidable (type-Prop P) →
+  Decidable-Prop l
+decidable-prop-is-merely-decidable-Prop P M =
+  ( type-Prop P ,
+    is-prop-type-Prop P ,
+    is-decidable-prop-is-merely-decidable-type-Prop P M)
+```

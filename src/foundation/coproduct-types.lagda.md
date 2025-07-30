@@ -14,6 +14,7 @@ open import foundation.dependent-pair-types
 open import foundation.negated-equality
 open import foundation.noncontractible-types
 open import foundation.subuniverses
+open import foundation.negation
 open import foundation.unit-type
 open import foundation.universe-levels
 
@@ -60,6 +61,14 @@ module _
   is-left-or-is-right : (x : X + Y) → is-left x + is-right x
   is-left-or-is-right (inl x) = inl star
   is-left-or-is-right (inr x) = inr star
+
+  decidable-is-left : (x : X + Y) → is-left x + ¬ (is-left x)
+  decidable-is-left (inl x) = inl star
+  decidable-is-left (inr x) = inr (λ ())
+
+  decidable-is-right : (x : X + Y) → is-right x + ¬ (is-right x)
+  decidable-is-right (inl x) = inr (λ ())
+  decidable-is-right (inr x) = inl star
 ```
 
 ### The predicate that a subuniverse is closed under coproducts

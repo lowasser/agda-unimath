@@ -8,13 +8,21 @@ module foundation.limited-principle-of-omniscience where
 
 ```agda
 open import elementary-number-theory.natural-numbers
+open import elementary-number-theory.addition-natural-numbers
 
+open import foundation.function-types
 open import foundation.booleans
 open import foundation.coproduct-types
 open import foundation.decidable-subtypes
 open import foundation.decidable-types
+open import foundation.propositional-truncations
 open import foundation.dependent-pair-types
+open import foundation.embeddings
 open import foundation.disjunction
+open import foundation.inhabited-types
+open import foundation.mere-embeddings
+open import foundation.axiom-of-countable-choice
+open import foundation.decidable-propositions
 open import foundation.equivalences
 open import foundation.existential-quantification
 open import foundation.logical-equivalences
@@ -141,6 +149,38 @@ abstract
 abstract
   LPO-level-LPO : {l : Level} → level-LPO l → LPO
   LPO-level-LPO level-lpo = LPO-bool-LPO (bool-LPO-level-LPO level-lpo)
+```
+
+### Assuming countable choice, LPO is equivalent to the statement that if there is an embedding `ℕ ↪ A + B`, then there is either an embedding `ℕ ↪ A` or `ℕ ↪ B`
+
+```agda
+module _
+  (acω : ACω) (lpo : LPO)
+  where
+
+  embedding-natural-coproduct-LPO :
+    {l1 l2 : Level} (A : UU l1) (B : UU l2) (E : ℕ ↪ A + B) →
+    type-Prop (mere-emb-Prop ℕ A ∨ mere-emb-Prop ℕ B)
+  embedding-natural-coproduct-LPO A B E =
+    let
+      open do-syntax-trunc-Prop (mere-emb-Prop ℕ A ∨ mere-emb-Prop ℕ B)
+    in do
+      let
+        P : decidable-subtype lzero ℕ
+        P n =
+          ( is-left (map-emb E n) ,
+            is-prop-is-left (map-emb E n) ,
+            decidable-is-left (map-emb E n))
+        P' : decidable-subtype lzero ℕ
+        P' m =
+            decidable-prop-is-merely-decidable-Prop
+               {! is-merely-decidable-Prop (type-decidable-subtype (P ∘ (_+ℕ m)))  !}
+              ( lpo (P ∘ (_+ℕ m)))
+        Q n =
+          {! decidable-prop-is-merely-decidable-Prop
+              (λ k →
+                is-inhabited-Prop (Σ ℕ (λ k → leq-ℕ n k ×   !}
+      {!   !}
 ```
 
 ## See also
