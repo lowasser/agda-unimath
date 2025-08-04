@@ -26,6 +26,7 @@ open import foundation.unit-type
 open import foundation.universe-levels
 
 open import univalent-combinatorics.standard-finite-types
+open import univalent-combinatorics.finite-types
 ```
 
 </details>
@@ -185,6 +186,19 @@ pr2 (equiv-classical-standard-Fin-reverse n) =
     ( standard-classical-Fin-reverse n)
     ( is-section-classical-standard-Fin-reverse n)
     ( is-retraction-classical-standard-Fin-reverse n)
+```
+
+### The finite type of the classical finite type
+
+```agda
+abstract
+  is-finite-classical-Fin : (n : ℕ) → is-finite (classical-Fin n)
+  is-finite-classical-Fin n =
+    is-finite-count (n , equiv-classical-standard-Fin n)
+
+finite-type-classical-Fin : (n : ℕ) → Finite-Type lzero
+finite-type-classical-Fin n =
+  (classical-Fin n , is-finite-classical-Fin n)
 ```
 
 ## See also

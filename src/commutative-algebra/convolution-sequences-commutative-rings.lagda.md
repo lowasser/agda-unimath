@@ -11,20 +11,31 @@ open import commutative-algebra.commutative-rings
 open import commutative-algebra.convolution-sequences-commutative-semirings
 open import commutative-algebra.function-commutative-rings
 
+open import elementary-number-theory.binary-sum-decompositions-natural-numbers
 open import elementary-number-theory.natural-numbers
+open import elementary-number-theory.strict-inequality-natural-numbers
 
+open import foundation.homotopies
+open import foundation.equivalences
+open import foundation.unit-type
 open import foundation.dependent-pair-types
 open import foundation.identity-types
 open import foundation.sequences
 open import foundation.unital-binary-operations
 open import foundation.universe-levels
+open import commutative-algebra.invertible-elements-commutative-rings
 
 open import group-theory.abelian-groups
 open import group-theory.semigroups
 
+open import ring-theory.invertible-elements-rings
+open import commutative-algebra.sums-of-finite-families-of-elements-commutative-rings
+open import elementary-number-theory.strong-induction-natural-numbers
 open import ring-theory.rings
 
+open import univalent-combinatorics.finite-types
 open import univalent-combinatorics.dependent-pair-types
+open import univalent-combinatorics.classical-finite-types
 open import univalent-combinatorics.standard-finite-types
 ```
 
@@ -240,4 +251,65 @@ module _
     ring-convolution-sequence-Commutative-Ring
   pr2 commutative-ring-convolution-sequence-Commutative-Ring =
     commutative-convolution-sequence-Commutative-Ring R
+```
+
+### A sequence has an inverse under convolution iff its head is invertible
+
+```agda
+module _
+  {l : Level} (R : Commutative-Ring l) (x : sequence (type-Commutative-Ring R))
+  (H : is-invertible-element-Commutative-Ring R (head-sequence x))
+  where
+
+  inv-convolution-sequence-Commutative-Ring : sequence (type-Commutative-Ring R)
+  inv-convolution-sequence-Commutative-Ring =
+    strong-rec-ℕ
+      ( inv-is-invertible-element-Commutative-Ring R H)
+      ( λ n bᵢ →
+        mul-Commutative-Ring R
+          ( neg-Commutative-Ring R
+            ( inv-is-invertible-element-Commutative-Ring R H))
+          ( sum-finite-Commutative-Ring
+            ( R)
+            ( finite-type-classical-Fin (succ-ℕ n))
+            ( λ (i , i<n+1) →
+              mul-Commutative-Ring R
+                ( x (pr1 (subtraction-le-ℕ i (succ-ℕ n) i<n+1)))
+                ( bᵢ i (leq-le-succ-ℕ i n i<n+1)))))
+
+  htpy-is-left-inverse-inv-convolution-sequence-Commutative-Ring :
+    convolution-sequence-Commutative-Ring
+      ( R)
+      ( inv-convolution-sequence-Commutative-Ring)
+      ( x) ~
+    unit-convolution-sequence-Commutative-Ring R
+  htpy-is-left-inverse-inv-convolution-sequence-Commutative-Ring zero-ℕ =
+    (equational-reasoning
+      sum-finite-Commutative-Ring
+        ( R)
+        ( finite-type-binary-sum-decomposition-ℕ zero-ℕ)
+        ( λ (i , j , j+i=0) →
+          mul-Commutative-Ring
+            R
+            ( inv-convolution-sequence-Commutative-Ring i) (x j))
+      ＝
+        sum-finite-Commutative-Ring
+          ( R)
+          ( unit-Finite-Type)
+          ( λ star →
+            mul-Commutative-Ring
+              R
+              ( inv-convolution-sequence-Commutative-Ring 0) (x 0))
+        by
+          sum-equiv-finite-Commutative-Ring R _ _
+            ( equiv-unit-is-contr is-contr-binary-sum-decomposition-zero-ℕ) _
+      ＝
+        mul-Commutative-Ring R
+          ( inv-convolution-sequence-Commutative-Ring 0)
+          ( x 0)
+        by sum-unit-finite-Commutative-Ring R _
+      ＝ one-Commutative-Ring R
+        by is-left-inverse-inv-is-invertible-element-Commutative-Ring R H)
+  htpy-is-left-inverse-inv-convolution-sequence-Commutative-Ring (succ-ℕ n) =
+    ?
 ```

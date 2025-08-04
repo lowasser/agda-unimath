@@ -116,7 +116,7 @@ module _
 
   is-equiv-terminal-map-is-contr : is-contr A → is-equiv (terminal-map A)
   is-equiv-terminal-map-is-contr H =
-    is-equiv-is-invertible (λ _ → center H) (λ _ → refl) (contraction H)
+    is-equiv-is-invertible (λ _ → pr1 H) (λ _ → refl) (pr2 H)
 
   equiv-unit-is-contr : is-contr A → A ≃ unit
   equiv-unit-is-contr H = terminal-map A , is-equiv-terminal-map-is-contr H

@@ -90,9 +90,9 @@ module _
     x ＝ y
   eq-Eq-binary-sum-decomposition-ℕ (a , b , b+a=n) (.a , b' , b'+a=n) refl =
     eq-pair-eq-fiber
-      ( eq-pair-Σ
-        ( is-injective-right-add-ℕ a (b+a=n ∙ inv b'+a=n))
-        ( eq-type-Prop (Id-Prop ℕ-Set _ _)))
+      ( eq-type-subtype
+        ( λ _ → Id-Prop ℕ-Set _ _)
+        ( is-injective-right-add-ℕ a (b+a=n ∙ inv b'+a=n)))
 
   abstract
     is-set-binary-sum-decomposition-ℕ : is-set (binary-sum-decomposition-ℕ n)
@@ -214,9 +214,9 @@ module _
             subtraction-leq-ℕ k n (leq-subtraction-ℕ k n l l+k=n)
         in
           eq-pair-eq-fiber
-            ( eq-pair-Σ
-              ( is-injective-right-add-ℕ k (l'+k=n ∙ inv l+k=n))
-              ( eq-type-Prop (Id-Prop ℕ-Set (l +ℕ k) n))))
+            ( eq-type-subtype
+              ( λ _ → Id-Prop ℕ-Set _ _)
+              ( is-injective-right-add-ℕ k (l'+k=n ∙ inv l+k=n))))
     ( λ (k , k≤n) → eq-pair-eq-fiber (eq-type-Prop (leq-ℕ-Prop k n)))
 
   count-binary-sum-decomposition-ℕ : count (binary-sum-decomposition-ℕ n)
@@ -316,4 +316,16 @@ module _
       ( map-inv-equiv-permute-components-triple-with-sum-pr2)
       ( is-section-map-inv-equiv-permute-components-triple-with-sum-pr2)
       ( is-retraction-map-inv-equiv-permute-components-triple-with-sum-pr2)
+```
+
+### Binary sum decompositions of 0 are contractible
+
+```agda
+is-contr-binary-sum-decomposition-zero-ℕ :
+  is-contr (binary-sum-decomposition-ℕ 0)
+is-contr-binary-sum-decomposition-zero-ℕ =
+  ( (0 , 0 , refl) ,
+    λ (i , j , j+i=0) →
+    eq-Eq-binary-sum-decomposition-ℕ 0 _ _
+      ( inv (is-zero-right-is-zero-add-ℕ j i j+i=0)))
 ```

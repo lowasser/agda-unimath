@@ -7,6 +7,8 @@ module foundation.sequences where
 <details><summary>Imports</summary>
 
 ```agda
+open import elementary-number-theory.natural-numbers
+
 open import foundation.dependent-sequences
 open import foundation.universe-levels
 
@@ -41,6 +43,24 @@ sequence A = dependent-sequence (λ _ → A)
 map-sequence :
   {l1 l2 : Level} {A : UU l1} {B : UU l2} → (A → B) → sequence A → sequence B
 map-sequence f a = f ∘ a
+```
+
+### Heads and tails of sequences
+
+```agda
+module _
+  {l : Level} {A : UU l}
+  where
+
+  head-sequence : sequence A → A
+  head-sequence x = x 0
+
+  tail-sequence : sequence A → sequence A
+  tail-sequence x = x ∘ succ-ℕ
+
+  cons-sequence : A → sequence A → sequence A
+  cons-sequence a x zero-ℕ = a
+  cons-sequence a x (succ-ℕ n) = x n
 ```
 
 ## References
