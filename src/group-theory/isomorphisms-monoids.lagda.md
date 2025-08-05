@@ -193,6 +193,11 @@ module _
       ( comp-hom-Monoid M N M (hom-inv-iso-Monoid f) (hom-iso-Monoid f))
       ( id-hom-Monoid M)
       ( is-retraction-hom-inv-iso-Monoid f)
+
+  iso-semigroup-iso-Monoid :
+    iso-Monoid → iso-Semigroup (semigroup-Monoid M) (semigroup-Monoid N)
+  iso-semigroup-iso-Monoid f =
+    pr1 (pr1 f) , pr1 (pr1 (pr2 f)) , {!   !} , {!   !}
 ```
 
 ## Examples
