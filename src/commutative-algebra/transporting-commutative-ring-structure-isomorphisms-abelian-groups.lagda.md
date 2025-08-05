@@ -125,7 +125,7 @@ module _
     commutative-mul-transport-commutative-ring-structure-iso-Ab
 
   preserves-mul-transport-commutative-ring-structure-iso-Ab :
-    preserves-mul-hom-Ab
+    preserves-mul-hom-ab-Ring
       ( ring-Commutative-Ring A)
       ( ring-transport-commutative-ring-structure-iso-Ab)
       ( hom-iso-Ab (ab-Commutative-Ring A) B f)

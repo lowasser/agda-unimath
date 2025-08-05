@@ -40,21 +40,21 @@ Ring homomorphisms are maps between rings that preserve the ring structure
 ### The predicate on group homomorphisms between rings of preserving multiplication
 
 ```agda
-preserves-mul-hom-Ab :
+preserves-mul-hom-ab-Ring :
   {l1 l2 : Level} (R : Ring l1) (S : Ring l2) →
   hom-Ab (ab-Ring R) (ab-Ring S) → UU (l1 ⊔ l2)
-preserves-mul-hom-Ab R S f =
+preserves-mul-hom-ab-Ring R S f =
   {x y : type-Ring R} →
   map-hom-Ab (ab-Ring R) (ab-Ring S) f (mul-Ring R x y) ＝
   mul-Ring S
     ( map-hom-Ab (ab-Ring R) (ab-Ring S) f x)
     ( map-hom-Ab (ab-Ring R) (ab-Ring S) f y)
 
-is-prop-preserves-mul-hom-Ab :
+is-prop-preserves-mul-hom-ab-Ring :
   {l1 l2 : Level} (R : Ring l1) (S : Ring l2) →
   ( f : hom-Ab (ab-Ring R) (ab-Ring S)) →
-  is-prop (preserves-mul-hom-Ab R S f)
-is-prop-preserves-mul-hom-Ab R S f =
+  is-prop (preserves-mul-hom-ab-Ring R S f)
+is-prop-preserves-mul-hom-ab-Ring R S f =
   is-prop-implicit-Π
     ( λ x →
       is-prop-implicit-Π
@@ -69,17 +69,17 @@ is-prop-preserves-mul-hom-Ab R S f =
 ### The predicate on group homomorphisms between rings of preserving the unit
 
 ```agda
-preserves-unit-hom-Ab :
+preserves-unit-hom-ab-Ring :
   {l1 l2 : Level} (R : Ring l1) (S : Ring l2) →
   hom-Ab (ab-Ring R) (ab-Ring S) → UU l2
-preserves-unit-hom-Ab R S f =
+preserves-unit-hom-ab-Ring R S f =
   map-hom-Ab (ab-Ring R) (ab-Ring S) f (one-Ring R) ＝ one-Ring S
 
-is-prop-preserves-unit-hom-Ab :
+is-prop-preserves-unit-hom-ab-Ring :
   {l1 l2 : Level} (R : Ring l1) (S : Ring l2) →
   ( f : hom-Ab (ab-Ring R) (ab-Ring S)) →
-  is-prop (preserves-unit-hom-Ab R S f)
-is-prop-preserves-unit-hom-Ab R S f =
+  is-prop (preserves-unit-hom-ab-Ring R S f)
+is-prop-preserves-unit-hom-ab-Ring R S f =
   is-set-type-Ring S
     ( map-hom-Ab (ab-Ring R) (ab-Ring S) f (one-Ring R))
     ( one-Ring S)
@@ -95,7 +95,7 @@ module _
   is-ring-homomorphism-hom-Ab-Prop :
     hom-Ab (ab-Ring R) (ab-Ring S) → Prop (l1 ⊔ l2)
   is-ring-homomorphism-hom-Ab-Prop f =
-    is-homomorphism-semiring-prop-hom-Commutative-Monoid
+    is-semiring-homomorphism-prop-hom-Commutative-Monoid
       ( semiring-Ring R)
       ( semiring-Ring S)
       ( hom-commutative-monoid-hom-Ab (ab-Ring R) (ab-Ring S) f)
@@ -166,10 +166,10 @@ module _
     preserves-neg-hom-Ring =
       preserves-negatives-hom-Ab (ab-Ring R) (ab-Ring S) hom-ab-hom-Ring
 
-    preserves-mul-hom-Ring : preserves-mul-hom-Ab R S hom-ab-hom-Ring
+    preserves-mul-hom-Ring : preserves-mul-hom-ab-Ring R S hom-ab-hom-Ring
     preserves-mul-hom-Ring = pr1 (pr2 f)
 
-    preserves-one-hom-Ring : preserves-unit-hom-Ab R S hom-ab-hom-Ring
+    preserves-one-hom-Ring : preserves-unit-hom-ab-Ring R S hom-ab-hom-Ring
     preserves-one-hom-Ring = pr2 (pr2 f)
 
     is-ring-homomorphism-hom-Ring :
@@ -198,10 +198,12 @@ module _
   {l : Level} (R : Ring l)
   where
 
-  preserves-mul-id-hom-Ring : preserves-mul-hom-Ab R R (id-hom-Ab (ab-Ring R))
+  preserves-mul-id-hom-Ring :
+    preserves-mul-hom-ab-Ring R R (id-hom-Ab (ab-Ring R))
   preserves-mul-id-hom-Ring = refl
 
-  preserves-unit-id-hom-Ring : preserves-unit-hom-Ab R R (id-hom-Ab (ab-Ring R))
+  preserves-unit-id-hom-Ring :
+    preserves-unit-hom-ab-Ring R R (id-hom-Ab (ab-Ring R))
   preserves-unit-id-hom-Ring = refl
 
   is-ring-homomorphism-id-hom-Ring :
@@ -243,7 +245,8 @@ module _
       ( hom-multiplicative-monoid-hom-Ring S T g)
       ( hom-multiplicative-monoid-hom-Ring R S f)
 
-  preserves-mul-comp-hom-Ring : preserves-mul-hom-Ab R T hom-ab-comp-hom-Ring
+  preserves-mul-comp-hom-Ring :
+    preserves-mul-hom-ab-Ring R T hom-ab-comp-hom-Ring
   preserves-mul-comp-hom-Ring =
     preserves-mul-hom-Monoid
       ( multiplicative-monoid-Ring R)
@@ -251,7 +254,7 @@ module _
       ( hom-multiplicative-monoid-comp-hom-Ring)
 
   preserves-unit-comp-hom-Ring :
-    preserves-unit-hom-Ab R T hom-ab-comp-hom-Ring
+    preserves-unit-hom-ab-Ring R T hom-ab-comp-hom-Ring
   preserves-unit-comp-hom-Ring =
     preserves-unit-hom-Monoid
       ( multiplicative-monoid-Ring R)

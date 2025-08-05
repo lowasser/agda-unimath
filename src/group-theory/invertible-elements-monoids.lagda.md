@@ -539,3 +539,5 @@ module _
 
 - The core of a monoid is defined in
   [`group-theory.cores-monoids`](group-theory.cores-monoids.md).
+  ## See also
+- [Invertible elements in commutativemonoids](group-theory.invertible-elements-commutative-monoids.md)

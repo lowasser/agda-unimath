@@ -33,13 +33,17 @@ open import structured-types.wild-monoids
 ## Definition
 
 ```agda
+is-unital-prop-Semigroup : {l : Level} → Semigroup l → Prop l
+is-unital-prop-Semigroup G =
+  is-unital-prop-Set (set-Semigroup G) (mul-Semigroup G)
+
 is-unital-Semigroup :
   {l : Level} → Semigroup l → UU l
-is-unital-Semigroup G = is-unital (mul-Semigroup G)
+is-unital-Semigroup G = type-Prop (is-unital-prop-Semigroup G)
 
 Monoid :
   (l : Level) → UU (lsuc l)
-Monoid l = Σ (Semigroup l) is-unital-Semigroup
+Monoid l = type-subtype is-unital-prop-Semigroup
 
 module _
   {l : Level} (M : Monoid l)
@@ -117,34 +121,6 @@ module _
 ```
 
 ## Properties
-
-### For any semigroup `G`, being unital is a property
-
-```agda
-abstract
-  all-elements-equal-is-unital-Semigroup :
-    {l : Level} (G : Semigroup l) → all-elements-equal (is-unital-Semigroup G)
-  all-elements-equal-is-unital-Semigroup
-    ( X , μ , associative-μ)
-    ( e , left-unit-e , right-unit-e)
-    ( e' , left-unit-e' , right-unit-e') =
-    eq-type-subtype
-      ( λ e →
-        product-Prop
-          ( Π-Prop (type-Set X) (λ y → Id-Prop X (μ e y) y))
-          ( Π-Prop (type-Set X) (λ x → Id-Prop X (μ x e) x)))
-      ( (inv (left-unit-e' e)) ∙ (right-unit-e e'))
-
-abstract
-  is-prop-is-unital-Semigroup :
-    {l : Level} (G : Semigroup l) → is-prop (is-unital-Semigroup G)
-  is-prop-is-unital-Semigroup G =
-    is-prop-all-elements-equal (all-elements-equal-is-unital-Semigroup G)
-
-is-unital-prop-Semigroup : {l : Level} (G : Semigroup l) → Prop l
-pr1 (is-unital-prop-Semigroup G) = is-unital-Semigroup G
-pr2 (is-unital-prop-Semigroup G) = is-prop-is-unital-Semigroup G
-```
 
 ### Monoids are H-spaces
 

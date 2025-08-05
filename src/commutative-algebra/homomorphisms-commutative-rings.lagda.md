@@ -140,7 +140,7 @@ module _
         ( f)
 
     preserves-mul-hom-Commutative-Ring :
-      preserves-mul-hom-Ab
+      preserves-mul-hom-ab-Ring
         ( ring-Commutative-Ring A)
         ( ring-Commutative-Ring B)
         ( hom-ab-hom-Commutative-Ring)
@@ -151,7 +151,7 @@ module _
         ( f)
 
     preserves-one-hom-Commutative-Ring :
-      preserves-unit-hom-Ab
+      preserves-unit-hom-ab-Ring
         ( ring-Commutative-Ring A)
         ( ring-Commutative-Ring B)
         ( hom-ab-hom-Commutative-Ring)
@@ -188,7 +188,7 @@ module _
   where
 
   preserves-mul-id-hom-Commutative-Ring :
-    preserves-mul-hom-Ab
+    preserves-mul-hom-ab-Ring
       ( ring-Commutative-Ring A)
       ( ring-Commutative-Ring A)
       ( id-hom-Ab (ab-Commutative-Ring A))
@@ -196,7 +196,7 @@ module _
     preserves-mul-id-hom-Ring (ring-Commutative-Ring A)
 
   preserves-unit-id-hom-Commutative-Ring :
-    preserves-unit-hom-Ab
+    preserves-unit-hom-ab-Ring
       ( ring-Commutative-Ring A)
       ( ring-Commutative-Ring A)
       ( id-hom-Ab (ab-Commutative-Ring A))
@@ -247,7 +247,7 @@ module _
       ( f)
 
   preserves-mul-comp-hom-Commutative-Ring :
-    preserves-mul-hom-Ab
+    preserves-mul-hom-ab-Ring
       ( ring-Commutative-Ring A)
       ( ring-Commutative-Ring C)
       ( hom-ab-comp-hom-Commutative-Ring)
@@ -260,7 +260,7 @@ module _
       ( f)
 
   preserves-unit-comp-hom-Commutative-Ring :
-    preserves-unit-hom-Ab
+    preserves-unit-hom-ab-Ring
       ( ring-Commutative-Ring A)
       ( ring-Commutative-Ring C)
       ( hom-ab-comp-hom-Commutative-Ring)

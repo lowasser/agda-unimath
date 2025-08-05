@@ -41,6 +41,7 @@ open import ring-theory.intersections-ideals-semirings public
 open import ring-theory.invariant-basis-property-rings public
 open import ring-theory.invertible-elements-rings public
 open import ring-theory.isomorphisms-rings public
+open import ring-theory.isomorphisms-semirings public
 open import ring-theory.joins-ideals-rings public
 open import ring-theory.joins-left-ideals-rings public
 open import ring-theory.joins-right-ideals-rings public

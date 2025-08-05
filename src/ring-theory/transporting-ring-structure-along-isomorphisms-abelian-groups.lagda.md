@@ -144,7 +144,7 @@ module _
     right-distributive-mul-add-transport-ring-structure-iso-Ab
 
   preserves-mul-transport-ring-structure-iso-Ab :
-    preserves-mul-hom-Ab
+    preserves-mul-hom-ab-Ring
       ( R)
       ( transport-ring-structure-iso-Ab)
       ( hom-iso-Ab (ab-Ring R) A f)

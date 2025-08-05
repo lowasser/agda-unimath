@@ -135,7 +135,7 @@ module _
         ( f)
 
     preserves-mul-hom-Finite-Ring :
-      preserves-mul-hom-Ab
+      preserves-mul-hom-ab-Ring
         ( ring-Finite-Ring A)
         ( ring-Finite-Ring B)
         ( hom-ab-hom-Finite-Ring)
@@ -146,7 +146,7 @@ module _
         ( f)
 
     preserves-one-hom-Finite-Ring :
-      preserves-unit-hom-Ab
+      preserves-unit-hom-ab-Ring
         ( ring-Finite-Ring A)
         ( ring-Finite-Ring B)
         ( hom-ab-hom-Finite-Ring)
@@ -173,7 +173,7 @@ module _
   where
 
   preserves-mul-id-hom-Finite-Ring :
-    preserves-mul-hom-Ab
+    preserves-mul-hom-ab-Ring
       ( ring-Finite-Ring A)
       ( ring-Finite-Ring A)
       ( id-hom-Ab (ab-Finite-Ring A))
@@ -181,7 +181,7 @@ module _
     preserves-mul-id-hom-Ring (ring-Finite-Ring A)
 
   preserves-unit-id-hom-Finite-Ring :
-    preserves-unit-hom-Ab
+    preserves-unit-hom-ab-Ring
       ( ring-Finite-Ring A)
       ( ring-Finite-Ring A)
       ( id-hom-Ab (ab-Finite-Ring A))
@@ -232,7 +232,7 @@ module _
       ( f)
 
   preserves-mul-comp-hom-Finite-Ring :
-    preserves-mul-hom-Ab
+    preserves-mul-hom-ab-Ring
       ( ring-Finite-Ring A)
       ( ring-Finite-Ring C)
       ( hom-ab-comp-hom-Finite-Ring)
@@ -245,7 +245,7 @@ module _
       ( f)
 
   preserves-unit-comp-hom-Finite-Ring :
-    preserves-unit-hom-Ab
+    preserves-unit-hom-ab-Ring
       ( ring-Finite-Ring A)
       ( ring-Finite-Ring C)
       ( hom-ab-comp-hom-Finite-Ring)

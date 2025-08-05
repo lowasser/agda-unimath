@@ -16,6 +16,7 @@ open import foundation.universe-levels
 open import group-theory.commutative-monoids
 open import group-theory.homomorphisms-monoids
 open import group-theory.homomorphisms-semigroups
+open import group-theory.invertible-elements-commutative-monoids
 ```
 
 </details>
@@ -246,4 +247,24 @@ module _
     right-unit-law-comp-hom-Monoid
       ( monoid-Commutative-Monoid M)
       ( monoid-Commutative-Monoid N)
+```
+
+### Any homomorphism of commutative monoids sends invertible elements to invertible elements
+
+```agda
+module _
+  {l1 l2 : Level} (M : Commutative-Monoid l1) (N : Commutative-Monoid l2)
+  (f : hom-Commutative-Monoid M N)
+  where
+
+  preserves-invertible-elements-hom-Commutative-Monoid :
+    {x : type-Commutative-Monoid M} →
+    is-invertible-element-Commutative-Monoid M x →
+    is-invertible-element-Commutative-Monoid N
+      ( map-hom-Commutative-Monoid M N f x)
+  preserves-invertible-elements-hom-Commutative-Monoid =
+    preserves-invertible-elements-hom-Monoid
+      ( monoid-Commutative-Monoid M)
+      ( monoid-Commutative-Monoid N)
+      ( f)
 ```

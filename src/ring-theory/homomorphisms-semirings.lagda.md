@@ -7,6 +7,7 @@ module ring-theory.homomorphisms-semirings where
 <details><summary>Imports</summary>
 
 ```agda
+open import foundation.conjunction
 open import foundation.dependent-pair-types
 open import foundation.equivalences
 open import foundation.fundamental-theorem-of-identity-types
@@ -35,49 +36,93 @@ commutative monoids that preserve multiplication and the multiplicative unit.
 
 ## Definitions
 
+### The predicate on group homomorphisms between semirings of preserving multiplication
+
+```agda
+preserves-mul-prop-hom-additive-commutative-monoid-Semiring :
+  {l1 l2 : Level} (R : Semiring l1) (S : Semiring l2) →
+  hom-Commutative-Monoid
+    ( additive-commutative-monoid-Semiring R)
+    ( additive-commutative-monoid-Semiring S) →
+  Prop (l1 ⊔ l2)
+preserves-mul-prop-hom-additive-commutative-monoid-Semiring R S f =
+  preserves-mul-prop-Semigroup
+    ( multiplicative-semigroup-Semiring R)
+    ( multiplicative-semigroup-Semiring S)
+    ( map-hom-Commutative-Monoid
+      ( additive-commutative-monoid-Semiring R)
+      ( additive-commutative-monoid-Semiring S)
+      ( f))
+
+preserves-mul-hom-additive-commutative-monoid-Semiring :
+  {l1 l2 : Level} (R : Semiring l1) (S : Semiring l2) →
+  hom-Commutative-Monoid
+    ( additive-commutative-monoid-Semiring R)
+    ( additive-commutative-monoid-Semiring S) →
+  UU (l1 ⊔ l2)
+preserves-mul-hom-additive-commutative-monoid-Semiring R S f =
+  type-Prop (preserves-mul-prop-hom-additive-commutative-monoid-Semiring R S f)
+```
+
+### The predicate on group homomorphisms between semirings of preserving the unit
+
+```agda
+preserves-unit-prop-hom-additive-commutative-monoid-Semiring :
+  {l1 l2 : Level} (R : Semiring l1) (S : Semiring l2) →
+  ( hom-Commutative-Monoid
+    ( additive-commutative-monoid-Semiring R)
+    ( additive-commutative-monoid-Semiring S)) →
+  Prop l2
+preserves-unit-prop-hom-additive-commutative-monoid-Semiring R S f =
+  Id-Prop
+    ( set-Semiring S)
+    ( map-hom-Commutative-Monoid
+      ( additive-commutative-monoid-Semiring R)
+      ( additive-commutative-monoid-Semiring S)
+      ( f)
+      ( one-Semiring R))
+    ( one-Semiring S)
+
+preserves-unit-hom-additive-commutative-monoid-Semiring :
+  {l1 l2 : Level} (R : Semiring l1) (S : Semiring l2) →
+  ( hom-Commutative-Monoid
+    ( additive-commutative-monoid-Semiring R)
+    ( additive-commutative-monoid-Semiring S)) →
+  UU l2
+preserves-unit-hom-additive-commutative-monoid-Semiring R S f =
+  type-Prop (preserves-unit-prop-hom-additive-commutative-monoid-Semiring R S f)
+```
+
+### Semiring homomorphisms
+
 ```agda
 module _
   {l1 l2 : Level} (R : Semiring l1) (S : Semiring l2)
   where
 
-  is-homomorphism-semiring-prop-hom-Commutative-Monoid :
+  is-semiring-homomorphism-prop-hom-Commutative-Monoid :
     ( hom-Commutative-Monoid
       ( additive-commutative-monoid-Semiring R)
       ( additive-commutative-monoid-Semiring S)) → Prop (l1 ⊔ l2)
-  is-homomorphism-semiring-prop-hom-Commutative-Monoid f =
-    Σ-Prop
-      ( preserves-mul-prop-Semigroup
-        ( multiplicative-semigroup-Semiring R)
-        ( multiplicative-semigroup-Semiring S)
-        ( map-hom-Commutative-Monoid
-          ( additive-commutative-monoid-Semiring R)
-          ( additive-commutative-monoid-Semiring S)
-          ( f)))
-      ( λ H →
-        preserves-unit-prop-hom-Semigroup
-          ( multiplicative-monoid-Semiring R)
-          ( multiplicative-monoid-Semiring S)
-          ( ( map-hom-Commutative-Monoid
-              ( additive-commutative-monoid-Semiring R)
-              ( additive-commutative-monoid-Semiring S)
-              ( f)) ,
-            ( H)))
+  is-semiring-homomorphism-prop-hom-Commutative-Monoid f =
+    preserves-mul-prop-hom-additive-commutative-monoid-Semiring R S f ∧
+    preserves-unit-prop-hom-additive-commutative-monoid-Semiring R S f
 
-  is-homomorphism-semiring-hom-Commutative-Monoid :
+  is-semiring-homomorphism-hom-Commutative-Monoid :
     ( hom-Commutative-Monoid
       ( additive-commutative-monoid-Semiring R)
       ( additive-commutative-monoid-Semiring S)) → UU (l1 ⊔ l2)
-  is-homomorphism-semiring-hom-Commutative-Monoid f =
-    type-Prop (is-homomorphism-semiring-prop-hom-Commutative-Monoid f)
+  is-semiring-homomorphism-hom-Commutative-Monoid f =
+    type-Prop (is-semiring-homomorphism-prop-hom-Commutative-Monoid f)
 
-  is-prop-is-homomorphism-semiring-hom-Commutative-Monoid :
+  is-prop-is-semiring-homomorphism-hom-Commutative-Monoid :
     ( f :
       hom-Commutative-Monoid
         ( additive-commutative-monoid-Semiring R)
         ( additive-commutative-monoid-Semiring S)) →
-    is-prop (is-homomorphism-semiring-hom-Commutative-Monoid f)
-  is-prop-is-homomorphism-semiring-hom-Commutative-Monoid f =
-    is-prop-type-Prop (is-homomorphism-semiring-prop-hom-Commutative-Monoid f)
+    is-prop (is-semiring-homomorphism-hom-Commutative-Monoid f)
+  is-prop-is-semiring-homomorphism-hom-Commutative-Monoid f =
+    is-prop-type-Prop (is-semiring-homomorphism-prop-hom-Commutative-Monoid f)
 
   hom-set-Semiring : Set (l1 ⊔ l2)
   hom-set-Semiring =
@@ -85,7 +130,7 @@ module _
       ( hom-set-Commutative-Monoid
         ( additive-commutative-monoid-Semiring R)
         ( additive-commutative-monoid-Semiring S))
-      ( is-homomorphism-semiring-prop-hom-Commutative-Monoid)
+      ( is-semiring-homomorphism-prop-hom-Commutative-Monoid)
 
   hom-Semiring : UU (l1 ⊔ l2)
   hom-Semiring = type-Set hom-set-Semiring
@@ -110,11 +155,11 @@ module _
         ( additive-commutative-monoid-Semiring S)
         ( hom-additive-commutative-monoid-hom-Semiring)
 
-    preserves-addition-hom-Semiring :
+    preserves-add-hom-Semiring :
       {x y : type-Semiring R} →
       map-hom-Semiring (add-Semiring R x y) ＝
       add-Semiring S (map-hom-Semiring x) (map-hom-Semiring y)
-    preserves-addition-hom-Semiring =
+    preserves-add-hom-Semiring =
       preserves-mul-hom-Commutative-Monoid
         ( additive-commutative-monoid-Semiring R)
         ( additive-commutative-monoid-Semiring S)
@@ -134,15 +179,15 @@ module _
       mul-Semiring S (map-hom-Semiring x) (map-hom-Semiring y)
     preserves-mul-hom-Semiring = pr1 (pr2 f)
 
-    preserves-unit-hom-Semiring :
+    preserves-one-hom-Semiring :
       map-hom-Semiring (one-Semiring R) ＝ one-Semiring S
-    preserves-unit-hom-Semiring = pr2 (pr2 f)
+    preserves-one-hom-Semiring = pr2 (pr2 f)
 
-    is-homomorphism-semiring-hom-Semiring :
-      is-homomorphism-semiring-hom-Commutative-Monoid
+    is-semiring-homomorphism-hom-Semiring :
+      is-semiring-homomorphism-hom-Commutative-Monoid
         ( hom-additive-commutative-monoid-hom-Semiring)
-    pr1 is-homomorphism-semiring-hom-Semiring = preserves-mul-hom-Semiring
-    pr2 is-homomorphism-semiring-hom-Semiring = preserves-unit-hom-Semiring
+    pr1 is-semiring-homomorphism-hom-Semiring = preserves-mul-hom-Semiring
+    pr2 is-semiring-homomorphism-hom-Semiring = preserves-one-hom-Semiring
 
     hom-multiplicative-monoid-hom-Semiring :
       hom-Monoid
@@ -153,7 +198,7 @@ module _
     pr2 (pr1 hom-multiplicative-monoid-hom-Semiring) =
       preserves-mul-hom-Semiring
     pr2 hom-multiplicative-monoid-hom-Semiring =
-      preserves-unit-hom-Semiring
+      preserves-one-hom-Semiring
 ```
 
 ### The identity homomorphism of semirings
@@ -290,10 +335,10 @@ module _
         ( additive-commutative-monoid-Semiring R)
         ( additive-commutative-monoid-Semiring S)
         ( hom-additive-commutative-monoid-hom-Semiring R S f))
-      ( is-prop-is-homomorphism-semiring-hom-Commutative-Monoid R S)
+      ( is-prop-is-semiring-homomorphism-hom-Commutative-Monoid R S)
       ( hom-additive-commutative-monoid-hom-Semiring R S f)
       ( refl-htpy-hom-Semiring R S f)
-      ( is-homomorphism-semiring-hom-Semiring R S f)
+      ( is-semiring-homomorphism-hom-Semiring R S f)
 
   htpy-eq-hom-Semiring :
     (g : hom-Semiring R S) → (f ＝ g) → htpy-hom-Semiring R S f g

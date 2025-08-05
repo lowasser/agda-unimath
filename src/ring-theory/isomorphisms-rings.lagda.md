@@ -338,8 +338,8 @@ module _
     preserves-mul-inv-is-iso-Ab :
       (f : hom-Ab (ab-Ring R) (ab-Ring S)) →
       (U : is-iso-Ab (ab-Ring R) (ab-Ring S) f) →
-      preserves-mul-hom-Ab R S f →
-      preserves-mul-hom-Ab S R
+      preserves-mul-hom-ab-Ring R S f →
+      preserves-mul-hom-ab-Ring S R
         ( hom-inv-is-iso-Ab (ab-Ring R) (ab-Ring S) f U)
     preserves-mul-inv-is-iso-Ab f U μ {x} {y} =
       ( inv
@@ -366,8 +366,8 @@ module _
   preserves-unit-inv-is-iso-Ab :
     (f : hom-Ab (ab-Ring R) (ab-Ring S)) →
     (U : is-iso-Ab (ab-Ring R) (ab-Ring S) f) →
-    preserves-unit-hom-Ab R S f →
-    preserves-unit-hom-Ab S R
+    preserves-unit-hom-ab-Ring R S f →
+    preserves-unit-hom-ab-Ring S R
       ( hom-inv-is-iso-Ab (ab-Ring R) (ab-Ring S) f U)
   preserves-unit-inv-is-iso-Ab f U ν =
     ( inv (ap (map-inv-is-iso-Ab (ab-Ring R) (ab-Ring S) f U) ν)) ∙
