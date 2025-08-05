@@ -9,16 +9,25 @@ module group-theory.isomorphisms-monoids where
 ```agda
 open import category-theory.isomorphisms-in-large-precategories
 
+open import foundation.contractible-types
+open import foundation.dependent-pair-types
+open import foundation.equality-dependent-pair-types
+open import foundation.equivalences
 open import foundation.function-types
+open import foundation.functoriality-dependent-pair-types
 open import foundation.homotopies
 open import foundation.identity-types
 open import foundation.propositions
 open import foundation.sets
+open import foundation.subtypes
+open import foundation.torsorial-type-families
 open import foundation.transport-along-identifications
 open import foundation.universe-levels
 
+open import group-theory.category-of-semigroups
 open import group-theory.homomorphisms-monoids
 open import group-theory.invertible-elements-monoids
+open import group-theory.isomorphisms-semigroups
 open import group-theory.monoids
 open import group-theory.precategory-of-monoids
 ```
@@ -52,6 +61,10 @@ module _
       { Y = N}
       ( f)
 
+  map-inv-is-iso-Monoid :
+    is-iso-Monoid → type-Monoid N → type-Monoid M
+  map-inv-is-iso-Monoid H = map-hom-Monoid N M (hom-inv-is-iso-Monoid H)
+
   is-section-hom-inv-is-iso-Monoid :
     (H : is-iso-Monoid) →
     comp-hom-Monoid N M N f (hom-inv-is-iso-Monoid H) ＝
@@ -63,6 +76,15 @@ module _
       { Y = N}
       ( f)
 
+  is-section-map-inv-is-iso-Monoid :
+    ( U : is-iso-Monoid) →
+    ( map-hom-Monoid M N f ∘ map-inv-is-iso-Monoid U) ~ id
+  is-section-map-inv-is-iso-Monoid U =
+    htpy-eq-hom-Monoid N N
+      ( comp-hom-Monoid N M N f (hom-inv-is-iso-Monoid U))
+      ( id-hom-Monoid N)
+      ( is-section-hom-inv-is-iso-Monoid U)
+
   is-retraction-hom-inv-is-iso-Monoid :
     (H : is-iso-Monoid) →
     comp-hom-Monoid M N M (hom-inv-is-iso-Monoid H) f ＝
@@ -73,6 +95,15 @@ module _
       { X = M}
       { Y = N}
       ( f)
+
+  is-retraction-map-inv-is-iso-Monoid :
+    (U : is-iso-Monoid) →
+    ( map-inv-is-iso-Monoid U ∘ map-hom-Monoid M N f) ~ id
+  is-retraction-map-inv-is-iso-Monoid U =
+    htpy-eq-hom-Monoid M M
+      ( comp-hom-Monoid M N M (hom-inv-is-iso-Monoid U) f)
+      ( id-hom-Monoid M)
+      ( is-retraction-hom-inv-is-iso-Monoid U)
 ```
 
 ### Isomorphisms of monoids
@@ -185,19 +216,6 @@ module _
     id-iso-Large-Precategory
       ( Monoid-Large-Precategory)
       { X = M}
-```
-
-### Equalities induce isomorphisms
-
-An equality between objects `x y : A` gives rise to an isomorphism between them.
-This is because by the J-rule, it is enough to construct an isomorphism given
-`refl : Id x x`, from `x` to itself. We take the identity morphism as such an
-isomorphism.
-
-```agda
-iso-eq-Monoid :
-  {l1 : Level} (M N : Monoid l1) → M ＝ N → iso-Monoid M N
-iso-eq-Monoid = iso-eq-Large-Precategory Monoid-Large-Precategory
 ```
 
 ## Properties
@@ -334,4 +352,34 @@ module _
       ( preserves-invertible-elements-hom-Monoid N M
         ( hom-inv-iso-Monoid M N f)
         ( H))
+```
+
+### The total space of monoid isomorphisms from a given monoid `M` is contractible
+
+```agda
+module _
+  {l : Level} (M : Monoid l)
+  where
+
+  iso-eq-Monoid : (N : Monoid l) → Id M N → iso-Monoid M N
+  iso-eq-Monoid = iso-eq-Large-Precategory Monoid-Large-Precategory M
+
+  eq-iso-Monoid : (N : Monoid l) → iso-Monoid M N → Id M N
+  eq-iso-Monoid N f =
+    eq-pair-Σ
+      ( eq-iso-Semigroup (semigroup-Monoid M) (semigroup-Monoid N) {!   !})
+      {!   !}
+
+  abstract
+    extensionality-Monoid' : (N : Monoid l) → Id M N ≃ iso-Monoid M N
+    extensionality-Monoid' N =
+      {!   !}
+
+  abstract
+    is-torsorial-iso-Monoid : is-torsorial (λ (N : Monoid l) → iso-Monoid M N)
+    is-torsorial-iso-Monoid =
+      is-contr-equiv'
+        ( Σ (Monoid l) (Id M))
+        ( equiv-tot extensionality-Monoid')
+        ( is-torsorial-Id M)
 ```
