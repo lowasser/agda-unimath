@@ -8,20 +8,27 @@ module group-theory.isomorphisms-monoids where
 
 ```agda
 open import category-theory.isomorphisms-in-large-precategories
+open import foundation.type-arithmetic-dependent-pair-types
 
 open import foundation.contractible-types
 open import foundation.dependent-pair-types
 open import foundation.equality-dependent-pair-types
 open import foundation.equivalences
+open import foundation.function-extensionality
+open import group-theory.monoids
 open import foundation.function-types
 open import foundation.functoriality-dependent-pair-types
+open import foundation.fundamental-theorem-of-identity-types
 open import foundation.homotopies
 open import foundation.identity-types
 open import foundation.propositions
 open import foundation.sets
+open import foundation.structure-identity-principle
 open import foundation.subtypes
 open import foundation.torsorial-type-families
+open import group-theory.equivalences-monoids
 open import foundation.transport-along-identifications
+open import foundation.unital-binary-operations
 open import foundation.universe-levels
 
 open import group-theory.category-of-semigroups
@@ -354,6 +361,48 @@ module _
         ( H))
 ```
 
+### A homomorphism of monoids is an equivalence of monoids if and only if it is an isomorphism
+
+```agda
+module _
+  {l1 l2 : Level} (M : Monoid l1) (N : Monoid l2)
+  where
+
+  abstract
+    is-iso-is-equiv-hom-Monoid :
+      (f : hom-Monoid M N) →
+      is-equiv-hom-Monoid M N f → is-iso-Monoid M N f
+    is-iso-is-equiv-hom-Monoid (f-hom-semi , preserves-unit-f) U =
+      ({! U  !} , {!   !}) ,
+      ( eq-htpy-hom-Monoid N N _ (id-hom-Monoid N) (is-section-map-inv-is-equiv U) ,
+        eq-htpy-hom-Monoid M M _ (id-hom-Monoid M) (is-retraction-map-inv-is-equiv U))
+
+      {-
+    pr1 (pr1 (is-iso-is-equiv-hom-Semigroup (f , μ-f) U)) =
+      map-inv-is-equiv U
+    pr2 (pr1 (is-iso-is-equiv-hom-Semigroup (f , μ-f) U)) =
+      preserves-mul-map-inv-is-equiv-Semigroup G H (f , μ-f) U
+    pr1 (pr2 (is-iso-is-equiv-hom-Semigroup (f , μ-f) U)) =
+      eq-htpy-hom-Semigroup H H (is-section-map-inv-is-equiv U)
+    pr2 (pr2 (is-iso-is-equiv-hom-Semigroup (f , μ-f) U)) =
+      eq-htpy-hom-Semigroup G G (is-retraction-map-inv-is-equiv U) -}
+
+  equiv-iso-equiv-Monoid : equiv-Monoid M N ≃ iso-Monoid M N
+  equiv-iso-equiv-Monoid =
+    equiv-type-subtype
+      ( λ f → is-property-is-equiv (map-hom-Monoid M N f))
+      ( is-prop-is-iso-Monoid M N)
+      {!  is-iso-is-equiv-hom-Monoid !} {!   !} ∘e
+    {! equiv-right-swap-Σ  !}
+  {- equiv-iso-equiv-Semigroup =
+    ( equiv-type-subtype
+      ( λ f → is-property-is-equiv (map-hom-Semigroup G H f))
+      ( is-prop-is-iso-Semigroup G H)
+      ( is-iso-is-equiv-hom-Semigroup)
+      ( is-equiv-is-iso-Semigroup)) ∘e
+    ( equiv-right-swap-Σ)-}
+```
+
 ### The total space of monoid isomorphisms from a given monoid `M` is contractible
 
 ```agda
@@ -363,6 +412,14 @@ module _
 
   iso-eq-Monoid : (N : Monoid l) → Id M N → iso-Monoid M N
   iso-eq-Monoid = iso-eq-Large-Precategory Monoid-Large-Precategory M
+
+  is-torsorial-iso-Monoid :
+    is-torsorial (iso-Monoid {l2 = l} M)
+  is-torsorial-iso-Monoid =
+    is-contr-equiv'
+      ( Σ (Monoid l) (equiv-Monoid M))
+      (equiv-tot {!  equiv-iso-equiv-Monoid !})
+      {!   !}
 
   eq-iso-Monoid : (N : Monoid l) → iso-Monoid M N → Id M N
   eq-iso-Monoid N f =
@@ -374,12 +431,4 @@ module _
     extensionality-Monoid' : (N : Monoid l) → Id M N ≃ iso-Monoid M N
     extensionality-Monoid' N =
       {!   !}
-
-  abstract
-    is-torsorial-iso-Monoid : is-torsorial (λ (N : Monoid l) → iso-Monoid M N)
-    is-torsorial-iso-Monoid =
-      is-contr-equiv'
-        ( Σ (Monoid l) (Id M))
-        ( equiv-tot extensionality-Monoid')
-        ( is-torsorial-Id M)
 ```

@@ -18,6 +18,7 @@ open import foundation.sets
 open import foundation.subtype-identity-principle
 open import foundation.subtypes
 open import foundation.torsorial-type-families
+open import foundation.unital-binary-operations
 open import foundation.universe-levels
 
 open import group-theory.homomorphisms-semigroups
@@ -39,6 +40,17 @@ element.
 ### Homomorphisms of monoids
 
 ```agda
+module _
+  {l1 l2 : Level} {A : UU l1} {B : UU l2}
+  where
+
+  preserves-unit :
+    (μA : A → A → A) → is-unital μA →
+    (μB : B → B → B) → is-unital μB →
+    (A → B) → UU l2
+  preserves-unit μA unital-μA μB unital-μB f =
+    f (pr1 unital-μA) ＝ pr1 unital-μB
+
 module _
   {l1 l2 : Level} (M1 : Monoid l1) (M2 : Monoid l2)
   where

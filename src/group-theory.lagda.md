@@ -19,6 +19,7 @@ open import group-theory.category-of-abelian-groups public
 open import group-theory.category-of-concrete-groups public
 open import group-theory.category-of-group-actions public
 open import group-theory.category-of-groups public
+open import group-theory.category-of-monoids public
 open import group-theory.category-of-orbits-groups public
 open import group-theory.category-of-semigroups public
 open import group-theory.cayleys-theorem public
@@ -67,6 +68,7 @@ open import group-theory.epimorphisms-groups public
 open import group-theory.equivalences-concrete-group-actions public
 open import group-theory.equivalences-concrete-groups public
 open import group-theory.equivalences-group-actions public
+open import group-theory.equivalences-monoids public
 open import group-theory.equivalences-semigroups public
 open import group-theory.exponents-abelian-groups public
 open import group-theory.exponents-groups public

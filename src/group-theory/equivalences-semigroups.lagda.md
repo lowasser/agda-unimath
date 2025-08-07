@@ -68,6 +68,18 @@ module _
 
 ## Properties
 
+### The identity equivalence of semigroups
+
+```agda
+module _
+  {l : Level} (G : Semigroup l)
+  where
+
+  id-equiv-Semigroup : equiv-Semigroup G G
+  pr1 id-equiv-Semigroup = id-equiv
+  pr2 id-equiv-Semigroup = refl
+```
+
 ### The total space of all equivalences of semigroups with domain `G` is contractible
 
 ```agda
