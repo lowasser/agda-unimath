@@ -8,6 +8,7 @@ module metric-spaces.pseudometric-space-of-cauchy-approximations-metric-spaces w
 
 ```agda
 open import elementary-number-theory.positive-rational-numbers
+
 open import elementary-number-theory.strict-inequality-rational-numbers
 
 open import foundation.action-on-identifications-functions
@@ -54,14 +55,11 @@ module _
           Π-Prop
             ( ℚ⁺)
             ( λ ε →
-              Π-Prop
-                ( ℚ⁺)
-                ( λ θ →
-                  neighborhood-prop-Metric-Space
-                    ( M)
-                    ( δ +ℚ⁺ ε +ℚ⁺ θ +ℚ⁺ d)
-                    ( map-cauchy-approximation-Metric-Space M x δ)
-                    ( map-cauchy-approximation-Metric-Space M y ε))))
+              neighborhood-prop-Metric-Space
+                ( M)
+                ( δ +ℚ⁺ ε +ℚ⁺ d)
+                ( map-cauchy-approximation-Metric-Space M x δ)
+                ( map-cauchy-approximation-Metric-Space M y ε)))
 
   neighborhood-pseudometric-cauchy-approximation-Metric-Space :
     ℚ⁺ → Relation l2 (cauchy-approximation-Metric-Space M)
@@ -82,20 +80,15 @@ module _
     refl-neighborhood-pseudometric-cauchy-approximation-Metric-Space :
       (d : ℚ⁺) (x : cauchy-approximation-Metric-Space M) →
       neighborhood-pseudometric-cauchy-approximation-Metric-Space d x x
-    refl-neighborhood-pseudometric-cauchy-approximation-Metric-Space d x δ ε θ =
+    refl-neighborhood-pseudometric-cauchy-approximation-Metric-Space d x δ ε =
       let
         xδ = map-cauchy-approximation-Metric-Space M x δ
         xε = map-cauchy-approximation-Metric-Space M x ε
       in
         monotonic-neighborhood-Metric-Space M xδ xε
           ( δ +ℚ⁺ ε)
-          ( δ +ℚ⁺ ε +ℚ⁺ θ +ℚ⁺ d)
-          ( transitive-le-ℚ⁺
-            ( δ +ℚ⁺ ε)
-            ( δ +ℚ⁺ ε +ℚ⁺ θ)
-            ( δ +ℚ⁺ ε +ℚ⁺ θ +ℚ⁺ d)
-            ( le-right-add-rational-ℚ⁺ _ d)
-            ( le-right-add-rational-ℚ⁺ _ θ))
+          ( δ +ℚ⁺ ε +ℚ⁺ d)
+          ( le-right-add-rational-ℚ⁺ _ d)
           ( is-cauchy-approximation-map-cauchy-approximation-Metric-Space
             ( M)
             ( x)
@@ -111,15 +104,15 @@ module _
       neighborhood-pseudometric-cauchy-approximation-Metric-Space d x y →
       neighborhood-pseudometric-cauchy-approximation-Metric-Space d y x
     symmetric-neighborhood-pseudometric-cauchy-approximation-Metric-Space
-      d x y Ndxy δ ε θ =
+      d x y Ndxy δ ε =
         let
           xε = map-cauchy-approximation-Metric-Space M x ε
           yδ = map-cauchy-approximation-Metric-Space M y δ
         in
           tr
             ( λ d' → neighborhood-Metric-Space M d' yδ xε)
-            ( ap (_+ℚ⁺ d) (ap (_+ℚ⁺ θ) (commutative-add-ℚ⁺ ε δ)))
-            ( symmetric-neighborhood-Metric-Space M _ xε yδ (Ndxy ε δ θ))
+            ( ap (_+ℚ⁺ d) (commutative-add-ℚ⁺ ε δ))
+            ( symmetric-neighborhood-Metric-Space M _ xε yδ (Ndxy ε δ))
 ```
 
 ### The neighborhood relation is triangular
@@ -135,58 +128,73 @@ module _
         ( x)
         ( z)
     triangular-neighborhood-pseudometric-cauchy-approximation-Metric-Space
-      x y z dxy dyz Ndyz Ndxy δ ε θ =
+      x y z dxy dyz Ndyz Ndxy δ ε =
         let
           xδ = map-cauchy-approximation-Metric-Space M x δ
           zε = map-cauchy-approximation-Metric-Space M z ε
-          (θ₂ , θ₂+θ₂<θ) = bound-double-le-ℚ⁺ θ
-          (θa , θb , θa+θb=θ₂) = split-ℚ⁺ θ₂
-          yθa = map-cauchy-approximation-Metric-Space M y θa
         in
-          monotonic-neighborhood-Metric-Space
-            ( M)
-            ( xδ)
-            ( zε)
-            ( (δ +ℚ⁺ θa +ℚ⁺ θb +ℚ⁺ dxy) +ℚ⁺ (θa +ℚ⁺ ε +ℚ⁺ θb +ℚ⁺ dyz))
-            ( δ +ℚ⁺ ε +ℚ⁺ θ +ℚ⁺ (dxy +ℚ⁺ dyz))
-            ( binary-tr
-              ( le-ℚ⁺)
-              ( equational-reasoning
-                ((δ +ℚ⁺ ε) +ℚ⁺ (dxy +ℚ⁺ dyz)) +ℚ⁺ (θ₂ +ℚ⁺ θ₂)
-                ＝ (δ +ℚ⁺ dxy +ℚ⁺ (ε +ℚ⁺ dyz)) +ℚ⁺ (θa +ℚ⁺ θb +ℚ⁺ (θa +ℚ⁺ θb))
-                  by
-                    ap-add-ℚ⁺
-                      ( interchange-law-add-add-ℚ⁺ _ _ _ _)
-                      ( inv (ap-add-ℚ⁺ θa+θb=θ₂ θa+θb=θ₂))
-                ＝ (δ +ℚ⁺ dxy +ℚ⁺ (θa +ℚ⁺ θb)) +ℚ⁺ (ε +ℚ⁺ dyz +ℚ⁺ (θa +ℚ⁺ θb))
-                  by interchange-law-add-add-ℚ⁺ _ _ _ _
-                ＝ ((δ +ℚ⁺ (θa +ℚ⁺ θb)) +ℚ⁺ dxy) +ℚ⁺ (ε +ℚ⁺ (θa +ℚ⁺ θb) +ℚ⁺ dyz)
-                  by
-                    ap-add-ℚ⁺
-                      ( right-swap-add-ℚ⁺ _ _ _)
-                      ( right-swap-add-ℚ⁺ _ _ _)
-                ＝ (δ +ℚ⁺ θa +ℚ⁺ θb +ℚ⁺ dxy) +ℚ⁺ (ε +ℚ⁺ θa +ℚ⁺ θb +ℚ⁺ dyz)
-                  by
-                    inv
-                      ( ap-add-ℚ⁺
-                        ( ap (_+ℚ⁺ dxy) (associative-add-ℚ⁺ _ _ _))
-                        ( ap (_+ℚ⁺ dyz) (associative-add-ℚ⁺ _ _ _)))
-                ＝ (δ +ℚ⁺ θa +ℚ⁺ θb +ℚ⁺ dxy) +ℚ⁺ (θa +ℚ⁺ ε +ℚ⁺ θb +ℚ⁺ dyz)
-                  by
-                    ap-add-ℚ⁺
-                      ( refl)
-                      ( ap (_+ℚ⁺ dyz) (ap (_+ℚ⁺ θb) (commutative-add-ℚ⁺ ε θa))))
-              ( right-swap-add-ℚ⁺ (δ +ℚ⁺ ε) (dxy +ℚ⁺ dyz) θ)
-              ( preserves-le-right-add-ℚ⁺
-                ( δ +ℚ⁺ ε +ℚ⁺ (dxy +ℚ⁺ dyz))
-                ( θ₂ +ℚ⁺ θ₂)
-                ( θ)
-                ( θ₂+θ₂<θ)))
-            ( triangular-neighborhood-Metric-Space M xδ yθa zε
-              ( δ +ℚ⁺ θa +ℚ⁺ θb +ℚ⁺ dxy)
-              ( θa +ℚ⁺ ε +ℚ⁺ θb +ℚ⁺ dyz)
-              ( Ndyz θa ε θb)
-              ( Ndxy δ θa θb))
+        saturated-neighborhood-Metric-Space M (δ +ℚ⁺ ε +ℚ⁺ (dxy +ℚ⁺ dyz)) xδ zε
+          ( λ θ →
+            let
+              (θ₂ , θ₂+θ₂<θ) = bound-double-le-ℚ⁺ θ
+              (θa , θb , θa+θb=θ₂) = split-ℚ⁺ θ₂
+              yθa = map-cauchy-approximation-Metric-Space M y θa
+            in
+              monotonic-neighborhood-Metric-Space
+                ( M)
+                ( xδ)
+                ( zε)
+                ( (δ +ℚ⁺ θa +ℚ⁺ dxy +ℚ⁺ θb) +ℚ⁺ (θa +ℚ⁺ ε +ℚ⁺ dyz +ℚ⁺ θb))
+                ( δ +ℚ⁺ ε +ℚ⁺ (dxy +ℚ⁺ dyz) +ℚ⁺ θ)
+                ( tr
+                  ( λ q → le-ℚ⁺ q (δ +ℚ⁺ ε +ℚ⁺ (dxy +ℚ⁺ dyz) +ℚ⁺ θ))
+                  ( equational-reasoning
+                    ((δ +ℚ⁺ ε) +ℚ⁺ (dxy +ℚ⁺ dyz)) +ℚ⁺ (θ₂ +ℚ⁺ θ₂)
+                    ＝
+                      ((δ +ℚ⁺ dxy) +ℚ⁺ (ε +ℚ⁺ dyz)) +ℚ⁺
+                      ((θa +ℚ⁺ θb) +ℚ⁺ (θa +ℚ⁺ θb))
+                      by
+                        ap-add-ℚ⁺
+                          ( interchange-law-add-add-ℚ⁺ δ ε dxy dyz)
+                          ( inv (ap-add-ℚ⁺ θa+θb=θ₂ θa+θb=θ₂))
+                    ＝
+                      ((δ +ℚ⁺ dxy) +ℚ⁺ (θa +ℚ⁺ θb)) +ℚ⁺
+                      ((ε +ℚ⁺ dyz) +ℚ⁺ (θa +ℚ⁺ θb))
+                      by interchange-law-add-add-ℚ⁺ _ _ _ _
+                    ＝
+                      ((δ +ℚ⁺ θa) +ℚ⁺ (dxy +ℚ⁺ θb)) +ℚ⁺
+                      ((ε +ℚ⁺ θa) +ℚ⁺ (dyz +ℚ⁺ θb))
+                      by
+                        ap-add-ℚ⁺
+                          ( interchange-law-add-add-ℚ⁺ _ _ _ _)
+                          ( interchange-law-add-add-ℚ⁺ _ _ _ _)
+                    ＝
+                      (δ +ℚ⁺ θa +ℚ⁺ dxy +ℚ⁺ θb) +ℚ⁺
+                      ((θa +ℚ⁺ ε) +ℚ⁺ (dyz +ℚ⁺ θb))
+                      by
+                        ap-add-ℚ⁺
+                          ( inv (associative-add-ℚ⁺ _ _ _))
+                          ( ap-add-ℚ⁺ (commutative-add-ℚ⁺ _ _) refl)
+                    ＝ (δ +ℚ⁺ θa +ℚ⁺ dxy +ℚ⁺ θb) +ℚ⁺ (θa +ℚ⁺ ε +ℚ⁺ dyz +ℚ⁺ θb)
+                      by ap-add-ℚ⁺ refl (inv (associative-add-ℚ⁺ _ _ _)))
+                  ( preserves-le-right-add-ℚ⁺
+                    ( δ +ℚ⁺ ε +ℚ⁺ (dxy +ℚ⁺ dyz))
+                    ( θ₂ +ℚ⁺ θ₂)
+                    ( θ)
+                    ( θ₂+θ₂<θ)))
+                ( triangular-neighborhood-Metric-Space M xδ yθa zε
+                  ( δ +ℚ⁺ θa +ℚ⁺ dxy +ℚ⁺ θb)
+                  ( θa +ℚ⁺ ε +ℚ⁺ dyz +ℚ⁺ θb)
+                  ( monotonic-neighborhood-Metric-Space M yθa zε
+                    ( θa +ℚ⁺ ε +ℚ⁺ dyz)
+                    ( θa +ℚ⁺ ε +ℚ⁺ dyz +ℚ⁺ θb)
+                    ( le-left-add-ℚ⁺ (θa +ℚ⁺ ε +ℚ⁺ dyz) θb)
+                    ( Ndyz θa ε))
+                  ( monotonic-neighborhood-Metric-Space M xδ yθa
+                    ( δ +ℚ⁺ θa +ℚ⁺ dxy)
+                    ( δ +ℚ⁺ θa +ℚ⁺ dxy +ℚ⁺ θb)
+                    ( le-left-add-ℚ⁺ (δ +ℚ⁺ θa +ℚ⁺ dxy) θb)
+                    ( Ndxy δ θa))))
 ```
 
 ### The neighborhood relation is saturated
@@ -201,26 +209,20 @@ module _
           ( y)) →
       neighborhood-pseudometric-cauchy-approximation-Metric-Space ε x y
     saturated-neighborhood-pseudometric-cauchy-approximation-Metric-Space
-      d x y H δ ε θ =
+      d x y H δ ε =
         let
           xδ = map-cauchy-approximation-Metric-Space M x δ
           yε = map-cauchy-approximation-Metric-Space M y ε
-          (θa , θb , θa+θb=θ) = split-ℚ⁺ θ
         in
-          tr
-            ( λ γ → neighborhood-Metric-Space M γ xδ yε)
-            ( equational-reasoning
-              δ +ℚ⁺ ε +ℚ⁺ θa +ℚ⁺ (d +ℚ⁺ θb)
-              ＝ (δ +ℚ⁺ ε) +ℚ⁺ (θa +ℚ⁺ (d +ℚ⁺ θb)) by associative-add-ℚ⁺ _ _ _
-              ＝ (δ +ℚ⁺ ε) +ℚ⁺ (d +ℚ⁺ (θa +ℚ⁺ θb))
-                by ap-add-ℚ⁺ refl (left-swap-add-ℚ⁺ _ _ _)
-              ＝ (δ +ℚ⁺ ε) +ℚ⁺ (d +ℚ⁺ θ)
-                by ap-add-ℚ⁺ refl (ap-add-ℚ⁺ refl θa+θb=θ)
-              ＝ (δ +ℚ⁺ ε) +ℚ⁺ (θ +ℚ⁺ d)
-                by ap-add-ℚ⁺ refl (commutative-add-ℚ⁺ d θ)
-              ＝ δ +ℚ⁺ ε +ℚ⁺ θ +ℚ⁺ d
-                by inv (associative-add-ℚ⁺ _ _ _))
-            ( H θb δ ε θa)
+          saturated-neighborhood-Metric-Space M
+            ( δ +ℚ⁺ ε +ℚ⁺ d)
+            ( xδ)
+            ( yε)
+            ( λ θ →
+              tr
+                ( λ η → neighborhood-Metric-Space M η xδ yε)
+                ( inv (associative-add-ℚ⁺ _ _ _))
+                ( H θ δ ε))
 ```
 
 ### The pseudometric space of Cauchy approximations
@@ -258,9 +260,9 @@ module _
       ( map-pseudometric-cauchy-approximation-Metric-Space x)
       ( map-pseudometric-cauchy-approximation-Metric-Space y)
   map-neighborhood-pseudometric-cauchy-approximation-Metric-Space
-    d x y Ndxy δ ε θ =
-      monotonic-neighborhood-Metric-Space M x y d (δ +ℚ⁺ ε +ℚ⁺ θ +ℚ⁺ d)
-        ( le-right-add-ℚ⁺ (δ +ℚ⁺ ε +ℚ⁺ θ) d)
+    d x y Ndxy δ ε =
+      monotonic-neighborhood-Metric-Space M x y d (δ +ℚ⁺ ε +ℚ⁺ d)
+        ( le-right-add-ℚ⁺ (δ +ℚ⁺ ε) d)
         ( Ndxy)
 
   abstract
@@ -276,17 +278,12 @@ module _
         saturated-neighborhood-Metric-Space M d x y
           ( λ δ →
             let
-              (δ₁₂ , δ₃ , δ₁₂+δ₃=δ) = split-ℚ⁺ δ
-              (δ₁ , δ₂ , δ₁+δ₂=δ₁₂) = split-ℚ⁺ δ₁₂
+              (δ₁ , δ₂ , δ₁+δ₂=δ) = split-ℚ⁺ δ
             in
               tr
                 ( λ ε → neighborhood-Metric-Space M ε x y)
-                ( equational-reasoning
-                  δ₁ +ℚ⁺ δ₂ +ℚ⁺ δ₃ +ℚ⁺ d
-                  ＝ δ₁₂ +ℚ⁺ δ₃ +ℚ⁺ d by ap (_+ℚ⁺ d) (ap (_+ℚ⁺ δ₃) δ₁+δ₂=δ₁₂)
-                  ＝ δ +ℚ⁺ d by ap (_+ℚ⁺ d) δ₁₂+δ₃=δ
-                  ＝ d +ℚ⁺ δ by commutative-add-ℚ⁺ δ d)
-                ( Ndxy' δ₁ δ₂ δ₃))
+                ( commutative-add-ℚ⁺ _ _ ∙ ap (d +ℚ⁺_) δ₁+δ₂=δ)
+                ( Ndxy' δ₁ δ₂))
 
   isometry-map-pseudometric-cauchy-approximation-Metric-Space :
     isometry-Pseudometric-Space
