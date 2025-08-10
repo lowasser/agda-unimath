@@ -187,8 +187,11 @@ open import group-theory.subsets-monoids public
 open import group-theory.subsets-semigroups public
 open import group-theory.substitution-functor-concrete-group-actions public
 open import group-theory.substitution-functor-group-actions public
+open import group-theory.sums-of-finite-families-of-elements-abelian-groups public
 open import group-theory.sums-of-finite-families-of-elements-commutative-monoids public
+open import group-theory.sums-of-finite-sequences-of-elements-abelian-groups public
 open import group-theory.sums-of-finite-sequences-of-elements-commutative-monoids public
+open import group-theory.sums-of-finite-sequences-of-elements-groups public
 open import group-theory.sums-of-finite-sequences-of-elements-monoids public
 open import group-theory.surjective-group-homomorphisms public
 open import group-theory.surjective-semigroup-homomorphisms public

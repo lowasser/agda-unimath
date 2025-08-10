@@ -19,9 +19,7 @@ open import foundation.action-on-identifications-functions
 open import foundation.cartesian-product-types
 open import foundation.coproduct-types
 open import foundation.dependent-pair-types
-open import foundation.empty-types
 open import foundation.equivalences
-open import foundation.function-extensionality
 open import foundation.function-types
 open import foundation.homotopies
 open import foundation.identity-types
@@ -37,7 +35,6 @@ open import linear-algebra.finite-sequences-in-commutative-monoids
 open import lists.lists
 
 open import univalent-combinatorics.coproduct-types
-open import univalent-combinatorics.finite-types
 open import univalent-combinatorics.standard-finite-types
 ```
 
