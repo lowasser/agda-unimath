@@ -108,6 +108,7 @@ open import group-theory.intersections-subgroups-groups public
 open import group-theory.inverse-semigroups public
 open import group-theory.invertible-elements-monoids public
 open import group-theory.isomorphisms-abelian-groups public
+open import group-theory.isomorphisms-commutative-monoids public
 open import group-theory.isomorphisms-concrete-groups public
 open import group-theory.isomorphisms-group-actions public
 open import group-theory.isomorphisms-groups public
