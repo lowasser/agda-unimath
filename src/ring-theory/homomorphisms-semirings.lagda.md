@@ -110,11 +110,11 @@ module _
         ( additive-commutative-monoid-Semiring S)
         ( hom-additive-commutative-monoid-hom-Semiring)
 
-    preserves-addition-hom-Semiring :
+    preserves-add-hom-Semiring :
       {x y : type-Semiring R} →
       map-hom-Semiring (add-Semiring R x y) ＝
       add-Semiring S (map-hom-Semiring x) (map-hom-Semiring y)
-    preserves-addition-hom-Semiring =
+    preserves-add-hom-Semiring =
       preserves-mul-hom-Commutative-Monoid
         ( additive-commutative-monoid-Semiring R)
         ( additive-commutative-monoid-Semiring S)

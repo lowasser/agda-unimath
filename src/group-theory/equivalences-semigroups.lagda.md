@@ -7,6 +7,7 @@ module group-theory.equivalences-semigroups where
 <details><summary>Imports</summary>
 
 ```agda
+open import foundation.action-on-identifications-functions
 open import foundation.dependent-pair-types
 open import foundation.equivalences
 open import foundation.function-extensionality
@@ -64,9 +65,98 @@ module _
 
   is-equiv-hom-Semigroup : hom-Semigroup G H → UU (l1 ⊔ l2)
   is-equiv-hom-Semigroup f = is-equiv (map-hom-Semigroup G H f)
+
+module _
+  {l1 l2 : Level} (G : Semigroup l1) (H : Semigroup l2)
+  (e : equiv-Semigroup G H)
+  where
+
+  equiv-equiv-Semigroup : type-Semigroup G ≃ type-Semigroup H
+  equiv-equiv-Semigroup = pr1 e
+
+  map-equiv-Semigroup : type-Semigroup G → type-Semigroup H
+  map-equiv-Semigroup = map-equiv equiv-equiv-Semigroup
+
+  is-equiv-map-equiv-Semigroup : is-equiv map-equiv-Semigroup
+  is-equiv-map-equiv-Semigroup = is-equiv-map-equiv equiv-equiv-Semigroup
+
+  preserves-mul-equiv-equiv-Semigroup :
+    preserves-mul-equiv-Semigroup G H equiv-equiv-Semigroup
+  preserves-mul-equiv-equiv-Semigroup = pr2 e
+
+  preserves-mul-map-equiv-Semigroup :
+    preserves-mul-Semigroup G H map-equiv-Semigroup
+  preserves-mul-map-equiv-Semigroup = preserves-mul-equiv-equiv-Semigroup
+
+  hom-equiv-Semigroup : hom-Semigroup G H
+  pr1 hom-equiv-Semigroup = map-equiv-Semigroup
+  pr2 hom-equiv-Semigroup = preserves-mul-map-equiv-Semigroup
+
+  inv-equiv-equiv-Semigroup : type-Semigroup H ≃ type-Semigroup G
+  inv-equiv-equiv-Semigroup = inv-equiv equiv-equiv-Semigroup
+
+  map-inv-equiv-equiv-Semigroup : type-Semigroup H → type-Semigroup G
+  map-inv-equiv-equiv-Semigroup = map-equiv inv-equiv-equiv-Semigroup
 ```
 
 ## Properties
+
+### The inverse of an equivalence of semigroups preserves the binary operation
+
+```agda
+module _
+  {l1 l2 : Level} (G : Semigroup l1) (H : Semigroup l2)
+  where
+
+  abstract
+    preserves-mul-map-inv-is-equiv-Semigroup :
+      ( f : hom-Semigroup G H)
+      ( U : is-equiv (map-hom-Semigroup G H f)) →
+      preserves-mul-Semigroup H G (map-inv-is-equiv U)
+    preserves-mul-map-inv-is-equiv-Semigroup (f , μ-f) U {x} {y} =
+      map-inv-is-equiv
+        ( is-emb-is-equiv U
+          ( map-inv-is-equiv U (mul-Semigroup H x y))
+          ( mul-Semigroup G
+            ( map-inv-is-equiv U x)
+            ( map-inv-is-equiv U y)))
+        ( ( is-section-map-inv-is-equiv U (mul-Semigroup H x y)) ∙
+          ( ap
+            ( λ t → mul-Semigroup H t y)
+            ( inv (is-section-map-inv-is-equiv U x))) ∙
+          ( ap
+            ( mul-Semigroup H (f (map-inv-is-equiv U x)))
+            ( inv (is-section-map-inv-is-equiv U y))) ∙
+          ( inv μ-f))
+
+module _
+  {l1 l2 : Level} (G : Semigroup l1) (H : Semigroup l2)
+  (e : equiv-Semigroup G H)
+  where
+
+  preserves-mul-map-inv-equiv-Semigroup :
+    preserves-mul-Semigroup H G (map-inv-equiv-equiv-Semigroup G H e)
+  preserves-mul-map-inv-equiv-Semigroup =
+    preserves-mul-map-inv-is-equiv-Semigroup G H
+      ( hom-equiv-Semigroup G H e)
+      ( is-equiv-map-equiv-Semigroup G H e)
+
+  hom-inv-equiv-Semigroup : hom-Semigroup H G
+  pr1 hom-inv-equiv-Semigroup = map-inv-equiv-equiv-Semigroup G H e
+  pr2 hom-inv-equiv-Semigroup = preserves-mul-map-inv-equiv-Semigroup
+```
+
+### The identity equivalence of semigroups
+
+```agda
+module _
+  {l : Level} (G : Semigroup l)
+  where
+
+  id-equiv-Semigroup : equiv-Semigroup G G
+  pr1 id-equiv-Semigroup = id-equiv
+  pr2 id-equiv-Semigroup = refl
+```
 
 ### The total space of all equivalences of semigroups with domain `G` is contractible
 

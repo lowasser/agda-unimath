@@ -224,35 +224,6 @@ module _
       { Y = H}
 ```
 
-### The inverse of an equivalence of semigroups preserves the binary operation
-
-```agda
-module _
-  {l1 l2 : Level} (G : Semigroup l1) (H : Semigroup l2)
-  where
-
-  abstract
-    preserves-mul-map-inv-is-equiv-Semigroup :
-      ( f : hom-Semigroup G H)
-      ( U : is-equiv (map-hom-Semigroup G H f)) →
-      preserves-mul-Semigroup H G (map-inv-is-equiv U)
-    preserves-mul-map-inv-is-equiv-Semigroup (f , μ-f) U {x} {y} =
-      map-inv-is-equiv
-        ( is-emb-is-equiv U
-          ( map-inv-is-equiv U (mul-Semigroup H x y))
-          ( mul-Semigroup G
-            ( map-inv-is-equiv U x)
-            ( map-inv-is-equiv U y)))
-        ( ( is-section-map-inv-is-equiv U (mul-Semigroup H x y)) ∙
-          ( ap
-            ( λ t → mul-Semigroup H t y)
-            ( inv (is-section-map-inv-is-equiv U x))) ∙
-          ( ap
-            ( mul-Semigroup H (f (map-inv-is-equiv U x)))
-            ( inv (is-section-map-inv-is-equiv U y))) ∙
-          ( inv μ-f))
-```
-
 ### A homomorphism of semigroups is an equivalence of semigroups if and only if it is an isomorphism
 
 ```agda

@@ -9,15 +9,25 @@ module group-theory.isomorphisms-monoids where
 ```agda
 open import category-theory.isomorphisms-in-large-precategories
 
+open import foundation.action-on-identifications-functions
+open import foundation.contractible-types
+open import foundation.dependent-pair-types
+open import foundation.equality-dependent-pair-types
+open import foundation.equivalences
 open import foundation.function-types
+open import foundation.functoriality-dependent-pair-types
 open import foundation.homotopies
 open import foundation.identity-types
+open import foundation.logical-equivalences
 open import foundation.propositions
 open import foundation.sets
+open import foundation.torsorial-type-families
 open import foundation.transport-along-identifications
 open import foundation.universe-levels
 
+open import group-theory.equivalences-monoids
 open import group-theory.homomorphisms-monoids
+open import group-theory.homomorphisms-semigroups
 open import group-theory.invertible-elements-monoids
 open import group-theory.monoids
 open import group-theory.precategory-of-monoids
@@ -43,14 +53,16 @@ module _
   is-iso-Monoid =
     is-iso-Large-Precategory Monoid-Large-Precategory {X = M} {Y = N} f
 
-  hom-inv-is-iso-Monoid :
-    is-iso-Monoid → hom-Monoid N M
+  hom-inv-is-iso-Monoid : is-iso-Monoid → hom-Monoid N M
   hom-inv-is-iso-Monoid =
     hom-inv-is-iso-Large-Precategory
       ( Monoid-Large-Precategory)
       { X = M}
       { Y = N}
       ( f)
+
+  map-inv-is-iso-Monoid : is-iso-Monoid → type-Monoid N → type-Monoid M
+  map-inv-is-iso-Monoid H = map-hom-Monoid N M (hom-inv-is-iso-Monoid H)
 
   is-section-hom-inv-is-iso-Monoid :
     (H : is-iso-Monoid) →
@@ -63,6 +75,12 @@ module _
       { Y = N}
       ( f)
 
+  is-section-map-inv-is-iso-Monoid :
+    (H : is-iso-Monoid) →
+    map-hom-Monoid M N f ∘ map-inv-is-iso-Monoid H ~ id
+  is-section-map-inv-is-iso-Monoid H n =
+    ap (λ h → map-hom-Monoid N N h n) (is-section-hom-inv-is-iso-Monoid H)
+
   is-retraction-hom-inv-is-iso-Monoid :
     (H : is-iso-Monoid) →
     comp-hom-Monoid M N M (hom-inv-is-iso-Monoid H) f ＝
@@ -73,6 +91,12 @@ module _
       { X = M}
       { Y = N}
       ( f)
+
+  is-retraction-map-inv-is-iso-Monoid :
+    (H : is-iso-Monoid) →
+    map-inv-is-iso-Monoid H ∘ map-hom-Monoid M N f ~ id
+  is-retraction-map-inv-is-iso-Monoid H m =
+    ap (λ h → map-hom-Monoid M M h m) (is-retraction-hom-inv-is-iso-Monoid H)
 ```
 
 ### Isomorphisms of monoids
@@ -334,4 +358,122 @@ module _
       ( preserves-invertible-elements-hom-Monoid N M
         ( hom-inv-iso-Monoid M N f)
         ( H))
+```
+
+### Equivalences of monoids are equivalent to isomorphisms of monoids
+
+```agda
+module _
+  {l1 l2 : Level} (M : Monoid l1) (N : Monoid l2)
+  (let
+    G = semigroup-Monoid M
+    H = semigroup-Monoid N)
+  where
+
+  equiv-iso-Monoid : iso-Monoid M N → type-Monoid M ≃ type-Monoid N
+  pr1 (equiv-iso-Monoid i) =
+    map-iso-Monoid M N i
+  pr2 (equiv-iso-Monoid i) =
+    is-equiv-is-invertible
+      ( map-inv-iso-Monoid M N i)
+      ( is-section-map-inv-iso-Monoid M N i)
+      ( is-retraction-map-inv-iso-Monoid M N i)
+
+  equiv-Monoid-iso-Monoid : iso-Monoid M N → equiv-Monoid M N
+  pr1 (equiv-Monoid-iso-Monoid i) =
+    ( equiv-iso-Monoid i , preserves-mul-iso-Monoid M N i)
+  pr2 (equiv-Monoid-iso-Monoid i) =
+    preserves-unit-hom-Monoid M N
+      ( hom-iso-Monoid M N i)
+
+module _
+  {l1 l2 : Level} (M : Monoid l1) (N : Monoid l2)
+  where
+
+  is-equiv-prop-hom-Monoid : hom-Monoid M N → Prop (l1 ⊔ l2)
+  is-equiv-prop-hom-Monoid f = is-equiv-Prop (map-hom-Monoid M N f)
+
+  is-equiv-hom-Monoid : hom-Monoid M N → UU (l1 ⊔ l2)
+  is-equiv-hom-Monoid f = type-Prop (is-equiv-prop-hom-Monoid f)
+
+  equiv-Monoid' : UU (l1 ⊔ l2)
+  equiv-Monoid' = Σ (hom-Monoid M N) is-equiv-hom-Monoid
+
+  equiv-Monoid-equiv-Monoid' :
+    equiv-Monoid' ≃ equiv-Monoid M N
+  pr1 equiv-Monoid-equiv-Monoid' (((h , M) , H) , E) = ((h , E) , M) , H
+  pr2 equiv-Monoid-equiv-Monoid' =
+    is-equiv-is-invertible
+      ( λ (((h , E) , M) , H) → ((h , M) , H) , E)
+      ( refl-htpy)
+      ( refl-htpy)
+
+  is-equiv-is-iso-hom-Monoid :
+    (f : hom-Monoid M N) → is-iso-Monoid M N f → is-equiv-hom-Monoid f
+  is-equiv-is-iso-hom-Monoid f i =
+    is-equiv-is-invertible
+      ( map-hom-Monoid N M (hom-inv-is-iso-Monoid M N f i))
+      ( λ x →
+        ap
+          ( λ p → pr1 (pr1 p) x)
+          ( is-section-hom-inv-is-iso-Monoid M N f i))
+          ( λ x →
+              ap
+                ( λ p → pr1 (pr1 p) x)
+                ( is-retraction-hom-inv-is-iso-Monoid M N f i))
+
+  is-iso-is-equiv-hom-Monoid :
+    (f : hom-Monoid M N) → is-equiv-hom-Monoid f → is-iso-Monoid M N f
+  is-iso-is-equiv-hom-Monoid f e =
+    ( ( hom-inv-equiv-Monoid M N e') ,
+      ( eq-pair-Σ
+        ( eq-htpy-hom-Semigroup H H
+          ( is-section-map-inv-equiv (equiv-equiv-Monoid M N e')))
+        ( is-set-has-uip (is-set-type-Monoid N) _ _ _ _)) ,
+      ( eq-pair-Σ
+        ( eq-htpy-hom-Semigroup G G
+          ( is-retraction-map-inv-equiv (equiv-equiv-Monoid M N e')))
+        ( is-set-has-uip (is-set-type-Monoid M) _ _ _ _)))
+    where
+    e' = map-equiv equiv-Monoid-equiv-Monoid' (f , e)
+    G = semigroup-Monoid M
+    H = semigroup-Monoid N
+
+  equiv-equiv-Monoid-iso-Monoid :
+    equiv-Monoid' ≃ iso-Monoid M N
+  equiv-equiv-Monoid-iso-Monoid =
+    equiv-tot
+      ( λ f →
+        equiv-iff
+          ( is-equiv-prop-hom-Monoid f)
+          ( is-iso-prop-Monoid M N f)
+          ( is-iso-is-equiv-hom-Monoid f)
+          ( is-equiv-is-iso-hom-Monoid f))
+
+  equiv-iso-equiv-Monoid : equiv-Monoid M N ≃ iso-Monoid M N
+  equiv-iso-equiv-Monoid =
+    equiv-equiv-Monoid-iso-Monoid ∘e inv-equiv equiv-Monoid-equiv-Monoid'
+
+  iso-equiv-Monoid : equiv-Monoid M N → iso-Monoid M N
+  iso-equiv-Monoid = map-equiv equiv-iso-equiv-Monoid
+
+iso-extensionality-Monoid :
+  {l : Level} (M N : Monoid l) → (M ＝ N) ≃ iso-Monoid M N
+iso-extensionality-Monoid M N =
+  equiv-iso-equiv-Monoid M N ∘e extensionality-Monoid M N
+```
+
+### Isomorphisms to `M` are torsorial
+
+```agda
+module _
+  {l : Level} (M : Monoid l)
+  where
+
+  is-torsorial-iso-Monoid : is-torsorial (iso-Monoid M)
+  is-torsorial-iso-Monoid =
+    is-contr-equiv'
+      ( Σ (Monoid l) (equiv-Monoid M))
+      ( equiv-tot (equiv-iso-equiv-Monoid M))
+      ( is-torsorial-equiv-Monoid M)
 ```

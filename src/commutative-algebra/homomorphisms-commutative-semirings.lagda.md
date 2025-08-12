@@ -75,14 +75,14 @@ module _
         ( semiring-Commutative-Semiring B)
         ( f)
 
-    preserves-addition-hom-Commutative-Semiring :
+    preserves-add-hom-Commutative-Semiring :
       {x y : type-Commutative-Semiring A} →
       map-hom-Commutative-Semiring (add-Commutative-Semiring A x y) ＝
       add-Commutative-Semiring B
         ( map-hom-Commutative-Semiring x)
         ( map-hom-Commutative-Semiring y)
-    preserves-addition-hom-Commutative-Semiring =
-      preserves-addition-hom-Semiring
+    preserves-add-hom-Commutative-Semiring =
+      preserves-add-hom-Semiring
         ( semiring-Commutative-Semiring A)
         ( semiring-Commutative-Semiring B)
         ( f)
