@@ -31,8 +31,10 @@ open import group-theory.precategory-of-commutative-monoids
 
 ## Idea
 
-An **isomorphism** of [monoids](group-theory.monoids.md) is an invertible
-[homomorphism of monoids](group-theory.homomorphisms-monoids.md).
+An
+{{#concept "isomorphism" disambiguation="of commutative monoids" WDID=Q189112 WD="isomorphism" Agda=iso-Commutative-Monoid}}
+of [commutative monoids](group-theory.commutative-monoids.md) is an invertible
+[homomorphism of commutative monoids](group-theory.homomorphisms-commutative-monoids.md).
 
 ## Definitions
 
@@ -110,7 +112,7 @@ module _
       ( f)
 ```
 
-### Isomorphisms of monoids
+### Isomorphisms of commutative monoids
 
 ```agda
 module _

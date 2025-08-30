@@ -34,7 +34,10 @@ open import group-theory.semigroups
 
 ## Idea
 
-Isomorphisms of semigroups are homomorphisms that have a two-sided inverse.
+An
+{{#concept "isomorphism" disambiguation="of semigroups" WDID=Q189112 WD="isomorphism" Agda=iso-Semigroup}}
+of [semigroups](group-theory.semigroups.md) is an invertible
+[homomorphism of semigroups](group-theory.homomorphisms-semigroups.md).
 
 ## Definition
 

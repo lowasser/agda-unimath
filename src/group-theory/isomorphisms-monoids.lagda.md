@@ -36,7 +36,9 @@ open import group-theory.precategory-of-monoids
 
 ## Idea
 
-An **isomorphism** of [monoids](group-theory.monoids.md) is an invertible
+An
+{{#concept "isomorphism" disambiguation="of monoids" WDID=Q189112 WD="isomorphism" Agda=iso-Monoid}}
+of [monoids](group-theory.monoids.md) is an invertible
 [homomorphism of monoids](group-theory.homomorphisms-monoids.md).
 
 ## Definitions
