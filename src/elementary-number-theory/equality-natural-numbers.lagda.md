@@ -14,6 +14,7 @@ open import foundation.coproduct-types
 open import foundation.decidable-equality
 open import foundation.decidable-types
 open import foundation.dependent-pair-types
+open import foundation.discrete-types
 open import foundation.empty-types
 open import foundation.equivalences
 open import foundation.function-types
@@ -22,11 +23,11 @@ open import foundation.identity-types
 open import foundation.propositions
 open import foundation.set-truncations
 open import foundation.sets
+open import foundation.tight-apartness-relations
 open import foundation.unit-type
 open import foundation.universe-levels
 
 open import foundation-core.decidable-propositions
-open import foundation-core.discrete-types
 open import foundation-core.torsorial-type-families
 ```
 
@@ -160,8 +161,8 @@ is-torsorial-Eq-ℕ :
   (m : ℕ) → is-torsorial (Eq-ℕ m)
 pr1 (pr1 (is-torsorial-Eq-ℕ m)) = m
 pr2 (pr1 (is-torsorial-Eq-ℕ m)) = refl-Eq-ℕ m
-pr2 (is-torsorial-Eq-ℕ zero-ℕ) (pair zero-ℕ star) = refl
-pr2 (is-torsorial-Eq-ℕ (succ-ℕ m)) (pair (succ-ℕ n) e) =
+pr2 (is-torsorial-Eq-ℕ zero-ℕ) (zero-ℕ , _) = refl
+pr2 (is-torsorial-Eq-ℕ (succ-ℕ m)) (succ-ℕ n , e) =
   ap (map-total-Eq-ℕ m) (pr2 (is-torsorial-Eq-ℕ m) (pair n e))
 
 is-equiv-Eq-eq-ℕ :
@@ -178,4 +179,12 @@ is-equiv-Eq-eq-ℕ {m} {n} =
 ```agda
 equiv-unit-trunc-ℕ-Set : ℕ ≃ type-trunc-Set ℕ
 equiv-unit-trunc-ℕ-Set = equiv-unit-trunc-Set ℕ-Set
+```
+
+### The natural numbers have a tight apartness relation
+
+```agda
+ℕ-Type-With-Tight-Apartness : Type-With-Tight-Apartness lzero lzero
+ℕ-Type-With-Tight-Apartness =
+  type-with-tight-apartness-Discrete-Type ℕ-Discrete-Type
 ```
