@@ -10,7 +10,10 @@ module set-theory.cardinalities where
 open import foundation.binary-relations
 open import foundation.dependent-pair-types
 open import foundation.equivalences
+open import foundation.unit-type
+open import foundation.empty-types
 open import foundation.function-extensionality
+open import foundation.raising-universe-levels
 open import foundation.functoriality-propositional-truncation
 open import foundation.identity-types
 open import foundation.large-binary-relations
@@ -53,6 +56,16 @@ cardinal l = type-Set (cardinal-Set l)
 
 cardinality : {l : Level} → Set l → cardinal l
 cardinality A = unit-trunc-Set A
+```
+
+### Important cardinalities
+
+```agda
+zero-cardinal : (l : Level) → cardinal l
+zero-cardinal l = cardinality (raise-Set l empty-Set)
+
+one-cardinal : (l : Level) → cardinal l
+one-cardinal l = cardinality (raise-Set l unit-Set)
 ```
 
 ### Inequality of cardinalities

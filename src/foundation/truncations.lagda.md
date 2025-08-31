@@ -571,3 +571,14 @@ module _
       is-retraction-map-inv-trunc-Σ
       is-section-map-inv-trunc-Σ
 ```
+## `do` syntax for truncation { #do-syntax }
+
+```agda
+module do-syntax-trunc {l : Level} {t : 𝕋} (motive : Truncated-Type l t) where
+  _>>=_ :
+    {l1 : Level} {A : UU l1} →
+    type-trunc t A → (A → type-Truncated-Type motive) →
+    type-Truncated-Type motive
+  trunc-a >>= k =
+    map-universal-property-trunc motive k trunc-a
+```

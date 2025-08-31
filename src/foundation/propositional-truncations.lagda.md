@@ -489,11 +489,7 @@ with the module
 
 ```agda
 module do-syntax-trunc-Prop {l : Level} (motive : Prop l) where
-  _>>=_ :
-    {l : Level} {A : UU l} →
-    type-trunc-Prop A → (A → type-Prop motive) →
-    type-Prop motive
-  trunc-prop-a >>= k = rec-trunc-Prop motive k trunc-prop-a
+  open do-syntax-trunc motive
 ```
 
 This allows us to rewrite the nested chain above as
