@@ -10,10 +10,12 @@ module metric-spaces.limits-of-sequences-metric-spaces where
 open import elementary-number-theory.inequality-natural-numbers
 open import elementary-number-theory.maximum-natural-numbers
 open import elementary-number-theory.natural-numbers
+open import elementary-number-theory.addition-natural-numbers
 open import elementary-number-theory.positive-rational-numbers
 
 open import foundation.dependent-pair-types
 open import foundation.function-types
+open import foundation.existential-quantification
 open import foundation.functoriality-dependent-pair-types
 open import foundation.identity-types
 open import foundation.inhabited-subtypes
@@ -266,6 +268,33 @@ module _
       ( map-short-function-Metric-Space A B f lim)
   short-map-limit-sequence-Metric-Space =
     map-is-inhabited short-map-limit-modulus-sequence-Metric-Space
+```
+
+### A sequence's limit is the same even after dropping a finite number of elements
+
+```agda
+module _
+  {l1 l2 : Level} (M : Metric-Space l1 l2)
+  where
+
+  is-limit-is-limit-drop-sequence-Metric-Space :
+    (n : ℕ) (f : sequence-type-Metric-Space M) (x : type-Metric-Space M) →
+    is-limit-sequence-Metric-Space M (drop-sequence n f) x →
+    is-limit-sequence-Metric-Space M f x
+  is-limit-is-limit-drop-sequence-Metric-Space n f x H =
+    let open do-syntax-trunc-Prop (is-limit-prop-sequence-Metric-Space M f x)
+    in do
+      (μ , is-modulus-μ) ← H
+      intro-exists
+        ( add-ℕ n ∘ μ)
+        ( λ ε i n+με≤i →
+          let
+            (k , k+με=i) = subtraction-leq-ℕ n i {!   !}
+          in
+            tr
+              ( λ j → neighborhood-Metric-Space M ε (f j) x)
+              {!   !}
+              ( is-modulus-μ ε {!   !} {!   !}))
 ```
 
 ## See also

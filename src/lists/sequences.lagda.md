@@ -7,6 +7,8 @@ module lists.sequences where
 <details><summary>Imports</summary>
 
 ```agda
+open import elementary-number-theory.addition-natural-numbers
+open import elementary-number-theory.natural-numbers
 open import foundation.universe-levels
 
 open import foundation-core.function-types
@@ -42,6 +44,13 @@ sequence A = dependent-sequence (λ _ → A)
 map-sequence :
   {l1 l2 : Level} {A : UU l1} {B : UU l2} → (A → B) → sequence A → sequence B
 map-sequence f a = f ∘ a
+```
+
+### Dropping elements from a sequence
+
+```agda
+drop-sequence : {l : Level} {A : UU l} → (n : ℕ) → sequence A → sequence A
+drop-sequence n f = f ∘ add-ℕ n
 ```
 
 ## References
