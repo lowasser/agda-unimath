@@ -15,6 +15,7 @@ open import foundation.propositional-truncations
 open import foundation.propositions
 open import foundation.universe-levels
 
+open import metric-spaces.cartesian-products-metric-spaces
 open import metric-spaces.equality-of-metric-spaces
 open import metric-spaces.functions-metric-spaces
 open import metric-spaces.images-isometries-metric-spaces
@@ -174,4 +175,29 @@ module _
       map-is-inhabited
         ( λ μX ε → net-im-isometric-equiv-net-Metric-Space X Y f ε (μX ε))
         ( tbX)
+```
+
+### Total boundedness is preserved by Cartesian products
+
+```agda
+module _
+  {l1 l2 l3 l4 l5 l6 : Level} (X : Metric-Space l1 l2) (Y : Metric-Space l3 l4)
+  (tbX : is-totally-bounded-Metric-Space l5 X)
+  (tbY : is-totally-bounded-Metric-Space l6 Y)
+  where
+
+  abstract
+    is-totally-bounded-product-Metric-Space :
+      is-totally-bounded-Metric-Space (l5 ⊔ l6) (product-Metric-Space X Y)
+    is-totally-bounded-product-Metric-Space =
+      let
+        open
+          do-syntax-trunc-Prop
+            ( is-totally-bounded-prop-Metric-Space
+              ( l5 ⊔ l6)
+              ( product-Metric-Space X Y))
+      in do
+        MX ← tbX
+        MY ← tbY
+        unit-trunc-Prop (λ ε → product-net-Metric-Space X Y ε (MX ε) (MY ε))
 ```

@@ -8,7 +8,10 @@ module univalent-combinatorics.finitely-enumerable-subtypes where
 
 ```agda
 open import foundation.action-on-identifications-functions
+open import foundation.cartesian-product-types
+open import foundation.cartesian-products-subtypes
 open import foundation.dependent-pair-types
+open import foundation.equivalences
 open import foundation.existential-quantification
 open import foundation.fibers-of-maps
 open import foundation.function-types
@@ -125,4 +128,19 @@ module _
   finitely-enumerable-subtype-im-finitely-enumerable-subtype =
     ( im-finitely-enumerable-subtype ,
       is-finitely-enumerable-im-finitely-enumerable-subtype)
+```
+
+### Finitely enumerable subtypes are closed under Cartesian products
+
+```agda
+product-finitely-enumerable-subtype :
+  {l1 l2 l3 l4 : Level} {X : UU l1} {Y : UU l2} →
+  (S : finitely-enumerable-subtype l3 X) →
+  (T : finitely-enumerable-subtype l4 Y) →
+  finitely-enumerable-subtype (l3 ⊔ l4) (X × Y)
+product-finitely-enumerable-subtype (S , feS) (T , feT) =
+  ( product-subtype S T ,
+    is-finitely-enumerable-equiv
+      ( inv-equiv (equiv-type-product-subtype S T))
+      ( is-finitely-enumerable-product feS feT))
 ```
