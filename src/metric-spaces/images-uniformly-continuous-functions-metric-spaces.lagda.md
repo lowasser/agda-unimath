@@ -35,17 +35,17 @@ continuity for the unit map of the image.
 ```agda
 module _
   {l1 l2 l3 l4 : Level} (X : Metric-Space l1 l2) (Y : Metric-Space l3 l4)
-  (f : uniformly-continuous-function-Metric-Space X Y)
+  (f : ucont-function-Metric-Space X Y)
   where
 
-  im-uniformly-continuous-function-Metric-Space : Metric-Space (l1 ⊔ l3) l4
-  im-uniformly-continuous-function-Metric-Space =
-    im-Metric-Space X Y (map-uniformly-continuous-function-Metric-Space X Y f)
+  im-ucont-function-Metric-Space : Metric-Space (l1 ⊔ l3) l4
+  im-ucont-function-Metric-Space =
+    im-Metric-Space X Y (map-ucont-function-Metric-Space X Y f)
 
-  map-unit-im-uniformly-continuous-function-Metric-Space :
-    type-function-Metric-Space X im-uniformly-continuous-function-Metric-Space
-  map-unit-im-uniformly-continuous-function-Metric-Space =
-    map-unit-im (map-uniformly-continuous-function-Metric-Space X Y f)
+  map-unit-im-ucont-function-Metric-Space :
+    type-function-Metric-Space X im-ucont-function-Metric-Space
+  map-unit-im-ucont-function-Metric-Space =
+    map-unit-im (map-ucont-function-Metric-Space X Y f)
 ```
 
 ## Properties
@@ -75,22 +75,22 @@ module _
 ```agda
 module _
   {l1 l2 l3 l4 : Level} (X : Metric-Space l1 l2) (Y : Metric-Space l3 l4)
-  (f : uniformly-continuous-function-Metric-Space X Y)
+  (f : ucont-function-Metric-Space X Y)
   where
 
-  is-uniformly-continuous-map-unit-im-uniformly-continuous-function-Metric-Space :
-    is-uniformly-continuous-function-Metric-Space
+  is-ucont-map-unit-im-ucont-function-Metric-Space :
+    is-ucont-function-Metric-Space
       ( X)
-      ( im-uniformly-continuous-function-Metric-Space X Y f)
-      ( map-unit-im-uniformly-continuous-function-Metric-Space X Y f)
-  is-uniformly-continuous-map-unit-im-uniformly-continuous-function-Metric-Space =
-    is-uniformly-continuous-map-uniformly-continuous-function-Metric-Space X Y f
+      ( im-ucont-function-Metric-Space X Y f)
+      ( map-unit-im-ucont-function-Metric-Space X Y f)
+  is-ucont-map-unit-im-ucont-function-Metric-Space =
+    is-ucont-map-ucont-function-Metric-Space X Y f
 
-  uniformly-continuous-map-unit-im-uniformly-continuous-function-Metric-Space :
-    uniformly-continuous-function-Metric-Space
+  uniformly-continuous-map-unit-im-ucont-function-Metric-Space :
+    ucont-function-Metric-Space
       ( X)
-      ( im-uniformly-continuous-function-Metric-Space X Y f)
-  uniformly-continuous-map-unit-im-uniformly-continuous-function-Metric-Space =
-    ( map-unit-im-uniformly-continuous-function-Metric-Space X Y f ,
-      is-uniformly-continuous-map-unit-im-uniformly-continuous-function-Metric-Space)
+      ( im-ucont-function-Metric-Space X Y f)
+  uniformly-continuous-map-unit-im-ucont-function-Metric-Space =
+    ( map-unit-im-ucont-function-Metric-Space X Y f ,
+      is-ucont-map-unit-im-ucont-function-Metric-Space)
 ```

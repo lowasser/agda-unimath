@@ -227,10 +227,10 @@ module _
           ( left-unit-law-mul-ℚ⁺ d))
         ( L (inv-ℚ⁺ α *ℚ⁺ d) x y H))
 
-  is-uniformly-continuous-is-lipschitz-function-Metric-Space :
+  is-ucont-is-lipschitz-function-Metric-Space :
     is-lipschitz-function-Metric-Space A B f →
-    is-uniformly-continuous-function-Metric-Space A B f
-  is-uniformly-continuous-is-lipschitz-function-Metric-Space =
+    is-ucont-function-Metric-Space A B f
+  is-ucont-is-lipschitz-function-Metric-Space =
     map-is-inhabited
       modulus-of-uniform-continuity-lipschitz-constant-function-Metric-Space
 
@@ -241,10 +241,10 @@ module _
 
   uniformly-continuous-lipschitz-function-Metric-Space :
     lipschitz-function-Metric-Space A B →
-    uniformly-continuous-function-Metric-Space A B
+    ucont-function-Metric-Space A B
   uniformly-continuous-lipschitz-function-Metric-Space f =
     ( map-lipschitz-function-Metric-Space A B f) ,
-    ( is-uniformly-continuous-is-lipschitz-function-Metric-Space
+    ( is-ucont-is-lipschitz-function-Metric-Space
       ( A)
       ( B)
       ( map-lipschitz-function-Metric-Space A B f)

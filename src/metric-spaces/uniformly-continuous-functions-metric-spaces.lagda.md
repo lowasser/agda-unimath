@@ -35,10 +35,14 @@ open import metric-spaces.short-functions-metric-spaces
 
 A [function](metric-spaces.functions-metric-spaces.md) `f` between
 [metric spaces](metric-spaces.metric-spaces.md) `X` and `Y` is
-{{#concept "uniformly continuous" Disambiguation="function between metric spaces" WDID=Q741865 WD="uniform continuity" Agda=is-uniformly-continuous-function-Metric-Space}}
+{{#concept "uniformly continuous" Disambiguation="function between metric spaces" WDID=Q741865 WD="uniform continuity" Agda=is-ucont-function-Metric-Space}}
 if there exists a function `m : ℚ⁺ → ℚ⁺` such that for any `x : X`, whenever
 `x'` is in an `m ε`-neighborhood of `x`, `f x'` is in an `ε`-neighborhood of
 `f x`. The function `m` is called a modulus of uniform continuity of `f`.
+
+A
+{{#concept "modulated uniformly continuous function" Disambiguation="function between metric spaces" Agda=modulated-ucont-function-Metric-Space}}
+is a pair of a function `f` and a specific modulus of uniform continuity of `f`.
 
 ## Definitions
 
@@ -74,14 +78,14 @@ module _
   modulus-of-uniform-continuity-function-Metric-Space =
     type-subtype is-modulus-of-uniform-continuity-prop-function-Metric-Space
 
-  is-uniformly-continuous-prop-function-Metric-Space : Prop (l1 ⊔ l2 ⊔ l4)
-  is-uniformly-continuous-prop-function-Metric-Space =
+  is-ucont-prop-function-Metric-Space : Prop (l1 ⊔ l2 ⊔ l4)
+  is-ucont-prop-function-Metric-Space =
     is-inhabited-subtype-Prop
       is-modulus-of-uniform-continuity-prop-function-Metric-Space
 
-  is-uniformly-continuous-function-Metric-Space : UU (l1 ⊔ l2 ⊔ l4)
-  is-uniformly-continuous-function-Metric-Space =
-    type-Prop is-uniformly-continuous-prop-function-Metric-Space
+  is-ucont-function-Metric-Space : UU (l1 ⊔ l2 ⊔ l4)
+  is-ucont-function-Metric-Space =
+    type-Prop is-ucont-prop-function-Metric-Space
 ```
 
 ### The type of uniformly continuous functions between metric spaces
@@ -91,23 +95,51 @@ module _
   {l1 l2 l3 l4 : Level} (X : Metric-Space l1 l2) (Y : Metric-Space l3 l4)
   where
 
-  uniformly-continuous-function-Metric-Space : UU (l1 ⊔ l2 ⊔ l3 ⊔ l4)
-  uniformly-continuous-function-Metric-Space =
-    type-subtype (is-uniformly-continuous-prop-function-Metric-Space X Y)
+  ucont-function-Metric-Space : UU (l1 ⊔ l2 ⊔ l3 ⊔ l4)
+  ucont-function-Metric-Space =
+    type-subtype (is-ucont-prop-function-Metric-Space X Y)
 
-  map-uniformly-continuous-function-Metric-Space :
-    uniformly-continuous-function-Metric-Space →
+  map-ucont-function-Metric-Space :
+    ucont-function-Metric-Space →
     type-function-Metric-Space X Y
-  map-uniformly-continuous-function-Metric-Space = pr1
+  map-ucont-function-Metric-Space = pr1
 
-  is-uniformly-continuous-map-uniformly-continuous-function-Metric-Space :
-    (f : uniformly-continuous-function-Metric-Space) →
-    is-uniformly-continuous-function-Metric-Space
+  is-ucont-map-ucont-function-Metric-Space :
+    (f : ucont-function-Metric-Space) →
+    is-ucont-function-Metric-Space X Y (map-ucont-function-Metric-Space f)
+  is-ucont-map-ucont-function-Metric-Space = pr2
+```
+
+### The type of modulated uniformly continuous functions between metric spaces
+
+```agda
+module _
+  {l1 l2 l3 l4 : Level} (X : Metric-Space l1 l2) (Y : Metric-Space l3 l4)
+  where
+
+  modulated-ucont-function-Metric-Space : UU (l1 ⊔ l2 ⊔ l3 ⊔ l4)
+  modulated-ucont-function-Metric-Space =
+    Σ ( type-function-Metric-Space X Y)
+      ( modulus-of-uniform-continuity-function-Metric-Space X Y)
+
+  map-modulated-ucont-function-Metric-Space :
+    modulated-ucont-function-Metric-Space →
+    type-function-Metric-Space X Y
+  map-modulated-ucont-function-Metric-Space = pr1
+
+  modulus-modulated-ucont-function-Metric-Space :
+    (f : modulated-ucont-function-Metric-Space) →
+    modulus-of-uniform-continuity-function-Metric-Space
       ( X)
       ( Y)
-      ( map-uniformly-continuous-function-Metric-Space f)
-  is-uniformly-continuous-map-uniformly-continuous-function-Metric-Space =
-    pr2
+      ( map-modulated-ucont-function-Metric-Space f)
+  modulus-modulated-ucont-function-Metric-Space = pr2
+
+trunc-modulated-ucont-function-Metric-Space :
+  {l1 l2 l3 l4 : Level} (X : Metric-Space l1 l2) (Y : Metric-Space l3 l4) →
+  modulated-ucont-function-Metric-Space X Y → ucont-function-Metric-Space X Y
+trunc-modulated-ucont-function-Metric-Space _ _ (f , Mf) =
+  ( f , unit-trunc-Prop Mf)
 ```
 
 ## Properties
@@ -122,28 +154,15 @@ module _
   (f : type-function-Metric-Space X Y)
   where
 
-  is-continuous-at-point-is-uniformly-continuous-function-Metric-Space :
-    is-uniformly-continuous-function-Metric-Space X Y f →
+  is-continuous-at-point-is-ucont-function-Metric-Space :
+    is-ucont-function-Metric-Space X Y f →
     (x : type-Metric-Space X) →
     is-continuous-at-point-function-Metric-Space X Y f x
-  is-continuous-at-point-is-uniformly-continuous-function-Metric-Space H x =
+  is-continuous-at-point-is-ucont-function-Metric-Space H x =
     elim-exists
       ( is-continuous-at-point-prop-function-Metric-Space X Y f x)
       ( λ m K → intro-exists m (K x))
       ( H)
-```
-
-### The identity function is uniformly continuous
-
-```agda
-module _
-  {l1 l2 : Level} (X : Metric-Space l1 l2)
-  where
-
-  is-uniformly-continuous-id-Metric-Space :
-    is-uniformly-continuous-function-Metric-Space X X id
-  is-uniformly-continuous-id-Metric-Space =
-    intro-exists id (λ _ _ _ → id)
 ```
 
 ### The composition of uniformly continuous functions is uniformly continuous
@@ -156,17 +175,17 @@ module _
   (Z : Metric-Space l5 l6)
   where
 
-  is-uniformly-continuous-comp-function-Metric-Space :
+  is-ucont-comp-function-Metric-Space :
     (g : type-function-Metric-Space Y Z) →
     (f : type-function-Metric-Space X Y) →
-    is-uniformly-continuous-function-Metric-Space Y Z g →
-    is-uniformly-continuous-function-Metric-Space X Y f →
-    is-uniformly-continuous-function-Metric-Space X Z (g ∘ f)
-  is-uniformly-continuous-comp-function-Metric-Space g f H K =
+    is-ucont-function-Metric-Space Y Z g →
+    is-ucont-function-Metric-Space X Y f →
+    is-ucont-function-Metric-Space X Z (g ∘ f)
+  is-ucont-comp-function-Metric-Space g f H K =
     let
       open
         do-syntax-trunc-Prop
-          ( is-uniformly-continuous-prop-function-Metric-Space X Z (g ∘ f))
+          ( is-ucont-prop-function-Metric-Space X Z (g ∘ f))
     in
       do
         mg , is-modulus-uniform-mg ← H
@@ -177,21 +196,21 @@ module _
             is-modulus-uniform-mg (f x) ε (f x') ∘
             is-modulus-uniform-mf x (mg ε) x')
 
-  comp-uniformly-continuous-function-Metric-Space :
-    uniformly-continuous-function-Metric-Space Y Z →
-    uniformly-continuous-function-Metric-Space X Y →
-    uniformly-continuous-function-Metric-Space X Z
-  comp-uniformly-continuous-function-Metric-Space g f =
-    ( map-uniformly-continuous-function-Metric-Space Y Z g ∘
-      map-uniformly-continuous-function-Metric-Space X Y f) ,
-    ( is-uniformly-continuous-comp-function-Metric-Space
-      ( map-uniformly-continuous-function-Metric-Space Y Z g)
-      ( map-uniformly-continuous-function-Metric-Space X Y f)
-      ( is-uniformly-continuous-map-uniformly-continuous-function-Metric-Space
+  comp-ucont-function-Metric-Space :
+    ucont-function-Metric-Space Y Z →
+    ucont-function-Metric-Space X Y →
+    ucont-function-Metric-Space X Z
+  comp-ucont-function-Metric-Space g f =
+    ( map-ucont-function-Metric-Space Y Z g ∘
+      map-ucont-function-Metric-Space X Y f) ,
+    ( is-ucont-comp-function-Metric-Space
+      ( map-ucont-function-Metric-Space Y Z g)
+      ( map-ucont-function-Metric-Space X Y f)
+      ( is-ucont-map-ucont-function-Metric-Space
         ( Y)
         ( Z)
         ( g))
-      ( is-uniformly-continuous-map-uniformly-continuous-function-Metric-Space
+      ( is-ucont-map-ucont-function-Metric-Space
         ( X)
         ( Y)
         ( f)))
@@ -225,6 +244,23 @@ module _
       is-short-id-is-modulus-of-uniform-continuity-function-Metric-Space)
 ```
 
+### The identity function is uniformly continuous
+
+```agda
+module _
+  {l1 l2 : Level} (X : Metric-Space l1 l2)
+  where
+
+  modulus-of-uniform-continuity-id-Metric-Space :
+    modulus-of-uniform-continuity-function-Metric-Space X X id
+  modulus-of-uniform-continuity-id-Metric-Space = (id , (λ _ _ _ → id))
+
+  is-ucont-id-Metric-Space :
+    is-ucont-function-Metric-Space X X id
+  is-ucont-id-Metric-Space =
+    unit-trunc-Prop modulus-of-uniform-continuity-id-Metric-Space
+```
+
 ### Short maps are uniformly continuous
 
 ```agda
@@ -234,18 +270,24 @@ module _
   (B : Metric-Space l3 l4)
   where
 
-  is-uniformly-continuous-is-short-function-Metric-Space :
+  is-ucont-is-short-function-Metric-Space :
     (f : type-function-Metric-Space A B) →
     is-short-function-Metric-Space A B f →
-    is-uniformly-continuous-function-Metric-Space A B f
-  is-uniformly-continuous-is-short-function-Metric-Space f H =
+    is-ucont-function-Metric-Space A B f
+  is-ucont-is-short-function-Metric-Space f H =
     intro-exists id (λ x d → H d x)
 
-  uniformly-continuous-short-function-Metric-Space :
+  modulated-ucont-short-function-Metric-Space :
     short-function-Metric-Space A B →
-    uniformly-continuous-function-Metric-Space A B
-  uniformly-continuous-short-function-Metric-Space =
-    tot is-uniformly-continuous-is-short-function-Metric-Space
+    modulated-ucont-function-Metric-Space A B
+  modulated-ucont-short-function-Metric-Space (f , H) =
+    ( f , id , λ x d → H d x)
+
+  ucont-short-function-Metric-Space :
+    short-function-Metric-Space A B →
+    ucont-function-Metric-Space A B
+  ucont-short-function-Metric-Space =
+    tot is-ucont-is-short-function-Metric-Space
 ```
 
 ### Isometries are uniformly continuous
@@ -256,17 +298,24 @@ module _
   (A : Metric-Space l1 l2) (B : Metric-Space l3 l4)
   where
 
-  is-uniformly-continuous-is-isometry-Metric-Space :
+  is-ucont-is-isometry-Metric-Space :
     (f : type-function-Metric-Space A B) →
     is-isometry-Metric-Space A B f →
-    is-uniformly-continuous-function-Metric-Space A B f
-  is-uniformly-continuous-is-isometry-Metric-Space f =
-    is-uniformly-continuous-is-short-function-Metric-Space A B f ∘
+    is-ucont-function-Metric-Space A B f
+  is-ucont-is-isometry-Metric-Space f =
+    is-ucont-is-short-function-Metric-Space A B f ∘
     is-short-is-isometry-Metric-Space A B f
 
-  uniformly-continuous-isometry-Metric-Space :
+  modulated-ucont-isometry-Metric-Space :
     isometry-Metric-Space A B →
-    uniformly-continuous-function-Metric-Space A B
-  uniformly-continuous-isometry-Metric-Space =
-    tot is-uniformly-continuous-is-isometry-Metric-Space
+    modulated-ucont-function-Metric-Space A B
+  modulated-ucont-isometry-Metric-Space f =
+    modulated-ucont-short-function-Metric-Space A B
+      ( short-isometry-Metric-Space A B f)
+
+  ucont-isometry-Metric-Space :
+    isometry-Metric-Space A B →
+    ucont-function-Metric-Space A B
+  ucont-isometry-Metric-Space =
+    tot is-ucont-is-isometry-Metric-Space
 ```

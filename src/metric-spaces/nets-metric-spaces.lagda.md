@@ -125,13 +125,13 @@ module _
   (ε : ℚ⁺) (N : net-Metric-Space l5 X (μ ε))
   where
 
-  net-im-uniformly-continuous-function-net-Metric-Space :
+  net-im-ucont-function-net-Metric-Space :
     net-Metric-Space (l1 ⊔ l3 ⊔ l5) (im-Metric-Space X Y f) ε
-  net-im-uniformly-continuous-function-net-Metric-Space =
+  net-im-ucont-function-net-Metric-Space =
     ( im-finitely-enumerable-subtype
       ( map-unit-im f)
       ( finitely-enumerable-subset-net-Metric-Space X (μ ε) N) ,
-      is-approximation-im-uniformly-continuous-function-approximation-Metric-Space
+      is-approximation-im-ucont-function-approximation-Metric-Space
         ( X)
         ( Y)
         ( f)
@@ -155,7 +155,7 @@ module _
       ( im-short-function-Metric-Space X Y f)
       ( ε)
   net-im-short-function-net-Metric-Space =
-    net-im-uniformly-continuous-function-net-Metric-Space
+    net-im-ucont-function-net-Metric-Space
       ( X)
       ( Y)
       ( map-short-function-Metric-Space X Y f)

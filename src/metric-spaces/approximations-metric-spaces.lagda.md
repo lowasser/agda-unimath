@@ -110,14 +110,14 @@ module _
   where
 
   abstract
-    is-approximation-im-uniformly-continuous-function-approximation-Metric-Space :
+    is-approximation-im-ucont-function-approximation-Metric-Space :
       is-approximation-Metric-Space
         ( im-Metric-Space X Y f)
         ( ε)
         ( im-subtype
           ( map-unit-im f)
           ( subset-approximation-Metric-Space X (μ ε) A))
-    is-approximation-im-uniformly-continuous-function-approximation-Metric-Space
+    is-approximation-im-ucont-function-approximation-Metric-Space
       (y , ∃x:fx=y) =
         let
           open
@@ -138,11 +138,11 @@ module _
               ( fx=y)
               ( is-modulus-ucont-f-μ a ε x Nμεax))
 
-  approximation-im-uniformly-continuous-function-approximation-Metric-Space :
+  approximation-im-ucont-function-approximation-Metric-Space :
     approximation-Metric-Space (l1 ⊔ l3 ⊔ l5) (im-Metric-Space X Y f) ε
-  approximation-im-uniformly-continuous-function-approximation-Metric-Space =
+  approximation-im-ucont-function-approximation-Metric-Space =
     ( im-subtype (map-unit-im f) (subset-approximation-Metric-Space X (μ ε) A) ,
-      is-approximation-im-uniformly-continuous-function-approximation-Metric-Space)
+      is-approximation-im-ucont-function-approximation-Metric-Space)
 ```
 
 ### If `f : X → Y` is a short function and `A` is an `ε`-approximation of `X`, then `im f A` is an `ε`-approximation of `im f X`
@@ -160,7 +160,7 @@ module _
       ( im-short-function-Metric-Space X Y f)
       ( ε)
   approximation-im-short-function-approximation-Metric-Space =
-    approximation-im-uniformly-continuous-function-approximation-Metric-Space
+    approximation-im-ucont-function-approximation-Metric-Space
       ( X)
       ( Y)
       ( map-short-function-Metric-Space X Y f)
