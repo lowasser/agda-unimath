@@ -22,6 +22,7 @@ open import foundation.universe-levels
 open import metric-spaces.equality-of-metric-spaces
 open import metric-spaces.metric-spaces
 open import metric-spaces.metrics
+open import metric-spaces.subspaces-metric-spaces
 
 open import real-numbers.nonnegative-real-numbers
 open import real-numbers.strict-inequality-real-numbers
@@ -223,6 +224,27 @@ module _
     eq-metric-is-metric-of-Metric-Space =
       eq-isometric-equiv-Metric-Space _ _
         ( isometric-equiv-metric-is-metric-of-Metric-Space M ρ is-metric-M-ρ)
+```
+
+### If `ρ` is a metric for a metric space `M`, it is a metric for any subspace `S ⊆ M`
+
+```agda
+module _
+  {l1 l2 l3 : Level} (M : Metric-Space l1 l2)
+  (ρ : distance-function l2 (set-Metric-Space M))
+  (S : subset-Metric-Space l3 M)
+  where
+
+  distance-function-subset-Metric-Space :
+    distance-function l2 (set-Metric-Space (subspace-Metric-Space M S))
+  distance-function-subset-Metric-Space (s , s∈S) (t , t∈S) = ρ s t
+
+  is-metric-of-subspace-Metric-Space :
+    is-metric-of-Metric-Space M ρ →
+    is-metric-of-Metric-Space
+      ( subspace-Metric-Space M S)
+      ( distance-function-subset-Metric-Space)
+  is-metric-of-subspace-Metric-Space H ε (s , s∈S) (t , t∈S) = H ε s t
 ```
 
 ## See also
