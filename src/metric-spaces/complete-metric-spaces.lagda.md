@@ -92,6 +92,10 @@ module _
     ℚ⁺ → Relation l2 type-Complete-Metric-Space
   neighborhood-Complete-Metric-Space =
     neighborhood-Metric-Space metric-space-Complete-Metric-Space
+
+  cauchy-approximation-Complete-Metric-Space : UU (l1 ⊔ l2)
+  cauchy-approximation-Complete-Metric-Space =
+    cauchy-approximation-Metric-Space metric-space-Complete-Metric-Space
 ```
 
 ### The equivalence between Cauchy approximations and convergent Cauchy approximations in a complete metric space
@@ -103,8 +107,7 @@ module _
   where
 
   convergent-cauchy-approximation-Complete-Metric-Space :
-    cauchy-approximation-Metric-Space
-      ( metric-space-Complete-Metric-Space A) →
+    cauchy-approximation-Complete-Metric-Space A →
     convergent-cauchy-approximation-Metric-Space
       ( metric-space-Complete-Metric-Space A)
   convergent-cauchy-approximation-Complete-Metric-Space u =
