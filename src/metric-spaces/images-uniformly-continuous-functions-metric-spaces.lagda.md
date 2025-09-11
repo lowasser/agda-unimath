@@ -78,19 +78,19 @@ module _
   (f : uniformly-continuous-function-Metric-Space X Y)
   where
 
-  is-uniformly-continuous-map-unit-im-uniformly-continuous-function-Metric-Space :
+  is-uniformly-continuous-map-unit-im-ucont-function-Metric-Space :
     is-uniformly-continuous-function-Metric-Space
       ( X)
       ( im-uniformly-continuous-function-Metric-Space X Y f)
       ( map-unit-im-uniformly-continuous-function-Metric-Space X Y f)
-  is-uniformly-continuous-map-unit-im-uniformly-continuous-function-Metric-Space =
+  is-uniformly-continuous-map-unit-im-ucont-function-Metric-Space =
     is-uniformly-continuous-map-uniformly-continuous-function-Metric-Space X Y f
 
-  uniformly-continuous-map-unit-im-uniformly-continuous-function-Metric-Space :
+  ucont-map-unit-im-ucont-function-Metric-Space :
     uniformly-continuous-function-Metric-Space
       ( X)
       ( im-uniformly-continuous-function-Metric-Space X Y f)
-  uniformly-continuous-map-unit-im-uniformly-continuous-function-Metric-Space =
+  ucont-map-unit-im-ucont-function-Metric-Space =
     ( map-unit-im-uniformly-continuous-function-Metric-Space X Y f ,
-      is-uniformly-continuous-map-unit-im-uniformly-continuous-function-Metric-Space)
+      is-uniformly-continuous-map-unit-im-ucont-function-Metric-Space)
 ```
