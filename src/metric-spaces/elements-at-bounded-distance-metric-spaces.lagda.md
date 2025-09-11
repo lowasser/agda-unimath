@@ -28,6 +28,7 @@ open import foundation.universe-levels
 
 open import logic.functoriality-existential-quantification
 
+open import metric-spaces.cauchy-approximations-metric-spaces
 open import metric-spaces.metric-spaces
 
 open import order-theory.preorders
@@ -189,6 +190,30 @@ module _
     ( transitive-bounded-dist-Metric A)
 ```
 
+### All the values of a Cauchy approximation in a metric space are at bounded distance
+
+```agda
+module _
+  {l1 l2 : Level} (A : Metric-Space l1 l2)
+  (f : cauchy-approximation-Metric-Space A)
+  where
+
+  bounded-dist-map-cauchy-approximation-Metric-Space :
+    (ε δ : ℚ⁺) →
+    bounded-dist-Metric-Space
+      ( A)
+      ( map-cauchy-approximation-Metric-Space A f ε)
+      ( map-cauchy-approximation-Metric-Space A f δ)
+  bounded-dist-map-cauchy-approximation-Metric-Space ε δ =
+    unit-trunc-Prop
+      ( ( ε +ℚ⁺ δ) ,
+        ( is-cauchy-approximation-map-cauchy-approximation-Metric-Space
+          ( A)
+          ( f)
+          ( ε)
+          ( δ)))
+```
+
 ### Elements at bounded distance can be assigned an upper real distance
 
 ```agda
@@ -235,4 +260,17 @@ module _
             ( q≤0)
             ( le-zero-is-positive-ℚ ε is-pos-ε))
           ( ε<q)
+
+    leq-zero-upper-real-dist-Metric-Space :
+      leq-upper-ℝ zero-upper-ℝ upper-real-dist-Metric-Space
+    leq-zero-upper-real-dist-Metric-Space q =
+      rec-trunc-Prop
+        ( le-ℚ-Prop zero-ℚ q)
+        ( λ ((ε , Nεxy) , ε<q) →
+          transitive-le-ℚ
+            ( zero-ℚ)
+            ( rational-ℚ⁺ ε)
+            ( q)
+            ( ε<q)
+            ( le-zero-is-positive-ℚ (pr1 ε) (pr2 ε)))
 ```
