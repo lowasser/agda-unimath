@@ -15,6 +15,8 @@ open import commutative-algebra.convolution-sequences-commutative-rings public
 open import commutative-algebra.convolution-sequences-commutative-semirings public
 open import commutative-algebra.dependent-products-commutative-rings public
 open import commutative-algebra.dependent-products-commutative-semirings public
+open import commutative-algebra.derivatives-formal-power-series-commutative-semirings public
+open import commutative-algebra.derivatives-polynomials-commutative-semirings public
 open import commutative-algebra.discrete-fields public
 open import commutative-algebra.eisenstein-integers public
 open import commutative-algebra.euclidean-domains public
