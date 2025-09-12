@@ -38,6 +38,14 @@ formal-power-series-Rational-Extension-Commutative-Ring R =
   formal-power-series-Commutative-Ring
     ( commutative-ring-Rational-Extension-Commutative-Ring R)
 
+formal-power-series-coefficients-Rational-Extension-Commutative-Ring :
+  {l : Level} → (R : Rational-Extension-Commutative-Ring l) →
+  sequence (type-Rational-Extension-Commutative-Ring R) →
+  formal-power-series-Rational-Extension-Commutative-Ring R
+formal-power-series-coefficients-Rational-Extension-Commutative-Ring R =
+  formal-power-series-coefficients-Commutative-Ring
+    ( commutative-ring-Rational-Extension-Commutative-Ring R)
+
 coefficient-formal-power-series-Rational-Extension-Commutative-Ring :
   {l : Level} (R : Rational-Extension-Commutative-Ring l) →
   (formal-power-series-Rational-Extension-Commutative-Ring R) →

@@ -12,6 +12,7 @@ open import elementary-number-theory.equality-natural-numbers
 open import elementary-number-theory.inequality-natural-numbers
 open import elementary-number-theory.multiplication-natural-numbers
 open import elementary-number-theory.natural-numbers
+open import elementary-number-theory.nonzero-natural-numbers
 
 open import foundation.coproduct-types
 open import foundation.dependent-pair-types
@@ -52,25 +53,37 @@ div-factorial-ℕ (succ-ℕ n) x l H with
 ... | inr refl = pair (factorial-ℕ n) refl
 ```
 
-```agda
-is-nonzero-factorial-ℕ :
-  (x : ℕ) → is-nonzero-ℕ (factorial-ℕ x)
-is-nonzero-factorial-ℕ zero-ℕ = Eq-eq-ℕ
-is-nonzero-factorial-ℕ (succ-ℕ x) =
-  is-nonzero-mul-ℕ
-    ( factorial-ℕ x)
-    ( succ-ℕ x)
-    ( is-nonzero-factorial-ℕ x)
-    ( is-nonzero-succ-ℕ x)
+### The factorial of any number is nonzero
 
-leq-factorial-ℕ :
-  (n : ℕ) → leq-ℕ n (factorial-ℕ n)
-leq-factorial-ℕ zero-ℕ = leq-zero-ℕ 1
-leq-factorial-ℕ (succ-ℕ n) =
-  leq-mul-is-nonzero-ℕ'
-    ( factorial-ℕ n)
-    ( succ-ℕ n)
-    ( is-nonzero-factorial-ℕ n)
+```agda
+abstract
+  is-nonzero-factorial-ℕ :
+    (x : ℕ) → is-nonzero-ℕ (factorial-ℕ x)
+  is-nonzero-factorial-ℕ zero-ℕ = Eq-eq-ℕ
+  is-nonzero-factorial-ℕ (succ-ℕ x) =
+    is-nonzero-mul-ℕ
+      ( factorial-ℕ x)
+      ( succ-ℕ x)
+      ( is-nonzero-factorial-ℕ x)
+      ( is-nonzero-succ-ℕ x)
+
+nonzero-factorial-ℕ : ℕ → ℕ⁺
+nonzero-factorial-ℕ n =
+  ( factorial-ℕ n , is-nonzero-factorial-ℕ n)
+```
+
+### `n ≤ n!` for all `n`
+
+```agda
+abstract
+  leq-factorial-ℕ :
+    (n : ℕ) → leq-ℕ n (factorial-ℕ n)
+  leq-factorial-ℕ zero-ℕ = leq-zero-ℕ 1
+  leq-factorial-ℕ (succ-ℕ n) =
+    leq-mul-is-nonzero-ℕ'
+      ( factorial-ℕ n)
+      ( succ-ℕ n)
+      ( is-nonzero-factorial-ℕ n)
 ```
 
 ## External links

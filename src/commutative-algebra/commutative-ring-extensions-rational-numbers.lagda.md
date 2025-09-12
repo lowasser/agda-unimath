@@ -103,6 +103,12 @@ module _
     initial-hom-Rational-Extension-Ring
       ( rational-extension-ring-Rational-Extension-Commutative-Ring R)
 
+  map-initial-hom-Rational-Extension-Commutative-Ring :
+    ℚ → type-Rational-Extension-Commutative-Ring R
+  map-initial-hom-Rational-Extension-Commutative-Ring =
+    map-initial-hom-Rational-Extension-Ring
+      ( rational-extension-ring-Rational-Extension-Commutative-Ring R)
+
   is-contr-rational-hom-Rational-Extension-Commutative-Ring :
     is-contr
       ( hom-Commutative-Ring
