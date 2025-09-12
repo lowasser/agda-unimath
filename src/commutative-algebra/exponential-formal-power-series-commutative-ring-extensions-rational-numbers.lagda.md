@@ -10,11 +10,12 @@ module commutative-algebra.exponential-formal-power-series-commutative-ring-exte
 open import commutative-algebra.commutative-ring-extensions-rational-numbers
 open import commutative-algebra.formal-power-series-commutative-ring-extensions-rational-numbers
 
+open import elementary-number-theory.factorials
+open import elementary-number-theory.natural-numbers
+open import elementary-number-theory.unit-fractions-rational-numbers
+
 open import foundation.dependent-pair-types
 open import foundation.universe-levels
-open import elementary-number-theory.natural-numbers
-open import elementary-number-theory.factorials
-open import elementary-number-theory.unit-fractions-rational-numbers
 ```
 
 </details>
