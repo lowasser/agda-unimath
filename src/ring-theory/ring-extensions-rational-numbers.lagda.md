@@ -51,7 +51,7 @@ open import ring-theory.rings
 A {{#concept "ring extension of ℚ" Agda=Rational-Extension-Ring}} is a
 [ring](ring-theory.rings.md) where the images of
 [positive integers](elementary-number-theory.positive-integers.md) by the
-[initial ring homomorphism](elementary-number-theory.ring-of-integers.md)) are
+[initial ring homomorphism](elementary-number-theory.ring-of-integers.md) are
 [invertible elements](ring-theory.invertible-elements-rings.md), i.e., where the
 initial ring homomorphism [inverts](ring-theory.localizations-rings.md) the
 subset of positive integers.
