@@ -65,6 +65,20 @@ open formal-power-series-Commutative-Semiring public
 
 ## Properties
 
+### The constant term of a formal power series
+
+```agda
+module _
+  {l : Level} {R : Commutative-Semiring l}
+  where
+
+  constant-term-formal-power-series-Commutative-Semiring :
+    formal-power-series-Commutative-Semiring R →
+    type-Commutative-Semiring R
+  constant-term-formal-power-series-Commutative-Semiring f =
+    coefficient-formal-power-series-Commutative-Semiring f 0
+```
+
 ### The terms in the infinite sum of evaluating a formal power series at an argument
 
 ```agda

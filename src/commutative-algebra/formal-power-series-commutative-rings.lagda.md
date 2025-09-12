@@ -42,9 +42,10 @@ open import ring-theory.semirings
 
 A
 {{#concept "formal power series" WD="formal power series" WDID=Q1003025 disambiguation="in a commutative ring" Agda=formal-power-series-Commutative-Ring}}
-is a formal sum of the form `Σₙ aₙxⁿ`, where `n` ranges over the
-[natural numbers](elementary-number-theory.natural-numbers.md), without any
-notion of convergence.
+in a [commutative ring](commutative-algebra.commutative-rings.md) `R` is a
+formal sum of the form `Σₙ aₙxⁿ`, where `n` ranges over the
+[natural numbers](elementary-number-theory.natural-numbers.md) and the
+coefficients `aₙ` are elements of `R`, without any notion of convergence.
 
 ## Definition
 
@@ -60,9 +61,29 @@ formal-power-series-coefficients-Commutative-Ring :
   sequence (type-Commutative-Ring R) → formal-power-series-Commutative-Ring R
 formal-power-series-coefficients-Commutative-Ring R =
   formal-power-series-coefficients-Commutative-Semiring
+
+coefficient-formal-power-series-Commutative-Ring :
+  {l : Level} (R : Commutative-Ring l) →
+  formal-power-series-Commutative-Ring R → sequence (type-Commutative-Ring R)
+coefficient-formal-power-series-Commutative-Ring _ =
+  coefficient-formal-power-series-Commutative-Semiring
 ```
 
 ## Properties
+
+### The constant term of a formal power series
+
+```agda
+module _
+  {l : Level} (R : Commutative-Ring l)
+  where
+
+  constant-term-formal-power-series-Commutative-Ring :
+    formal-power-series-Commutative-Ring R →
+    type-Commutative-Ring R
+  constant-term-formal-power-series-Commutative-Ring =
+    constant-term-formal-power-series-Commutative-Semiring
+```
 
 ### The terms in the infinite sum of evaluating a formal power series at an argument
 

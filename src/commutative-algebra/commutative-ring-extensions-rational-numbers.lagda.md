@@ -1,8 +1,6 @@
 # Commutative ring extensions of the rational numbers
 
 ```agda
-{-# OPTIONS --lossy-unification #-}
-
 module commutative-algebra.commutative-ring-extensions-rational-numbers where
 ```
 
@@ -63,6 +61,10 @@ module _
   ring-Rational-Extension-Commutative-Ring =
     ring-Commutative-Ring commutative-ring-Rational-Extension-Commutative-Ring
 
+  type-Rational-Extension-Commutative-Ring : UU l
+  type-Rational-Extension-Commutative-Ring =
+    type-Commutative-Ring commutative-ring-Rational-Extension-Commutative-Ring
+
   is-rational-extension-ring-Rational-Extension-Commutative-Ring :
     is-rational-extension-Ring ring-Rational-Extension-Commutative-Ring
   is-rational-extension-ring-Rational-Extension-Commutative-Ring = pr2 R
@@ -72,6 +74,16 @@ module _
   rational-extension-ring-Rational-Extension-Commutative-Ring =
     ( ring-Rational-Extension-Commutative-Ring ,
       is-rational-extension-ring-Rational-Extension-Commutative-Ring)
+
+  zero-Rational-Extension-Commutative-Ring :
+    type-Rational-Extension-Commutative-Ring
+  zero-Rational-Extension-Commutative-Ring =
+    zero-Commutative-Ring commutative-ring-Rational-Extension-Commutative-Ring
+
+  one-Rational-Extension-Commutative-Ring :
+    type-Rational-Extension-Commutative-Ring
+  one-Rational-Extension-Commutative-Ring =
+    one-Commutative-Ring commutative-ring-Rational-Extension-Commutative-Ring
 ```
 
 ## Properties
