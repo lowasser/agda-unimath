@@ -7,6 +7,7 @@ module elementary-number-theory.multiplication-closed-intervals-rational-numbers
 <details><summary>Imports</summary>
 
 ```agda
+open import elementary-number-theory.absolute-value-rational-numbers
 open import elementary-number-theory.addition-closed-intervals-rational-numbers
 open import elementary-number-theory.addition-rational-numbers
 open import elementary-number-theory.additive-group-of-rational-numbers
@@ -21,6 +22,7 @@ open import elementary-number-theory.multiplicative-group-of-positive-rational-n
 open import elementary-number-theory.multiplicative-group-of-rational-numbers
 open import elementary-number-theory.multiplicative-monoid-of-rational-numbers
 open import elementary-number-theory.negative-rational-numbers
+open import elementary-number-theory.nonnegative-rational-numbers
 open import elementary-number-theory.positive-and-negative-rational-numbers
 open import elementary-number-theory.positive-rational-numbers
 open import elementary-number-theory.rational-numbers
@@ -696,4 +698,12 @@ commutative-monoid-mul-interval-ℚ : Commutative-Monoid lzero
 commutative-monoid-mul-interval-ℚ =
   ( monoid-mul-interval-ℚ ,
     commutative-mul-interval-ℚ)
+```
+
+### Bounds on the width of the product of intervals
+
+```agda
+abstract
+  bound-width-mul-interval-ℚ :
+    {!   !}
 ```

@@ -9,6 +9,7 @@
 ```agda
 module elementary-number-theory where
 
+open import elementary-number-theory.absolute-value-closed-intervals-rational-numbers public
 open import elementary-number-theory.absolute-value-integers public
 open import elementary-number-theory.absolute-value-rational-numbers public
 open import elementary-number-theory.ackermann-function public

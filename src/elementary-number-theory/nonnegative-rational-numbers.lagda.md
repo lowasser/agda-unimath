@@ -17,6 +17,7 @@ open import elementary-number-theory.inequality-integers
 open import elementary-number-theory.inequality-rational-numbers
 open import elementary-number-theory.integer-fractions
 open import elementary-number-theory.integers
+open import elementary-number-theory.maximum-rational-numbers
 open import elementary-number-theory.multiplication-integer-fractions
 open import elementary-number-theory.multiplication-integers
 open import elementary-number-theory.multiplication-positive-and-negative-integers
@@ -198,6 +199,11 @@ module _
     is-nonnegative-iff-leq-zero-ℚ =
       ( leq-zero-is-nonnegative-ℚ ,
         is-nonnegative-leq-zero-ℚ)
+
+abstract
+  leq-zero-rational-ℚ⁰⁺ : (p : ℚ⁰⁺) → leq-ℚ zero-ℚ (rational-ℚ⁰⁺ p)
+  leq-zero-rational-ℚ⁰⁺ (p , is-nonneg-p) =
+    leq-zero-is-nonnegative-ℚ p is-nonneg-p
 ```
 
 ### The successor of a nonnegative rational number is positive
@@ -407,4 +413,23 @@ le-ℚ⁰⁺ p q = type-Prop (le-ℚ⁰⁺-Prop p q)
 abstract
   le-zero-nonnegative-ℚ⁰⁺ : (q : ℚ⁺) → le-ℚ⁰⁺ zero-ℚ⁰⁺ (nonnegative-ℚ⁺ q)
   le-zero-nonnegative-ℚ⁰⁺ (q , pos-q) = le-zero-is-positive-ℚ q pos-q
+```
+
+### The maximum of nonnegative rational numbers
+
+```agda
+abstract
+  is-nonnegative-max-ℚ⁰⁺ :
+    (p q : ℚ⁰⁺) → is-nonnegative-ℚ (max-ℚ (rational-ℚ⁰⁺ p) (rational-ℚ⁰⁺ q))
+  is-nonnegative-max-ℚ⁰⁺ (p , is-nonneg-p) (q , is-nonneg-q) =
+    is-nonnegative-leq-zero-ℚ _
+      ( transitive-leq-ℚ
+        ( zero-ℚ)
+        ( p)
+        ( max-ℚ p q)
+        ( leq-left-max-ℚ p q)
+        ( leq-zero-is-nonnegative-ℚ p is-nonneg-p))
+
+max-ℚ⁰⁺ : ℚ⁰⁺ → ℚ⁰⁺ → ℚ⁰⁺
+max-ℚ⁰⁺ p⁰⁺@(p , _) q⁰⁺@(q , _) = (max-ℚ p q , is-nonnegative-max-ℚ⁰⁺ p⁰⁺ q⁰⁺)
 ```
