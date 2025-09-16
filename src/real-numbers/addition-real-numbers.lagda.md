@@ -56,8 +56,9 @@ open import real-numbers.upper-dedekind-real-numbers
 
 ## Idea
 
-We introduce {{#concept "addition" Disambiguation="real numbers" Agda=add-ℝ}} on
-the [Dedekind real numbers](real-numbers.dedekind-real-numbers.md) and derive
+We introduce
+{{#concept "addition" Disambiguation="real numbers" Agda=add-ℝ WDID=Q32043 WD="addition"}}
+on the [Dedekind real numbers](real-numbers.dedekind-real-numbers.md) and derive
 its basic properties.
 
 The sum of two Dedekind real numbers is is a Dedekind real number whose lower

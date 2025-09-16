@@ -8,6 +8,7 @@ module elementary-number-theory.closed-intervals-rational-numbers where
 
 ```agda
 open import elementary-number-theory.decidable-total-order-rational-numbers
+open import elementary-number-theory.distance-rational-numbers
 open import elementary-number-theory.inequality-rational-numbers
 open import elementary-number-theory.maximum-rational-numbers
 open import elementary-number-theory.minimum-rational-numbers
@@ -63,8 +64,14 @@ is-closed-interval-map-prop-ℚ =
 is-below-prop-interval-ℚ : interval-ℚ → subtype lzero ℚ
 is-below-prop-interval-ℚ ((a , _) , _) b = le-ℚ-Prop b a
 
+is-below-interval-ℚ : interval-ℚ → ℚ → UU lzero
+is-below-interval-ℚ [a,b] q = type-Prop (is-below-prop-interval-ℚ [a,b] q)
+
 is-above-prop-interval-ℚ : interval-ℚ → subtype lzero ℚ
 is-above-prop-interval-ℚ ((_ , a) , _) b = le-ℚ-Prop a b
+
+is-above-interval-ℚ : interval-ℚ → ℚ → UU lzero
+is-above-interval-ℚ [a,b] q = type-Prop (is-above-prop-interval-ℚ [a,b] q)
 
 nonnegative-width-interval-ℚ : interval-ℚ → ℚ⁰⁺
 nonnegative-width-interval-ℚ ((a , b) , a≤b) =
@@ -78,6 +85,14 @@ is-injective-subtype-interval-ℚ :
   is-injective subtype-interval-ℚ
 is-injective-subtype-interval-ℚ =
   is-injective-subtype-closed-interval-Poset ℚ-Poset
+
+lower-bound-is-in-interval-ℚ :
+  ([p,q] : interval-ℚ) → is-in-interval-ℚ [p,q] (lower-bound-interval-ℚ [p,q])
+lower-bound-is-in-interval-ℚ ((p , q) , p≤q) = (refl-leq-ℚ p , p≤q)
+
+upper-bound-is-in-interval-ℚ :
+  ([p,q] : interval-ℚ) → is-in-interval-ℚ [p,q] (upper-bound-interval-ℚ [p,q])
+upper-bound-is-in-interval-ℚ ((p , q) , p≤q) = (p≤q , refl-leq-ℚ q)
 ```
 
 ### Important ranges
@@ -138,4 +153,27 @@ abstract
 is-interval-map-ℚ :
   (ℚ → ℚ) → ([a,b] [c,d] : interval-ℚ) → UU lzero
 is-interval-map-ℚ = is-closed-interval-map-Poset ℚ-Poset ℚ-Poset
+```
+
+### The distance between the lower and upper bounds of a closed interval is its width
+
+```agda
+abstract
+  eq-width-dist-lower-upper-bounds-interval-ℚ :
+    ([a,b] : interval-ℚ) →
+    rational-dist-ℚ
+      ( lower-bound-interval-ℚ [a,b])
+      ( upper-bound-interval-ℚ [a,b]) ＝
+    width-interval-ℚ [a,b]
+  eq-width-dist-lower-upper-bounds-interval-ℚ ((a , b) , a≤b) =
+    eq-dist-diff-leq-ℚ a b a≤b
+
+  eq-width-dist-upper-lower-bounds-interval-ℚ :
+    ([a,b] : interval-ℚ) →
+    rational-dist-ℚ
+      ( upper-bound-interval-ℚ [a,b])
+      ( lower-bound-interval-ℚ [a,b]) ＝
+    width-interval-ℚ [a,b]
+  eq-width-dist-upper-lower-bounds-interval-ℚ ((a , b) , a≤b) =
+    eq-dist-diff-leq-ℚ' b a a≤b
 ```

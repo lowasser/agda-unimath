@@ -7,6 +7,7 @@ module real-numbers.dedekind-real-numbers where
 <details><summary>Imports</summary>
 
 ```agda
+open import elementary-number-theory.closed-intervals-rational-numbers
 open import elementary-number-theory.inequality-rational-numbers
 open import elementary-number-theory.rational-numbers
 open import elementary-number-theory.strict-inequality-rational-numbers
@@ -28,6 +29,7 @@ open import foundation.function-types
 open import foundation.functoriality-cartesian-product-types
 open import foundation.functoriality-dependent-pair-types
 open import foundation.identity-types
+open import foundation.inhabited-types
 open import foundation.logical-equivalences
 open import foundation.negation
 open import foundation.powersets
@@ -188,6 +190,13 @@ module _
 
   is-in-cut-ℝ : ℚ → UU l
   is-in-cut-ℝ = is-in-subtype cut-ℝ
+
+  enclosing-rational-interval-ℝ : subtype l interval-ℚ
+  enclosing-rational-interval-ℝ ((p , q) , _) = lower-cut-ℝ p ∧ upper-cut-ℝ q
+
+  type-enclosing-rational-interval-ℝ : UU l
+  type-enclosing-rational-interval-ℝ =
+    type-subtype enclosing-rational-interval-ℝ
 ```
 
 ## Properties
@@ -253,18 +262,25 @@ module _
   {l : Level} (x : ℝ l) (p q : ℚ)
   where
 
-  le-lower-upper-cut-ℝ :
-    is-in-lower-cut-ℝ x p →
-    is-in-upper-cut-ℝ x q →
-    le-ℚ p q
-  le-lower-upper-cut-ℝ H H' =
-    rec-coproduct
-      ( id)
-      ( λ I →
-        ex-falso
-          ( is-disjoint-cut-ℝ x p
-              ( H , leq-upper-cut-ℝ x q p I H')))
-      ( decide-le-leq-ℚ p q)
+  abstract
+    le-lower-upper-cut-ℝ :
+      is-in-lower-cut-ℝ x p →
+      is-in-upper-cut-ℝ x q →
+      le-ℚ p q
+    le-lower-upper-cut-ℝ H H' =
+      rec-coproduct
+        ( id)
+        ( λ I →
+          ex-falso
+            ( is-disjoint-cut-ℝ x p
+                ( H , leq-upper-cut-ℝ x q p I H')))
+        ( decide-le-leq-ℚ p q)
+
+    leq-lower-upper-cut-ℝ :
+      is-in-lower-cut-ℝ x p →
+      is-in-upper-cut-ℝ x q →
+      leq-ℚ p q
+    leq-lower-upper-cut-ℝ H H' = leq-le-ℚ (le-lower-upper-cut-ℝ H H')
 ```
 
 ### Characterization of each cut by the other
@@ -511,6 +527,29 @@ module _
 
   eq-eq-upper-cut-ℝ : upper-cut-ℝ x ＝ upper-cut-ℝ y → x ＝ y
   eq-eq-upper-cut-ℝ = eq-eq-lower-cut-ℝ ∘ (eq-lower-cut-eq-upper-cut-ℝ x y)
+```
+
+### There exists a rational enclosing interval around each real number
+
+```agda
+module _
+  {l : Level} (x : ℝ l)
+  where
+
+  abstract
+    is-inhabited-type-enclosing-rational-interval-ℝ :
+      is-inhabited (type-enclosing-rational-interval-ℝ x)
+    is-inhabited-type-enclosing-rational-interval-ℝ =
+      let
+        open
+          do-syntax-trunc-Prop
+            ( is-inhabited-Prop (type-enclosing-rational-interval-ℝ x))
+      in do
+        (p , p<x) ← is-inhabited-lower-cut-ℝ x
+        (q , x<q) ← is-inhabited-upper-cut-ℝ x
+        intro-exists
+          ( (p , q) , leq-lower-upper-cut-ℝ x p q p<x x<q)
+          ( p<x , x<q)
 ```
 
 ## References
