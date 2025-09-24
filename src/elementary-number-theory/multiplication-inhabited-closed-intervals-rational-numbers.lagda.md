@@ -20,10 +20,13 @@ open import elementary-number-theory.multiplication-rational-numbers
 open import elementary-number-theory.multiplicative-group-of-positive-rational-numbers
 open import elementary-number-theory.multiplicative-group-of-rational-numbers
 open import elementary-number-theory.multiplicative-monoid-of-rational-numbers
+open import elementary-number-theory.strict-inequality-rational-numbers
 open import elementary-number-theory.negative-rational-numbers
+open import elementary-number-theory.nonnegative-rational-numbers
 open import elementary-number-theory.positive-and-negative-rational-numbers
 open import elementary-number-theory.positive-rational-numbers
 open import elementary-number-theory.rational-numbers
+open import elementary-number-theory.interior-inhabited-closed-intervals-rational-numbers
 
 open import foundation.action-on-identifications-binary-functions
 open import foundation.action-on-identifications-functions
@@ -31,6 +34,7 @@ open import foundation.binary-transport
 open import foundation.coproduct-types
 open import foundation.dependent-pair-types
 open import foundation.disjunction
+open import foundation.empty-types
 open import foundation.existential-quantification
 open import foundation.function-extensionality
 open import foundation.identity-types
@@ -751,4 +755,87 @@ commutative-monoid-mul-inhabited-closed-interval-ℚ : Commutative-Monoid lzero
 commutative-monoid-mul-inhabited-closed-interval-ℚ =
   ( monoid-mul-inhabited-closed-interval-ℚ ,
     commutative-mul-inhabited-closed-interval-ℚ)
+```
+
+### If `[a,b]` is interior to `[c,d]` and `[e,f]` is interior to `[g,h]`, then `[a,b] * [e,f]` is interior to `[c,d] * [g,h]`
+
+```agda
+abstract
+  interior-mul-inhabited-closed-interval-ℚ :
+    ([a,b] [c,d] [e,f] [g,h] : inhabited-closed-interval-ℚ) →
+    is-interior-to-inhabited-closed-interval-ℚ [a,b] [c,d] →
+    is-interior-to-inhabited-closed-interval-ℚ [e,f] [g,h] →
+    is-interior-to-inhabited-closed-interval-ℚ
+      ( mul-inhabited-closed-interval-ℚ [a,b] [e,f])
+      ( mul-inhabited-closed-interval-ℚ [c,d] [g,h])
+  interior-mul-inhabited-closed-interval-ℚ
+    [a,b]@((a , b) , a≤b) [c,d]@((c , d) , c≤d)
+    [e,f]@((e , f) , e≤f) [g,h]@((g , h) , g≤h)
+    (c<a , b<d) (g<e , f<h) =
+    let
+      motive =
+        is-interior-to-prop-inhabited-closed-interval-ℚ
+          ( mul-inhabited-closed-interval-ℚ [a,b] [e,f])
+          ( mul-inhabited-closed-interval-ℚ [c,d] [g,h])
+      δca⁺@(δca , _) = positive-diff-le-ℚ c a c<a
+      δbd = positive-diff-le-ℚ b d b<d
+      δge⁺@(δge , _) = positive-diff-le-ℚ g e g<e
+      δfh = positive-diff-le-ℚ f h f<h
+      c<d = transitive-le-ℚ c a d (concatenate-leq-le-ℚ a b d a≤b b<d) c<a
+      g<h = transitive-le-ℚ g e h (concatenate-leq-le-ℚ e f h e≤f f<h) g<e
+      min-cg-ch-dg-dh≤cg :
+        leq-ℚ (lower-bound-mul-inhabited-closed-interval-ℚ [c,d] [g,h]) (c *ℚ g)
+      min-cg-ch-dg-dh≤cg =
+        transitive-leq-ℚ _ _ _ (leq-left-min-ℚ _ _) (leq-left-min-ℚ _ _)
+      min-cg-ch-dg-dh≤ch :
+        leq-ℚ (lower-bound-mul-inhabited-closed-interval-ℚ [c,d] [g,h]) (c *ℚ h)
+      min-cg-ch-dg-dh≤ch =
+        transitive-leq-ℚ _ _ _ (leq-right-min-ℚ _ _) (leq-left-min-ℚ _ _)
+      min-cg-ch-dg-dh≤dg :
+        leq-ℚ (lower-bound-mul-inhabited-closed-interval-ℚ [c,d] [g,h]) (d *ℚ g)
+      min-cg-ch-dg-dh≤dg =
+        transitive-leq-ℚ _ _ _ (leq-left-min-ℚ _ _) (leq-right-min-ℚ _ _)
+      min-cg-ch-dg-dh≤dh :
+        leq-ℚ (lower-bound-mul-inhabited-closed-interval-ℚ [c,d] [g,h]) (d *ℚ h)
+      min-cg-ch-dg-dh≤dh =
+        transitive-leq-ℚ _ _ _ (leq-right-min-ℚ _ _) (leq-right-min-ℚ _ _)
+    in
+      ( eq-one-of-four-min-Total-Order
+        ( ℚ-Total-Order)
+        ( le-ℚ-Prop
+          ( lower-bound-mul-inhabited-closed-interval-ℚ [c,d] [g,h])
+          ( lower-bound-mul-inhabited-closed-interval-ℚ [a,b] [e,f]))
+        ( c *ℚ g)
+        ( c *ℚ h)
+        ( d *ℚ g)
+        ( d *ℚ h)
+        ( λ min-cg-ch-dg-dh=cg →
+          rec-coproduct
+            ( λ neg-c →
+              ex-falso
+                ( irreflexive-le-ℚ
+                  ( c *ℚ g)
+                  ( concatenate-leq-le-ℚ _ _ _
+                    ( leq-eq-ℚ _ _ (inv min-cg-ch-dg-dh=cg))
+                    ( concatenate-leq-le-ℚ _ _ _
+                      ( min-cg-ch-dg-dh≤ch)
+                      ( reverses-le-left-mul-ℚ⁻ (c , neg-c) g h g<h)))))
+            ( λ nonneg-c →
+              rec-coproduct
+                ( λ neg-g →
+                  ex-falso
+                    ( irreflexive-le-ℚ
+                      ( c *ℚ g)
+                      ( concatenate-leq-le-ℚ _ _ _
+                        ( leq-eq-ℚ _ _ (inv min-cg-ch-dg-dh=cg))
+                        ( concatenate-leq-le-ℚ _ _ _
+                          ( min-cg-ch-dg-dh≤dg)
+                          ( reverses-le-right-mul-ℚ⁻ (g , neg-g) c d c<d)))))
+                ( λ nonneg-g → ?)
+                ( decide-is-negative-is-nonnegative-ℚ g))
+            ( decide-is-negative-is-nonnegative-ℚ c))
+        {!   !}
+        {!   !}
+        {!   !} ,
+        {!   !})
 ```
