@@ -831,7 +831,7 @@ abstract
                         ( concatenate-leq-le-ℚ _ _ _
                           ( min-cg-ch-dg-dh≤dg)
                           ( reverses-le-right-mul-ℚ⁻ (g , neg-g) c d c<d)))))
-                ( λ nonneg-g → ?)
+                ( λ nonneg-g → {!   !})
                 ( decide-is-negative-is-nonnegative-ℚ g))
             ( decide-is-negative-is-nonnegative-ℚ c))
         {!   !}
