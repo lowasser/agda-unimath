@@ -7,16 +7,23 @@ module lists.subsequences where
 <details><summary>Imports</summary>
 
 ```agda
+open import order-theory.order-preserving-maps-posets
+open import elementary-number-theory.decidable-total-order-natural-numbers
 open import elementary-number-theory.inequality-natural-numbers
 open import elementary-number-theory.natural-numbers
 open import elementary-number-theory.strict-inequality-natural-numbers
+open import elementary-number-theory.multiplication-natural-numbers
+open import elementary-number-theory.addition-natural-numbers
+open import elementary-number-theory.nonzero-natural-numbers
 
+open import foundation.action-on-identifications-functions
 open import foundation.dependent-pair-types
 open import foundation.function-types
 open import foundation.functoriality-dependent-pair-types
 open import foundation.identity-types
 open import foundation.propositional-truncations
 open import foundation.universe-levels
+open import foundation.coproduct-types
 
 open import lists.sequences
 
@@ -64,6 +71,19 @@ module _
     preserves-strict-order-hom-Strictly-Preordered-Set
       strictly-preordered-set-ℕ
       strictly-preordered-set-ℕ
+
+  abstract
+    is-increasing-extract-subsequence :
+      (f : subsequence) →
+      preserves-order-Poset
+        ( ℕ-Poset)
+        ( ℕ-Poset)
+        ( extract-subsequence f)
+    is-increasing-extract-subsequence (f , H) a b a≤b =
+      rec-coproduct
+        ( λ a=b → leq-eq-ℕ (f a) (f b) (ap f a=b))
+        ( λ a<b → leq-le-ℕ (f a) (f b) (H a b a<b))
+        ( eq-or-le-leq-ℕ a b a≤b)
 
   seq-subsequence : subsequence → sequence A
   seq-subsequence f n = u (extract-subsequence f n)
@@ -126,4 +146,30 @@ module _
             ( extract-subsequence u v)
             ( is-strictly-increasing-extract-subsequence u v)
             ( n)))
+```
+
+### The subsequence of dropping leading elements
+
+```agda
+module _
+  {l : Level} {A : UU l} (k : ℕ) (u : sequence A)
+  where
+
+  drop-subsequence : subsequence u
+  drop-subsequence = (add-ℕ' k , preserves-le-right-add-ℕ k)
+```
+
+### The subsequence of taking every `k`th element for nonzero `k`
+
+```agda
+module _
+  {l : Level} {A : UU l} (k : ℕ⁺) (u : sequence A)
+  where
+
+  mul-ℕ⁺-subsequence : subsequence u
+  mul-ℕ⁺-subsequence =
+    ( mul-ℕ' (nat-ℕ⁺ k) , preserves-le-right-mul-nat-ℕ⁺ k)
+
+  seq-mul-ℕ⁺-subsequence : sequence A
+  seq-mul-ℕ⁺-subsequence = seq-subsequence u mul-ℕ⁺-subsequence
 ```

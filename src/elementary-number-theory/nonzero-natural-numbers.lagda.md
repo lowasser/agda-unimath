@@ -14,6 +14,7 @@ open import elementary-number-theory.multiplication-natural-numbers
 open import elementary-number-theory.natural-numbers
 open import elementary-number-theory.strict-inequality-natural-numbers
 
+open import foundation.binary-transport
 open import foundation.coproduct-types
 open import foundation.dependent-pair-types
 open import foundation.empty-types
@@ -198,4 +199,35 @@ reflects-leq-pred-nonzero-ℕ :
 reflects-leq-pred-nonzero-ℕ (succ-ℕ m , _) (succ-ℕ n , _) m≤n = m≤n
 reflects-leq-pred-nonzero-ℕ (zero-ℕ , H) _ = ex-falso (H refl)
 reflects-leq-pred-nonzero-ℕ (succ-ℕ _ , _) (zero-ℕ , H) = ex-falso (H refl)
+```
+
+### Multiplication by nonzero natural numbers preserves strict inequality
+
+```agda
+abstract
+  preserves-le-right-mul-is-nonzero-ℕ :
+    (n : ℕ) → is-nonzero-ℕ n → (a b : ℕ) → le-ℕ a b → le-ℕ (a *ℕ n) (b *ℕ n)
+  preserves-le-right-mul-is-nonzero-ℕ 0 H _ _ _ = ex-falso (H refl)
+  preserves-le-right-mul-is-nonzero-ℕ 1 H a b a<b =
+    binary-tr
+      ( le-ℕ)
+      ( inv (right-unit-law-mul-ℕ a))
+      ( inv (right-unit-law-mul-ℕ b))
+      ( a<b)
+  preserves-le-right-mul-is-nonzero-ℕ (succ-ℕ n@(succ-ℕ n')) H a b a<b =
+    binary-tr
+      ( le-ℕ)
+      ( inv (right-successor-law-mul-ℕ a n))
+      ( inv (right-successor-law-mul-ℕ b n))
+      ( preserves-le-add-ℕ
+        { a}
+        { b}
+        { a *ℕ n}
+        { b *ℕ n}
+        ( a<b)
+        ( preserves-le-right-mul-is-nonzero-ℕ n (is-nonzero-succ-ℕ n') a b a<b))
+
+  preserves-le-right-mul-nat-ℕ⁺ :
+    (n : ℕ⁺) (a b : ℕ) → le-ℕ a b → le-ℕ (a *ℕ nat-ℕ⁺ n) (b *ℕ nat-ℕ⁺ n)
+  preserves-le-right-mul-nat-ℕ⁺ = ind-Σ preserves-le-right-mul-is-nonzero-ℕ
 ```

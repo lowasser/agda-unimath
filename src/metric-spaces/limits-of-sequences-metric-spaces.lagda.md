@@ -28,7 +28,10 @@ open import foundation.subtypes
 open import foundation.transport-along-identifications
 open import foundation.universe-levels
 
+open import logic.functoriality-existential-quantification
+
 open import lists.sequences
+open import lists.subsequences
 
 open import metric-spaces.cartesian-products-metric-spaces
 open import metric-spaces.metric-spaces
@@ -446,6 +449,45 @@ module _
       ( limit-modulus-pair-sequence-Metric-Space A B u v lim-u lim-v)
       ( is-lim-u)
       ( is-lim-v)
+```
+
+### Taking subsequences preserves limits
+
+```agda
+module _
+  {l1 l2 : Level}
+  (X : Metric-Space l1 l2)
+  {u : sequence-type-Metric-Space X}
+  {lim : type-Metric-Space X}
+  (f : subsequence u)
+  where
+
+  abstract
+    preserves-is-limit-modulus-seq-subsequence-Metric-Space :
+      (μ : ℚ⁺ → ℕ) →
+      is-limit-modulus-sequence-Metric-Space X u lim μ →
+      is-limit-modulus-sequence-Metric-Space
+        ( X)
+        ( seq-subsequence u f)
+        ( lim)
+        ( μ)
+    preserves-is-limit-modulus-seq-subsequence-Metric-Space
+      μ is-mod-μ ε n με≤n =
+      is-mod-μ
+        ( ε)
+        ( extract-subsequence u f n)
+        ( transitive-leq-ℕ
+          ( μ ε)
+          ( n)
+          ( extract-subsequence u f n)
+          ( is-superlinear-extract-subsequence u f n) με≤n)
+
+    preserves-is-limit-seq-subsequence-Metric-Space :
+      is-limit-sequence-Metric-Space X u lim →
+      is-limit-sequence-Metric-Space X (seq-subsequence u f) lim
+    preserves-is-limit-seq-subsequence-Metric-Space =
+      map-tot-exists
+        ( preserves-is-limit-modulus-seq-subsequence-Metric-Space)
 ```
 
 ## See also
