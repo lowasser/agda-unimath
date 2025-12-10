@@ -102,9 +102,6 @@ module _
   neg-Metric-Ab : type-Metric-Ab MG → type-Metric-Ab MG
   neg-Metric-Ab = neg-Ab (ab-Metric-Ab MG)
 
-  neg-zero-Metric-Ab : neg-Metric-Ab zero-Metric-Ab ＝ zero-Metric-Ab
-  neg-zero-Metric-Ab = neg-zero-Ab (ab-Metric-Ab MG)
-
   diff-Metric-Ab : type-Metric-Ab MG → type-Metric-Ab MG → type-Metric-Ab MG
   diff-Metric-Ab x y = add-Metric-Ab x (neg-Metric-Ab y)
 
