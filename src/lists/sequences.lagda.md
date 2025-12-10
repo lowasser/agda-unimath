@@ -7,13 +7,13 @@ module lists.sequences where
 <details><summary>Imports</summary>
 
 ```agda
+open import elementary-number-theory.addition-natural-numbers
 open import elementary-number-theory.natural-numbers
 
 open import foundation.cartesian-product-types
 open import foundation.dependent-pair-types
+open import foundation.function-types
 open import foundation.universe-levels
-
-open import foundation-core.function-types
 
 open import lists.dependent-sequences
 ```
@@ -43,8 +43,11 @@ sequence A = dependent-sequence (λ _ → A)
 ### The tail of a sequence
 
 ```agda
+drop-sequence : {l : Level} {A : UU l} → ℕ → sequence A → sequence A
+drop-sequence k u = u ∘ add-ℕ' k
+
 tail-sequence : {l : Level} {A : UU l} → sequence A → sequence A
-tail-sequence u n = u (succ-ℕ n)
+tail-sequence = drop-sequence 1
 ```
 
 ### Functorial action on maps of sequences

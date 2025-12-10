@@ -28,10 +28,10 @@ open import foundation.subtypes
 open import foundation.transport-along-identifications
 open import foundation.universe-levels
 
-open import logic.functoriality-existential-quantification
-
 open import lists.sequences
 open import lists.subsequences
+
+open import logic.functoriality-existential-quantification
 
 open import metric-spaces.cartesian-products-metric-spaces
 open import metric-spaces.metric-spaces
@@ -480,7 +480,7 @@ module _
           ( μ ε)
           ( n)
           ( extract-subsequence u f n)
-          ( is-superlinear-extract-subsequence u f n) με≤n)
+          ( is-inflationary-extract-subsequence u f n) με≤n)
 
     preserves-is-limit-seq-subsequence-Metric-Space :
       is-limit-sequence-Metric-Space X u lim →

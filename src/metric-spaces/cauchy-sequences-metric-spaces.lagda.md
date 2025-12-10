@@ -38,6 +38,7 @@ open import foundation.transport-along-identifications
 open import foundation.universe-levels
 
 open import lists.sequences
+open import lists.subsequences
 
 open import metric-spaces.cartesian-products-metric-spaces
 open import metric-spaces.cauchy-approximations-metric-spaces
@@ -770,6 +771,41 @@ module _
   pair-cauchy-sequence-Metric-Space =
     ( sequence-pair-cauchy-sequence-Metric-Space ,
       is-cauchy-sequence-pair-cauchy-sequence-Metric-Space)
+```
+
+### Taking subsequences preserves the property of being a Cauchy sequence
+
+```agda
+module _
+  {l1 l2 : Level}
+  (X : Metric-Space l1 l2)
+  {u : sequence-type-Metric-Space X}
+  (f : subsequence u)
+  where
+
+  abstract
+    preserves-is-cauchy-seq-subsequence-Metric-Space :
+      is-cauchy-sequence-Metric-Space X u →
+      is-cauchy-sequence-Metric-Space X (seq-subsequence u f)
+    preserves-is-cauchy-seq-subsequence-Metric-Space μ ε =
+      ( pr1 (μ ε) ,
+        λ m n με≤m με≤n →
+          pr2
+            ( μ ε)
+            ( extract-subsequence u f m)
+            ( extract-subsequence u f n)
+            ( transitive-leq-ℕ
+              ( pr1 (μ ε))
+              ( m)
+              ( extract-subsequence u f m)
+              ( is-inflationary-extract-subsequence u f m)
+              ( με≤m))
+            ( transitive-leq-ℕ
+              ( pr1 (μ ε))
+              ( n)
+              ( extract-subsequence u f n)
+              ( is-inflationary-extract-subsequence u f n)
+              ( με≤n)))
 ```
 
 ## See also

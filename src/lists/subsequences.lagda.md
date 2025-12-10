@@ -7,26 +7,27 @@ module lists.subsequences where
 <details><summary>Imports</summary>
 
 ```agda
-open import order-theory.order-preserving-maps-posets
+open import elementary-number-theory.addition-natural-numbers
 open import elementary-number-theory.decidable-total-order-natural-numbers
 open import elementary-number-theory.inequality-natural-numbers
-open import elementary-number-theory.natural-numbers
-open import elementary-number-theory.strict-inequality-natural-numbers
 open import elementary-number-theory.multiplication-natural-numbers
-open import elementary-number-theory.addition-natural-numbers
+open import elementary-number-theory.natural-numbers
 open import elementary-number-theory.nonzero-natural-numbers
+open import elementary-number-theory.strict-inequality-natural-numbers
 
 open import foundation.action-on-identifications-functions
+open import foundation.coproduct-types
 open import foundation.dependent-pair-types
 open import foundation.function-types
 open import foundation.functoriality-dependent-pair-types
 open import foundation.identity-types
 open import foundation.propositional-truncations
 open import foundation.universe-levels
-open import foundation.coproduct-types
 
 open import lists.sequences
 
+open import order-theory.inflationary-maps-posets
+open import order-theory.order-preserving-maps-posets
 open import order-theory.strict-order-preserving-maps
 open import order-theory.strictly-increasing-sequences-strictly-preordered-sets
 ```
@@ -120,7 +121,7 @@ module _
       strictly-preordered-set-ℕ
 ```
 
-### The extraction sequence of a subsequence is superlinear
+### The extraction sequence of a subsequence is inflationary
 
 ```agda
 module _
@@ -128,11 +129,11 @@ module _
   where
 
   abstract
-    is-superlinear-extract-subsequence :
-      (n : ℕ) → leq-ℕ n (extract-subsequence u v n)
-    is-superlinear-extract-subsequence zero-ℕ =
+    is-inflationary-extract-subsequence :
+      is-inflationary-map-Poset ℕ-Poset (extract-subsequence u v)
+    is-inflationary-extract-subsequence zero-ℕ =
       leq-zero-ℕ (extract-subsequence u v zero-ℕ)
-    is-superlinear-extract-subsequence (succ-ℕ n) =
+    is-inflationary-extract-subsequence (succ-ℕ n) =
       leq-succ-le-ℕ
         ( n)
         ( extract-subsequence u v (succ-ℕ n))
@@ -140,7 +141,7 @@ module _
           { n}
           { extract-subsequence u v n}
           { extract-subsequence u v (succ-ℕ n)}
-          ( is-superlinear-extract-subsequence n)
+          ( is-inflationary-extract-subsequence n)
           ( le-succ-is-strictly-increasing-sequence-Strictly-Preordered-Set
             ( strictly-preordered-set-ℕ)
             ( extract-subsequence u v)

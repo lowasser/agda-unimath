@@ -25,6 +25,7 @@ open import group-theory.abelian-groups
 open import group-theory.sums-of-finite-sequences-of-elements-abelian-groups
 
 open import lists.sequences
+open import lists.subsequences
 
 open import univalent-combinatorics.coproduct-types
 open import univalent-combinatorics.standard-finite-types
@@ -148,7 +149,10 @@ module _
 
   drop-series-Metric-Ab : ℕ → series-Metric-Ab G → series-Metric-Ab G
   drop-series-Metric-Ab n (series-terms-Metric-Ab f) =
-    series-terms-Metric-Ab (f ∘ add-ℕ n)
+    series-terms-Metric-Ab (drop-sequence n f)
+
+  tail-series-Metric-Ab : series-Metric-Ab G → series-Metric-Ab G
+  tail-series-Metric-Ab = drop-series-Metric-Ab 1
 ```
 
 ### The partial sums of a series after dropping terms
@@ -207,5 +211,14 @@ module _
             partial-sum-series-Metric-Ab
               ( series-terms-Metric-Ab {G = G} (σ ∘ add-ℕ n))
               ( i)
-            by is-identity-left-conjugation-Ab (ab-Metric-Ab G) _ _)
+            by is-identity-left-conjugation-Ab (ab-Metric-Ab G) _ _
+          ＝
+            partial-sum-series-Metric-Ab (drop-series-Metric-Ab n s) i
+            by
+              ap
+                ( λ f →
+                  partial-sum-series-Metric-Ab
+                    ( series-terms-Metric-Ab {G = G} (σ ∘ f))
+                    ( i))
+                ( eq-htpy (commutative-add-ℕ n)))
 ```
