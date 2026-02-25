@@ -225,6 +225,26 @@ abstract
     sum-constant-fin-sequence-type-Group (group-Ab G)
 ```
 
+### Negation is distributive across sums
+
+```agda
+module _
+  {l : Level} (G : Ab l)
+  where
+
+  abstract
+    distributive-neg-sum-fin-sequence-type-Ab :
+      (n : ℕ) (f : fin-sequence-type-Ab G n) →
+      neg-Ab G (sum-fin-sequence-type-Ab G n f) ＝
+      sum-fin-sequence-type-Ab G n (neg-Ab G ∘ f)
+    distributive-neg-sum-fin-sequence-type-Ab 0 _ = neg-zero-Ab G
+    distributive-neg-sum-fin-sequence-type-Ab (succ-ℕ n) f =
+      ( distributive-neg-add-Ab G _ _) ∙
+      ( ap-add-Ab G
+        ( distributive-neg-sum-fin-sequence-type-Ab n (f ∘ inl))
+        ( refl))
+```
+
 ## See also
 
 - [Sums of finite families of elements in abelian groups](group-theory.sums-of-finite-families-of-elements-commutative-monoids.md)
