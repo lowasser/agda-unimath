@@ -19,6 +19,8 @@ open import linear-algebra.constant-matrices public
 open import linear-algebra.constant-tuples public
 open import linear-algebra.dependent-products-left-modules-commutative-rings public
 open import linear-algebra.dependent-products-left-modules-rings public
+open import linear-algebra.dependent-products-real-vector-spaces public
+open import linear-algebra.dependent-products-vector-spaces public
 open import linear-algebra.diagonal-matrices-on-rings public
 open import linear-algebra.difference-linear-maps-left-modules-commutative-rings public
 open import linear-algebra.difference-linear-maps-left-modules-rings public
@@ -35,6 +37,7 @@ open import linear-algebra.finite-sequences-in-monoids public
 open import linear-algebra.finite-sequences-in-rings public
 open import linear-algebra.finite-sequences-in-semigroups public
 open import linear-algebra.finite-sequences-in-semirings public
+open import linear-algebra.function-real-vector-spaces public
 open import linear-algebra.functoriality-matrices public
 open import linear-algebra.kernels-linear-maps-left-modules-commutative-rings public
 open import linear-algebra.kernels-linear-maps-left-modules-rings public
@@ -84,6 +87,9 @@ open import linear-algebra.standard-euclidean-inner-product-spaces public
 open import linear-algebra.standard-euclidean-vector-spaces public
 open import linear-algebra.subsets-left-modules-commutative-rings public
 open import linear-algebra.subsets-left-modules-rings public
+open import linear-algebra.subsets-real-vector-spaces public
+open import linear-algebra.subsets-vector-spaces public
+open import linear-algebra.subspaces-real-vector-spaces public
 open import linear-algebra.subspaces-vector-spaces public
 open import linear-algebra.sums-of-finite-sequences-of-elements-normed-real-vector-spaces public
 open import linear-algebra.symmetric-bilinear-forms-real-vector-spaces public
@@ -95,5 +101,6 @@ open import linear-algebra.tuples-on-euclidean-domains public
 open import linear-algebra.tuples-on-monoids public
 open import linear-algebra.tuples-on-rings public
 open import linear-algebra.tuples-on-semirings public
+open import linear-algebra.vector-space-of-uniformly-continuous-functions-into-normed-real-vector-spaces public
 open import linear-algebra.vector-spaces public
 ```

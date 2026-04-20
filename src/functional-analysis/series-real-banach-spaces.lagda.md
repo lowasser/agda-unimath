@@ -7,7 +7,6 @@ module functional-analysis.series-real-banach-spaces where
 <details><summary>Imports</summary>
 
 ```agda
-open import analysis.metric-abelian-groups-normed-real-vector-spaces
 open import analysis.series-metric-abelian-groups
 open import analysis.series-real-numbers
 
@@ -19,6 +18,8 @@ open import foundation.identity-types
 open import foundation.universe-levels
 
 open import functional-analysis.real-banach-spaces
+
+open import linear-algebra.normed-real-vector-spaces
 
 open import lists.sequences
 ```

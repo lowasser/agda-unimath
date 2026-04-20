@@ -9,6 +9,7 @@ module linear-algebra.left-modules-rings where
 ```agda
 open import elementary-number-theory.ring-of-integers
 
+open import foundation.action-on-identifications-binary-functions
 open import foundation.action-on-identifications-functions
 open import foundation.dependent-pair-types
 open import foundation.equality-dependent-pair-types
@@ -89,6 +90,10 @@ module _
   add-left-module-Ring :
     (x y : type-left-module-Ring) → type-left-module-Ring
   add-left-module-Ring = add-Ab ab-left-module-Ring
+
+  diff-left-module-Ring :
+    (x y : type-left-module-Ring) → type-left-module-Ring
+  diff-left-module-Ring = right-subtraction-Ab ab-left-module-Ring
 
   zero-left-module-Ring : type-left-module-Ring
   zero-left-module-Ring = zero-Ab ab-left-module-Ring
@@ -435,6 +440,41 @@ module _
           ( endomorphism-ring-ab-left-module-Ring R M)
           ( mul-hom-left-module-Ring R M)
           ( r))
+```
+
+### Distributivity law for multiplication over subtraction
+
+```agda
+module _
+  {l1 l2 : Level} (R : Ring l1) (M : left-module-Ring l2 R)
+  where
+
+  abstract
+    left-distributive-mul-diff-left-module-Ring :
+      (r : type-Ring R) (x y : type-left-module-Ring R M) →
+      mul-left-module-Ring R M r (diff-left-module-Ring R M x y) ＝
+      diff-left-module-Ring R M
+        ( mul-left-module-Ring R M r x)
+        ( mul-left-module-Ring R M r y)
+    left-distributive-mul-diff-left-module-Ring r x y =
+      ( left-distributive-mul-add-left-module-Ring R M r x _) ∙
+      ( ap-binary
+        ( add-left-module-Ring R M)
+        ( refl)
+        ( right-negative-law-mul-left-module-Ring R M r y))
+
+    right-distributive-mul-diff-left-module-Ring :
+      (r s : type-Ring R) (x : type-left-module-Ring R M) →
+      mul-left-module-Ring R M (right-subtraction-Ring R r s) x ＝
+      diff-left-module-Ring R M
+        ( mul-left-module-Ring R M r x)
+        ( mul-left-module-Ring R M s x)
+    right-distributive-mul-diff-left-module-Ring r s x =
+      ( right-distributive-mul-add-left-module-Ring R M r _ x) ∙
+      ( ap-binary
+        ( add-left-module-Ring R M)
+        ( refl)
+        ( left-negative-law-mul-left-module-Ring R M s x))
 ```
 
 #### Multiplying by the negation of the one of the ring is negation

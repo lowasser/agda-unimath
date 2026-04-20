@@ -9,10 +9,17 @@ module linear-algebra.normed-real-vector-spaces where
 <details><summary>Imports</summary>
 
 ```agda
+open import analysis.metric-abelian-groups
+
+open import elementary-number-theory.multiplication-positive-rational-numbers
+
 open import foundation.action-on-identifications-functions
 open import foundation.dependent-pair-types
+open import foundation.equality-dependent-pair-types
+open import foundation.existential-quantification
 open import foundation.identity-types
 open import foundation.logical-equivalences
+open import foundation.propositional-truncations
 open import foundation.propositions
 open import foundation.sets
 open import foundation.subtypes
@@ -24,24 +31,37 @@ open import group-theory.abelian-groups
 open import linear-algebra.real-vector-spaces
 open import linear-algebra.seminormed-real-vector-spaces
 
+open import metric-spaces.cartesian-products-metric-spaces
 open import metric-spaces.equality-of-metric-spaces
 open import metric-spaces.isometries-metric-spaces
+open import metric-spaces.lipschitz-maps-metric-spaces
 open import metric-spaces.located-metric-spaces
 open import metric-spaces.metric-spaces
 open import metric-spaces.metrics
 open import metric-spaces.metrics-of-metric-spaces
+open import metric-spaces.pseudometric-spaces
+open import metric-spaces.rational-neighborhood-relations
+open import metric-spaces.uniformly-continuous-maps-metric-spaces
+
+open import order-theory.large-posets
 
 open import real-numbers.absolute-value-real-numbers
 open import real-numbers.addition-real-numbers
 open import real-numbers.dedekind-real-numbers
+open import real-numbers.difference-real-numbers
 open import real-numbers.distance-real-numbers
 open import real-numbers.inequality-real-numbers
+open import real-numbers.large-additive-group-of-real-numbers
+open import real-numbers.metric-additive-group-of-real-numbers
 open import real-numbers.metric-space-of-real-numbers
+open import real-numbers.multiplication-nonnegative-real-numbers
+open import real-numbers.multiplication-real-numbers
 open import real-numbers.nonnegative-real-numbers
 open import real-numbers.raising-universe-levels-real-numbers
 open import real-numbers.rational-real-numbers
 open import real-numbers.saturation-inequality-nonnegative-real-numbers
 open import real-numbers.similarity-real-numbers
+open import real-numbers.strict-inequality-real-numbers
 open import real-numbers.zero-real-numbers
 ```
 
@@ -191,6 +211,30 @@ module _
   right-inverse-law-add-Normed-ℝ-Vector-Space =
     right-inverse-law-add-Ab ab-Normed-ℝ-Vector-Space
 
+  mul-Normed-ℝ-Vector-Space :
+    ℝ l1 → type-Normed-ℝ-Vector-Space → type-Normed-ℝ-Vector-Space
+  mul-Normed-ℝ-Vector-Space =
+    mul-ℝ-Vector-Space vector-space-Normed-ℝ-Vector-Space
+
+  left-distributive-mul-diff-Normed-ℝ-Vector-Space :
+    (c : ℝ l1) (x y : type-Normed-ℝ-Vector-Space) →
+    mul-Normed-ℝ-Vector-Space c (diff-Normed-ℝ-Vector-Space x y) ＝
+    diff-Normed-ℝ-Vector-Space
+      ( mul-Normed-ℝ-Vector-Space c x)
+      ( mul-Normed-ℝ-Vector-Space c y)
+  left-distributive-mul-diff-Normed-ℝ-Vector-Space =
+    left-distributive-mul-diff-ℝ-Vector-Space vector-space-Normed-ℝ-Vector-Space
+
+  right-distributive-mul-diff-Normed-ℝ-Vector-Space :
+    (c d : ℝ l1) (x : type-Normed-ℝ-Vector-Space) →
+    mul-Normed-ℝ-Vector-Space (c -ℝ d) x ＝
+    diff-Normed-ℝ-Vector-Space
+      ( mul-Normed-ℝ-Vector-Space c x)
+      ( mul-Normed-ℝ-Vector-Space d x)
+  right-distributive-mul-diff-Normed-ℝ-Vector-Space =
+    right-distributive-mul-diff-ℝ-Vector-Space
+      ( vector-space-Normed-ℝ-Vector-Space)
+
   map-norm-Normed-ℝ-Vector-Space : type-Normed-ℝ-Vector-Space → ℝ l1
   map-norm-Normed-ℝ-Vector-Space = pr1 (pr1 norm-Normed-ℝ-Vector-Space)
 
@@ -258,6 +302,14 @@ module _
         ( dist-Normed-ℝ-Vector-Space u v +ℝ dist-Normed-ℝ-Vector-Space v w)
     triangular-dist-Normed-ℝ-Vector-Space =
       triangular-dist-Seminormed-ℝ-Vector-Space
+        ( seminormed-vector-space-Normed-ℝ-Vector-Space)
+
+    is-absolutely-homogeneous-norm-Normed-ℝ-Vector-Space :
+      (c : ℝ l1) (v : type-Normed-ℝ-Vector-Space) →
+      map-norm-Normed-ℝ-Vector-Space (mul-Normed-ℝ-Vector-Space c v) ＝
+      abs-ℝ c *ℝ map-norm-Normed-ℝ-Vector-Space v
+    is-absolutely-homogeneous-norm-Normed-ℝ-Vector-Space =
+      is-absolutely-homogeneous-seminorm-Seminormed-ℝ-Vector-Space
         ( seminormed-vector-space-Normed-ℝ-Vector-Space)
 ```
 
@@ -404,6 +456,77 @@ module _
                   ( w)))))
 ```
 
+### Normed real vector spaces are metric abelian groups
+
+```agda
+module _
+  {l1 l2 : Level}
+  (V : Normed-ℝ-Vector-Space l1 l2)
+  where
+
+  metric-ab-Normed-ℝ-Vector-Space : Metric-Ab l2 l1
+  metric-ab-Normed-ℝ-Vector-Space =
+    ( ab-Normed-ℝ-Vector-Space V ,
+      pseudometric-structure-Metric-Space
+        ( metric-space-Normed-ℝ-Vector-Space V) ,
+      is-extensional-pseudometric-Metric-Space
+        ( metric-space-Normed-ℝ-Vector-Space V) ,
+      is-isometry-neg-Normed-ℝ-Vector-Space V ,
+      is-isometry-left-add-Normed-ℝ-Vector-Space V)
+```
+
+### The metric abelian group associated with `ℝ` as a normed vector space over `ℝ` is equal to the metric additive group of `ℝ`
+
+```agda
+abstract
+  eq-metric-ab-normed-real-vector-space-metric-ab-ℝ :
+    (l : Level) →
+    metric-ab-Normed-ℝ-Vector-Space (normed-real-vector-space-ℝ l) ＝
+    metric-ab-add-ℝ l
+  eq-metric-ab-normed-real-vector-space-metric-ab-ℝ l =
+    eq-pair-eq-fiber
+      ( eq-type-subtype
+        ( λ M → is-metric-ab-prop-Ab-Pseudometric-Structure (ab-add-ℝ l) M)
+        ( eq-type-subtype
+          ( is-pseudometric-prop-Rational-Neighborhood-Relation (ℝ l))
+          ( eq-Eq-Rational-Neighborhood-Relation _ _
+            ( λ d x y → inv-iff (neighborhood-iff-leq-dist-ℝ d x y)))))
+```
+
+### Addition is a uniformly continuous map in the metric space of a normed real vector space
+
+```agda
+module _
+  {l1 l2 : Level}
+  (V : Normed-ℝ-Vector-Space l1 l2)
+  where
+
+  uniformly-continuous-map-add-pair-Normed-ℝ-Vector-Space :
+    uniformly-continuous-map-Metric-Space
+      ( product-Metric-Space
+        ( metric-space-Normed-ℝ-Vector-Space V)
+        ( metric-space-Normed-ℝ-Vector-Space V))
+      ( metric-space-Normed-ℝ-Vector-Space V)
+  uniformly-continuous-map-add-pair-Normed-ℝ-Vector-Space =
+    uniformly-continuous-map-add-pair-Metric-Ab
+      ( metric-ab-Normed-ℝ-Vector-Space V)
+
+  is-uniformly-continuous-map-add-pair-Normed-ℝ-Vector-Space :
+    is-uniformly-continuous-map-Metric-Space
+      ( product-Metric-Space
+        ( metric-space-Normed-ℝ-Vector-Space V)
+        ( metric-space-Normed-ℝ-Vector-Space V))
+      ( metric-space-Normed-ℝ-Vector-Space V)
+      ( ind-Σ (add-Normed-ℝ-Vector-Space V))
+  is-uniformly-continuous-map-add-pair-Normed-ℝ-Vector-Space =
+    is-uniformly-continuous-map-uniformly-continuous-map-Metric-Space
+      ( product-Metric-Space
+        ( metric-space-Normed-ℝ-Vector-Space V)
+        ( metric-space-Normed-ℝ-Vector-Space V))
+      ( metric-space-Normed-ℝ-Vector-Space V)
+      ( uniformly-continuous-map-add-pair-Normed-ℝ-Vector-Space)
+```
+
 ### The norm of the zero vector is zero
 
 ```agda
@@ -419,6 +542,82 @@ module _
     eq-zero-norm-zero-Normed-ℝ-Vector-Space =
       eq-zero-seminorm-zero-Seminormed-ℝ-Vector-Space
         ( seminormed-vector-space-Normed-ℝ-Vector-Space V)
+```
+
+### Scalar multiplication by a fixed constant is a Lipschitz map on the metric space of a normed real vector space
+
+```agda
+module _
+  {l1 l2 : Level}
+  (V : Normed-ℝ-Vector-Space l1 l2)
+  (c : ℝ l1)
+  where
+
+  abstract
+    is-lipschitz-map-mul-Normed-ℝ-Vector-Space :
+      is-lipschitz-map-Metric-Space
+        ( metric-space-Normed-ℝ-Vector-Space V)
+        ( metric-space-Normed-ℝ-Vector-Space V)
+        ( mul-Normed-ℝ-Vector-Space V c)
+    is-lipschitz-map-mul-Normed-ℝ-Vector-Space =
+      let
+        open inequality-reasoning-Large-Poset ℝ-Large-Poset
+        open
+          do-syntax-trunc-Prop
+            ( is-lipschitz-prop-map-Metric-Space
+              ( metric-space-Normed-ℝ-Vector-Space V)
+              ( metric-space-Normed-ℝ-Vector-Space V)
+              ( mul-Normed-ℝ-Vector-Space V c))
+        _*V_ = mul-Normed-ℝ-Vector-Space V
+        _-V_ = diff-Normed-ℝ-Vector-Space V
+      in do
+        (q , |c|<q) ← exists-greater-positive-rational-ℝ (abs-ℝ c)
+        intro-exists
+          ( q)
+          ( λ ε x y dxy≤ε →
+            chain-of-inequalities
+              dist-Normed-ℝ-Vector-Space V (c *V x) (c *V y)
+              ≤ map-norm-Normed-ℝ-Vector-Space V (c *V (x -V y))
+                by
+                  leq-eq-ℝ
+                    ( ap
+                      ( map-norm-Normed-ℝ-Vector-Space V)
+                      ( inv
+                        ( left-distributive-mul-diff-Normed-ℝ-Vector-Space
+                          ( V)
+                          ( c)
+                          ( x)
+                          ( y))))
+              ≤ abs-ℝ c *ℝ map-norm-Normed-ℝ-Vector-Space V (x -V y)
+                by
+                  leq-eq-ℝ
+                    ( is-absolutely-homogeneous-norm-Normed-ℝ-Vector-Space
+                      ( V)
+                      ( c)
+                      ( x -V y))
+              ≤ real-ℚ⁺ q *ℝ real-ℚ⁺ ε
+                by
+                  preserves-leq-mul-ℝ⁰⁺
+                    ( nonnegative-abs-ℝ c)
+                    ( nonnegative-real-ℚ⁺ q)
+                    ( nonnegative-norm-Normed-ℝ-Vector-Space V (x -V y))
+                    ( nonnegative-real-ℚ⁺ ε)
+                    ( leq-le-ℝ |c|<q)
+                    ( dxy≤ε)
+              ≤ real-ℚ⁺ (q *ℚ⁺ ε)
+                by leq-eq-ℝ (mul-real-ℚ _ _))
+
+    is-uniformly-continuous-map-mul-Normed-ℝ-Vector-Space :
+      is-uniformly-continuous-map-Metric-Space
+        ( metric-space-Normed-ℝ-Vector-Space V)
+        ( metric-space-Normed-ℝ-Vector-Space V)
+        ( mul-Normed-ℝ-Vector-Space V c)
+    is-uniformly-continuous-map-mul-Normed-ℝ-Vector-Space =
+      is-uniformly-continuous-map-is-lipschitz-map-Metric-Space
+        ( metric-space-Normed-ℝ-Vector-Space V)
+        ( metric-space-Normed-ℝ-Vector-Space V)
+        ( mul-Normed-ℝ-Vector-Space V c)
+        ( is-lipschitz-map-mul-Normed-ℝ-Vector-Space)
 ```
 
 ## See also

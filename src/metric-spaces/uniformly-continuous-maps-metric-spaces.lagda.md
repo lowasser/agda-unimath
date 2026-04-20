@@ -350,6 +350,32 @@ module _
       is-uniformly-continuous-map-product-uniformly-continuous-map-Metric-Space)
 ```
 
+### Given uniformly continuous maps from `X → Y` and `X → Z`, the diagonal product map from `X → Y × Z`
+
+```agda
+module _
+  {l1 l2 l3 l4 l5 l6 : Level}
+  (X : Metric-Space l1 l2)
+  (Y : Metric-Space l3 l4)
+  (Z : Metric-Space l5 l6)
+  where
+
+  diagonal-product-uniformly-continuous-map-Metric-Space :
+    uniformly-continuous-map-Metric-Space X Y →
+    uniformly-continuous-map-Metric-Space X Z →
+    uniformly-continuous-map-Metric-Space X (product-Metric-Space Y Z)
+  diagonal-product-uniformly-continuous-map-Metric-Space f g =
+    comp-uniformly-continuous-map-Metric-Space
+      ( X)
+      ( product-Metric-Space X X)
+      ( product-Metric-Space Y Z)
+      ( product-uniformly-continuous-map-Metric-Space X Y X Z f g)
+      ( uniformly-continuous-map-isometry-Metric-Space
+        ( X)
+        ( product-Metric-Space X X)
+        ( diagonal-product-isometry-Metric-Space X))
+```
+
 ## See also
 
 - [Modulated uniformly continuous maps on metric spaces](metric-spaces.modulated-uniformly-continuous-maps-metric-spaces.md)

@@ -1,6 +1,8 @@
 # Left modules over commutative rings
 
 ```agda
+{-# OPTIONS --lossy-unification #-}
+
 module linear-algebra.left-modules-commutative-rings where
 ```
 
@@ -65,6 +67,12 @@ module _
     type-left-module-Commutative-Ring
   add-left-module-Commutative-Ring =
     add-left-module-Ring (ring-Commutative-Ring R) M
+
+  diff-left-module-Commutative-Ring :
+    (x y : type-left-module-Commutative-Ring) →
+    type-left-module-Commutative-Ring
+  diff-left-module-Commutative-Ring =
+    diff-left-module-Ring (ring-Commutative-Ring R) M
 
   mul-left-module-Commutative-Ring :
     type-Commutative-Ring R → type-left-module-Commutative-Ring →
@@ -154,6 +162,28 @@ module _
       ( mul-left-module-Commutative-Ring s x)
   right-distributive-mul-add-left-module-Commutative-Ring =
     right-distributive-mul-add-left-module-Ring (ring-Commutative-Ring R) M
+
+  left-distributive-mul-diff-left-module-Commutative-Ring :
+    (r : type-Commutative-Ring R) (x y : type-left-module-Commutative-Ring) →
+    mul-left-module-Commutative-Ring
+      ( r)
+      ( diff-left-module-Commutative-Ring x y) ＝
+    diff-left-module-Commutative-Ring
+      ( mul-left-module-Commutative-Ring r x)
+      ( mul-left-module-Commutative-Ring r y)
+  left-distributive-mul-diff-left-module-Commutative-Ring =
+    left-distributive-mul-diff-left-module-Ring (ring-Commutative-Ring R) M
+
+  right-distributive-mul-diff-left-module-Commutative-Ring :
+    (r s : type-Commutative-Ring R) (x : type-left-module-Commutative-Ring) →
+    mul-left-module-Commutative-Ring
+      ( right-subtraction-Commutative-Ring R r s)
+      ( x) ＝
+    diff-left-module-Commutative-Ring
+      ( mul-left-module-Commutative-Ring r x)
+      ( mul-left-module-Commutative-Ring s x)
+  right-distributive-mul-diff-left-module-Commutative-Ring =
+    right-distributive-mul-diff-left-module-Ring (ring-Commutative-Ring R) M
 
   associative-mul-left-module-Commutative-Ring :
     (r s : type-Commutative-Ring R) (x : type-left-module-Commutative-Ring) →
