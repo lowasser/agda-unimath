@@ -1,6 +1,8 @@
 # Partitions of closed intervals of real numbers
 
 ```agda
+{-# OPTIONS --lossy-unification #-}
+
 module real-numbers.partitions-closed-intervals-real-numbers where
 ```
 
@@ -17,6 +19,7 @@ open import foundation.dependent-pair-types
 open import foundation.function-types
 open import foundation.identity-types
 open import foundation.logical-equivalences
+open import foundation.transport-along-identifications
 open import foundation.unit-type
 open import foundation.universe-levels
 
@@ -40,6 +43,7 @@ open import real-numbers.difference-real-numbers
 open import real-numbers.inequalities-addition-and-subtraction-real-numbers
 open import real-numbers.inequality-nonnegative-real-numbers
 open import real-numbers.inequality-real-numbers
+open import real-numbers.large-poset-closed-intervals-real-numbers
 open import real-numbers.maximum-finite-families-nonnegative-real-numbers
 open import real-numbers.multiplication-nonnegative-real-numbers
 open import real-numbers.multiplication-real-numbers
@@ -208,6 +212,36 @@ fin-sequence-closed-interval-partition-closed-interval-ℝ {l} [a,b] p =
     ( ℝ-Poset l)
     ( pred-length-partition-closed-interval-ℝ [a,b] p)
     ( increasing-real-fin-sequence-partition-closed-interval-ℝ [a,b] p)
+```
+
+### The closed intervals in a partition of `[a, b]` are contained in `[a, b]`
+
+```agda
+abstract
+  leq-fin-sequence-closed-interval-partition-closed-interval-ℝ :
+    {l : Level} ([a,b] : closed-interval-ℝ l l)
+    (p : partition-closed-interval-ℝ [a,b]) →
+    is-upper-bound-family-of-elements-Large-Poset
+      ( large-poset-closed-interval-ℝ)
+      ( fin-sequence-closed-interval-partition-closed-interval-ℝ [a,b] p)
+      ( [a,b])
+  leq-fin-sequence-closed-interval-partition-closed-interval-ℝ
+    {l} [a,b]@((a , b) , a≤b) p@((((succ-ℕ n , _) , _) , _) , _) i =
+    inv-tr
+      ( λ [c,d] → leq-closed-interval-ℝ [c,d] [a,b])
+      ( htpy-closed-intervals-increasing-fin-sequence-type-Poset'
+        ( ℝ-Poset l)
+        ( pred-length-partition-closed-interval-ℝ [a,b] p)
+        ( increasing-real-fin-sequence-partition-closed-interval-ℝ [a,b] p)
+        ( i))
+      ( lower-bound-real-fin-sequence-partition-closed-interval-ℝ
+          ( [a,b])
+          ( p)
+          ( skip-zero-Fin n i) ,
+        upper-bound-real-fin-sequence-partition-closed-interval-ℝ
+          ( [a,b])
+          ( p)
+          ( inl-Fin n i))
 ```
 
 ### The mesh of a partition

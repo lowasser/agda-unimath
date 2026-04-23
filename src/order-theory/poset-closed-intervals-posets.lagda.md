@@ -137,3 +137,7 @@ module _
       ( leq-subtype-leq-closed-interval-Poset [a,b] [c,d] ,
         leq-closed-interval-leq-subtype-Poset [a,b] [c,d])
 ```
+
+## See also
+
+- [The large poset of closed intervals in large posets](order-theory.large-poset-closed-intervals-large-posets.md)
