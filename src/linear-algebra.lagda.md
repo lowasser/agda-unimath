@@ -19,6 +19,8 @@ open import linear-algebra.constant-matrices public
 open import linear-algebra.constant-tuples public
 open import linear-algebra.dependent-products-left-modules-commutative-rings public
 open import linear-algebra.dependent-products-left-modules-rings public
+open import linear-algebra.dependent-products-real-vector-spaces public
+open import linear-algebra.dependent-products-vector-spaces public
 open import linear-algebra.diagonal-matrices-on-rings public
 open import linear-algebra.difference-linear-maps-left-modules-commutative-rings public
 open import linear-algebra.difference-linear-maps-left-modules-rings public
@@ -35,6 +37,9 @@ open import linear-algebra.finite-sequences-in-monoids public
 open import linear-algebra.finite-sequences-in-rings public
 open import linear-algebra.finite-sequences-in-semigroups public
 open import linear-algebra.finite-sequences-in-semirings public
+open import linear-algebra.function-left-modules-rings public
+open import linear-algebra.function-real-vector-spaces public
+open import linear-algebra.function-vector-spaces public
 open import linear-algebra.functoriality-matrices public
 open import linear-algebra.kernels-linear-maps-left-modules-commutative-rings public
 open import linear-algebra.kernels-linear-maps-left-modules-rings public
@@ -53,6 +58,7 @@ open import linear-algebra.linear-forms-left-modules-commutative-rings public
 open import linear-algebra.linear-forms-vector-spaces public
 open import linear-algebra.linear-maps-left-modules-commutative-rings public
 open import linear-algebra.linear-maps-left-modules-rings public
+open import linear-algebra.linear-maps-real-vector-spaces public
 open import linear-algebra.linear-maps-vector-spaces public
 open import linear-algebra.linear-spans-left-modules-rings public
 open import linear-algebra.matrices public
@@ -85,7 +91,10 @@ open import linear-algebra.standard-euclidean-vector-spaces public
 open import linear-algebra.subsets-left-modules-commutative-rings public
 open import linear-algebra.subsets-left-modules-rings public
 open import linear-algebra.subspaces-vector-spaces public
+open import linear-algebra.sums-of-finite-sequences-of-elements-left-modules-rings public
 open import linear-algebra.sums-of-finite-sequences-of-elements-normed-real-vector-spaces public
+open import linear-algebra.sums-of-finite-sequences-of-elements-real-vector-spaces public
+open import linear-algebra.sums-of-finite-sequences-of-elements-vector-spaces public
 open import linear-algebra.symmetric-bilinear-forms-real-vector-spaces public
 open import linear-algebra.transposition-matrices public
 open import linear-algebra.tuples-on-commutative-monoids public
