@@ -49,32 +49,33 @@ module _
   (f : type-closed-interval-ℝ l1 [a,b] → type-ℝ-Vector-Space V)
   where
 
-  area-riemann-rectangle-closed-interval-ℝ :
+  area-riemann-rectangle-closed-interval-ℝ-Vector-Space :
     ([c,d] : closed-interval-ℝ l1 l1) →
     leq-closed-interval-ℝ [c,d] [a,b] →
     type-ℝ-Vector-Space V
-  area-riemann-rectangle-closed-interval-ℝ ((c , d) , c≤d) (a≤c , d≤b) =
+  area-riemann-rectangle-closed-interval-ℝ-Vector-Space
+    ((c , d) , c≤d) (a≤c , d≤b) =
     mul-ℝ-Vector-Space
       ( V)
       ( d -ℝ c)
       ( f (c , a≤c , transitive-leq-ℝ c d b d≤b c≤d))
 
-  fin-sequence-area-riemann-rectangle-closed-interval-ℝ :
+  fin-sequence-area-riemann-rectangle-closed-interval-ℝ-Vector-Space :
     (p : partition-closed-interval-ℝ [a,b]) →
     fin-sequence
       ( type-ℝ-Vector-Space V)
       ( pred-length-partition-closed-interval-ℝ [a,b] p)
-  fin-sequence-area-riemann-rectangle-closed-interval-ℝ p i =
-    area-riemann-rectangle-closed-interval-ℝ
+  fin-sequence-area-riemann-rectangle-closed-interval-ℝ-Vector-Space p i =
+    area-riemann-rectangle-closed-interval-ℝ-Vector-Space
       ( fin-sequence-closed-interval-partition-closed-interval-ℝ [a,b] p i)
       ( leq-fin-sequence-closed-interval-partition-closed-interval-ℝ [a,b] p i)
 
-  riemann-sum-partition-closed-interval-ℝ :
+  riemann-sum-partition-closed-interval-ℝ-Vector-Space :
     (p : partition-closed-interval-ℝ [a,b]) →
     type-ℝ-Vector-Space V
-  riemann-sum-partition-closed-interval-ℝ p =
+  riemann-sum-partition-closed-interval-ℝ-Vector-Space p =
     sum-fin-sequence-type-ℝ-Vector-Space
       ( V)
       ( pred-length-partition-closed-interval-ℝ [a,b] p)
-      ( fin-sequence-area-riemann-rectangle-closed-interval-ℝ p)
+      ( fin-sequence-area-riemann-rectangle-closed-interval-ℝ-Vector-Space p)
 ```
