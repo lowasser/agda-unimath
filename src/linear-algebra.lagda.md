@@ -77,7 +77,6 @@ open import linear-algebra.rational-modules public
 open import linear-algebra.real-inner-product-spaces public
 open import linear-algebra.real-inner-product-spaces-are-normed public
 open import linear-algebra.real-vector-spaces public
-open import linear-algebra.riemann-sums-maps-closed-intervals-real-numbers-real-vector-spaces public
 open import linear-algebra.right-modules-rings public
 open import linear-algebra.scalar-multiplication-linear-maps-left-modules-commutative-rings public
 open import linear-algebra.scalar-multiplication-linear-maps-vector-spaces public

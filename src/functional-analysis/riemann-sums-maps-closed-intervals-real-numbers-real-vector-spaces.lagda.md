@@ -1,7 +1,7 @@
 # Riemann sums of maps from closed intervals in ℝ to real vector spaces
 
 ```agda
-module linear-algebra.riemann-sums-maps-closed-intervals-real-numbers-real-vector-spaces where
+module functional-analysis.riemann-sums-maps-closed-intervals-real-numbers-real-vector-spaces where
 ```
 
 <details><summary>Imports</summary>
