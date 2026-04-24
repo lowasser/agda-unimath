@@ -79,3 +79,7 @@ module _
       ( pred-length-partition-closed-interval-ℝ [a,b] p)
       ( fin-sequence-area-riemann-rectangle-closed-interval-ℝ-Vector-Space p)
 ```
+
+## External links
+
+- [Riemann sum](https://en.wikipedia.org/wiki/Riemann_sum) on Wikipedia
