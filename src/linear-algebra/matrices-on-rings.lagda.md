@@ -13,7 +13,7 @@ open import foundation.identity-types
 open import foundation.sets
 open import foundation.universe-levels
 
-open import linear-algebra.dependent-products-left-modules-rings
+open import linear-algebra.function-left-modules-rings
 open import linear-algebra.finite-sequences-in-rings
 open import linear-algebra.left-modules-rings
 open import linear-algebra.matrices
@@ -50,10 +50,10 @@ module _
 
   left-module-matrix-Ring : left-module-Ring l R
   left-module-matrix-Ring =
-    Π-left-module-Ring
+    function-left-module-Ring
       ( R)
+      ( function-left-module-ring-Ring R (Fin n))
       ( Fin m)
-      ( λ _ → Π-left-module-Ring R (Fin n) (λ _ → left-module-ring-Ring R))
 
   set-matrix-Ring : Set l
   set-matrix-Ring = set-left-module-Ring R left-module-matrix-Ring

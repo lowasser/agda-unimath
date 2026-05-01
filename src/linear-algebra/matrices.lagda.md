@@ -74,7 +74,7 @@ module _
   where
 
   bottom-row-matrix : matrix A (succ-ℕ m) n → fin-sequence A n
-  bottom-row-matrix M = M (zero-Fin m)
+  bottom-row-matrix M = last-fin-sequence m M
 ```
 
 ### The vertical initial segment of a matrix
@@ -87,7 +87,7 @@ module _
   where
 
   vertical-init-matrix : matrix A (succ-ℕ m) n → matrix A m n
-  vertical-init-matrix M i = M (skip-zero-Fin m i)
+  vertical-init-matrix M = init-fin-sequence m M
 ```
 
 ### The first column of a matrix
@@ -126,7 +126,7 @@ module _
   where
 
   last-column-matrix : matrix A m (succ-ℕ n) → fin-sequence A m
-  last-column-matrix M i = M i (zero-Fin n)
+  last-column-matrix M = last-fin-sequence n ∘ M
 ```
 
 ### The horizontal initial segment of a matrix
@@ -139,7 +139,7 @@ module _
   where
 
   horizontal-init-matrix : matrix A m (succ-ℕ n) → matrix A m n
-  horizontal-init-matrix M i j = M i (skip-zero-Fin n j)
+  horizontal-init-matrix M = init-fin-sequence n ∘ M
 ```
 
 ### Truncation of matrix types
