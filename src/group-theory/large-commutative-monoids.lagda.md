@@ -306,6 +306,58 @@ module _
   preserves-sim-right-mul-Large-Commutative-Monoid =
     preserves-sim-right-mul-Large-Monoid
       ( large-monoid-Large-Commutative-Monoid M)
+
+  eq-raise-Large-Commutative-Monoid :
+    (l1 : Level) {l2 : Level} (x : type-Large-Commutative-Monoid M (l1 ⊔ l2)) →
+    raise-Large-Commutative-Monoid l2 x ＝ x
+  eq-raise-Large-Commutative-Monoid =
+    eq-raise-leq-level-Large-Monoid (large-monoid-Large-Commutative-Monoid M)
+
+  raise-raise-Large-Commutative-Monoid :
+    {l1 l2 l3 : Level} → (x : type-Large-Commutative-Monoid M l1) →
+    raise-Large-Commutative-Monoid l2 (raise-Large-Commutative-Monoid l3 x) ＝
+    raise-Large-Commutative-Monoid (l2 ⊔ l3) x
+  raise-raise-Large-Commutative-Monoid =
+    raise-raise-Large-Monoid (large-monoid-Large-Commutative-Monoid M)
+
+  raise-left-mul-Large-Commutative-Monoid :
+    {l1 l2 l3 : Level} →
+    (x : type-Large-Commutative-Monoid M l1) →
+    (y : type-Large-Commutative-Monoid M l2) →
+    mul-Large-Commutative-Monoid M (raise-Large-Commutative-Monoid l3 x) y ＝
+    raise-Large-Commutative-Monoid l3 (mul-Large-Commutative-Monoid M x y)
+  raise-left-mul-Large-Commutative-Monoid =
+    mul-raise-left-Large-Monoid (large-monoid-Large-Commutative-Monoid M) _
+
+  raise-right-mul-Large-Commutative-Monoid :
+    {l1 l2 l3 : Level} →
+    (x : type-Large-Commutative-Monoid M l1) →
+    (y : type-Large-Commutative-Monoid M l2) →
+    mul-Large-Commutative-Monoid M x (raise-Large-Commutative-Monoid l3 y) ＝
+    raise-Large-Commutative-Monoid l3 (mul-Large-Commutative-Monoid M x y)
+  raise-right-mul-Large-Commutative-Monoid =
+    mul-raise-right-Large-Monoid (large-monoid-Large-Commutative-Monoid M) _
+
+  raise-left-unit-law-Large-Commutative-Monoid :
+    {l1 l2 : Level} (x : type-Large-Commutative-Monoid M l1) →
+    mul-Large-Commutative-Monoid M (raise-unit-Large-Commutative-Monoid l2) x ＝
+    raise-Large-Commutative-Monoid l2 x
+  raise-left-unit-law-Large-Commutative-Monoid =
+    left-raise-unit-law-mul-Large-Monoid
+      ( large-monoid-Large-Commutative-Monoid M)
+
+  raise-right-unit-law-Large-Commutative-Monoid :
+    {l1 l2 : Level} (x : type-Large-Commutative-Monoid M l1) →
+    mul-Large-Commutative-Monoid M x (raise-unit-Large-Commutative-Monoid l2) ＝
+    raise-Large-Commutative-Monoid l2 x
+  raise-right-unit-law-Large-Commutative-Monoid =
+    right-raise-unit-law-mul-Large-Monoid
+      ( large-monoid-Large-Commutative-Monoid M)
+
+  raise-unit-lzero-Large-Commutative-Monoid :
+    raise-unit-Large-Commutative-Monoid lzero ＝ unit-Large-Commutative-Monoid M
+  raise-unit-lzero-Large-Commutative-Monoid =
+    raise-unit-lzero-Large-Monoid (large-monoid-Large-Commutative-Monoid M)
 ```
 
 ### Raising universe levels in multiplication

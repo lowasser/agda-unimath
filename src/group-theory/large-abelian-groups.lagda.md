@@ -56,6 +56,9 @@ record Large-Ab (α : Level → Level) (β : Level → Level → Level) : UUω w
   cumulative-large-set-Large-Ab =
     cumulative-large-set-Large-Group large-group-Large-Ab
 
+  type-Large-Ab : (l : Level) → UU (α l)
+  type-Large-Ab = type-Large-Group large-group-Large-Ab
+
   set-Large-Ab : (l : Level) → Set (α l)
   set-Large-Ab = set-Large-Group large-group-Large-Ab
 
