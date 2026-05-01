@@ -1,6 +1,8 @@
 # Partitions of closed intervals of real numbers
 
 ```agda
+{-# OPTIONS --lossy-unification #-}
+
 module real-numbers.partitions-closed-intervals-real-numbers where
 ```
 
@@ -11,41 +13,32 @@ open import elementary-number-theory.inequality-standard-finite-types
 open import elementary-number-theory.natural-numbers
 
 open import foundation.action-on-identifications-functions
-open import foundation.binary-transport
 open import foundation.cartesian-product-types
 open import foundation.dependent-pair-types
 open import foundation.function-types
 open import foundation.identity-types
 open import foundation.logical-equivalences
+open import foundation.transport-along-identifications
 open import foundation.unit-type
 open import foundation.universe-levels
 
 open import lists.finite-sequences
 open import lists.tuples
 
-open import order-theory.increasing-arrays-posets
 open import order-theory.increasing-finite-sequences-posets
 open import order-theory.increasing-nonempty-arrays-posets
-open import order-theory.large-posets
-open import order-theory.least-upper-bounds-large-posets
 open import order-theory.lower-bounds-large-posets
-open import order-theory.opposite-posets
-open import order-theory.order-preserving-maps-posets
 open import order-theory.upper-bounds-large-posets
 
 open import real-numbers.addition-real-numbers
 open import real-numbers.closed-intervals-real-numbers
 open import real-numbers.dedekind-real-numbers
-open import real-numbers.difference-real-numbers
-open import real-numbers.inequalities-addition-and-subtraction-real-numbers
 open import real-numbers.inequality-nonnegative-real-numbers
 open import real-numbers.inequality-real-numbers
+open import real-numbers.large-poset-closed-intervals-real-numbers
 open import real-numbers.maximum-finite-families-nonnegative-real-numbers
 open import real-numbers.multiplication-nonnegative-real-numbers
-open import real-numbers.multiplication-real-numbers
 open import real-numbers.nonnegative-real-numbers
-open import real-numbers.rational-real-numbers
-open import real-numbers.similarity-real-numbers
 
 open import univalent-combinatorics.standard-finite-types
 ```
@@ -73,8 +66,8 @@ module _
   partition-closed-interval-ℝ =
     Σ ( increasing-nonempty-array-type-Poset (ℝ-Poset l))
       ( λ u →
-        ( head-increasing-nonempty-array-type-Poset (ℝ-Poset l) u ＝ a) ×
-        ( last-increasing-nonempty-array-type-Poset (ℝ-Poset l) u ＝ b))
+        ( last-increasing-nonempty-array-type-Poset (ℝ-Poset l) u ＝ a) ×
+        ( head-increasing-nonempty-array-type-Poset (ℝ-Poset l) u ＝ b))
 
   pred-length-partition-closed-interval-ℝ :
     partition-closed-interval-ℝ → ℕ
@@ -111,40 +104,25 @@ module _
     ((((succ-ℕ n , u) , _) , H) , _) =
     ( u , H)
 
-  abstract
-    reverses-order-fin-sequence-partition-closed-interval-ℝ :
-      (p : partition-closed-interval-ℝ) →
-      preserves-order-Poset
-        ( opposite-Poset (Fin-Poset (length-partition-closed-interval-ℝ p)))
-        ( ℝ-Poset l)
-        ( real-fin-sequence-partition-closed-interval-ℝ p)
-    reverses-order-fin-sequence-partition-closed-interval-ℝ
-      ((((succ-ℕ n , u) , _) , H) , _) =
-      reverses-order-is-increasing-fin-sequence-type-Poset
-        ( ℝ-Poset l)
-        ( succ-ℕ n)
-        ( u)
-        ( H)
-
-  eq-lower-bound-head-real-fin-sequence-partition-closed-interval-ℝ :
-    (p : partition-closed-interval-ℝ) →
-    head-fin-sequence
-      ( pred-length-partition-closed-interval-ℝ p)
-      ( real-fin-sequence-partition-closed-interval-ℝ p) ＝
-    a
-  eq-lower-bound-head-real-fin-sequence-partition-closed-interval-ℝ
-    ((((succ-ℕ n , u) , _) , _) , u₋₁=a , _) =
-    u₋₁=a
-
-  eq-upper-bound-last-real-fin-sequence-partition-closed-interval-ℝ :
+  eq-lower-bound-last-real-fin-sequence-partition-closed-interval-ℝ :
     (p : partition-closed-interval-ℝ) →
     last-fin-sequence
       ( pred-length-partition-closed-interval-ℝ p)
       ( real-fin-sequence-partition-closed-interval-ℝ p) ＝
+    a
+  eq-lower-bound-last-real-fin-sequence-partition-closed-interval-ℝ
+    ((((succ-ℕ n , u) , _) , _) , u₀=a , _) =
+    u₀=a
+
+  eq-upper-bound-head-real-fin-sequence-partition-closed-interval-ℝ :
+    (p : partition-closed-interval-ℝ) →
+    head-fin-sequence
+      ( pred-length-partition-closed-interval-ℝ p)
+      ( real-fin-sequence-partition-closed-interval-ℝ p) ＝
     b
-  eq-upper-bound-last-real-fin-sequence-partition-closed-interval-ℝ
-    ((((succ-ℕ n , u) , _) , _) , _ , u₀=b) =
-    u₀=b
+  eq-upper-bound-head-real-fin-sequence-partition-closed-interval-ℝ
+    ((((succ-ℕ n , u) , _) , _) , _ , u₋₁=b) =
+    u₋₁=b
 
   abstract
     lower-bound-real-fin-sequence-partition-closed-interval-ℝ :
@@ -153,16 +131,9 @@ module _
         ( ℝ-Large-Poset)
         ( real-fin-sequence-partition-closed-interval-ℝ p)
         ( a)
-    lower-bound-real-fin-sequence-partition-closed-interval-ℝ p i =
-      binary-tr
-        ( leq-ℝ)
-        ( eq-lower-bound-head-real-fin-sequence-partition-closed-interval-ℝ p)
-        ( refl)
-        ( reverses-order-fin-sequence-partition-closed-interval-ℝ
-          ( p)
-          ( neg-one-Fin (pred-length-partition-closed-interval-ℝ p))
-          ( i)
-          ( leq-neg-one-Fin (pred-length-partition-closed-interval-ℝ p) i))
+    lower-bound-real-fin-sequence-partition-closed-interval-ℝ
+      p@((((succ-ℕ n , u) , _) , H) , u₀=a , _) i =
+      tr (λ x → leq-ℝ x (u i)) u₀=a (H (zero-Fin n) i (leq-zero-Fin n i))
 
     upper-bound-real-fin-sequence-partition-closed-interval-ℝ :
       (p : partition-closed-interval-ℝ) →
@@ -170,16 +141,9 @@ module _
         ( ℝ-Large-Poset)
         ( real-fin-sequence-partition-closed-interval-ℝ p)
         ( b)
-    upper-bound-real-fin-sequence-partition-closed-interval-ℝ p i =
-      binary-tr
-        ( leq-ℝ)
-        ( refl)
-        ( eq-upper-bound-last-real-fin-sequence-partition-closed-interval-ℝ p)
-        ( reverses-order-fin-sequence-partition-closed-interval-ℝ
-          ( p)
-          ( i)
-          ( zero-Fin (pred-length-partition-closed-interval-ℝ p))
-          ( leq-zero-Fin (pred-length-partition-closed-interval-ℝ p) i))
+    upper-bound-real-fin-sequence-partition-closed-interval-ℝ
+      p@((((succ-ℕ n , u) , _) , H) , _ , u₋₁=b) i =
+      tr (leq-ℝ (u i)) u₋₁=b (H i (neg-one-Fin n) star)
 
   fin-sequence-partition-closed-interval-ℝ :
     (p : partition-closed-interval-ℝ) →
@@ -197,17 +161,39 @@ module _
 ### The sequence of closed intervals of a partition
 
 ```agda
-fin-sequence-closed-interval-partition-closed-interval-ℝ :
-  {l : Level} ([a,b] : closed-interval-ℝ l l)
-  (p : partition-closed-interval-ℝ [a,b]) →
-  fin-sequence
-    ( closed-interval-ℝ l l)
-    ( pred-length-partition-closed-interval-ℝ [a,b] p)
-fin-sequence-closed-interval-partition-closed-interval-ℝ {l} [a,b] p =
-  closed-intervals-increasing-fin-sequence-type-Poset
-    ( ℝ-Poset l)
-    ( pred-length-partition-closed-interval-ℝ [a,b] p)
-    ( increasing-real-fin-sequence-partition-closed-interval-ℝ [a,b] p)
+module _
+  {l : Level}
+  ([a,b]@((a , b) , _) : closed-interval-ℝ l l)
+  where
+
+  fin-sequence-closed-interval-partition-closed-interval-ℝ :
+    (p : partition-closed-interval-ℝ [a,b]) →
+    fin-sequence
+      ( closed-interval-ℝ l l)
+      ( pred-length-partition-closed-interval-ℝ [a,b] p)
+  fin-sequence-closed-interval-partition-closed-interval-ℝ p =
+    closed-intervals-increasing-fin-sequence-type-Poset
+      ( ℝ-Poset l)
+      ( pred-length-partition-closed-interval-ℝ [a,b] p)
+      ( increasing-real-fin-sequence-partition-closed-interval-ℝ [a,b] p)
+
+  abstract
+    leq-fin-sequence-closed-interval-partition-closed-interval-ℝ :
+      (p : partition-closed-interval-ℝ [a,b]) →
+      is-upper-bound-family-of-elements-Large-Poset
+        ( large-poset-closed-interval-ℝ)
+        ( fin-sequence-closed-interval-partition-closed-interval-ℝ p)
+        ( [a,b])
+    leq-fin-sequence-closed-interval-partition-closed-interval-ℝ
+      p@((((succ-ℕ n , u) , _) , _) , _) i =
+      ( lower-bound-real-fin-sequence-partition-closed-interval-ℝ
+          ( [a,b])
+          ( p)
+          ( inl-Fin n i) ,
+        upper-bound-real-fin-sequence-partition-closed-interval-ℝ
+          ( [a,b])
+          ( p)
+          ( inr-Fin n i))
 ```
 
 ### The mesh of a partition
@@ -245,7 +231,7 @@ module _
 ```agda
 module _
   {l : Level}
-  ([a,b]@((a , b) , a≤b) : closed-interval-ℝ l l)
+  ([a,b] : closed-interval-ℝ l l)
   where
 
   abstract
@@ -255,39 +241,14 @@ module _
         ( large-poset-ℝ⁰⁺)
         ( diffs-partition-closed-interval-ℝ [a,b] p)
         ( nonnegative-width-closed-interval-ℝ [a,b])
-    bound-diffs-partition-closed-interval-ℝ
-      p@((((succ-ℕ n , u) , _) , _) , _) i =
-      let
-        open inequality-reasoning-Large-Poset ℝ-Large-Poset
-      in
-        chain-of-inequalities
-          real-ℝ⁰⁺ (diffs-partition-closed-interval-ℝ [a,b] p i)
-          ≤ u (inl-Fin n i) -ℝ u (skip-zero-Fin n i)
-            by
-              leq-eq-ℝ
-                ( ap
-                  ( width-closed-interval-ℝ)
-                  ( htpy-closed-intervals-increasing-fin-sequence-type-Poset'
-                    ( ℝ-Poset l)
-                    ( pred-length-partition-closed-interval-ℝ [a,b] p)
-                    ( increasing-real-fin-sequence-partition-closed-interval-ℝ
-                      ( [a,b])
-                      ( p))
-                    ( i)))
-          ≤ b -ℝ u (skip-zero-Fin n i)
-            by
-              preserves-leq-right-add-ℝ _ _ _
-                ( upper-bound-real-fin-sequence-partition-closed-interval-ℝ
-                  ( [a,b])
-                  ( p)
-                  ( inl-Fin n i))
-          ≤ b -ℝ a
-            by
-              reverses-leq-left-diff-ℝ _
-                ( lower-bound-real-fin-sequence-partition-closed-interval-ℝ
-                  ( [a,b])
-                  ( p)
-                  ( skip-zero-Fin n i))
+    bound-diffs-partition-closed-interval-ℝ p i =
+      leq-width-leq-closed-interval-ℝ
+        ( fin-sequence-closed-interval-partition-closed-interval-ℝ [a,b] p i)
+        ( [a,b])
+        ( leq-fin-sequence-closed-interval-partition-closed-interval-ℝ
+          ( [a,b])
+          ( p)
+          ( i))
 
     bound-mesh-partition-closed-interval-ℝ :
       (p : partition-closed-interval-ℝ [a,b]) →
@@ -314,9 +275,13 @@ module _
   trivial-partition-closed-interval-ℝ :
     partition-closed-interval-ℝ [a,b]
   trivial-partition-closed-interval-ℝ =
-    ( ( ((2 , component-tuple 2 (a ∷ b ∷ empty-tuple)) , star) ,
-        a≤b ,
-        raise-star) ,
+    ( ( ( (2 , component-tuple 2 (b ∷ a ∷ empty-tuple)) ,
+          star) ,
+        is-increasing-is-increasing-leq-next-fin-sequence-type-Poset
+          ( ℝ-Poset l)
+          ( 2)
+          ( _)
+          ( raise-star , a≤b)) ,
       refl ,
       refl)
 ```

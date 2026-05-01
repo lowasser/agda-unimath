@@ -86,6 +86,7 @@ open import order-theory.large-join-semilattices public
 open import order-theory.large-locales public
 open import order-theory.large-meet-semilattices public
 open import order-theory.large-meet-subsemilattices public
+open import order-theory.large-poset-closed-intervals-large-posets public
 open import order-theory.large-posets public
 open import order-theory.large-preorders public
 open import order-theory.large-quotient-locales public

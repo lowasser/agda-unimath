@@ -65,6 +65,7 @@ open import real-numbers.iterated-halving-difference-real-numbers public
 open import real-numbers.large-additive-group-of-real-numbers public
 open import real-numbers.large-multiplicative-group-of-positive-real-numbers public
 open import real-numbers.large-multiplicative-monoid-of-real-numbers public
+open import real-numbers.large-poset-closed-intervals-real-numbers public
 open import real-numbers.large-ring-of-real-numbers public
 open import real-numbers.limits-of-endomaps-real-numbers public
 open import real-numbers.limits-of-sequences-real-numbers public
