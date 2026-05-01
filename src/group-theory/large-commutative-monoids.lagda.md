@@ -184,12 +184,6 @@ module _
   sim-raise-Large-Commutative-Monoid' =
     sim-raise-Large-Monoid' (large-monoid-Large-Commutative-Monoid M)
 
-  eq-raise-Large-Commutative-Monoid :
-    {l : Level} (x : type-Large-Commutative-Monoid M l) →
-    raise-Large-Commutative-Monoid l x ＝ x
-  eq-raise-Large-Commutative-Monoid =
-    eq-raise-Large-Monoid (large-monoid-Large-Commutative-Monoid M)
-
   is-emb-raise-Large-Commutative-Monoid :
     (l1 l2 : Level) → is-emb (raise-Large-Commutative-Monoid {l1} l2)
   is-emb-raise-Large-Commutative-Monoid =
@@ -201,13 +195,6 @@ module _
     type-Large-Commutative-Monoid M (l1 ⊔ l2)
   emb-raise-Large-Commutative-Monoid =
     emb-raise-Large-Monoid (large-monoid-Large-Commutative-Monoid M)
-
-  raise-raise-Large-Commutative-Monoid :
-    {l0 l1 l2 : Level} (x : type-Large-Commutative-Monoid M l0) →
-    raise-Large-Commutative-Monoid l1 (raise-Large-Commutative-Monoid l2 x) ＝
-    raise-Large-Commutative-Monoid (l1 ⊔ l2) x
-  raise-raise-Large-Commutative-Monoid =
-    raise-raise-Large-Monoid (large-monoid-Large-Commutative-Monoid M)
 
   eq-raise-sim-Large-Commutative-Monoid :
     {l1 l2 : Level}
@@ -245,119 +232,6 @@ module _
     x ＝ raise-Large-Commutative-Monoid l1 y
   eq-raise-sim-Large-Commutative-Monoid' =
     eq-raise-sim-Large-Monoid' (large-monoid-Large-Commutative-Monoid M)
-```
-
-### Similarity preservation of multiplication
-
-```agda
-module _
-  {α : Level → Level} {β : Level → Level → Level}
-  (M : Large-Commutative-Monoid α β)
-  where
-
-  sim-preserving-binary-operator-mul-Large-Commutative-Monoid :
-    sim-preserving-binary-operator-Cumulative-Large-Set
-      ( cumulative-large-set-Large-Commutative-Monoid M)
-  sim-preserving-binary-operator-mul-Large-Commutative-Monoid =
-    sim-preserving-binary-operator-mul-Large-Monoid
-      ( large-monoid-Large-Commutative-Monoid M)
-
-  preserves-sim-mul-Large-Commutative-Monoid :
-    preserves-sim-binary-operator-Cumulative-Large-Set
-      ( cumulative-large-set-Large-Commutative-Monoid M)
-      ( mul-Large-Commutative-Monoid M)
-  preserves-sim-mul-Large-Commutative-Monoid =
-    preserves-sim-mul-Large-Monoid (large-monoid-Large-Commutative-Monoid M)
-
-  sim-preserving-map-left-mul-Large-Commutative-Monoid :
-    {l : Level} (x : type-Large-Commutative-Monoid M l) →
-    sim-preserving-endomap-Cumulative-Large-Set
-      ( l ⊔_)
-      ( cumulative-large-set-Large-Commutative-Monoid M)
-  sim-preserving-map-left-mul-Large-Commutative-Monoid =
-    sim-preserving-map-left-mul-Large-Monoid
-      ( large-monoid-Large-Commutative-Monoid M)
-
-  preserves-sim-left-mul-Large-Commutative-Monoid :
-    {l : Level} (x : type-Large-Commutative-Monoid M l) →
-    preserves-sim-endomap-Cumulative-Large-Set
-      ( l ⊔_)
-      ( cumulative-large-set-Large-Commutative-Monoid M)
-      ( mul-Large-Commutative-Monoid M x)
-  preserves-sim-left-mul-Large-Commutative-Monoid =
-    preserves-sim-left-mul-Large-Monoid
-      ( large-monoid-Large-Commutative-Monoid M)
-
-  sim-preserving-map-right-mul-Large-Commutative-Monoid :
-    {l : Level} (y : type-Large-Commutative-Monoid M l) →
-    sim-preserving-endomap-Cumulative-Large-Set
-      ( l ⊔_)
-      ( cumulative-large-set-Large-Commutative-Monoid M)
-  sim-preserving-map-right-mul-Large-Commutative-Monoid =
-    sim-preserving-map-right-mul-Large-Monoid
-      ( large-monoid-Large-Commutative-Monoid M)
-
-  preserves-sim-right-mul-Large-Commutative-Monoid :
-    {l : Level} (y : type-Large-Commutative-Monoid M l) →
-    preserves-sim-endomap-Cumulative-Large-Set
-      ( l ⊔_)
-      ( cumulative-large-set-Large-Commutative-Monoid M)
-      ( mul-Large-Commutative-Monoid' M y)
-  preserves-sim-right-mul-Large-Commutative-Monoid =
-    preserves-sim-right-mul-Large-Monoid
-      ( large-monoid-Large-Commutative-Monoid M)
-
-  eq-raise-Large-Commutative-Monoid :
-    (l1 : Level) {l2 : Level} (x : type-Large-Commutative-Monoid M (l1 ⊔ l2)) →
-    raise-Large-Commutative-Monoid l2 x ＝ x
-  eq-raise-Large-Commutative-Monoid =
-    eq-raise-leq-level-Large-Monoid (large-monoid-Large-Commutative-Monoid M)
-
-  raise-raise-Large-Commutative-Monoid :
-    {l1 l2 l3 : Level} → (x : type-Large-Commutative-Monoid M l1) →
-    raise-Large-Commutative-Monoid l2 (raise-Large-Commutative-Monoid l3 x) ＝
-    raise-Large-Commutative-Monoid (l2 ⊔ l3) x
-  raise-raise-Large-Commutative-Monoid =
-    raise-raise-Large-Monoid (large-monoid-Large-Commutative-Monoid M)
-
-  raise-left-mul-Large-Commutative-Monoid :
-    {l1 l2 l3 : Level} →
-    (x : type-Large-Commutative-Monoid M l1) →
-    (y : type-Large-Commutative-Monoid M l2) →
-    mul-Large-Commutative-Monoid M (raise-Large-Commutative-Monoid l3 x) y ＝
-    raise-Large-Commutative-Monoid l3 (mul-Large-Commutative-Monoid M x y)
-  raise-left-mul-Large-Commutative-Monoid =
-    mul-raise-left-Large-Monoid (large-monoid-Large-Commutative-Monoid M) _
-
-  raise-right-mul-Large-Commutative-Monoid :
-    {l1 l2 l3 : Level} →
-    (x : type-Large-Commutative-Monoid M l1) →
-    (y : type-Large-Commutative-Monoid M l2) →
-    mul-Large-Commutative-Monoid M x (raise-Large-Commutative-Monoid l3 y) ＝
-    raise-Large-Commutative-Monoid l3 (mul-Large-Commutative-Monoid M x y)
-  raise-right-mul-Large-Commutative-Monoid =
-    mul-raise-right-Large-Monoid (large-monoid-Large-Commutative-Monoid M) _
-
-  raise-left-unit-law-Large-Commutative-Monoid :
-    {l1 l2 : Level} (x : type-Large-Commutative-Monoid M l1) →
-    mul-Large-Commutative-Monoid M (raise-unit-Large-Commutative-Monoid l2) x ＝
-    raise-Large-Commutative-Monoid l2 x
-  raise-left-unit-law-Large-Commutative-Monoid =
-    left-raise-unit-law-mul-Large-Monoid
-      ( large-monoid-Large-Commutative-Monoid M)
-
-  raise-right-unit-law-Large-Commutative-Monoid :
-    {l1 l2 : Level} (x : type-Large-Commutative-Monoid M l1) →
-    mul-Large-Commutative-Monoid M x (raise-unit-Large-Commutative-Monoid l2) ＝
-    raise-Large-Commutative-Monoid l2 x
-  raise-right-unit-law-Large-Commutative-Monoid =
-    right-raise-unit-law-mul-Large-Monoid
-      ( large-monoid-Large-Commutative-Monoid M)
-
-  raise-unit-lzero-Large-Commutative-Monoid :
-    raise-unit-Large-Commutative-Monoid lzero ＝ unit-Large-Commutative-Monoid M
-  raise-unit-lzero-Large-Commutative-Monoid =
-    raise-unit-lzero-Large-Monoid (large-monoid-Large-Commutative-Monoid M)
 ```
 
 ### Raising universe levels in multiplication

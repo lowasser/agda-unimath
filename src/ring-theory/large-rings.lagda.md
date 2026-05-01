@@ -203,17 +203,17 @@ module _
   raise-right-add-Large-Ring =
     add-raise-right-Large-Ab (large-ab-Large-Ring R) _
 
-  left-raise-unit-law-Large-Ring :
+  left-raise-unit-law-add-Large-Ring :
     {l1 l2 : Level} (x : type-Large-Ring R l1) →
     add-Large-Ring R (raise-zero-Large-Ring l2) x ＝ raise-Large-Ring R l2 x
-  left-raise-unit-law-Large-Ring =
+  left-raise-unit-law-add-Large-Ring =
     left-raise-unit-law-add-Large-Ab (large-ab-Large-Ring R)
 
-  right-raise-unit-law-Large-Ring :
+  right-raise-unit-law-add-Large-Ring :
     {l1 l2 : Level} (x : type-Large-Ring R l1) →
     add-Large-Ring R x (raise-zero-Large-Ring l2) ＝
     raise-Large-Ring R l2 x
-  right-raise-unit-law-Large-Ring =
+  right-raise-unit-law-add-Large-Ring =
     right-raise-unit-law-add-Large-Ab (large-ab-Large-Ring R)
 
   raise-zero-lzero-Large-Ring :

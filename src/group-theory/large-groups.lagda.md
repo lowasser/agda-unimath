@@ -85,70 +85,6 @@ record Large-Group (α : Level → Level) (β : Level → Level → Level) : UU�
     mul-Large-Group x y ＝ mul-Large-Group x' y'
   ap-mul-Large-Group = ap-mul-Large-Monoid large-monoid-Large-Group
 
-  unit-Large-Group : type-Large-Group lzero
-  unit-Large-Group = unit-Large-Monoid large-monoid-Large-Group
-
-  large-similarity-relation-Large-Group :
-    Large-Similarity-Relation β type-Large-Group
-  large-similarity-relation-Large-Group =
-    large-similarity-relation-Large-Monoid large-monoid-Large-Group
-
-  sim-prop-Large-Group : Large-Relation-Prop β type-Large-Group
-  sim-prop-Large-Group = sim-prop-Large-Monoid large-monoid-Large-Group
-
-  sim-Large-Group : Large-Relation β type-Large-Group
-  sim-Large-Group = sim-Large-Monoid large-monoid-Large-Group
-
-  refl-sim-Large-Group :
-    {l : Level} (x : type-Large-Group l) → sim-Large-Group x x
-  refl-sim-Large-Group = refl-sim-Large-Monoid large-monoid-Large-Group
-
-  sim-eq-Large-Group :
-    {l : Level} {x y : type-Large-Group l} → x ＝ y → sim-Large-Group x y
-  sim-eq-Large-Group = sim-eq-Large-Monoid large-monoid-Large-Group
-
-  eq-sim-Large-Group :
-    {l : Level} (x y : type-Large-Group l) → sim-Large-Group x y → x ＝ y
-  eq-sim-Large-Group = eq-sim-Large-Monoid large-monoid-Large-Group
-
-  symmetric-sim-Large-Group :
-    {l1 l2 : Level} (x : type-Large-Group l1) (y : type-Large-Group l2) →
-    sim-Large-Group x y → sim-Large-Group y x
-  symmetric-sim-Large-Group =
-    symmetric-sim-Large-Monoid large-monoid-Large-Group
-
-  transitive-sim-Large-Group :
-    {l1 l2 l3 : Level}
-    (x : type-Large-Group l1)
-    (y : type-Large-Group l2)
-    (z : type-Large-Group l3) →
-    sim-Large-Group y z → sim-Large-Group x y → sim-Large-Group x z
-  transitive-sim-Large-Group =
-    transitive-sim-Large-Monoid large-monoid-Large-Group
-
-  preserves-sim-left-mul-Large-Group :
-    {l1 l2 l3 : Level} (y : type-Large-Group l1)
-    (x : type-Large-Group l2) (x' : type-Large-Group l3) →
-    sim-Large-Group x x' →
-    sim-Large-Group (mul-Large-Group x y) (mul-Large-Group x' y)
-  preserves-sim-left-mul-Large-Group y =
-    preserves-sim-right-mul-Large-Monoid (large-monoid-Large-Group) y
-
-  preserves-sim-right-mul-Large-Group :
-    {l1 l2 l3 : Level} (x : type-Large-Group l1)
-    (y : type-Large-Group l2) (y' : type-Large-Group l3) →
-    sim-Large-Group y y' →
-    sim-Large-Group (mul-Large-Group x y) (mul-Large-Group x y')
-  preserves-sim-right-mul-Large-Group x =
-    preserves-sim-left-mul-Large-Monoid large-monoid-Large-Group x
-
-  raise-unit-Large-Group : (l : Level) → type-Large-Group l
-  raise-unit-Large-Group = raise-unit-Large-Monoid large-monoid-Large-Group
-
-  raise-Large-Group :
-    {l1 : Level} (l2 : Level) → type-Large-Group l1 → type-Large-Group (l1 ⊔ l2)
-  raise-Large-Group = raise-Large-Monoid large-monoid-Large-Group
-
   field
     inv-Large-Group : {l : Level} → type-Large-Group l → type-Large-Group l
 
@@ -271,18 +207,6 @@ module _
     raise-Large-Group (l1 ⊔ l2) x
   raise-raise-Large-Group =
     raise-raise-Large-Monoid (large-monoid-Large-Group G)
-
-  eq-raise-sim-Large-Group :
-    {l1 l2 : Level} (x : type-Large-Group G l1) (y : type-Large-Group G l2) →
-    sim-Large-Group G x y → raise-Large-Group l2 x ＝ raise-Large-Group l1 y
-  eq-raise-sim-Large-Group =
-    eq-raise-sim-Large-Monoid (large-monoid-Large-Group G)
-
-  sim-eq-raise-Large-Group :
-    {l1 l2 : Level} (x : type-Large-Group G l1) (y : type-Large-Group G l2) →
-    raise-Large-Group l2 x ＝ raise-Large-Group l1 y → sim-Large-Group G x y
-  sim-eq-raise-Large-Group =
-    sim-eq-raise-Large-Monoid (large-monoid-Large-Group G)
 
   eq-raise-iff-sim-Large-Group :
     {l1 l2 : Level}
@@ -460,74 +384,23 @@ module _
   left-raise-unit-law-mul-Large-Group =
     left-raise-unit-law-mul-Large-Monoid (large-monoid-Large-Group G)
 
+  right-raise-unit-law-mul-Large-Group :
+    {l1 l2 : Level} (x : type-Large-Group G l1) →
+    mul-Large-Group G x (raise-unit-Large-Group l2) ＝ raise-Large-Group G l2 x
+  right-raise-unit-law-mul-Large-Group =
+    right-raise-unit-law-mul-Large-Monoid (large-monoid-Large-Group G)
+
   left-raise-unit-law-mul-Large-Group' :
     {l : Level} (y : type-Large-Group G l) →
     mul-Large-Group G (raise-unit-Large-Group l) y ＝ y
   left-raise-unit-law-mul-Large-Group' =
     left-raise-unit-law-mul-Large-Monoid' (large-monoid-Large-Group G)
 
-  sim-raise-Large-Group :
-    {l1 : Level} (l2 : Level) (x : type-Large-Group G l1) →
-    sim-Large-Group G x (raise-Large-Group G l2 x)
-  sim-raise-Large-Group = sim-raise-Large-Monoid (large-monoid-Large-Group G)
-
-  sim-raise-Large-Group' :
-    {l1 : Level} (l2 : Level) (x : type-Large-Group G l1) →
-    sim-Large-Group G (raise-Large-Group G l2 x) x
-  sim-raise-Large-Group' = sim-raise-Large-Monoid' (large-monoid-Large-Group G)
-
-  eq-raise-Large-Group :
-    (l1 : Level) {l2 : Level} (x : type-Large-Group G (l1 ⊔ l2)) →
-    raise-Large-Group G l2 x ＝ x
-  eq-raise-Large-Group =
-    eq-raise-leq-level-Large-Monoid (large-monoid-Large-Group G)
-
-  raise-raise-Large-Group :
-    {l1 l2 l3 : Level} (x : type-Large-Group G l1) →
-    raise-Large-Group G l2 (raise-Large-Group G l3 x) ＝
-    raise-Large-Group G (l2 ⊔ l3) x
-  raise-raise-Large-Group =
-    raise-raise-Large-Monoid (large-monoid-Large-Group G)
-
-  raise-left-mul-Large-Group :
-    {l1 l2 l3 : Level}
-    (x : type-Large-Group G l1) (y : type-Large-Group G l2) →
-    mul-Large-Group G (raise-Large-Group G l3 x) y ＝
-    raise-Large-Group G l3 (mul-Large-Group G x y)
-  raise-left-mul-Large-Group =
-    mul-raise-left-Large-Monoid (large-monoid-Large-Group G) _
-
-  raise-right-mul-Large-Group :
-    {l1 l2 l3 : Level}
-    (x : type-Large-Group G l1) (y : type-Large-Group G l2) →
-    mul-Large-Group G x (raise-Large-Group G l3 y) ＝
-    raise-Large-Group G l3 (mul-Large-Group G x y)
-  raise-right-mul-Large-Group =
-    mul-raise-right-Large-Monoid (large-monoid-Large-Group G) _
-
-  raise-mul-Large-Group :
-    {l1 l2 l3 l4 : Level}
-    (x : type-Large-Group G l1) (y : type-Large-Group G l2) →
-    mul-Large-Group G
-      ( raise-Large-Group G l3 x)
-      ( raise-Large-Group G l4 y) ＝
-    raise-Large-Group G (l3 ⊔ l4) (mul-Large-Group G x y)
-  raise-mul-Large-Group =
-    mul-raise-raise-Large-Monoid (large-monoid-Large-Group G) _ _
-
-  raise-left-unit-law-Large-Group :
-    {l1 l2 : Level} (x : type-Large-Group G l1) →
-    mul-Large-Group G x (raise-unit-Large-Group l2) ＝
-    raise-Large-Group G l2 x
-  raise-left-unit-law-Large-Group =
-    left-raise-unit-law-mul-Large-Monoid (large-monoid-Large-Group G)
-
-  raise-right-unit-law-Large-Group :
-    {l1 l2 : Level} (x : type-Large-Group G l1) →
-    mul-Large-Group G x (raise-unit-Large-Group G l2) ＝
-    raise-Large-Group G l2 x
-  raise-right-unit-law-Large-Group =
-    right-raise-unit-law-mul-Large-Monoid (large-monoid-Large-Group G)
+  right-raise-unit-law-mul-Large-Group' :
+    {l : Level} (x : type-Large-Group G l) →
+    mul-Large-Group G x (raise-unit-Large-Group l) ＝ x
+  right-raise-unit-law-mul-Large-Group' =
+    right-raise-unit-law-mul-Large-Monoid' (large-monoid-Large-Group G)
 
   eq-left-is-unit-law-mul-Large-Group :
     {l1 l2 : Level} (x : type-Large-Group G l1) (y : type-Large-Group G l2) →
@@ -808,44 +681,24 @@ module _
       inv-Large-Group G (mul-Large-Group G x y) ＝
       mul-Large-Group G (inv-Large-Group G y) (inv-Large-Group G x)
     distributive-inv-mul-Large-Group {l1} {l2} x y =
-      inv
-        ( let
-            open similarity-reasoning-Large-Group G
-            _*_ = mul-Large-Group G
-            mul-inv = inv-Large-Group G
-          in
-            eq-sim-Large-Group G _ _
-              ( unique-right-inv-Large-Group G _ _
-                ( equational-reasoning
-                  (x * y) * (mul-inv y * mul-inv x)
-                  ＝ x * (y * (mul-inv y * mul-inv x))
-                    by associative-mul-Large-Group G _ _ _
-                  ＝ x * ((y * mul-inv y) * mul-inv x)
-                    by
-                      ap-mul-Large-Group G
-                        ( refl)
-                        ( inv (associative-mul-Large-Group G _ _ _))
-                  ＝ x * (raise-unit-Large-Group G l2 * mul-inv x)
-                    by
-                      ap-mul-Large-Group G
-                        ( refl)
-                        ( ap-mul-Large-Group G
-                          ( right-inverse-law-mul-Large-Group G y)
-                          ( refl))
-                  ＝ x * raise-Large-Group G l2 (mul-inv x)
-                    by
-                      ap-mul-Large-Group G
-                        ( refl)
-                        ( raise-left-unit-law-Large-Group G _)
-                  ＝ raise-Large-Group G l2 (x * mul-inv x)
-                    by raise-right-mul-Large-Group G _ _
-                  ＝ raise-Large-Group G l2 (raise-unit-Large-Group G l1)
-                    by
-                      ap
-                        ( raise-Large-Group G l2)
-                        ( right-inverse-law-mul-Large-Group G x)
-                  ＝ raise-unit-Large-Group G (l1 ⊔ l2)
-                    by raise-raise-Large-Group G _)))
+      let
+        _*G_ = mul-Large-Group G
+        inv-G = inv-Large-Group G
+        open similarity-reasoning-Large-Group G
+      in
+        inv
+          ( eq-sim-Large-Group G _ _
+            ( unique-right-inv-Large-Group G _ _
+              ( similarity-reasoning
+                (x *G y) *G (inv-G y *G inv-G x)
+                ~ x *G (y *G (inv-G y *G inv-G x))
+                  by sim-eq-Large-Group G (associative-mul-Large-Group G _ _ _)
+                ~ x *G inv-G x
+                  by
+                    preserves-sim-left-mul-Large-Group G x _ _
+                      ( sim-cancel-left-mul-div-Large-Group G y (inv-G x))
+                ~ unit-Large-Group G
+                  by sim-right-inverse-law-mul-Large-Group G x)))
 ```
 
 ### Inverting elements of a large group is an involution
@@ -855,14 +708,15 @@ module _
   {α : Level → Level} {β : Level → Level → Level} (G : Large-Group α β)
   where
 
-  inv-inv-Large-Group :
-    {l : Level} (x : type-Large-Group G l) →
-    inv-Large-Group G (inv-Large-Group G x) ＝ x
-  inv-inv-Large-Group x =
-    inv
-      ( eq-sim-Large-Group G _ _
-        ( unique-right-inv-Large-Group G _ _
-          ( left-inverse-law-mul-Large-Group G x)))
+  abstract
+    inv-inv-Large-Group :
+      {l : Level} (x : type-Large-Group G l) →
+      inv-Large-Group G (inv-Large-Group G x) ＝ x
+    inv-inv-Large-Group x =
+      inv
+        ( eq-sim-Large-Group G _ _
+          ( unique-left-inv-Large-Group G _ _
+            ( sim-right-inverse-law-mul-Large-Group G x)))
 
   aut-inv-Large-Group : (l : Level) → Aut (type-Large-Group G l)
   aut-inv-Large-Group l =
@@ -920,9 +774,7 @@ module _
   group-Large-Group : (l : Level) → Group (α l)
   group-Large-Group l =
     ( semigroup-Large-Group l ,
-      ( raise-unit-Large-Group G l ,
-        left-unit-law-mul-Monoid (monoid-Large-Group l) ,
-        right-unit-law-mul-Monoid (monoid-Large-Group l)) ,
+      is-unital-Monoid (monoid-Large-Group l) ,
       inv-Large-Group G ,
       eq-left-inverse-law-mul-Large-Group G ,
       eq-right-inverse-law-mul-Large-Group G)
@@ -962,25 +814,6 @@ module _
         ( λ z → inv-Large-Group G z ＝ z)
         ( raise-unit-lzero-Large-Group G)
         ( inv-raise-unit-Large-Group lzero)
-```
-
-### Inverting elements of a large group is an involution
-
-```agda
-module _
-  {α : Level → Level} {β : Level → Level → Level} (G : Large-Group α β)
-  where
-
-  abstract
-    inv-inv-Large-Group :
-      {l : Level} (x : type-Large-Group G l) →
-      inv-Large-Group G (inv-Large-Group G x) ＝ x
-    inv-inv-Large-Group {l} = inv-inv-Group (group-Large-Group G l)
-
-  aut-inv-Large-Group : (l : Level) → Aut (type-Large-Group G l)
-  aut-inv-Large-Group l =
-    ( inv-Large-Group G ,
-      is-equiv-is-involution inv-inv-Large-Group)
 ```
 
 ### Right multiplication reflects similarity

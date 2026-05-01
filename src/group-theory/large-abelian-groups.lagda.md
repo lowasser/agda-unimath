@@ -56,9 +56,6 @@ record Large-Ab (α : Level → Level) (β : Level → Level → Level) : UUω w
   cumulative-large-set-Large-Ab =
     cumulative-large-set-Large-Group large-group-Large-Ab
 
-  type-Large-Ab : (l : Level) → UU (α l)
-  type-Large-Ab = type-Large-Group large-group-Large-Ab
-
   set-Large-Ab : (l : Level) → Set (α l)
   set-Large-Ab = set-Large-Group large-group-Large-Ab
 
@@ -91,16 +88,13 @@ record Large-Ab (α : Level → Level) (β : Level → Level → Level) : UUω w
   neg-Large-Ab = inv-Large-Group large-group-Large-Ab
 
   large-monoid-Large-Ab : Large-Monoid α β
-  large-monoid-Large-Ab =
-    large-monoid-Large-Group large-group-Large-Ab
+  large-monoid-Large-Ab = large-monoid-Large-Group large-group-Large-Ab
 
   large-commutative-monoid-Large-Ab : Large-Commutative-Monoid α β
   large-commutative-monoid-Large-Ab =
-    λ where
-      .large-monoid-Large-Commutative-Monoid →
-        large-monoid-Large-Ab
-      .commutative-mul-Large-Commutative-Monoid →
-        commutative-add-Large-Ab
+    make-Large-Commutative-Monoid
+      ( large-monoid-Large-Ab)
+      ( commutative-add-Large-Ab)
 
 open Large-Ab public
 ```
