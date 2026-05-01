@@ -19,6 +19,8 @@ open import linear-algebra.constant-grids public
 open import linear-algebra.constant-tuples public
 open import linear-algebra.dependent-products-left-modules-commutative-rings public
 open import linear-algebra.dependent-products-left-modules-rings public
+open import linear-algebra.dependent-products-real-vector-spaces public
+open import linear-algebra.dependent-products-vector-spaces public
 open import linear-algebra.diagonal-matrices-on-rings public
 open import linear-algebra.difference-linear-maps-left-modules-commutative-rings public
 open import linear-algebra.difference-linear-maps-left-modules-rings public
@@ -38,6 +40,10 @@ open import linear-algebra.finite-sequences-in-semirings public
 open import linear-algebra.functoriality-grids public
 open import linear-algebra.grids public
 open import linear-algebra.grids-on-rings public
+open import linear-algebra.function-left-modules-rings public
+open import linear-algebra.function-real-vector-spaces public
+open import linear-algebra.function-vector-spaces public
+open import linear-algebra.functoriality-matrices public
 open import linear-algebra.kernels-linear-maps-left-modules-commutative-rings public
 open import linear-algebra.kernels-linear-maps-left-modules-rings public
 open import linear-algebra.kernels-linear-maps-vector-spaces public
