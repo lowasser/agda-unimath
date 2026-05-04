@@ -804,6 +804,11 @@ module _
   pointed-htpy-pointed-equiv f =
     pointed-map-pointed-equiv e ~∗ pointed-map-pointed-equiv f
 
+  htpy-pointed-equiv :
+    (f : pointed-equiv A B) → UU (l1 ⊔ l2)
+  htpy-pointed-equiv f =
+    map-pointed-equiv e ~ map-pointed-equiv f
+
   refl-htpy-pointed-equiv :
     pointed-htpy-pointed-equiv e
   refl-htpy-pointed-equiv =

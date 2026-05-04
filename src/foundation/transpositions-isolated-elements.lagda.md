@@ -313,7 +313,7 @@ module _
     map-transposition-isolated-elements (a , d) (b , e) ~
     map-transposition-isolated-elements (a' , d') (b' , e')
   htpy-transposition-isolated-elements' refl refl = refl-htpy
-    
+
   htpy-transposition-isolated-elements :
     (a ＝ a') → (b ＝ b') →
     map-transposition-isolated-elements (a , d) (b , e) ~

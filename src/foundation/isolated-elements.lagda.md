@@ -215,6 +215,15 @@ module _
       is-prop-equiv
         ( equiv-Eq-eq-isolated-element d x)
         ( is-prop-Eq-isolated-element d x)
+
+module _
+  {l1 : Level} {A : UU l1} ((a , d) : isolated-element A)
+  where
+
+  eq-isolated-element-Prop :
+    subtype l1 A
+  pr1 (eq-isolated-element-Prop x) = a ＝ x
+  pr2 (eq-isolated-element-Prop x) = is-prop-eq-isolated-element a d x
 ```
 
 ### The loop space at an isolated element is contractible
