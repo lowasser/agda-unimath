@@ -1,4 +1,4 @@
-# Transposing identifications along sections
+# Transposing identifications along involutions
 
 ```agda
 module foundation.transposition-identifications-along-involutions where
