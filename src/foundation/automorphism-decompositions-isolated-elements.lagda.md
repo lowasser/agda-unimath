@@ -16,6 +16,7 @@ open import foundation.equality-cartesian-product-types
 open import foundation.equivalence-extensionality
 open import foundation.equivalences
 open import foundation.equivalences-types-with-isolated-elements
+open import foundation.functoriality-cartesian-product-types
 open import foundation.functoriality-dependent-pair-types
 open import foundation.fundamental-theorem-of-identity-types
 open import foundation.homotopies
@@ -294,21 +295,16 @@ module _
     is-equiv-decomposition-aut-isolated-element
 ```
 
-### Any equivalence that fixes an isolated point is uniquely determined by its restriction to the complement
+### The type `Aut A` is equivalent to `Aut C × isolated-element A`
 
 ```agda
 module _
-  {l1 : Level} {A : UU l1} ((a , d) : isolated-element A)
-  ((e , p) (f , q) : (A , a) ≃∗ (A , a))
+  {l1 : Level} {A : UU l1} (a : isolated-element A)
   where
 
-  htpy-equiv-complement-isolated-element :
-    map-equiv-complement-isolated-element (a , d) (a , d) (e , p) ~
-    map-equiv-complement-isolated-element (a , d) (a , d) (f , q) →
-    htpy-equiv e f
-  htpy-equiv-complement-isolated-element H x =
-    rec-coproduct
-      ( λ { refl → p ∙ inv q})
-      ( λ n → ap pr1 (H (x , n)))
-      ( d x)
+  compute-aut-isolated-element :
+    Aut A ≃ Aut (complement-isolated-element a) × isolated-element A
+  compute-aut-isolated-element =
+    equiv-product (compute-pointed-equiv-isolated-element a a) id-equiv ∘e
+    equiv-decomposition-aut-isolated-element a
 ```
