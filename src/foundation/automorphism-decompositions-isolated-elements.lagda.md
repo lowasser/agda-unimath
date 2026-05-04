@@ -1,7 +1,7 @@
 # Automorphism decompositions with respect to isolated elements
 
 ```agda
-module foundation.automorphisms-types-with-isolated-elements where
+module foundation.automorphism-decompositions-isolated-elements where
 ```
 
 <details><summary>Imports</summary>
