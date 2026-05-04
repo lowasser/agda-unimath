@@ -30,6 +30,7 @@ open import foundation.arithmetic-law-coproduct-and-sigma-decompositions public
 open import foundation.arithmetic-law-product-and-pi-decompositions public
 open import foundation.automorphism-decompositions-isolated-elements public
 open import foundation.automorphisms public
+open import foundation.automorphisms-discrete-types public
 open import foundation.axiom-of-choice public
 open import foundation.axiom-of-countable-choice public
 open import foundation.axiom-of-dependent-choice public
@@ -82,6 +83,7 @@ open import foundation.commuting-triangles-of-identifications public
 open import foundation.commuting-triangles-of-maps public
 open import foundation.commuting-triangles-of-morphisms-arrows public
 open import foundation.complements public
+open import foundation.complements-elements-discrete-types public
 open import foundation.complements-images public
 open import foundation.complements-subtypes public
 open import foundation.composite-maps-in-inverse-sequential-diagrams public
