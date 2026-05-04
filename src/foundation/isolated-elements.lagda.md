@@ -442,6 +442,6 @@ module _
 
 ## See also
 
-- [Automorphisms on types with isolated elements](foundation.automorphisms-types-with-isolated-elements.md)
+- [Automorphism decompositions with respect to isolated elements](foundation.automorphism-decompositions-isolated-elements.md)
 - [Equivalences between types with isolated elements](foundation.equivalences-types-with-isolated-elements.md)
 - [Transpositions at isolated elements](foundation.transpositions-isolated-elements.md)

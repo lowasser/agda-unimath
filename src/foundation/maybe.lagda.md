@@ -64,7 +64,7 @@ abstract
   is-injective-unit-Maybe = is-injective-inl
 ```
 
-### Being an exception is equivalent to being right as a coproduct
+### Being an exception is equivalent to being in the right type of the coproduct
 
 ```agda
 module _
@@ -86,7 +86,7 @@ module _
     ( is-right-is-exception-Maybe x , is-exception-is-right-Maybe x)
 ```
 
-### Being a value is equivalent to being left as a coproduct
+### Being a value is equivalent to being in the left type of the coproduct
 
 ```agda
 module _
