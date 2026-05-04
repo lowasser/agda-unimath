@@ -442,4 +442,6 @@ module _
 
 ## See also
 
-- [Equivalences between types with isolated elements](foundation.equivalences-types-with-isolated-elements.lagda.md)
+- [Automorphisms on types with isolated elements](foundation.automorphisms-types-with-isolated-elements.md)
+- [Equivalences between types with isolated elements](foundation.equivalences-types-with-isolated-elements.md)
+- [Transpositions at isolated elements](foundation.transpositions-isolated-elements.md)
