@@ -50,7 +50,9 @@ complement of `a` in `A`. Then there is an
   Aut A ≃ Aut C × isolated-element A.
 ```
 
-The idea behind the proof is that every automorphism `e` on A can be factored as
+This equivalence was proven in the [TypeTopology library](https://martinescardo.github.io/TypeTopology/Factorial.Law.html) by Martín Escardo, who called the set `isolated-element A` the *coderived set* of `A`.
+
+The idea behind our proof is that every automorphism `e` on A can be factored as
 an equivalence that fixes the point `a` and the
 [transposition](foundation.transpositions-isolated-elements.md) with the
 isolated element `b := e a`. By this unique factorization result, we obtain an
