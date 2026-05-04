@@ -50,7 +50,7 @@ complement of `a` in `A`. Then there is an
   Aut A ≃ Aut C × isolated-element A.
 ```
 
-This equivalence was proven in the [TypeTopology library](https://martinescardo.github.io/TypeTopology/Factorial.Law.html) by Martín Escardo, who called the set `isolated-element A` the *coderived set* of `A`.
+This equivalence was proven in the TypeTopology library by Martín Escardó {{#cite Esc19CoderivedSet}}, who called the set `isolated-element A` the *coderived set* of `A`.
 
 The idea behind our proof is that every automorphism `e` on A can be factored as
 an equivalence that fixes the point `a` and the
@@ -310,3 +310,7 @@ module _
     equiv-product (compute-pointed-equiv-isolated-element a a) id-equiv ∘e
     equiv-decomposition-aut-isolated-element a
 ```
+
+## References
+
+{{#bibliography}}
