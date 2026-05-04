@@ -50,7 +50,9 @@ complement of `a` in `A`. Then there is an
   Aut A ≃ Aut C × isolated-element A.
 ```
 
-This equivalence was proven in the TypeTopology library by Martín Escardó {{#cite Esc19CoderivedSet}}, who called the set `isolated-element A` the *coderived set* of `A`.
+This equivalence was proven in the TypeTopology library by Martín Escardó
+{{#cite Esc19CoderivedSet}}, who called the set `isolated-element A` the
+_coderived set_ of `A`.
 
 The idea behind our proof is that every automorphism `e` on A can be factored as
 an equivalence that fixes the point `a` and the
@@ -63,10 +65,10 @@ equivalence
 ```
 
 We call the type on the right-hand side the
-{{#concept "automorphism decomposition" Disambiguation="isolated element" Agda=automorphism-decomposition-isolated-element}} with respect to the isolated element `a`.
-The proof of our original claim is then finished by showing that any equivalence
-that fixes the isolated element `a` is uniquely determined by an automorphism on
-the complement of `a`.
+{{#concept "automorphism decomposition" Disambiguation="isolated element" Agda=automorphism-decomposition-isolated-element}}
+with respect to the isolated element `a`. The proof of our original claim is
+then finished by showing that any equivalence that fixes the isolated element
+`a` is uniquely determined by an automorphism on the complement of `a`.
 
 ## Definitions
 
@@ -165,7 +167,7 @@ module _
 
 ## Properties
 
-### Given an isolated element, the type of automorphisms on a type is equivalen to the type of automorphism decompositions
+### Given an isolated element, the type of automorphisms on a type is equivalent to the type of automorphism decompositions
 
 ```agda
 module _

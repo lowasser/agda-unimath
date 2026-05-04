@@ -291,7 +291,10 @@ module _
 
 ### Equality of equivalences preserving isolated base points is characterized by homotopies
 
-We show that equality of equivalences between types with isolated base points is equivalent to [homotopies](foundation-core.homotopies.md) between them. Since preserving the base point is a property, it is unnecessary to consider [pointed homotopies](structured-types.pointed-homotopies.md).
+We show that equality of equivalences between types with isolated base points is
+equivalent to [homotopies](foundation-core.homotopies.md) between them. Since
+preserving the base point is a property, it is unnecessary to consider
+[pointed homotopies](structured-types.pointed-homotopies.md).
 
 ```agda
 module _

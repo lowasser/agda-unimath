@@ -28,8 +28,8 @@ open import foundation.action-on-identifications-ternary-functions public
 open import foundation.apartness-relations public
 open import foundation.arithmetic-law-coproduct-and-sigma-decompositions public
 open import foundation.arithmetic-law-product-and-pi-decompositions public
+open import foundation.automorphism-decompositions-isolated-elements public
 open import foundation.automorphisms public
-open import foundation.automorphisms-types-with-isolated-elements public
 open import foundation.axiom-of-choice public
 open import foundation.axiom-of-countable-choice public
 open import foundation.axiom-of-dependent-choice public
