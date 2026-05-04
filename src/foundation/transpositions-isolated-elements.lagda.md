@@ -8,12 +8,14 @@ module foundation.transpositions-isolated-elements where
 
 ```agda
 open import foundation.action-on-identifications-functions
+open import foundation.automorphisms
 open import foundation.coproduct-types
 open import foundation.decidable-types
 open import foundation.dependent-pair-types
 open import foundation.empty-types
 open import foundation.full-subtypes
 open import foundation.function-types
+open import foundation.homotopies
 open import foundation.involutions
 open import foundation.isolated-elements
 open import foundation.negated-equality
@@ -77,6 +79,11 @@ module _
   pr2 (split-full-subtype-distinct-isolated-elements x) =
     is-prop-is-in-split-full-subtype-distinct-isolated-elements x
 
+  inclusion-split-full-subtype-distinct-isolated-elements :
+    type-subtype split-full-subtype-distinct-isolated-elements → A
+  inclusion-split-full-subtype-distinct-isolated-elements =
+    inclusion-subtype split-full-subtype-distinct-isolated-elements
+
   is-full-split-full-subtype-distinct-isolated-elements :
     is-full-subtype split-full-subtype-distinct-isolated-elements
   is-full-split-full-subtype-distinct-isolated-elements x =
@@ -103,21 +110,60 @@ module _
       split-full-subtype-distinct-isolated-elements
       is-full-split-full-subtype-distinct-isolated-elements
 
+  map-inv-compute-type-split-full-subtype-distinct-isolated-elements :
+    A → type-subtype split-full-subtype-distinct-isolated-elements
+  map-inv-compute-type-split-full-subtype-distinct-isolated-elements =
+    map-equiv inv-compute-type-split-full-subtype-distinct-isolated-elements
+
+  compute-inv-compute-type-split-full-subtype-distinct-isolated-elements :
+    (x : A) (u : is-in-split-full-subtype-distinct-isolated-elements x) →
+    map-inv-compute-type-split-full-subtype-distinct-isolated-elements x ＝
+    (x , u)
+  compute-inv-compute-type-split-full-subtype-distinct-isolated-elements x u =
+    eq-type-subtype
+      ( split-full-subtype-distinct-isolated-elements)
+      ( is-section-map-inv-equiv
+        compute-type-split-full-subtype-distinct-isolated-elements x)
+
   map-transposition-distinct-isolated-elements' :
     type-subtype split-full-subtype-distinct-isolated-elements →
     type-subtype split-full-subtype-distinct-isolated-elements
-  pr1 (map-transposition-distinct-isolated-elements' (x , inl p)) =
-    b
-  pr2 (map-transposition-distinct-isolated-elements' (x , inl p)) =
-    inr (inl refl)
-  pr1 (map-transposition-distinct-isolated-elements' (x , inr (inl q))) =
-    a
-  pr2 (map-transposition-distinct-isolated-elements' (x , inr (inl q))) =
-    inl refl
-  pr1 (map-transposition-distinct-isolated-elements' (x , inr (inr H))) =
-    x
-  pr2 (map-transposition-distinct-isolated-elements' (x , inr (inr H))) =
-    inr (inr H)
+  map-transposition-distinct-isolated-elements' (x , inl p) =
+    ( b , inr (inl refl))
+  map-transposition-distinct-isolated-elements' (x , inr (inl q)) =
+    ( a , inl refl)
+  map-transposition-distinct-isolated-elements' (x , inr (inr H)) =
+    ( x , inr (inr H))
+
+  compute-first-value-transposition-distinct-isolated-elements' :
+    (u : is-in-split-full-subtype-distinct-isolated-elements a)
+    (v : is-in-split-full-subtype-distinct-isolated-elements b) →
+    map-transposition-distinct-isolated-elements' (a , u) ＝ (b , v)
+  compute-first-value-transposition-distinct-isolated-elements' (inl p) v =
+    eq-type-subtype
+      split-full-subtype-distinct-isolated-elements
+      refl
+  compute-first-value-transposition-distinct-isolated-elements'
+    ( inr (inl q)) v =
+    ex-falso (H (inv q))
+  compute-first-value-transposition-distinct-isolated-elements'
+    (inr (inr (f , g))) v =
+    ex-falso (f refl)
+
+  compute-second-value-transposition-distinct-isolated-elements' :
+    (u : is-in-split-full-subtype-distinct-isolated-elements a)
+    (v : is-in-split-full-subtype-distinct-isolated-elements b) →
+    map-transposition-distinct-isolated-elements' (b , v) ＝ (a , u)
+  compute-second-value-transposition-distinct-isolated-elements' u (inl p) =
+    ex-falso (H p)
+  compute-second-value-transposition-distinct-isolated-elements' u
+    ( inr (inl q)) =
+    eq-type-subtype
+      split-full-subtype-distinct-isolated-elements
+      refl
+  compute-second-value-transposition-distinct-isolated-elements' u
+    (inr (inr (f , g))) =
+    ex-falso (g refl)
 
   is-involution-transposition-distinct-isolated-elements' :
     is-involution map-transposition-distinct-isolated-elements'
@@ -144,9 +190,9 @@ module _
 
   transposition-distinct-isolated-elements : A ≃ A
   transposition-distinct-isolated-elements =
-    compute-type-split-full-subtype-distinct-isolated-elements ∘e
-    transposition-distinct-isolated-elements' ∘e
-    inv-compute-type-split-full-subtype-distinct-isolated-elements
+    map-conjugation-aut
+      compute-type-split-full-subtype-distinct-isolated-elements
+      transposition-distinct-isolated-elements'
 
   map-transposition-distinct-isolated-elements : A → A
   map-transposition-distinct-isolated-elements =
@@ -159,6 +205,32 @@ module _
       compute-type-split-full-subtype-distinct-isolated-elements
       map-transposition-distinct-isolated-elements'
       is-involution-transposition-distinct-isolated-elements'
+
+  compute-first-value-transposition-distinct-isolated-elements :
+    map-transposition-distinct-isolated-elements a ＝ b
+  compute-first-value-transposition-distinct-isolated-elements =
+    compute-value-conjugation-aut
+      ( compute-type-split-full-subtype-distinct-isolated-elements)
+      ( transposition-distinct-isolated-elements')
+      ( a , inl refl)
+      ( refl)
+      ( refl)
+      ( compute-first-value-transposition-distinct-isolated-elements'
+        ( inl refl)
+        ( inr (inl refl)))
+
+  compute-second-value-transposition-distinct-isolated-elements :
+    map-transposition-distinct-isolated-elements b ＝ a
+  compute-second-value-transposition-distinct-isolated-elements =
+    compute-value-conjugation-aut
+      ( compute-type-split-full-subtype-distinct-isolated-elements)
+      ( transposition-distinct-isolated-elements')
+      ( b , inr (inl refl))
+      ( refl)
+      ( refl)
+      ( compute-second-value-transposition-distinct-isolated-elements'
+        ( inl refl)
+        ( inr (inl refl)))
 ```
 
 ### Any two isolated elements in a type determine a transposition
@@ -194,4 +266,60 @@ module _
     is-involution map-transposition-isolated-elements
   is-involution-transposition-isolated-elements =
     cases-is-involution-transposition-isolated-elements (d b)
+
+  cases-compute-first-value-transposition-isolated-elements :
+    (u : is-decidable (a ＝ b)) →
+    map-equiv (cases-transposition-isolated-elements u) a ＝ b
+  cases-compute-first-value-transposition-isolated-elements (inl p) = p
+  cases-compute-first-value-transposition-isolated-elements (inr n) =
+    compute-first-value-transposition-distinct-isolated-elements
+      ( a , d)
+      ( b , e)
+      ( n)
+
+  compute-first-value-transposition-isolated-elements :
+    map-transposition-isolated-elements a ＝ b
+  compute-first-value-transposition-isolated-elements =
+    cases-compute-first-value-transposition-isolated-elements (d b)
+
+  cases-compute-second-value-transposition-isolated-elements :
+    (u : is-decidable (a ＝ b)) →
+    map-equiv (cases-transposition-isolated-elements u) b ＝ a
+  cases-compute-second-value-transposition-isolated-elements (inl p) = inv p
+  cases-compute-second-value-transposition-isolated-elements (inr n) =
+    compute-second-value-transposition-distinct-isolated-elements
+      ( a , d)
+      ( b , e)
+      ( n)
+
+  compute-second-value-transposition-isolated-elements :
+    map-transposition-isolated-elements b ＝ a
+  compute-second-value-transposition-isolated-elements =
+    cases-compute-second-value-transposition-isolated-elements (d b)
+```
+
+## Properties
+
+### Transpositions at identical isolated elements are homotopic
+
+```agda
+module _
+  {l1 : Level} {A : UU l1}
+  ((a , d) (a' , d') (b , e) (b' , e') : isolated-element A)
+  where
+
+  htpy-transposition-isolated-elements' :
+    ((a , d) ＝ (a' , d')) → ((b , e) ＝ (b' , e')) →
+    map-transposition-isolated-elements (a , d) (b , e) ~
+    map-transposition-isolated-elements (a' , d') (b' , e')
+  htpy-transposition-isolated-elements' refl refl = refl-htpy
+    
+  htpy-transposition-isolated-elements :
+    (a ＝ a') → (b ＝ b') →
+    map-transposition-isolated-elements (a , d) (b , e) ~
+    map-transposition-isolated-elements (a' , d') (b' , e')
+  htpy-transposition-isolated-elements p q =
+    htpy-transposition-isolated-elements'
+      ( eq-type-subtype is-isolated-Prop p)
+      ( eq-type-subtype is-isolated-Prop q)
 ```

@@ -8,8 +8,10 @@ module foundation.automorphisms-types-with-isolated-elements where
 
 ```agda
 open import foundation.action-on-identifications-functions
+open import foundation.cartesian-product-types
 open import foundation.coproduct-types
 open import foundation.dependent-pair-types
+open import foundation.equality-cartesian-product-types
 open import foundation.equivalence-extensionality
 open import foundation.equivalences
 open import foundation.equivalences-types-with-isolated-elements
@@ -19,10 +21,13 @@ open import foundation.identity-types
 open import foundation.isolated-elements
 open import foundation.negated-equality
 open import foundation.negation
+open import foundation.retractions
+open import foundation.sections
 open import foundation.transpositions-isolated-elements
 open import foundation.universe-levels
 
 open import structured-types.pointed-equivalences
+open import structured-types.pointed-homotopies
 ```
 
 </details>
@@ -59,16 +64,52 @@ of `a`.
 ```agda
 module _
   {l1 : Level} {A : UU l1} ((a , d) : isolated-element A)
-  (e : A ≃ A)
   where
 
-  value-isolated-element-equiv : isolated-element A
-  value-isolated-element-equiv = map-equiv-isolated-element e (a , d)
+  value-aut-isolated-element :
+    (e : A ≃ A) → isolated-element A
+  value-aut-isolated-element e = map-equiv-isolated-element e (a , d)
 
-  transposition-value-isolated-element-equiv :
-    A ≃ A
-  transposition-value-isolated-element-equiv =
-    transposition-isolated-elements (a , d) value-isolated-element-equiv
+  transposition-value-aut-isolated-element :
+    (e : A ≃ A) → A ≃ A
+  transposition-value-aut-isolated-element e =
+    transposition-isolated-elements (a , d) (value-aut-isolated-element e)
+
+  aut-pointed-aut-isolated-element :
+    (e : A ≃ A) → A ≃ A
+  aut-pointed-aut-isolated-element e =
+    transposition-value-aut-isolated-element e ∘e e
+
+  map-pointed-aut-isolated-element :
+    (e : A ≃ A) → A → A
+  map-pointed-aut-isolated-element e =
+    map-equiv (aut-pointed-aut-isolated-element e)
+
+  preserves-point-pointed-aut-isolated-element :
+    (e : A ≃ A) → map-pointed-aut-isolated-element e a ＝ a
+  preserves-point-pointed-aut-isolated-element e =
+    compute-second-value-transposition-isolated-elements
+      ( a , d)
+      ( value-aut-isolated-element e)
+
+  pointed-aut-isolated-element :
+    (e : A ≃ A) → (A , a) ≃∗ (A , a)
+  pr1 (pointed-aut-isolated-element e) =
+    aut-pointed-aut-isolated-element e
+  pr2 (pointed-aut-isolated-element e) =
+    preserves-point-pointed-aut-isolated-element e
+
+  decomposition-aut-isolated-element :
+    (e : A ≃ A) → ((A , a) ≃∗ (A , a)) × isolated-element A
+  pr1 (decomposition-aut-isolated-element e) =
+    pointed-aut-isolated-element e
+  pr2 (decomposition-aut-isolated-element e) =
+    value-aut-isolated-element e
+
+  composition-aut-isolated-element :
+    ((A , a) ≃∗ (A , a)) × isolated-element A → A ≃ A
+  composition-aut-isolated-element ((h , p) , b) =
+    transposition-isolated-elements (a , d) b ∘e h
 ```
 
 ### Any equivalence that fixes an isolated point is uniquely determined by its restriction to the complement
