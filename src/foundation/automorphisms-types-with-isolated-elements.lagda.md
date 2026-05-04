@@ -51,9 +51,9 @@ complement of `a` in `A`. Then there is an
 
 The idea behind the proof is that every automorphism `e` on A can be factored as
 an equivalence that fixes the point `a` and the
-[transposition](foundation.transpositions-isolated-elements.md) with
-the isolated element `b := e a`. By this unique factorization result, we obtain
-an equivalence
+[transposition](foundation.transpositions-isolated-elements.md) with the
+isolated element `b := e a`. By this unique factorization result, we obtain an
+equivalence
 
 ```text
   Aut A ≃ ((A , a) ≃∗ (A , a)) × isolated-element A.
