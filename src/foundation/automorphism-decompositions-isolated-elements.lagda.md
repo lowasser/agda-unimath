@@ -85,7 +85,8 @@ module _
   aut-automorphism-decomposition-isolated-element :
     automorphism-decomposition-isolated-element → Aut A
   aut-automorphism-decomposition-isolated-element e =
-    equiv-pointed-equiv (pointed-aut-automorphism-decomposition-isolated-element e)
+    equiv-pointed-equiv
+      ( pointed-aut-automorphism-decomposition-isolated-element e)
 
   isolated-element-automorphism-decomposition-isolated-element :
     automorphism-decomposition-isolated-element → isolated-element A
@@ -120,15 +121,10 @@ module _
     is-torsorial (htpy-automorphism-decomposition-isolated-element e)
   is-torsorial-htpy-automorphism-decomposition-isolated-element ((e , p) , b) =
     is-torsorial-Eq-structure
-      ( is-torsorial-Eq-subtype
-        ( is-torsorial-htpy-equiv e)
-        ( λ f →
-          is-prop-eq-isolated-element _
-            ( preserves-isolated-elements-equiv f d)
-            ( a))
-        ( e)
-        ( refl-htpy)
-        ( p))
+      ( is-torsorial-htpy-pointed-equiv-isolated-element
+        ( a , d)
+        ( a , d)
+        ( e , p))
       ( (e , p) , refl-htpy)
       ( is-torsorial-Eq-subtype
         ( is-torsorial-Id _)
@@ -307,8 +303,8 @@ module _
   where
 
   htpy-equiv-complement-isolated-element :
-    map-equiv-complement-isolated-element e (a , d) (a , d) p ~
-    map-equiv-complement-isolated-element f (a , d) (a , d) q →
+    map-equiv-complement-isolated-element (a , d) (a , d) (e , p) ~
+    map-equiv-complement-isolated-element (a , d) (a , d) (f , q) →
     htpy-equiv e f
   htpy-equiv-complement-isolated-element H x =
     rec-coproduct
