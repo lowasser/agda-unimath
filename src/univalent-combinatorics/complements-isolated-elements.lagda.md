@@ -12,6 +12,7 @@ open import elementary-number-theory.natural-numbers
 open import foundation.dependent-pair-types
 open import foundation.equivalences
 open import foundation.equivalences-maybe
+open import foundation.equivalences-types-with-isolated-elements
 open import foundation.identity-types
 open import foundation.isolated-elements
 open import foundation.maybe
@@ -53,7 +54,6 @@ type-complement-element-Type-With-Cardinality-ℕ :
   UU l1
 type-complement-element-Type-With-Cardinality-ℕ k (X , x) =
   complement-isolated-element
-    ( type-Type-With-Cardinality-ℕ (succ-ℕ k) X)
     ( isolated-element-Type-With-Cardinality-ℕ k X x)
 
 equiv-maybe-structure-element-Type-With-Cardinality-ℕ :
@@ -63,7 +63,6 @@ equiv-maybe-structure-element-Type-With-Cardinality-ℕ :
   type-Type-With-Cardinality-ℕ (succ-ℕ k) X
 equiv-maybe-structure-element-Type-With-Cardinality-ℕ k X x =
   equiv-maybe-structure-isolated-element
-    ( type-Type-With-Cardinality-ℕ (succ-ℕ k) X)
     ( isolated-element-Type-With-Cardinality-ℕ k X x)
 
 has-cardinality-type-complement-element-Type-With-Cardinality-ℕ :
@@ -122,10 +121,10 @@ equiv-complement-element-Type-With-Cardinality-ℕ :
     ( complement-element-Type-With-Cardinality-ℕ k Y)
 equiv-complement-element-Type-With-Cardinality-ℕ
   k S T e p =
-  equiv-complement-isolated-element e
+  equiv-complement-isolated-element
     ( x , (λ x' → has-decidable-equality-has-cardinality-ℕ (succ-ℕ k) H x x'))
     ( y , (λ y' → has-decidable-equality-has-cardinality-ℕ (succ-ℕ k) K y y'))
-    ( p)
+    ( e , p)
   where
   H = pr2 (pr1 S)
   x = pr2 S

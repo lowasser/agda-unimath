@@ -417,25 +417,76 @@ module _
 
 ```agda
 module _
-  {l1 : Level} {A : UU l1} (a : isolated-element A)
+  {l1 : Level} {X : UU l1} ((x , d) : isolated-element X)
   where
 
+  map-maybe-structure-isolated-element :
+    Maybe (complement-isolated-element (x , d)) → X
+  map-maybe-structure-isolated-element (inl (y , f)) = y
+  map-maybe-structure-isolated-element (inr star) = x
+
+  cases-map-inv-maybe-structure-isolated-element :
+    (y : X) → is-decidable (x ＝ y) →
+    Maybe (complement-isolated-element (x , d))
+  cases-map-inv-maybe-structure-isolated-element y (inl p) =
+    inr star
+  cases-map-inv-maybe-structure-isolated-element y (inr f) =
+    inl (y , f)
+
+  map-inv-maybe-structure-isolated-element :
+    X → Maybe (complement-isolated-element (x , d))
+  map-inv-maybe-structure-isolated-element y =
+    cases-map-inv-maybe-structure-isolated-element y (d y)
+
+  cases-is-section-map-inv-maybe-structure-isolated-element :
+    (y : X) (d : is-decidable (x ＝ y)) →
+    ( map-maybe-structure-isolated-element
+      ( cases-map-inv-maybe-structure-isolated-element y d)) ＝
+    ( y)
+  cases-is-section-map-inv-maybe-structure-isolated-element .x (inl refl) =
+    refl
+  cases-is-section-map-inv-maybe-structure-isolated-element y (inr f) =
+    refl
+
+  is-section-map-inv-maybe-structure-isolated-element :
+    ( map-maybe-structure-isolated-element ∘
+      map-inv-maybe-structure-isolated-element) ~ id
+  is-section-map-inv-maybe-structure-isolated-element y =
+    cases-is-section-map-inv-maybe-structure-isolated-element y (d y)
+
+  is-retraction-map-inv-maybe-structure-isolated-element :
+    ( map-inv-maybe-structure-isolated-element ∘
+      map-maybe-structure-isolated-element) ~ id
+  is-retraction-map-inv-maybe-structure-isolated-element (inl (y , f)) =
+    ap
+      ( cases-map-inv-maybe-structure-isolated-element y)
+      ( eq-is-prop (is-prop-is-decidable (is-prop-eq-isolated-element x d y)))
+  is-retraction-map-inv-maybe-structure-isolated-element (inr star) =
+    ap
+      ( cases-map-inv-maybe-structure-isolated-element x)
+      { x = d (map-maybe-structure-isolated-element (inr star))}
+      { y = inl refl}
+      ( eq-is-prop (is-prop-is-decidable (is-prop-eq-isolated-element x d x)))
+
+  is-equiv-map-maybe-structure-isolated-element :
+    is-equiv (map-maybe-structure-isolated-element)
+  is-equiv-map-maybe-structure-isolated-element =
+    is-equiv-is-invertible
+      ( map-inv-maybe-structure-isolated-element)
+      ( is-section-map-inv-maybe-structure-isolated-element)
+      ( is-retraction-map-inv-maybe-structure-isolated-element)
+
   equiv-maybe-structure-isolated-element :
-    Maybe (complement-isolated-element a) ≃ A
-  equiv-maybe-structure-isolated-element =
-    compute-type-split-full-subtype-isolated-element a ∘e
-    inv-left-distributive-Σ-coproduct ∘e
-    commutative-coproduct ∘e
-    equiv-coproduct
-      ( id-equiv)
-      ( equiv-is-contr
-        ( is-contr-unit)
-        ( is-torsorial-Id (element-isolated-element a)))
+    Maybe (complement-isolated-element (x , d)) ≃ X
+  pr1 (equiv-maybe-structure-isolated-element) =
+    map-maybe-structure-isolated-element
+  pr2 (equiv-maybe-structure-isolated-element) =
+    is-equiv-map-maybe-structure-isolated-element
 
   maybe-structure-isolated-element :
-    maybe-structure A
+    maybe-structure X
   pr1 maybe-structure-isolated-element =
-    complement-isolated-element a
+    complement-isolated-element (x , d)
   pr2 maybe-structure-isolated-element =
     equiv-maybe-structure-isolated-element
 ```
