@@ -39,7 +39,7 @@ For any element `x` in a [finite type](univalent-combinatorics.finite-types.md)
 module _
   {l1 : Level} (k : ℕ)
   where
-  
+
   isolated-element-Type-With-Cardinality-ℕ :
     (X : Type-With-Cardinality-ℕ l1 (succ-ℕ k)) →
     type-Type-With-Cardinality-ℕ (succ-ℕ k) X →
