@@ -228,8 +228,8 @@ module _
       ( v) ＝
     x
   cases-is-retraction-map-inv-extension-equiv-complement-isolated-element x
-    ( inl refl) (inl q) =
-    refl
+    ( inl p) (inl q) =
+    p
   cases-is-retraction-map-inv-extension-equiv-complement-isolated-element x
     ( inl p) (inr n) =
     ex-falso (n refl)

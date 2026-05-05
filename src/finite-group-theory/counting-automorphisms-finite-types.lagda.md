@@ -45,9 +45,9 @@ of `n`.
 ```agda
 count-aut-count :
   {l : Level} {X : UU l} → count X → count (Aut X)
-count-aut-count {X = X} (n , Fin-n≃X) =
+count-aut-count {X = X} (n , e) =
   ( factorial-ℕ n ,
-    equiv-aut-equiv Fin-n≃X ∘e equiv-count (count-Permutation n))
+    conjugation-aut e ∘e equiv-count (count-Permutation n))
 ```
 
 ### The automorphisms of a type `X` with cardinality `n` have cardinality `n!`
@@ -59,7 +59,7 @@ abstract
     has-cardinality-ℕ (factorial-ℕ n) (Aut X)
   has-cardinality-factorial-aut-has-cardinality-ℕ n =
     map-trunc-Prop
-      ( λ Fin-n≃X → equiv-count (count-aut-count (n , Fin-n≃X)))
+      ( λ e → equiv-count (count-aut-count (n , e)))
 
 aut-Type-With-Cardinality-ℕ :
   {l : Level} (n : ℕ) → Type-With-Cardinality-ℕ l n →
@@ -85,7 +85,7 @@ abstract
     {l : Level} (X : Finite-Type l) →
     number-of-elements-Finite-Type (aut-Finite-Type X) ＝
     factorial-ℕ (number-of-elements-Finite-Type X)
-  number-of-elements-aut-Finite-Type FX@(X , is-finite-X) =
+  number-of-elements-aut-Finite-Type (X , is-finite-X) =
     rec-trunc-Prop
       ( Id-Prop ℕ-Set _ _)
       ( λ cX →
