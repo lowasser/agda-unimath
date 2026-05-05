@@ -34,7 +34,7 @@ write `C` for the type `{x : A ∣ a ≠ x}`. Then there is an equivalence
 ```
 
 This equivalence follows from a similar equivalence regarding
-[automorphisms on types equipped with an isolated element](foundation.automorphisms-types-with-isolated-elements.md).
+[automorphisms on types equipped with an isolated element](foundation.automorphism-decompositions-isolated-elements.md).
 
 ## Definitions
 
