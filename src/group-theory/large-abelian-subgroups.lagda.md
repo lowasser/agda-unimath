@@ -7,6 +7,7 @@ module group-theory.large-abelian-subgroups where
 <details><summary>Imports</summary>
 
 ```agda
+open import foundation.dependent-pair-types
 open import foundation.universe-levels
 
 open import group-theory.homomorphisms-large-abelian-groups
@@ -58,6 +59,14 @@ record
     Large-Commutative-Submonoid γ (large-commutative-monoid-Large-Ab G)
   large-commutative-submonoid-Large-Subgroup-Ab =
     make-Large-Commutative-Submonoid large-submonoid-Large-Subgroup-Ab
+
+  type-Large-Subgroup-Ab : (l : Level) → UU (α l ⊔ γ l)
+  type-Large-Subgroup-Ab =
+    type-Large-Subgroup large-subgroup-Large-Subgroup-Ab
+
+  inclusion-Large-Subgroup-Ab :
+    {l : Level} → type-Large-Subgroup-Ab l → type-Large-Ab G l
+  inclusion-Large-Subgroup-Ab = pr1
 
 open Large-Subgroup-Ab public
 ```

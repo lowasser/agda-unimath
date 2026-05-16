@@ -50,6 +50,10 @@ record
         ( large-group-Large-Ab G)
         ( large-group-Large-Ab H)
 
+  map-hom-Large-Ab : {l : Level} → type-Large-Ab G l → type-Large-Ab H l
+  map-hom-Large-Ab =
+    map-hom-Large-Group hom-large-group-hom-Large-Ab
+
 open hom-Large-Ab public
 ```
 

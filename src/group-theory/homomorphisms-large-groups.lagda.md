@@ -7,11 +7,13 @@ module group-theory.homomorphisms-large-groups where
 <details><summary>Imports</summary>
 
 ```agda
+open import foundation.action-on-identifications-functions
 open import foundation.dependent-pair-types
 open import foundation.identity-types
 open import foundation.universe-levels
 
 open import group-theory.homomorphisms-groups
+open import group-theory.homomorphisms-large-monoids
 open import group-theory.homomorphisms-large-semigroups
 open import group-theory.large-groups
 ```
@@ -94,16 +96,45 @@ module _
   {G : Large-Group α γ}
   {H : Large-Group β δ}
   (f : hom-Large-Group G H)
+  where abstract
+
+  preserves-raise-unit-hom-Large-Group :
+    (l : Level) →
+    map-hom-Large-Group f (raise-unit-Large-Group G l) ＝
+    raise-unit-Large-Group H l
+  preserves-raise-unit-hom-Large-Group l =
+    preserves-unit-hom-Group
+      ( group-Large-Group G l)
+      ( group-Large-Group H l)
+      ( hom-group-hom-Large-Group f l)
+
+  preserves-unit-hom-Large-Group :
+    map-hom-Large-Group f (unit-Large-Group G) ＝ unit-Large-Group H
+  preserves-unit-hom-Large-Group =
+    ( ap
+      ( map-hom-Large-Group f)
+      ( inv (eq-raise-Large-Group G lzero (unit-Large-Group G)))) ∙
+    ( preserves-raise-unit-hom-Large-Group lzero) ∙
+    ( eq-raise-Large-Group H lzero (unit-Large-Group H))
+```
+
+### Large monoid homomorphisms from large group homomorphisms
+
+```agda
+module _
+  {α β : Level → Level}
+  {γ δ : Level → Level → Level}
+  {G : Large-Group α γ}
+  {H : Large-Group β δ}
+  (f : hom-Large-Group G H)
   where
 
-  abstract
-    preserves-raise-unit-hom-Large-Group :
-      (l : Level) →
-      map-hom-Large-Group f (raise-unit-Large-Group G l) ＝
-      raise-unit-Large-Group H l
-    preserves-raise-unit-hom-Large-Group l =
-      preserves-unit-hom-Group
-        ( group-Large-Group G l)
-        ( group-Large-Group H l)
-        ( hom-group-hom-Large-Group f l)
+  hom-large-monoid-hom-Large-Group :
+    hom-Large-Monoid
+      ( large-monoid-Large-Group G)
+      ( large-monoid-Large-Group H)
+  hom-large-monoid-hom-Large-Group =
+    make-hom-Large-Monoid
+      ( hom-large-semigroup-hom-Large-Group f)
+      ( preserves-unit-hom-Large-Group f)
 ```
