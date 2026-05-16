@@ -20,7 +20,7 @@ open import group-theory.subsets-large-monoids
 
 A
 {{#concept "subset" Disambiguation="of a large commutative monoid" Agda=subset-Large-Commutative-Monoid}}
-of a [large commutative monoid](group-theory.large-commutative-monoid.md) is a
+of a [large commutative monoid](group-theory.large-commutative-monoids.md) is a
 [subset](foundation.subsets-cumulative-large-sets.md) of the
 [cumulative large set](foundation.cumulative-large-sets.md) of the large
 commutative monoid.
