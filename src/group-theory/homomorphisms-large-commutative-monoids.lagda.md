@@ -19,7 +19,7 @@ open import group-theory.large-commutative-monoids
 ## Idea
 
 A
-{{#concept "homomorphism" Disambiguation="of large monoids" Agda=hom-Large-Monoid}}
+{{#concept "homomorphism" Disambiguation="of large commutative monoids" Agda=hom-Large-Commutative-Monoid}}
 from a [large commutative monoid](group-theory.large-commutative-monoids.md) `M`
 to a large monoid `N` is a
 [homomorphism](group-theory.homomorphisms-large-semigroups.md) of their
