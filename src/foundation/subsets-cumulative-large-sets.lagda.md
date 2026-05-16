@@ -12,6 +12,7 @@ open import foundation.dependent-pair-types
 open import foundation.function-types
 open import foundation.identity-types
 open import foundation.induced-large-similarity-relations-large-subtypes
+open import foundation.large-similarity-relations
 open import foundation.large-subtypes
 open import foundation.propositions
 open import foundation.similarity-preserving-maps-cumulative-large-sets
@@ -171,14 +172,21 @@ module _
   (S : Subset-Cumulative-Large-Set γ X)
   where
 
+  large-similarity-relation-Subset-Cumulative-Large-Set :
+    Large-Similarity-Relation
+      ( β)
+      ( type-Subset-Cumulative-Large-Set S)
+  large-similarity-relation-Subset-Cumulative-Large-Set =
+    large-similarity-relation-large-subtype-Large-Similarity-Relation
+      ( large-subtype-Subset-Cumulative-Large-Set S)
+      ( large-similarity-relation-Cumulative-Large-Set X)
+
   cumulative-large-set-Subset-Cumulative-Large-Set :
     Cumulative-Large-Set (λ l → α l ⊔ γ l) β
   cumulative-large-set-Subset-Cumulative-Large-Set =
     make-Cumulative-Large-Set
-      ( type-large-subtype (large-subtype-Subset-Cumulative-Large-Set S))
-      ( large-similarity-relation-large-subtype-Large-Similarity-Relation
-        ( large-subtype-Subset-Cumulative-Large-Set S)
-        ( large-similarity-relation-Cumulative-Large-Set X))
+      ( type-Subset-Cumulative-Large-Set S)
+      ( large-similarity-relation-Subset-Cumulative-Large-Set)
       ( raise-type-Subset-Cumulative-Large-Set S)
       ( λ l (x , _) → sim-raise-Cumulative-Large-Set X l x)
 ```
