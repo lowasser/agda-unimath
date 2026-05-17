@@ -109,6 +109,7 @@ open import real-numbers.nonnegative-real-numbers public
 open import real-numbers.nonpositive-real-numbers public
 open import real-numbers.nonzero-real-numbers public
 open import real-numbers.nonzero-roots-nonnegative-real-numbers public
+open import real-numbers.nonzero-roots-positive-real-numbers public
 open import real-numbers.odd-roots-nonnegative-real-numbers public
 open import real-numbers.odd-roots-positive-real-numbers public
 open import real-numbers.odd-roots-real-numbers public

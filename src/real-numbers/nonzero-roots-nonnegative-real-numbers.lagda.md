@@ -44,7 +44,7 @@ open import real-numbers.squares-real-numbers
 For [nonzero](elementary-number-theory.nonzero-natural-numbers.md) `n`, the
 {{#concept "nth root" WDID=Q601053 WD="nth root" Disambiguation="of a nonnegative real number" Agda=root-nonzero-nat-ℝ⁰⁺}}
 is the inverse operation to the `n`th
-[power](real-numbers.powers-real-numbers.md) operation on the
+[power](real-numbers.powers-nonnegative-real-numbers.md) operation on the
 [nonnegative real numbers](real-numbers.nonnegative-real-numbers.md).
 
 ## Definition
@@ -65,6 +65,9 @@ opaque
 
 real-root-pair-expansion-ℝ⁰⁺ : {l : Level} → ℕ → ℕ → ℝ⁰⁺ l → ℝ l
 real-root-pair-expansion-ℝ⁰⁺ u v x = real-ℝ⁰⁺ (root-pair-expansion-ℝ⁰⁺ u v x)
+
+real-root-nonzero-nat-ℝ⁰⁺ : {l : Level} → ℕ⁺ → ℝ⁰⁺ l → ℝ l
+real-root-nonzero-nat-ℝ⁰⁺ n x = real-ℝ⁰⁺ (root-nonzero-nat-ℝ⁰⁺ n x)
 ```
 
 ## Properties
