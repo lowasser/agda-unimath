@@ -108,7 +108,7 @@ abstract opaque
               ( square-ℝ ∘ real-ℝ⁰⁺)
               ( is-section-root-pair-expansion-ℝ⁰⁺ u v (sqrt-ℝ⁰⁺ x))
         ＝ real-ℝ⁰⁺ x
-          by ap real-ℝ⁰⁺ (is-section-square-ℝ⁰⁺ x))
+          by ap real-ℝ⁰⁺ (is-section-sqrt-ℝ⁰⁺ x))
 
   is-section-root-nonzero-nat-ℝ⁰⁺ :
     {l : Level} (n : ℕ⁺) (x : ℝ⁰⁺ l) →
@@ -173,7 +173,7 @@ abstract opaque
         by
           ap
             ( root-pair-expansion-ℝ⁰⁺ u v)
-            ( is-retraction-square-ℝ⁰⁺ _)
+            ( is-retraction-sqrt-ℝ⁰⁺ _)
       ＝ x
         by is-retraction-root-pair-expansion-ℝ⁰⁺ u v x
 

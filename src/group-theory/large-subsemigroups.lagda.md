@@ -45,6 +45,9 @@ record
     UUω
   where
 
+  constructor
+    make-Large-Subsemigroup
+
   field
     subset-Large-Subsemigroup : subset-Large-Semigroup γ G
 
