@@ -28,9 +28,12 @@ open import foundation.universe-levels
 
 open import real-numbers.dedekind-real-numbers
 open import real-numbers.nonnegative-real-numbers
+open import real-numbers.odd-roots-nonnegative-real-numbers
 open import real-numbers.odd-roots-real-numbers
+open import real-numbers.powers-nonnegative-real-numbers
 open import real-numbers.powers-real-numbers
 open import real-numbers.square-roots-nonnegative-real-numbers
+open import real-numbers.squares-nonnegative-real-numbers
 open import real-numbers.squares-real-numbers
 ```
 
@@ -82,33 +85,32 @@ abstract opaque
     ( ap-binary power-ℝ⁰⁺ (left-unit-law-mul-ℕ _) refl) ∙
     ( is-section-root-is-odd-exponent-ℝ⁰⁺ _ _ x)
   is-section-root-pair-expansion-ℝ⁰⁺ (succ-ℕ u) v x =
-    eq-ℝ⁰⁺ _ _
-      ( equational-reasoning
-        power-ℝ
-          ( exp-ℕ 2 (succ-ℕ u) *ℕ succ-ℕ (v *ℕ 2))
-          ( real-root-pair-expansion-ℝ⁰⁺ u v (sqrt-ℝ⁰⁺ x))
-        ＝
-          power-ℝ
-            ( exp-ℕ 2 u *ℕ succ-ℕ (v *ℕ 2) *ℕ 2)
-            ( real-root-pair-expansion-ℝ⁰⁺ u v (sqrt-ℝ⁰⁺ x))
-          by
-            ap-binary
-              ( power-ℝ)
-              ( right-swap-mul-ℕ (exp-ℕ 2 u) 2 _)
-              ( refl)
-        ＝
-          square-ℝ
-            ( power-ℝ
-              ( exp-ℕ 2 u *ℕ succ-ℕ (v *ℕ 2))
-              ( real-root-pair-expansion-ℝ⁰⁺ u v (sqrt-ℝ⁰⁺ x)))
-          by power-mul-ℝ _ 2
-        ＝ square-ℝ (real-sqrt-ℝ⁰⁺ x)
-          by
-            ap
-              ( square-ℝ ∘ real-ℝ⁰⁺)
-              ( is-section-root-pair-expansion-ℝ⁰⁺ u v (sqrt-ℝ⁰⁺ x))
-        ＝ real-ℝ⁰⁺ x
-          by ap real-ℝ⁰⁺ (is-section-sqrt-ℝ⁰⁺ x))
+    equational-reasoning
+      power-ℝ⁰⁺
+        ( exp-ℕ 2 (succ-ℕ u) *ℕ succ-ℕ (v *ℕ 2))
+        ( root-pair-expansion-ℝ⁰⁺ (succ-ℕ u) v x)
+      ＝
+        power-ℝ⁰⁺
+          ( exp-ℕ 2 u *ℕ succ-ℕ (v *ℕ 2) *ℕ 2)
+          ( root-pair-expansion-ℝ⁰⁺ u v (sqrt-ℝ⁰⁺ x))
+        by
+          ap-binary
+            ( power-ℝ⁰⁺)
+            ( right-swap-mul-ℕ (exp-ℕ 2 u) 2 (succ-ℕ (v *ℕ 2)))
+            ( refl)
+      ＝
+        square-ℝ⁰⁺
+          ( power-ℝ⁰⁺
+            ( exp-ℕ 2 u *ℕ succ-ℕ (v *ℕ 2))
+            ( root-pair-expansion-ℝ⁰⁺ u v (sqrt-ℝ⁰⁺ x)))
+        by power-mul-ℝ⁰⁺ (exp-ℕ 2 u *ℕ succ-ℕ (v *ℕ 2)) 2
+      ＝ square-ℝ⁰⁺ (sqrt-ℝ⁰⁺ x)
+        by
+          ap
+            ( square-ℝ⁰⁺)
+            ( is-section-root-pair-expansion-ℝ⁰⁺ u v (sqrt-ℝ⁰⁺ x))
+      ＝ x
+        by is-section-sqrt-ℝ⁰⁺ x
 
   is-section-root-nonzero-nat-ℝ⁰⁺ :
     {l : Level} (n : ℕ⁺) (x : ℝ⁰⁺ l) →
@@ -143,37 +145,31 @@ abstract opaque
       root-pair-expansion-ℝ⁰⁺
         ( u)
         ( v)
-        ( sqrt-ℝ⁰⁺
-          ( power-ℝ⁰⁺ (exp-ℕ 2 u *ℕ 2 *ℕ succ-ℕ (v *ℕ 2)) x))
+        ( sqrt-ℝ⁰⁺ (power-ℝ⁰⁺ (exp-ℕ 2 (succ-ℕ u) *ℕ succ-ℕ (v *ℕ 2)) x))
       ＝
         root-pair-expansion-ℝ⁰⁺
           ( u)
           ( v)
-          ( sqrt-ℝ⁰⁺
-            ( power-ℝ⁰⁺ (exp-ℕ 2 u *ℕ succ-ℕ (v *ℕ 2) *ℕ 2) x))
+          ( sqrt-ℝ⁰⁺ (power-ℝ⁰⁺ (exp-ℕ 2 u *ℕ succ-ℕ (v *ℕ 2) *ℕ 2) x))
         by
           ap
-            ( root-pair-expansion-ℝ⁰⁺ u v ∘ sqrt-ℝ⁰⁺)
-            ( ap-binary power-ℝ⁰⁺ (right-swap-mul-ℕ (exp-ℕ 2 u) 2 _) refl)
+            ( λ n → root-pair-expansion-ℝ⁰⁺ u v (sqrt-ℝ⁰⁺ (power-ℝ⁰⁺ n x)))
+            ( right-swap-mul-ℕ (exp-ℕ 2 u) 2 (succ-ℕ (v *ℕ 2)))
       ＝
         root-pair-expansion-ℝ⁰⁺
           ( u)
           ( v)
-          ( sqrt-ℝ⁰⁺
-            ( square-ℝ⁰⁺ (power-ℝ⁰⁺ (exp-ℕ 2 u *ℕ succ-ℕ (v *ℕ 2)) x)))
+          ( sqrt-ℝ⁰⁺ (square-ℝ⁰⁺ (power-ℝ⁰⁺ (exp-ℕ 2 u *ℕ succ-ℕ (v *ℕ 2)) x)))
         by
           ap
             ( root-pair-expansion-ℝ⁰⁺ u v ∘ sqrt-ℝ⁰⁺)
-            ( eq-ℝ⁰⁺ _ _ (power-mul-ℝ _ 2))
+            ( power-mul-ℝ⁰⁺ (exp-ℕ 2 u *ℕ succ-ℕ (v *ℕ 2)) 2)
       ＝
         root-pair-expansion-ℝ⁰⁺
           ( u)
           ( v)
           ( power-ℝ⁰⁺ (exp-ℕ 2 u *ℕ succ-ℕ (v *ℕ 2)) x)
-        by
-          ap
-            ( root-pair-expansion-ℝ⁰⁺ u v)
-            ( is-retraction-sqrt-ℝ⁰⁺ _)
+        by ap (root-pair-expansion-ℝ⁰⁺ u v) (is-retraction-sqrt-ℝ⁰⁺ _)
       ＝ x
         by is-retraction-root-pair-expansion-ℝ⁰⁺ u v x
 

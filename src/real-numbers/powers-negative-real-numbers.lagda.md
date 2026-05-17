@@ -23,6 +23,7 @@ open import real-numbers.negative-real-numbers
 open import real-numbers.positive-real-numbers
 open import real-numbers.powers-positive-real-numbers
 open import real-numbers.powers-real-numbers
+open import real-numbers.squares-negative-real-numbers
 open import real-numbers.squares-real-numbers
 ```
 

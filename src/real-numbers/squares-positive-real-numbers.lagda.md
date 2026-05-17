@@ -11,6 +11,7 @@ open import foundation.universe-levels
 
 open import real-numbers.multiplication-positive-real-numbers
 open import real-numbers.positive-real-numbers
+open import real-numbers.squares-real-numbers
 ```
 
 </details>
@@ -29,4 +30,8 @@ itself.
 ```agda
 square-ℝ⁺ : {l : Level} → ℝ⁺ l → ℝ⁺ l
 square-ℝ⁺ x = x *ℝ⁺ x
+
+is-positive-square-real-ℝ⁺ :
+  {l : Level} (x : ℝ⁺ l) → is-positive-ℝ (square-ℝ (real-ℝ⁺ x))
+is-positive-square-real-ℝ⁺ x = is-positive-real-ℝ⁺ (square-ℝ⁺ x)
 ```

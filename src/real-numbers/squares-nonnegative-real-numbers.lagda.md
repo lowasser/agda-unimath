@@ -43,7 +43,7 @@ itself.
 
 ```agda
 square-ℝ⁰⁺ : {l : Level} → ℝ⁰⁺ l → ℝ⁰⁺ l
-square-ℝ⁰⁺ x = nonnegative-square-ℝ (real-ℝ⁰⁺ x)
+square-ℝ⁰⁺ x = x *ℝ⁰⁺ x
 ```
 
 ## Properties

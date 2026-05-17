@@ -761,7 +761,7 @@ abstract
       ( is-retraction-sqrt-ℝ⁰⁺ x⁰⁺)
       ( preserves-leq-sqrt-ℝ⁰⁺
         ( x⁰⁺)
-        ( nonnegative-square-ℝ x)
+        ( square-ℝ⁰⁺ x⁰⁺)
         ( binary-tr
           ( leq-ℝ)
           ( right-unit-law-mul-ℝ x)

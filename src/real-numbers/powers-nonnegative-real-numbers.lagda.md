@@ -9,6 +9,7 @@ module real-numbers.powers-nonnegative-real-numbers where
 <details><summary>Imports</summary>
 
 ```agda
+open import elementary-number-theory.multiplication-natural-numbers
 open import elementary-number-theory.natural-numbers
 
 open import foundation.binary-transport
@@ -53,6 +54,16 @@ power-ℝ⁰⁺ = power-Large-Monoid large-monoid-mul-ℝ⁰⁺
 ```
 
 ## Properties
+
+### `xᵐⁿ = (xᵐ)ⁿ`
+
+```agda
+abstract
+  power-mul-ℝ⁰⁺ :
+    {l : Level} (m n : ℕ) {x : ℝ⁰⁺ l} →
+    power-ℝ⁰⁺ (m *ℕ n) x ＝ power-ℝ⁰⁺ n (power-ℝ⁰⁺ m x)
+  power-mul-ℝ⁰⁺ = power-mul-Large-Monoid large-monoid-mul-ℝ⁰⁺
+```
 
 ### Powers on nonnegative real numbers agree with powers on real numbers
 
