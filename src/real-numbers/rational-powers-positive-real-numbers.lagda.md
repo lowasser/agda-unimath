@@ -12,6 +12,7 @@ module real-numbers.rational-powers-positive-real-numbers where
 open import elementary-number-theory.addition-rational-numbers
 open import elementary-number-theory.integers
 open import elementary-number-theory.multiplication-integer-fractions
+open import elementary-number-theory.natural-numbers
 open import elementary-number-theory.multiplication-rational-numbers
 open import elementary-number-theory.rational-numbers
 open import elementary-number-theory.reduced-integer-fractions
@@ -24,6 +25,7 @@ open import real-numbers.integer-powers-positive-real-numbers
 open import real-numbers.multiplication-positive-real-numbers
 open import real-numbers.multiplicative-inverses-positive-real-numbers
 open import real-numbers.positive-real-numbers
+open import real-numbers.powers-positive-real-numbers
 ```
 
 </details>
@@ -140,6 +142,17 @@ abstract
     {l : Level} (k : ℤ) (x : ℝ⁺ l) →
     rational-power-ℝ⁺ (rational-ℤ k) x ＝ int-power-ℝ⁺ k x
   rational-int-power-ℝ⁺ = in-int-fraction-power-ℝ⁺
+```
+
+### Rational powers agree with natural powers
+
+```agda
+abstract
+  rational-nat-power-ℝ⁺ :
+    {l : Level} (n : ℕ) (x : ℝ⁺ l) →
+    rational-power-ℝ⁺ (rational-ℕ n) x ＝ power-ℝ⁺ n x
+  rational-nat-power-ℝ⁺ n x =
+    rational-int-power-ℝ⁺ (int-ℕ n) x ∙ int-power-int-ℝ⁺ n x
 ```
 
 ### `x⁻¹` is the multiplicative inverse of `x`
