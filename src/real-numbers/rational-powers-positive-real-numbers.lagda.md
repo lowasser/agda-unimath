@@ -1,0 +1,90 @@
+# Rational powers of positive real numbers
+
+```agda
+{-# OPTIONS --lossy-unification #-}
+
+module real-numbers.rational-powers-positive-real-numbers where
+```
+
+<details><summary>Imports</summary>
+
+```agda
+open import elementary-number-theory.addition-rational-numbers
+open import elementary-number-theory.multiplication-integer-fractions
+open import elementary-number-theory.multiplication-rational-numbers
+open import elementary-number-theory.rational-numbers
+open import elementary-number-theory.reduced-integer-fractions
+
+open import foundation.identity-types
+open import foundation.universe-levels
+
+open import real-numbers.integer-fraction-powers-positive-real-numbers
+open import real-numbers.multiplication-positive-real-numbers
+open import real-numbers.positive-real-numbers
+```
+
+</details>
+
+## Idea
+
+Given a [rational number](elementary-number-theory.rational-numbers.md) `p/q`,
+the `p/q`th
+{{#concept "power" Disambiguation="a positive real number to a rational power" Agda=rational-power-ℝ⁺}}
+of a [positive real number](real-numbers.positive-real-numbers.md) `x` is the
+`q`th [root](real-numbers.nonzero-roots-positive-real-numbers.md) of the `p`th
+[power](real-numbers.integer-powers-positive-real-numbers.md) of `x`. This
+definition obeys the standard exponentiation laws.
+
+## Definition
+
+```agda
+rational-power-ℝ⁺ : {l : Level} → ℚ → ℝ⁺ l → ℝ⁺ l
+rational-power-ℝ⁺ q = int-fraction-power-ℝ⁺ (fraction-ℚ q)
+```
+
+## Properties
+
+### `xᵃᵇ = (xᵃ)ᵇ`
+
+```agda
+abstract opaque
+  unfolding mul-ℚ rational-fraction-ℤ
+
+  rational-power-mul-ℝ⁺ :
+    {l : Level} (a b : ℚ) (x : ℝ⁺ l) →
+    rational-power-ℝ⁺ (a *ℚ b) x ＝ rational-power-ℝ⁺ b (rational-power-ℝ⁺ a x)
+  rational-power-mul-ℝ⁺ a b x =
+    reduce-int-fraction-power-ℝ⁺ _ x ∙ int-fraction-power-mul-ℝ⁺ _ _ x
+```
+
+### `xᵃ⁺ᵇ = xᵃxᵇ`
+
+```agda
+abstract opaque
+  unfolding add-ℚ rational-fraction-ℤ
+
+  rational-power-add-ℝ⁺ :
+    {l : Level} (a b : ℚ) (x : ℝ⁺ l) →
+    rational-power-ℝ⁺ (a +ℚ b) x ＝
+    rational-power-ℝ⁺ a x *ℝ⁺ rational-power-ℝ⁺ b x
+  rational-power-add-ℝ⁺ a b x =
+    reduce-int-fraction-power-ℝ⁺ _ x ∙ int-fraction-power-add-ℝ⁺ _ _ x
+```
+
+### `x⁰ = 1`
+
+```agda
+abstract
+  zero-rational-power-ℝ⁺ :
+    {l : Level} (x : ℝ⁺ l) → rational-power-ℝ⁺ zero-ℚ x ＝ raise-one-ℝ⁺ l
+  zero-rational-power-ℝ⁺ = zero-int-fraction-power-ℝ⁺
+```
+
+### `x¹ = x`
+
+```agda
+abstract
+  one-rational-power-ℝ⁺ :
+    {l : Level} (x : ℝ⁺ l) → rational-power-ℝ⁺ one-ℚ x ＝ x
+  one-rational-power-ℝ⁺ = one-int-fraction-power-ℝ⁺
+```

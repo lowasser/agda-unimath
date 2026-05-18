@@ -556,6 +556,30 @@ module _
       integer-power-mul-Group (group-Large-Group G l1)
 ```
 
+### `(xᵐ)ⁿ = (xⁿ)ᵐ`
+
+```agda
+module _
+  {α : Level → Level} {β : Level → Level → Level} (G : Large-Group α β)
+  where abstract
+
+  swap-int-power-Large-Group :
+    {l1 : Level} (k l : ℤ) (x : type-Large-Group G l1) →
+    int-power-Large-Group G k (int-power-Large-Group G l x) ＝
+    int-power-Large-Group G l (int-power-Large-Group G k x)
+  swap-int-power-Large-Group {l1} =
+    swap-integer-power-Group (group-Large-Group G l1)
+
+  swap-int-power-power-Large-Group :
+    {l1 : Level} (k : ℤ) (n : ℕ) (x : type-Large-Group G l1) →
+    int-power-Large-Group G k (power-Large-Group G n x) ＝
+    power-Large-Group G n (int-power-Large-Group G k x)
+  swap-int-power-power-Large-Group k n x =
+    ( ap (int-power-Large-Group G k) (inv (int-power-int-Large-Group G n x))) ∙
+    ( swap-int-power-Large-Group k (int-ℕ n) x) ∙
+    ( int-power-int-Large-Group G n _)
+```
+
 ### Homomorphisms preserve integer powers on large groups
 
 ```agda

@@ -56,6 +56,7 @@ open import real-numbers.infima-and-suprema-families-real-numbers public
 open import real-numbers.infima-families-real-numbers public
 open import real-numbers.inhabited-finitely-enumerable-subsets-real-numbers public
 open import real-numbers.inhabited-totally-bounded-subsets-real-numbers public
+open import real-numbers.integer-fraction-powers-positive-real-numbers public
 open import real-numbers.integer-powers-positive-real-numbers public
 open import real-numbers.irrational-real-numbers public
 open import real-numbers.irrationality-square-root-of-two public
@@ -129,6 +130,7 @@ open import real-numbers.raising-universe-levels-real-numbers public
 open import real-numbers.raising-universe-levels-upper-dedekind-real-numbers public
 open import real-numbers.rational-approximates-of-real-numbers public
 open import real-numbers.rational-lower-dedekind-real-numbers public
+open import real-numbers.rational-powers-positive-real-numbers public
 open import real-numbers.rational-real-numbers public
 open import real-numbers.rational-upper-dedekind-real-numbers public
 open import real-numbers.real-maps-proper-closed-intervals-real-numbers public

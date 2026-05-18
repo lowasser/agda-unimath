@@ -7,6 +7,7 @@ module real-numbers.nonzero-roots-positive-real-numbers where
 <details><summary>Imports</summary>
 
 ```agda
+open import elementary-number-theory.integers
 open import elementary-number-theory.multiplication-natural-numbers
 open import elementary-number-theory.natural-numbers
 open import elementary-number-theory.nonzero-natural-numbers
@@ -20,10 +21,16 @@ open import foundation.empty-types
 open import foundation.equivalences
 open import foundation.function-types
 open import foundation.identity-types
+open import foundation.injective-maps
 open import foundation.transport-along-identifications
 open import foundation.universe-levels
 
+open import group-theory.integer-powers-of-elements-large-groups
+
 open import real-numbers.dedekind-real-numbers
+open import real-numbers.integer-powers-positive-real-numbers
+open import real-numbers.large-multiplicative-group-of-positive-real-numbers
+open import real-numbers.multiplication-positive-real-numbers
 open import real-numbers.nonnegative-real-numbers
 open import real-numbers.nonzero-roots-nonnegative-real-numbers
 open import real-numbers.odd-roots-positive-real-numbers
@@ -141,4 +148,91 @@ aut-power-nonzero-nat-ℝ⁺ :
 aut-power-nonzero-nat-ℝ⁺ n =
   ( power-ℝ⁺ (nat-ℕ⁺ n) ,
     is-equiv-power-nonzero-nat-ℝ⁺ n)
+```
+
+### Roots and integer powers commute
+
+```agda
+abstract
+  swap-root-nonzero-nat-int-power-ℝ⁺ :
+    {l : Level} (n : ℕ⁺) (k : ℤ) (x : ℝ⁺ l) →
+    root-nonzero-nat-ℝ⁺ n (int-power-ℝ⁺ k x) ＝
+    int-power-ℝ⁺ k (root-nonzero-nat-ℝ⁺ n x)
+  swap-root-nonzero-nat-int-power-ℝ⁺ n⁺@(n , _) k x =
+    is-injective-equiv
+      ( aut-power-nonzero-nat-ℝ⁺ n⁺)
+      ( equational-reasoning
+        power-ℝ⁺ n (root-nonzero-nat-ℝ⁺ n⁺ (int-power-ℝ⁺ k x))
+        ＝ int-power-ℝ⁺ k x
+          by is-section-root-nonzero-nat-ℝ⁺ n⁺ _
+        ＝ int-power-ℝ⁺ k (power-ℝ⁺ n (root-nonzero-nat-ℝ⁺ n⁺ x))
+          by ap (int-power-ℝ⁺ k) (inv (is-section-root-nonzero-nat-ℝ⁺ n⁺ x))
+        ＝ power-ℝ⁺ n (int-power-ℝ⁺ k (root-nonzero-nat-ℝ⁺ n⁺ x))
+          by swap-int-power-power-Large-Group large-group-mul-ℝ⁺ k n _)
+```
+
+### Roots and natural powers commute
+
+```agda
+abstract
+  swap-root-nonzero-nat-power-ℝ⁺ :
+    {l : Level} (n : ℕ⁺) (k : ℕ) (x : ℝ⁺ l) →
+    root-nonzero-nat-ℝ⁺ n (power-ℝ⁺ k x) ＝
+    power-ℝ⁺ k (root-nonzero-nat-ℝ⁺ n x)
+  swap-root-nonzero-nat-power-ℝ⁺ n k x =
+    equational-reasoning
+      root-nonzero-nat-ℝ⁺ n (power-ℝ⁺ k x)
+      ＝ root-nonzero-nat-ℝ⁺ n (int-power-ℝ⁺ (int-ℕ k) x)
+        by ap (root-nonzero-nat-ℝ⁺ n) (inv (int-power-int-ℝ⁺ k x))
+      ＝ int-power-ℝ⁺ (int-ℕ k) (root-nonzero-nat-ℝ⁺ n x)
+        by swap-root-nonzero-nat-int-power-ℝ⁺ n (int-ℕ k) x
+      ＝ power-ℝ⁺ k (root-nonzero-nat-ℝ⁺ n x)
+        by int-power-int-ℝ⁺ k _
+```
+
+### The `mn`th root of `x` is the `n`th root of the `m`th root of `x`
+
+```agda
+abstract
+  root-mul-nonzero-nat-ℝ⁺ :
+    {l : Level} (m n : ℕ⁺) (x : ℝ⁺ l) →
+    root-nonzero-nat-ℝ⁺ (m *ℕ⁺ n) x ＝
+    root-nonzero-nat-ℝ⁺ n (root-nonzero-nat-ℝ⁺ m x)
+  root-mul-nonzero-nat-ℝ⁺ m n x =
+    eq-ℝ⁺ _ _
+      ( ( ap
+          ( real-ℝ⁰⁺)
+          ( root-mul-nonzero-nat-ℝ⁰⁺ m n (nonnegative-ℝ⁺ x))) ∙
+        ( ap
+          ( real-root-nonzero-nat-ℝ⁰⁺ n)
+          ( eq-ℝ⁰⁺ _ _ refl)))
+```
+
+### `n`th roots distribute over multiplication
+
+```agda
+abstract
+  distributive-mul-root-nonzero-nat-ℝ⁺ :
+    {l1 l2 : Level}
+    (n : ℕ⁺) (x : ℝ⁺ l1) (y : ℝ⁺ l2) →
+    root-nonzero-nat-ℝ⁺ n (x *ℝ⁺ y) ＝
+    root-nonzero-nat-ℝ⁺ n x *ℝ⁺ root-nonzero-nat-ℝ⁺ n y
+  distributive-mul-root-nonzero-nat-ℝ⁺ n x y =
+    eq-ℝ⁺ _ _
+      ( ( ap (real-root-nonzero-nat-ℝ⁰⁺ n) (eq-ℝ⁰⁺ _ _ refl)) ∙
+        ( ap
+          ( real-ℝ⁰⁺)
+          ( distributive-mul-root-nonzero-nat-ℝ⁰⁺
+            ( n)
+            ( nonnegative-ℝ⁺ x)
+            ( nonnegative-ℝ⁺ y))))
+```
+
+### The 1st root is the identity
+
+```agda
+abstract
+  root-one-nonzero-nat-ℝ⁺ :
+    {l : Level} (x : ℝ⁺ l) → root-nonzero-nat-ℝ⁺ one-ℕ⁺ x ＝ x
+  root-one-nonzero-nat-ℝ⁺ = is-retraction-root-nonzero-nat-ℝ⁺ one-ℕ⁺
 ```

@@ -18,6 +18,7 @@ open import foundation.identity-types
 open import foundation.transport-along-identifications
 open import foundation.universe-levels
 
+open import group-theory.powers-of-elements-large-commutative-monoids
 open import group-theory.powers-of-elements-large-monoids
 
 open import order-theory.large-posets
@@ -113,4 +114,16 @@ abstract
       ( real-power-ℝ⁰⁺ n x)
       ( real-power-ℝ⁰⁺ n y)
       ( preserves-leq-power-ℝ⁰⁺ n x y x≤y)
+```
+
+### `(xy)ⁿ = xⁿyⁿ`
+
+```agda
+abstract
+  distributive-power-mul-ℝ⁰⁺ :
+    {l1 l2 : Level} (n : ℕ) {x : ℝ⁰⁺ l1} {y : ℝ⁰⁺ l2} →
+    power-ℝ⁰⁺ n (x *ℝ⁰⁺ y) ＝ power-ℝ⁰⁺ n x *ℝ⁰⁺ power-ℝ⁰⁺ n y
+  distributive-power-mul-ℝ⁰⁺ =
+    distributive-power-mul-Large-Commutative-Monoid
+      ( large-commutative-monoid-mul-ℝ⁰⁺)
 ```

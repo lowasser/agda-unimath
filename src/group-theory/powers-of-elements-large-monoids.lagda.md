@@ -320,6 +320,21 @@ module _
     power-mul-Large-Monoid {l} = power-mul-Monoid (monoid-Large-Monoid M l)
 ```
 
+### `(xᵐ)ⁿ = (xⁿ)ᵐ`
+
+```agda
+module _
+  {α : Level → Level} {β : Level → Level → Level} (M : Large-Monoid α β)
+  where abstract
+
+  swap-power-Large-Monoid :
+    {l : Level} (m n : ℕ) (x : type-Large-Monoid M l) →
+    power-Large-Monoid M m (power-Large-Monoid M n x) ＝
+    power-Large-Monoid M n (power-Large-Monoid M m x)
+  swap-power-Large-Monoid {l} =
+    swap-power-Monoid (monoid-Large-Monoid M l)
+```
+
 ### Homomorphisms preserve powers in large monoids
 
 ```agda

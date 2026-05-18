@@ -24,9 +24,14 @@ open import foundation.empty-types
 open import foundation.equivalences
 open import foundation.function-types
 open import foundation.identity-types
+open import foundation.injective-maps
 open import foundation.universe-levels
 
+open import group-theory.powers-of-elements-large-monoids
+
 open import real-numbers.dedekind-real-numbers
+open import real-numbers.large-multiplicative-monoid-of-nonnegative-real-numbers
+open import real-numbers.multiplication-nonnegative-real-numbers
 open import real-numbers.nonnegative-real-numbers
 open import real-numbers.odd-roots-nonnegative-real-numbers
 open import real-numbers.odd-roots-real-numbers
@@ -205,6 +210,100 @@ aut-power-nonzero-nat-ℝ⁰⁺ : (l : Level) (n : ℕ⁺) → Aut (ℝ⁰⁺ l)
 aut-power-nonzero-nat-ℝ⁰⁺ l n =
   ( power-ℝ⁰⁺ (nat-ℕ⁺ n) ,
     is-equiv-power-nonzero-nat-ℝ⁰⁺ l n)
+```
+
+### Roots and integer powers commute
+
+```agda
+abstract
+  swap-root-nonzero-nat-power-ℝ⁰⁺ :
+    {l : Level} (n : ℕ⁺) (k : ℕ) (x : ℝ⁰⁺ l) →
+    root-nonzero-nat-ℝ⁰⁺ n (power-ℝ⁰⁺ k x) ＝
+    power-ℝ⁰⁺ k (root-nonzero-nat-ℝ⁰⁺ n x)
+  swap-root-nonzero-nat-power-ℝ⁰⁺ n⁺@(n , _) k x =
+    is-injective-equiv
+      ( aut-power-nonzero-nat-ℝ⁰⁺ _ n⁺)
+      ( equational-reasoning
+        power-ℝ⁰⁺ n (root-nonzero-nat-ℝ⁰⁺ n⁺ (power-ℝ⁰⁺ k x))
+        ＝ power-ℝ⁰⁺ k x
+          by is-section-root-nonzero-nat-ℝ⁰⁺ n⁺ _
+        ＝ power-ℝ⁰⁺ k (power-ℝ⁰⁺ n (root-nonzero-nat-ℝ⁰⁺ n⁺ x))
+          by ap (power-ℝ⁰⁺ k) (inv (is-section-root-nonzero-nat-ℝ⁰⁺ n⁺ x))
+        ＝ power-ℝ⁰⁺ n (power-ℝ⁰⁺ k (root-nonzero-nat-ℝ⁰⁺ n⁺ x))
+          by swap-power-Large-Monoid large-monoid-mul-ℝ⁰⁺ k n _)
+```
+
+### The `mn`th root of `x` is the `n`th root of the `m`th root of `x`
+
+```agda
+abstract
+  root-mul-nonzero-nat-ℝ⁰⁺ :
+    {l : Level} (m n : ℕ⁺) (x : ℝ⁰⁺ l) →
+    root-nonzero-nat-ℝ⁰⁺ (m *ℕ⁺ n) x ＝
+    root-nonzero-nat-ℝ⁰⁺ n (root-nonzero-nat-ℝ⁰⁺ m x)
+  root-mul-nonzero-nat-ℝ⁰⁺ m⁺@(m , _) n⁺@(n , _) x =
+    is-injective-equiv
+      ( aut-power-nonzero-nat-ℝ⁰⁺ _ (m⁺ *ℕ⁺ n⁺))
+      ( equational-reasoning
+        power-ℝ⁰⁺ (m *ℕ n) (root-nonzero-nat-ℝ⁰⁺ (m⁺ *ℕ⁺ n⁺) x)
+        ＝ x
+          by is-section-root-nonzero-nat-ℝ⁰⁺ (m⁺ *ℕ⁺ n⁺) x
+        ＝ power-ℝ⁰⁺ m (root-nonzero-nat-ℝ⁰⁺ m⁺ x)
+          by inv (is-section-root-nonzero-nat-ℝ⁰⁺ m⁺ x)
+        ＝
+          power-ℝ⁰⁺
+            ( n)
+            ( root-nonzero-nat-ℝ⁰⁺ n⁺ (power-ℝ⁰⁺ m (root-nonzero-nat-ℝ⁰⁺ m⁺ x)))
+          by inv (is-section-root-nonzero-nat-ℝ⁰⁺ n⁺ _)
+        ＝
+          power-ℝ⁰⁺
+            ( n)
+            ( power-ℝ⁰⁺ m (root-nonzero-nat-ℝ⁰⁺ n⁺ (root-nonzero-nat-ℝ⁰⁺ m⁺ x)))
+          by ap (power-ℝ⁰⁺ n) (swap-root-nonzero-nat-power-ℝ⁰⁺ n⁺ m _)
+        ＝
+          power-ℝ⁰⁺
+            ( m *ℕ n)
+            ( root-nonzero-nat-ℝ⁰⁺ n⁺ (root-nonzero-nat-ℝ⁰⁺ m⁺ x))
+          by inv (power-mul-ℝ⁰⁺ m n))
+```
+
+### `n`th roots distribute over multiplication
+
+```agda
+abstract
+  distributive-mul-root-nonzero-nat-ℝ⁰⁺ :
+    {l1 l2 : Level}
+    (n : ℕ⁺) (x : ℝ⁰⁺ l1) (y : ℝ⁰⁺ l2) →
+    root-nonzero-nat-ℝ⁰⁺ n (x *ℝ⁰⁺ y) ＝
+    root-nonzero-nat-ℝ⁰⁺ n x *ℝ⁰⁺ root-nonzero-nat-ℝ⁰⁺ n y
+  distributive-mul-root-nonzero-nat-ℝ⁰⁺ n⁺@(n , _) x y =
+    is-injective-equiv
+      ( aut-power-nonzero-nat-ℝ⁰⁺ _ n⁺)
+      ( equational-reasoning
+        power-ℝ⁰⁺ n (root-nonzero-nat-ℝ⁰⁺ n⁺ (x *ℝ⁰⁺ y))
+        ＝ x *ℝ⁰⁺ y
+          by is-section-root-nonzero-nat-ℝ⁰⁺ n⁺ _
+        ＝
+          power-ℝ⁰⁺ n (root-nonzero-nat-ℝ⁰⁺ n⁺ x) *ℝ⁰⁺
+          power-ℝ⁰⁺ n (root-nonzero-nat-ℝ⁰⁺ n⁺ y)
+          by
+            inv
+              ( ap-mul-ℝ⁰⁺
+                ( is-section-root-nonzero-nat-ℝ⁰⁺ n⁺ x)
+                ( is-section-root-nonzero-nat-ℝ⁰⁺ n⁺ y))
+        ＝
+          power-ℝ⁰⁺ n (root-nonzero-nat-ℝ⁰⁺ n⁺ x *ℝ⁰⁺ root-nonzero-nat-ℝ⁰⁺ n⁺ y)
+          by inv (distributive-power-mul-ℝ⁰⁺ n))
+```
+
+### The 1st root is the identity
+
+```agda
+abstract
+  root-one-nonzero-nat-ℝ⁰⁺ :
+    {l : Level} (x : ℝ⁰⁺ l) →
+    root-nonzero-nat-ℝ⁰⁺ one-ℕ⁺ x ＝ x
+  root-one-nonzero-nat-ℝ⁰⁺ = is-retraction-root-nonzero-nat-ℝ⁰⁺ one-ℕ⁺
 ```
 
 ## See also
