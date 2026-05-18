@@ -17,6 +17,7 @@ open import elementary-number-theory.natural-numbers
 open import elementary-number-theory.rational-numbers
 open import elementary-number-theory.reduced-integer-fractions
 
+open import foundation.action-on-identifications-binary-functions
 open import foundation.identity-types
 open import foundation.universe-levels
 
@@ -163,4 +164,22 @@ abstract
     {l : Level} (x : ℝ⁺ l) → rational-power-ℝ⁺ neg-one-ℚ x ＝ inv-ℝ⁺ x
   neg-one-rational-power-ℝ⁺ x =
     rational-int-power-ℝ⁺ neg-one-ℤ x ∙ int-neg-one-power-ℝ⁺ x
+```
+
+### `x⁻ᵖ` is the multiplicative inverse of `xᵖ`
+
+```agda
+abstract
+  neg-rational-power-ℝ⁺ :
+    {l : Level} (p : ℚ) (x : ℝ⁺ l) →
+    rational-power-ℝ⁺ (neg-ℚ p) x ＝ inv-ℝ⁺ (rational-power-ℝ⁺ p x)
+  neg-rational-power-ℝ⁺ p x =
+    equational-reasoning
+      rational-power-ℝ⁺ (neg-ℚ p) x
+      ＝ rational-power-ℝ⁺ (p *ℚ neg-one-ℚ) x
+        by ap-binary rational-power-ℝ⁺ (inv (right-neg-unit-law-mul-ℚ p)) refl
+      ＝ rational-power-ℝ⁺ neg-one-ℚ (rational-power-ℝ⁺ p x)
+        by rational-power-mul-ℝ⁺ p neg-one-ℚ x
+      ＝ inv-ℝ⁺ (rational-power-ℝ⁺ p x)
+        by neg-one-rational-power-ℝ⁺ _
 ```
