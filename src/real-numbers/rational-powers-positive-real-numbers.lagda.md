@@ -12,8 +12,8 @@ module real-numbers.rational-powers-positive-real-numbers where
 open import elementary-number-theory.addition-rational-numbers
 open import elementary-number-theory.integers
 open import elementary-number-theory.multiplication-integer-fractions
-open import elementary-number-theory.natural-numbers
 open import elementary-number-theory.multiplication-rational-numbers
+open import elementary-number-theory.natural-numbers
 open import elementary-number-theory.rational-numbers
 open import elementary-number-theory.reduced-integer-fractions
 
