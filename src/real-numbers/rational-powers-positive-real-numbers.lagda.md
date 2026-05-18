@@ -10,6 +10,7 @@ module real-numbers.rational-powers-positive-real-numbers where
 
 ```agda
 open import elementary-number-theory.addition-rational-numbers
+open import elementary-number-theory.integers
 open import elementary-number-theory.multiplication-integer-fractions
 open import elementary-number-theory.multiplication-rational-numbers
 open import elementary-number-theory.rational-numbers
@@ -19,7 +20,9 @@ open import foundation.identity-types
 open import foundation.universe-levels
 
 open import real-numbers.integer-fraction-powers-positive-real-numbers
+open import real-numbers.integer-powers-positive-real-numbers
 open import real-numbers.multiplication-positive-real-numbers
+open import real-numbers.multiplicative-inverses-positive-real-numbers
 open import real-numbers.positive-real-numbers
 ```
 
@@ -109,4 +112,42 @@ abstract
     {l : Level} (p : ℚ) →
     rational-power-ℝ⁺ p (raise-one-ℝ⁺ l) ＝ raise-one-ℝ⁺ l
   rational-power-raise-one-ℝ⁺ p = int-fraction-power-raise-one-ℝ⁺ (fraction-ℚ p)
+```
+
+### `xᵖ⁺¹ = xxᵖ = xᵖx`
+
+```agda
+abstract
+  rational-power-succ-ℝ⁺' :
+    {l : Level} (p : ℚ) (x : ℝ⁺ l) →
+    rational-power-ℝ⁺ (succ-ℚ p) x ＝ x *ℝ⁺ rational-power-ℝ⁺ p x
+  rational-power-succ-ℝ⁺' p x =
+    ( rational-power-add-ℝ⁺ one-ℚ p x) ∙
+    ( ap-mul-ℝ⁺ (one-rational-power-ℝ⁺ x) refl)
+
+  rational-power-succ-ℝ⁺ :
+    {l : Level} (p : ℚ) (x : ℝ⁺ l) →
+    rational-power-ℝ⁺ (succ-ℚ p) x ＝ rational-power-ℝ⁺ p x *ℝ⁺ x
+  rational-power-succ-ℝ⁺ p x =
+    rational-power-succ-ℝ⁺' p x ∙ commutative-mul-ℝ⁺ _ _
+```
+
+### Rational powers agree with integer powers
+
+```agda
+abstract
+  rational-int-power-ℝ⁺ :
+    {l : Level} (k : ℤ) (x : ℝ⁺ l) →
+    rational-power-ℝ⁺ (rational-ℤ k) x ＝ int-power-ℝ⁺ k x
+  rational-int-power-ℝ⁺ = in-int-fraction-power-ℝ⁺
+```
+
+### `x⁻¹` is the multiplicative inverse of `x`
+
+```agda
+abstract
+  neg-one-rational-power-ℝ⁺ :
+    {l : Level} (x : ℝ⁺ l) → rational-power-ℝ⁺ neg-one-ℚ x ＝ inv-ℝ⁺ x
+  neg-one-rational-power-ℝ⁺ x =
+    rational-int-power-ℝ⁺ neg-one-ℤ x ∙ int-neg-one-power-ℝ⁺ x
 ```
