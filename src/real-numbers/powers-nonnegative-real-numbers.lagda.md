@@ -127,3 +127,13 @@ abstract
     distributive-power-mul-Large-Commutative-Monoid
       ( large-commutative-monoid-mul-ℝ⁰⁺)
 ```
+
+### `1ⁿ = 1`
+
+```agda
+abstract
+  power-raise-one-ℝ⁰⁺ :
+    {l : Level} (n : ℕ) → power-ℝ⁰⁺ n (raise-one-ℝ⁰⁺ l) ＝ raise-one-ℝ⁰⁺ l
+  power-raise-one-ℝ⁰⁺ {l} =
+    raise-power-unit-Large-Monoid large-monoid-mul-ℝ⁰⁺ l
+```

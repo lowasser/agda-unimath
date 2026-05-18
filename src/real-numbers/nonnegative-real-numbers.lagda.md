@@ -360,4 +360,7 @@ raise-ℝ⁰⁺ l (x , is-nonneg-x) =
 
 raise-zero-ℝ⁰⁺ : (l : Level) → ℝ⁰⁺ l
 raise-zero-ℝ⁰⁺ l = raise-ℝ⁰⁺ l zero-ℝ⁰⁺
+
+raise-one-ℝ⁰⁺ : (l : Level) → ℝ⁰⁺ l
+raise-one-ℝ⁰⁺ l = raise-ℝ⁰⁺ l one-ℝ⁰⁺
 ```

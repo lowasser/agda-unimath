@@ -61,3 +61,13 @@ abstract
       ( real-power-ℝ⁺ n x)
       ( is-positive-real-ℝ⁺ (power-ℝ⁺ n x))
 ```
+
+### `1ⁿ = 1`
+
+```agda
+abstract
+  power-raise-one-ℝ⁺ :
+    {l : Level} (n : ℕ) → power-ℝ⁺ n (raise-one-ℝ⁺ l) ＝ raise-one-ℝ⁺ l
+  power-raise-one-ℝ⁺ {l} =
+    raise-power-unit-Large-Monoid large-monoid-mul-ℝ⁺ l
+```

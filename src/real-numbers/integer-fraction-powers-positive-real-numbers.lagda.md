@@ -272,3 +272,17 @@ abstract
   one-int-fraction-power-ℝ⁺ x =
     in-int-fraction-power-ℝ⁺ one-ℤ x ∙ int-one-power-ℝ⁺ x
 ```
+
+### `1ᵖ = 1`
+
+```agda
+abstract
+  int-fraction-power-raise-one-ℝ⁺ :
+    {l : Level} (p : fraction-ℤ) →
+    int-fraction-power-ℝ⁺ p (raise-one-ℝ⁺ l) ＝ raise-one-ℝ⁺ l
+  int-fraction-power-raise-one-ℝ⁺ (p , q⁺) =
+    ( ap
+      ( root-nonzero-nat-ℝ⁺ (positive-nat-ℤ⁺ q⁺))
+      ( int-power-raise-one-ℝ⁺ _ p)) ∙
+    ( root-nonzero-nat-raise-one-ℝ⁺ (positive-nat-ℤ⁺ q⁺))
+```

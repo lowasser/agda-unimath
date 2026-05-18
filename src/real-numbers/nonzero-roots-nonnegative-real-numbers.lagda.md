@@ -306,6 +306,18 @@ abstract
   root-one-nonzero-nat-ℝ⁰⁺ = is-retraction-root-nonzero-nat-ℝ⁰⁺ one-ℕ⁺
 ```
 
+### Any root of 1 is 1
+
+```agda
+abstract
+  root-nonzero-nat-raise-one-ℝ⁰⁺ :
+    {l : Level} (n : ℕ⁺) →
+    root-nonzero-nat-ℝ⁰⁺ n (raise-one-ℝ⁰⁺ l) ＝ raise-one-ℝ⁰⁺ l
+  root-nonzero-nat-raise-one-ℝ⁰⁺ n =
+    ( ap (root-nonzero-nat-ℝ⁰⁺ n) (inv (power-raise-one-ℝ⁰⁺ (nat-ℕ⁺ n)))) ∙
+    ( is-retraction-root-nonzero-nat-ℝ⁰⁺ n _)
+```
+
 ## See also
 
 - [Odd roots of real numbers](real-numbers.odd-roots-real-numbers.md)

@@ -88,3 +88,25 @@ abstract
     {l : Level} (x : ℝ⁺ l) → rational-power-ℝ⁺ one-ℚ x ＝ x
   one-rational-power-ℝ⁺ = one-int-fraction-power-ℝ⁺
 ```
+
+### `(xy)ᵖ = xᵖyᵖ`
+
+```agda
+abstract
+  distributive-rational-power-mul-ℝ⁺ :
+    {l1 l2 : Level} (p : ℚ) (x : ℝ⁺ l1) (y : ℝ⁺ l2) →
+    rational-power-ℝ⁺ p (x *ℝ⁺ y) ＝
+    rational-power-ℝ⁺ p x *ℝ⁺ rational-power-ℝ⁺ p y
+  distributive-rational-power-mul-ℝ⁺ p =
+    distributive-int-fraction-power-mul-ℝ⁺ (fraction-ℚ p)
+```
+
+### `1ᵖ = 1`
+
+```agda
+abstract
+  rational-power-raise-one-ℝ⁺ :
+    {l : Level} (p : ℚ) →
+    rational-power-ℝ⁺ p (raise-one-ℝ⁺ l) ＝ raise-one-ℝ⁺ l
+  rational-power-raise-one-ℝ⁺ p = int-fraction-power-raise-one-ℝ⁺ (fraction-ℚ p)
+```

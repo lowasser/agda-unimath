@@ -236,3 +236,15 @@ abstract
     {l : Level} (x : ℝ⁺ l) → root-nonzero-nat-ℝ⁺ one-ℕ⁺ x ＝ x
   root-one-nonzero-nat-ℝ⁺ = is-retraction-root-nonzero-nat-ℝ⁺ one-ℕ⁺
 ```
+
+### Any root of 1 is 1
+
+```agda
+abstract
+  root-nonzero-nat-raise-one-ℝ⁺ :
+    {l : Level} (n : ℕ⁺) →
+    root-nonzero-nat-ℝ⁺ n (raise-one-ℝ⁺ l) ＝ raise-one-ℝ⁺ l
+  root-nonzero-nat-raise-one-ℝ⁺ n =
+    ( ap (root-nonzero-nat-ℝ⁺ n) (inv (power-raise-one-ℝ⁺ (nat-ℕ⁺ n)))) ∙
+    ( is-retraction-root-nonzero-nat-ℝ⁺ n _)
+```
