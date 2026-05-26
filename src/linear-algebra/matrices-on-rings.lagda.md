@@ -13,8 +13,8 @@ open import foundation.identity-types
 open import foundation.sets
 open import foundation.universe-levels
 
-open import linear-algebra.function-left-modules-rings
 open import linear-algebra.finite-sequences-in-rings
+open import linear-algebra.function-left-modules-rings
 open import linear-algebra.left-modules-rings
 open import linear-algebra.matrices
 
