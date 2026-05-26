@@ -10,6 +10,7 @@ module linear-algebra.matrices where
 open import elementary-number-theory.natural-numbers
 
 open import foundation.dependent-pair-types
+open import foundation.dependent-products-truncated-types
 open import foundation.function-types
 open import foundation.sets
 open import foundation.truncated-types
