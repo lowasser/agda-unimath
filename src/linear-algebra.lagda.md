@@ -24,7 +24,6 @@ open import linear-algebra.dependent-products-real-vector-spaces public
 open import linear-algebra.dependent-products-vector-spaces public
 open import linear-algebra.determinants-square-matrices-on-commutative-rings public
 open import linear-algebra.diagonal-grids-on-rings public
-open import linear-algebra.diagonal-matrices-on-rings public
 open import linear-algebra.diagonalizable-matrices-on-rings public
 open import linear-algebra.diagonals-of-square-matrices public
 open import linear-algebra.difference-linear-maps-left-modules-commutative-rings public
