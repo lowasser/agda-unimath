@@ -25,12 +25,11 @@ open import ring-theory.rings
 
 ## Definitions
 
-A
-{{#concept "diagonal grid" Agda=diagonal-grid-Ring WD="diagonal grid" WDID=Q332791}}
-is a [grid](linear-algebra.grids.md) whose only nonzero elements are on the
+A {{#concept "diagonal grid" Agda=diagonal-grid-Ring}} is a
+[grid](linear-algebra.grids-on-rings.md) whose only nonzero elements are on the
 diagonal of the grid.
 
-### Diagonal grids
+### Diagonal matrices
 
 ```agda
 module _

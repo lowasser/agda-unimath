@@ -131,3 +131,7 @@ module _
   bilinear-map-mul-square-matrix-Commutative-Ring =
     bilinear-map-mul-matrix-Commutative-Ring R n n n
 ```
+
+## See also
+
+- [The algebra of square matrices over commutative rings](linear-algebra.algebra-of-square-matrices-on-commutative-rings.md)

@@ -10,6 +10,7 @@ module linear-algebra.matrices where
 open import elementary-number-theory.natural-numbers
 
 open import foundation.dependent-pair-types
+open import foundation.dependent-products-truncated-types
 open import foundation.function-types
 open import foundation.sets
 open import foundation.truncated-types
@@ -74,7 +75,7 @@ module _
   where
 
   bottom-row-matrix : matrix A (succ-ℕ m) n → fin-sequence A n
-  bottom-row-matrix M = M (zero-Fin m)
+  bottom-row-matrix M = last-fin-sequence m M
 ```
 
 ### The vertical initial segment of a matrix
@@ -87,7 +88,7 @@ module _
   where
 
   vertical-init-matrix : matrix A (succ-ℕ m) n → matrix A m n
-  vertical-init-matrix M i = M (skip-zero-Fin m i)
+  vertical-init-matrix M = init-fin-sequence m M
 ```
 
 ### The first column of a matrix
@@ -126,7 +127,7 @@ module _
   where
 
   last-column-matrix : matrix A m (succ-ℕ n) → fin-sequence A m
-  last-column-matrix M i = M i (zero-Fin n)
+  last-column-matrix M = last-fin-sequence n ∘ M
 ```
 
 ### The horizontal initial segment of a matrix
@@ -139,7 +140,24 @@ module _
   where
 
   horizontal-init-matrix : matrix A m (succ-ℕ n) → matrix A m n
-  horizontal-init-matrix M i j = M i (skip-zero-Fin n j)
+  horizontal-init-matrix M = init-fin-sequence n ∘ M
+```
+
+### Truncation of matrix types
+
+```agda
+abstract
+  is-trunc-matrix :
+    (k : 𝕋) {l : Level} {A : UU l} (m n : ℕ) →
+    is-trunc k A →
+    is-trunc k (matrix A m n)
+  is-trunc-matrix k m n tA =
+    is-trunc-function-type k (is-trunc-function-type k tA)
+
+matrix-Set : {l : Level} → Set l → ℕ → ℕ → Set l
+matrix-Set (A , is-set-A) m n =
+  ( matrix A m n ,
+    is-trunc-matrix zero-𝕋 m n is-set-A)
 ```
 
 ### Truncation of matrix types
