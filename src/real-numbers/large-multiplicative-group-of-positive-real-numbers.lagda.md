@@ -68,7 +68,7 @@ large-commutative-submonoid-mul-real-ℝ⁺ :
   Large-Commutative-Submonoid id large-commutative-monoid-mul-ℝ
 large-commutative-submonoid-mul-real-ℝ⁺ =
   make-Large-Commutative-Submonoid
-    large-submonoid-mul-real-ℝ⁺
+    ( large-submonoid-mul-real-ℝ⁺)
 
 large-semigroup-mul-ℝ⁺ : Large-Semigroup lsuc (_⊔_)
 large-semigroup-mul-ℝ⁺ =
