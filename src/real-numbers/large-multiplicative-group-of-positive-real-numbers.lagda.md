@@ -45,7 +45,7 @@ The [positive real numbers](real-numbers.positive-real-numbers.md) form a
 [large abelian group](group-theory.large-abelian-groups.md) under
 [multiplication](real-numbers.multiplication-positive-real-numbers.md), which is
 a [submonoid](group-theory.large-commutative-submonoids.md) of the
-[large multiplicative monoid of real numbers](real-numbers.large-multiplicative-monoid-of-real-numbers.lagda.md).
+[large multiplicative monoid of real numbers](real-numbers.large-multiplicative-monoid-of-real-numbers.md).
 
 ## Definition
 
