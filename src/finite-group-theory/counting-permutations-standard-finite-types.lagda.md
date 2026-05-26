@@ -91,7 +91,7 @@ finite-type-Permutation n =
   ( Permutation n , is-finite-count (count-Permutation n))
 ```
 
-### The number of elements of `Permutation n` is n!
+### The number of elements of `Permutation n` is n
 
 ```agda
 abstract
