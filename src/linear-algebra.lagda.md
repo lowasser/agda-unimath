@@ -22,6 +22,8 @@ open import linear-algebra.dependent-products-left-modules-commutative-rings pub
 open import linear-algebra.dependent-products-left-modules-rings public
 open import linear-algebra.determinants-square-matrices-on-commutative-rings public
 open import linear-algebra.diagonal-grids-on-rings public
+open import linear-algebra.dependent-products-real-vector-spaces public
+open import linear-algebra.dependent-products-vector-spaces public
 open import linear-algebra.diagonal-matrices-on-rings public
 open import linear-algebra.diagonalizable-matrices-on-rings public
 open import linear-algebra.diagonals-of-square-matrices public
@@ -46,6 +48,9 @@ open import linear-algebra.grids-on-rings public
 open import linear-algebra.identity-matrices-on-commutative-rings public
 open import linear-algebra.identity-matrices-on-rings public
 open import linear-algebra.invertible-matrices-on-rings public
+open import linear-algebra.function-left-modules-rings public
+open import linear-algebra.function-real-vector-spaces public
+open import linear-algebra.function-vector-spaces public
 open import linear-algebra.kernels-linear-maps-left-modules-commutative-rings public
 open import linear-algebra.kernels-linear-maps-left-modules-rings public
 open import linear-algebra.kernels-linear-maps-vector-spaces public

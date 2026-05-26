@@ -43,59 +43,70 @@ of `n`.
 ### Counting permutations of `X` from a counting of `X`
 
 ```agda
-count-aut-count :
-  {l : Level} {X : UU l} → count X → count (Aut X)
-count-aut-count {X = X} (n , Fin-n≃X) =
-  ( factorial-ℕ n ,
-    tr
-      ( λ k → Fin k ≃ Aut X)
-      ( number-of-elements-count-Permutation n)
-      ( equiv-aut-equiv Fin-n≃X ∘e equiv-count (count-Permutation n)))
+module _
+  {l1 : Level} {X : UU l1} ((n , e) : count X)
+  where
+
+  count-aut :
+    count (Aut X)
+  count-aut =
+    ( factorial-ℕ n ,
+      conjugation-aut e ∘e equiv-count (count-Permutation n))
+
+  number-of-elements-count-aut :
+    number-of-elements-count count-aut ＝ factorial-ℕ n
+  number-of-elements-count-aut = refl
 ```
 
 ### The automorphisms of a type `X` with cardinality `n` have cardinality `n!`
 
 ```agda
-abstract
-  has-cardinality-factorial-aut-has-cardinality-ℕ :
-    {l : Level} {X : UU l} (n : ℕ) → has-cardinality-ℕ n X →
-    has-cardinality-ℕ (factorial-ℕ n) (Aut X)
-  has-cardinality-factorial-aut-has-cardinality-ℕ n =
-    map-trunc-Prop
-      ( λ Fin-n≃X → equiv-count (count-aut-count (n , Fin-n≃X)))
+module _
+  {l1 : Level} (n : ℕ)
+  where
 
-aut-Type-With-Cardinality-ℕ :
-  {l : Level} (n : ℕ) → Type-With-Cardinality-ℕ l n →
-  Type-With-Cardinality-ℕ l (factorial-ℕ n)
-aut-Type-With-Cardinality-ℕ n (X , |X|=n) =
-  ( Aut X , has-cardinality-factorial-aut-has-cardinality-ℕ n |X|=n)
+  abstract
+    has-cardinality-factorial-aut-has-cardinality-ℕ :
+      {X : UU l1} →
+      has-cardinality-ℕ n X → has-cardinality-ℕ (factorial-ℕ n) (Aut X)
+    has-cardinality-factorial-aut-has-cardinality-ℕ =
+      map-trunc-Prop
+        ( λ e → equiv-count (count-aut (n , e)))
+
+  aut-Type-With-Cardinality-ℕ :
+    Type-With-Cardinality-ℕ l1 n → Type-With-Cardinality-ℕ l1 (factorial-ℕ n)
+  aut-Type-With-Cardinality-ℕ (X , e) =
+    ( Aut X , has-cardinality-factorial-aut-has-cardinality-ℕ e)
 ```
 
 ### The automorphisms of a finite type
 
 ```agda
-abstract
-  is-finite-aut-is-finite :
-    {l : Level} {X : UU l} → is-finite X → is-finite (Aut X)
-  is-finite-aut-is-finite = map-trunc-Prop count-aut-count
+module _
+  {l1 : Level}
+  where
 
-aut-Finite-Type : {l : Level} → Finite-Type l → Finite-Type l
-aut-Finite-Type (X , is-finite-X) =
-  ( Aut X , is-finite-aut-is-finite is-finite-X)
+  abstract
+    is-finite-aut-is-finite :
+      {X : UU l1} → is-finite X → is-finite (Aut X)
+    is-finite-aut-is-finite = map-trunc-Prop count-aut
 
-abstract
-  number-of-elements-aut-Finite-Type :
-    {l : Level} (X : Finite-Type l) →
-    number-of-elements-Finite-Type (aut-Finite-Type X) ＝
-    factorial-ℕ (number-of-elements-Finite-Type X)
-  number-of-elements-aut-Finite-Type FX@(X , is-finite-X) =
-    rec-trunc-Prop
-      ( Id-Prop ℕ-Set _ _)
-      ( λ cX →
-        ( inv
-          ( compute-number-of-elements-is-finite
-            ( count-aut-count cX)
-            ( is-finite-aut-is-finite is-finite-X))) ∙
-        ( ap factorial-ℕ (compute-number-of-elements-is-finite cX is-finite-X)))
-      ( is-finite-X)
+  aut-Finite-Type : Finite-Type l1 → Finite-Type l1
+  aut-Finite-Type (X , H) =
+    ( Aut X , is-finite-aut-is-finite H)
+
+  abstract
+    number-of-elements-aut-Finite-Type :
+      (X : Finite-Type l1) →
+      number-of-elements-Finite-Type (aut-Finite-Type X) ＝
+      factorial-ℕ (number-of-elements-Finite-Type X)
+    number-of-elements-aut-Finite-Type (X , H) =
+      apply-universal-property-trunc-Prop H
+        ( Id-Prop ℕ-Set _ _)
+        ( λ (n , e) →
+          inv
+            ( compute-number-of-elements-is-finite
+              ( count-aut (n , e))
+              ( is-finite-aut-is-finite H)) ∙
+          ap factorial-ℕ (compute-number-of-elements-is-finite (n , e) H))
 ```
