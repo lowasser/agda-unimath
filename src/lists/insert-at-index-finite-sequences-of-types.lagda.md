@@ -37,7 +37,7 @@ Given a [natural number](elementary-number-theory.natural-numbers.md) `n` and a
 [finite sequence of types](lists.finite-sequences-of-types.md) `A₀, ..., Aₙ`,
 the
 {{#concept "insertion map" Disambiguation="of dependent finite sequences" Agda=insert-at-Π-fin-sequence}}
-of an element `x : A` at an
+of an element `x : Aᵢ` at an
 [index](univalent-combinatorics.standard-finite-types.md) `i : Fin (n+1)` is the
 map taking an element of `Πᵢ Aᵢ` that **inserts** `x` at the `i`th coordinate:
 

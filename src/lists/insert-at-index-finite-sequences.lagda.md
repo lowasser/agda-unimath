@@ -363,7 +363,7 @@ module _
           ( has-decidable-equality-Fin (n +ℕ 2) i k)
 ```
 
-### Inserting `aᵢ` at position `i` and `aⱼ` at position `j` is equivalent to inserting `aⱼ` at `j` and `aᵢ` at `i`
+### Elements can be inserted at distinct indices in either order
 
 ```agda
 module _
@@ -462,4 +462,63 @@ module _
             ( case-else i≠k)
             ( has-decidable-equality-Fin (n +ℕ 2) j k))
         ( has-decidable-equality-Fin (n +ℕ 2) i k)
+```
+
+### Inserting at one of two removed indices
+
+```agda
+module _
+  {l : Level} {A : UU l}
+  where abstract opaque
+
+  unfolding fiber-skip-Fin
+
+  insert-at-second-remove-at-two-indices-fin-sequence :
+    (n : ℕ)
+    (i j : Fin (n +ℕ 2))
+    (i≠j : i ≠ j)
+    (u : fin-sequence A (n +ℕ 2)) →
+    insert-at-fin-sequence
+      ( n)
+      ( pr1 (fiber-skip-Fin (succ-ℕ n) i j i≠j))
+      ( u j)
+      ( remove-at-two-indices-fin-sequence n i j i≠j u) ~
+    remove-at-fin-sequence (succ-ℕ n) i u
+  insert-at-second-remove-at-two-indices-fin-sequence
+    n (inr star) (inr star) i≠j =
+    ex-falso (i≠j refl)
+  insert-at-second-remove-at-two-indices-fin-sequence
+    zero-ℕ (inl (inr star)) (inl (inr star)) i≠j =
+    ex-falso (i≠j refl)
+  insert-at-second-remove-at-two-indices-fin-sequence
+    zero-ℕ (inr star) (inl (inr star)) i≠j u (inr star) =
+    refl
+  insert-at-second-remove-at-two-indices-fin-sequence
+    zero-ℕ (inl (inr star)) (inr star) i≠j u (inr star) =
+    refl
+  insert-at-second-remove-at-two-indices-fin-sequence
+    (succ-ℕ n) (inl i) (inl j) i≠j u (inl k) =
+    insert-at-second-remove-at-two-indices-fin-sequence
+      ( n)
+      ( i)
+      ( j)
+      ( nonequal-map inl i≠j)
+      ( tail-fin-sequence (n +ℕ 2) u)
+      ( k)
+  insert-at-second-remove-at-two-indices-fin-sequence
+    (succ-ℕ n) (inl i) (inl j) i≠j u (inr star) =
+    refl
+  insert-at-second-remove-at-two-indices-fin-sequence
+    (succ-ℕ n) (inl i) (inr star) i≠j u (inl k) =
+    refl
+  insert-at-second-remove-at-two-indices-fin-sequence
+    (succ-ℕ n) (inl i) (inr star) i≠j u (inr star) =
+    refl
+  insert-at-second-remove-at-two-indices-fin-sequence
+    (succ-ℕ n) (inr star) (inl j) i≠j u k =
+    compute-insert-at-remove-at-fin-sequence
+      ( succ-ℕ n)
+      ( j)
+      ( tail-fin-sequence (n +ℕ 2) u)
+      ( k)
 ```
