@@ -13,6 +13,9 @@ open import linear-algebra.bilinear-maps-left-modules-commutative-rings public
 open import linear-algebra.bilinear-maps-left-modules-rings public
 open import linear-algebra.cauchy-schwarz-inequality-complex-inner-product-spaces public
 open import linear-algebra.cauchy-schwarz-inequality-real-inner-product-spaces public
+open import linear-algebra.column-matrices public
+open import linear-algebra.column-matrices-on-commutative-rings public
+open import linear-algebra.column-matrices-on-rings public
 open import linear-algebra.complex-inner-product-spaces public
 open import linear-algebra.complex-vector-spaces public
 open import linear-algebra.conjugate-symmetric-sesquilinear-forms-complex-vector-spaces public
@@ -40,6 +43,7 @@ open import linear-algebra.finite-sequences-in-monoids public
 open import linear-algebra.finite-sequences-in-rings public
 open import linear-algebra.finite-sequences-in-semigroups public
 open import linear-algebra.finite-sequences-in-semirings public
+open import linear-algebra.function-left-modules-commutative-rings public
 open import linear-algebra.function-left-modules-rings public
 open import linear-algebra.function-real-vector-spaces public
 open import linear-algebra.function-vector-spaces public
@@ -71,6 +75,8 @@ open import linear-algebra.matrices public
 open import linear-algebra.matrices-on-commutative-rings public
 open import linear-algebra.matrices-on-rings public
 open import linear-algebra.multiplication-grids public
+open import linear-algebra.multiplication-matrices-finite-sequences-commutative-rings public
+open import linear-algebra.multiplication-matrices-finite-sequences-rings public
 open import linear-algebra.multiplication-matrices-on-commutative-rings public
 open import linear-algebra.multiplication-matrices-on-rings public
 open import linear-algebra.multiplication-square-matrices-on-commutative-rings public

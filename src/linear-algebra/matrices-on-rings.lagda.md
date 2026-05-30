@@ -18,6 +18,7 @@ open import linear-algebra.function-left-modules-rings
 open import linear-algebra.left-modules-rings
 open import linear-algebra.matrices
 
+open import ring-theory.function-rings
 open import ring-theory.rings
 
 open import univalent-combinatorics.standard-finite-types
@@ -52,7 +53,7 @@ module _
   left-module-matrix-Ring =
     function-left-module-Ring
       ( R)
-      ( function-left-module-ring-Ring R (Fin n))
+      ( left-module-function-Ring R (Fin n))
       ( Fin m)
 
   set-matrix-Ring : Set l
