@@ -28,7 +28,7 @@ open import univalent-combinatorics.standard-finite-types
 
 Given a [natural number](elementary-number-theory.natural-numbers.md) `n : ℕ`
 and a finite sequence of types `A₀, A₁, ..., Aₙ`, the
-{{#concept "removing map" Disambiguation="of dependent finite sequences" Agda=remove-at-fin-sequence}}
+{{#concept "removing map" Disambiguation="of dependent finite sequences" Agda=remove-at-Π-fin-sequence}}
 at [index](univalent-combinatorics.standard-finite-types.md) `i : Fin (n+1)` is
 the map taking an element of `Πᵢ Aᵢ` that **removes** the `i`th coordinate:
 
