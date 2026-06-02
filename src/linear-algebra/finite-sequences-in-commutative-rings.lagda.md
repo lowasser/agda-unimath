@@ -19,10 +19,13 @@ open import foundation.identity-types
 open import foundation.universe-levels
 
 open import group-theory.abelian-groups
+open import group-theory.sums-of-finite-sequences-of-elements-abelian-groups
 
 open import linear-algebra.finite-sequences-in-rings
 open import linear-algebra.left-modules-commutative-rings
 open import linear-algebra.sums-of-finite-sequences-of-elements-left-modules-commutative-rings
+
+open import lists.finite-sequences
 
 open import univalent-combinatorics.standard-finite-types
 ```
@@ -233,6 +236,25 @@ module _
     ab-left-module-Commutative-Ring
       ( R)
       ( left-module-fin-sequence-Commutative-Ring R n)
+```
+
+### Coordinates of sequence sums
+
+```agda
+abstract
+  coordinate-sum-fin-sequence-fin-sequence-type-Commutative-Ring :
+    {l : Level} (R : Commutative-Ring l) (m n : ℕ) (i : Fin n)
+    (v : fin-sequence (fin-sequence-type-Commutative-Ring R n) m) →
+    sum-fin-sequence-type-left-module-Commutative-Ring
+      ( R)
+      ( left-module-fin-sequence-Commutative-Ring R n)
+      ( m)
+      ( v)
+      ( i) ＝
+    sum-fin-sequence-type-Ab (ab-Commutative-Ring R) m (λ j → v j i)
+  coordinate-sum-fin-sequence-fin-sequence-type-Commutative-Ring R =
+    coordinate-sum-fin-sequence-fin-sequence-type-Ring
+      ( ring-Commutative-Ring R)
 ```
 
 ### The indicator sequence at a given index
