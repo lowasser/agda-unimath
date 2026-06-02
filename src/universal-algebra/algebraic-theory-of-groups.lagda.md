@@ -9,6 +9,7 @@ module universal-algebra.algebraic-theory-of-groups where
 ```agda
 open import foundation.binary-homotopies
 open import foundation.dependent-pair-types
+open import foundation.dependent-products-propositions
 open import foundation.equality-dependent-pair-types
 open import foundation.equivalences
 open import foundation.function-types
@@ -22,7 +23,6 @@ open import group-theory.groups
 open import group-theory.homomorphisms-groups
 open import group-theory.monoids
 
-open import lists.equivalence-tuples-finite-sequences
 open import lists.tuples
 
 open import univalent-combinatorics.standard-finite-types
