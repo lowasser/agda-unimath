@@ -13,6 +13,7 @@ open import elementary-number-theory.natural-numbers
 open import foundation.action-on-identifications-functions
 open import foundation.dependent-pair-types
 open import foundation.identity-types
+open import foundation.raising-universe-levels-unit-type
 open import foundation.transport-along-identifications
 open import foundation.universe-levels
 
@@ -39,7 +40,8 @@ over a
 is an abstract representation of a well-formed expression which uses only
 variables and operations in the signature.
 
-For this particular formalization, we are using de Bruijn variables.
+In this treatment, a term is parameterized by the number of variables required
+to evaluate it.
 
 ## Definitions
 
@@ -83,15 +85,16 @@ module _
   eval-tuple-term m assign (x ∷ v) =
     eval-term m assign x ∷ (eval-tuple-term m assign v)
 
-  eval-tuple-map-tuple-eval-term :
-    {l2 : Level} {A : UU l2} {k n : ℕ} →
-    (m : is-model-of-signature-type σ A)
-    (assign : fin-sequence A k)
-    (v : tuple (term σ k) n) →
-    eval-tuple-term m assign v ＝ map-tuple (eval-term m assign) v
-  eval-tuple-map-tuple-eval-term m assign empty-tuple = refl
-  eval-tuple-map-tuple-eval-term m assign (x ∷ v) =
-    ap (eval-term m assign x ∷_) (eval-tuple-map-tuple-eval-term m assign v)
+  abstract
+    eval-tuple-map-tuple-eval-term :
+      {l2 : Level} {A : UU l2} {k n : ℕ} →
+      (m : is-model-of-signature-type σ A)
+      (assign : fin-sequence A k)
+      (v : tuple (term σ k) n) →
+      eval-tuple-term m assign v ＝ map-tuple (eval-term m assign) v
+    eval-tuple-map-tuple-eval-term m assign empty-tuple = refl
+    eval-tuple-map-tuple-eval-term m assign (x ∷ v) =
+      ap (eval-term m assign x ∷_) (eval-tuple-map-tuple-eval-term m assign v)
 ```
 
 ### The induced function by a term on a model
