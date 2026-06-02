@@ -1,6 +1,8 @@
 # Finite sequences in commutative rings
 
 ```agda
+{-# OPTIONS --lossy-unification #-}
+
 module linear-algebra.finite-sequences-in-commutative-rings where
 ```
 
@@ -12,17 +14,15 @@ open import commutative-algebra.function-commutative-rings
 
 open import elementary-number-theory.natural-numbers
 
+open import foundation.homotopies
 open import foundation.identity-types
 open import foundation.universe-levels
 
 open import group-theory.abelian-groups
-open import group-theory.commutative-monoids
-open import group-theory.groups
-open import group-theory.monoids
-open import group-theory.semigroups
 
 open import linear-algebra.finite-sequences-in-rings
 open import linear-algebra.left-modules-commutative-rings
+open import linear-algebra.sums-of-finite-sequences-of-elements-left-modules-commutative-rings
 
 open import univalent-combinatorics.standard-finite-types
 ```
@@ -79,10 +79,18 @@ module _
   {l : Level} (R : Commutative-Ring l)
   where
 
-  left-module-fin-sequence-type-Commutative-Ring :
+  left-module-fin-sequence-Commutative-Ring :
     (n : ℕ) → left-module-Commutative-Ring l R
-  left-module-fin-sequence-type-Commutative-Ring n =
+  left-module-fin-sequence-Commutative-Ring n =
     left-module-function-Commutative-Ring R (Fin n)
+
+  scalar-mul-fin-sequence-type-Commutative-Ring :
+    (n : ℕ) →
+    type-Commutative-Ring R → fin-sequence-type-Commutative-Ring R n →
+    fin-sequence-type-Commutative-Ring R n
+  scalar-mul-fin-sequence-type-Commutative-Ring =
+    scalar-mul-fin-sequence-type-Ring
+      ( ring-Commutative-Ring R)
 ```
 
 ### The zero finite sequence in a commutative ring
@@ -224,5 +232,55 @@ module _
   ab-fin-sequence-type-Commutative-Ring n =
     ab-left-module-Commutative-Ring
       ( R)
-      ( left-module-fin-sequence-type-Commutative-Ring R n)
+      ( left-module-fin-sequence-Commutative-Ring R n)
+```
+
+### The indicator sequence at a given index
+
+```agda
+module _
+  {l : Level}
+  (R : Commutative-Ring l)
+  (n : ℕ)
+  where
+
+  indicator-fin-sequence-type-Commutative-Ring :
+    (i : Fin n) → fin-sequence-type-Commutative-Ring R n
+  indicator-fin-sequence-type-Commutative-Ring =
+    indicator-fin-sequence-type-Ring (ring-Commutative-Ring R) n
+```
+
+### Every finite sequence in a commutative ring is a linear combination of indicator sequences
+
+```agda
+abstract
+  htpy-linear-combination-indicator-fin-sequence-type-Commutative-Ring :
+    {l : Level} (R : Commutative-Ring l) (n : ℕ)
+    (v : fin-sequence-type-Commutative-Ring R n) →
+    sum-fin-sequence-type-left-module-Commutative-Ring R
+      ( left-module-fin-sequence-Commutative-Ring R n)
+      ( n)
+      ( λ i →
+        scalar-mul-fin-sequence-type-Commutative-Ring R n
+          ( v i)
+          ( indicator-fin-sequence-type-Commutative-Ring R n i)) ~
+    v
+  htpy-linear-combination-indicator-fin-sequence-type-Commutative-Ring R =
+    htpy-linear-combination-indicator-fin-sequence-type-Ring
+      ( ring-Commutative-Ring R)
+
+  eq-linear-combination-indicator-fin-sequence-type-Commutative-Ring :
+    {l : Level} (R : Commutative-Ring l) (n : ℕ)
+    (v : fin-sequence-type-Commutative-Ring R n) →
+    sum-fin-sequence-type-left-module-Commutative-Ring R
+      ( left-module-fin-sequence-Commutative-Ring R n)
+      ( n)
+      ( λ i →
+        scalar-mul-fin-sequence-type-Commutative-Ring R n
+          ( v i)
+          ( indicator-fin-sequence-type-Commutative-Ring R n i)) ＝
+    v
+  eq-linear-combination-indicator-fin-sequence-type-Commutative-Ring R =
+    eq-linear-combination-indicator-fin-sequence-type-Ring
+      ( ring-Commutative-Ring R)
 ```

@@ -8,11 +8,13 @@ module foundation.singleton-subtypes-discrete-types where
 
 ```agda
 open import foundation.action-on-identifications-functions
+open import foundation.contractible-types
 open import foundation.decidable-subtypes
 open import foundation.dependent-pair-types
 open import foundation.discrete-types
 open import foundation.functoriality-coproduct-types
 open import foundation.identity-types
+open import foundation.sets
 open import foundation.singleton-subtypes
 open import foundation.universe-levels
 
@@ -62,4 +64,26 @@ module _
     ( x ＝ y ,
       is-set-type-Discrete-Type XD x y ,
       decide-eq-X x y)
+```
+
+### The standard decidable singleton subtype is contractible
+
+```agda
+module _
+  {l : Level}
+  (XD@(X , decide-eq-X) : Discrete-Type l)
+  (x : X)
+  where
+
+  is-contr-type-decidable-standard-singleton-subtype-Discrete-Type :
+    is-contr
+      ( type-decidable-subtype
+        ( decidable-standard-singleton-subtype-Discrete-Type XD x))
+  is-contr-type-decidable-standard-singleton-subtype-Discrete-Type =
+    ( (x , refl) ,
+      λ (y , x=y) →
+        eq-type-subtype
+          ( subtype-decidable-subtype
+            ( decidable-standard-singleton-subtype-Discrete-Type XD x))
+          ( inv x=y))
 ```

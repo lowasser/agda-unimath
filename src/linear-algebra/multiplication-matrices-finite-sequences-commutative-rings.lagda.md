@@ -23,7 +23,6 @@ open import foundation.universe-levels
 open import linear-algebra.column-matrices
 open import linear-algebra.column-matrices-on-commutative-rings
 open import linear-algebra.finite-sequences-in-commutative-rings
-open import linear-algebra.function-left-modules-commutative-rings
 open import linear-algebra.linear-maps-left-modules-commutative-rings
 open import linear-algebra.matrices-on-commutative-rings
 open import linear-algebra.multiplication-matrices-finite-sequences-rings
@@ -74,8 +73,8 @@ module _
   is-additive-mul-matrix-fin-sequence-type-Commutative-Ring :
     is-additive-map-left-module-Commutative-Ring
       ( R)
-      ( left-module-fin-sequence-type-Commutative-Ring R n)
-      ( left-module-fin-sequence-type-Commutative-Ring R m)
+      ( left-module-fin-sequence-Commutative-Ring R n)
+      ( left-module-fin-sequence-Commutative-Ring R m)
       ( mul-matrix-fin-sequence-type-Commutative-Ring R m n M)
   is-additive-mul-matrix-fin-sequence-type-Commutative-Ring u v =
     eq-htpy
@@ -92,8 +91,8 @@ module _
   is-homogeneous-mul-matrix-fin-sequence-type-Commutative-Ring :
     is-homogeneous-map-left-module-Commutative-Ring
       ( R)
-      ( left-module-fin-sequence-type-Commutative-Ring R n)
-      ( left-module-fin-sequence-type-Commutative-Ring R m)
+      ( left-module-fin-sequence-Commutative-Ring R n)
+      ( left-module-fin-sequence-Commutative-Ring R m)
       ( mul-matrix-fin-sequence-type-Commutative-Ring R m n M)
   is-homogeneous-mul-matrix-fin-sequence-type-Commutative-Ring c v =
     eq-htpy
@@ -110,10 +109,36 @@ module _
   is-linear-mul-matrix-fin-sequence-type-Commutative-Ring :
     is-linear-map-left-module-Commutative-Ring
       ( R)
-      ( left-module-fin-sequence-type-Commutative-Ring R n)
-      ( left-module-fin-sequence-type-Commutative-Ring R m)
+      ( left-module-fin-sequence-Commutative-Ring R n)
+      ( left-module-fin-sequence-Commutative-Ring R m)
       ( mul-matrix-fin-sequence-type-Commutative-Ring R m n M)
   is-linear-mul-matrix-fin-sequence-type-Commutative-Ring =
     ( is-additive-mul-matrix-fin-sequence-type-Commutative-Ring ,
       is-homogeneous-mul-matrix-fin-sequence-type-Commutative-Ring)
+```
+
+### Every linear map from `Mⁿ → Mᵐ` is homotopic to a multiplication by an `m × n` matrix
+
+```agda
+module _
+  {l : Level}
+  (R : Commutative-Ring l)
+  (m n : ℕ)
+  (f :
+    linear-map-left-module-Commutative-Ring
+      ( R)
+      ( left-module-fin-sequence-Commutative-Ring R n)
+      ( left-module-fin-sequence-Commutative-Ring R m))
+  where
+
+  matrix-linear-map-left-module-fin-sequence-Commutative-Ring :
+    matrix-Commutative-Ring R m n
+  matrix-linear-map-left-module-fin-sequence-Commutative-Ring i j =
+    map-linear-map-left-module-Commutative-Ring
+      ( R)
+      ( left-module-fin-sequence-Commutative-Ring R n)
+      ( left-module-fin-sequence-Commutative-Ring R m)
+      ( f)
+      ( indicator-fin-sequence-type-Commutative-Ring R n j)
+      ( i)
 ```
