@@ -22,10 +22,11 @@ open import linear-algebra.matrices-on-rings
 
 ## Idea
 
-A {{#concept "column matrix" Disambiguation="on a ring" Agda=column-matrix}} of
-length `n` on a [commutative ring](commutative-algebra.commutative-rings.md) `R`
-is a [matrix](linear-algebra.matrices-on-commutative-rings.md) on `R` with `n`
-rows and one column.
+A
+{{#concept "column matrix" Disambiguation="on a ring" Agda=column-matrix-Commutative-Ring}}
+of length `n` on a [commutative ring](commutative-algebra.commutative-rings.md)
+`R` is a [matrix](linear-algebra.matrices-on-commutative-rings.md) on `R` with
+`n` rows and one column.
 
 ## Definition
 

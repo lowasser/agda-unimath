@@ -22,8 +22,9 @@ open import ring-theory.rings
 
 ## Idea
 
-A {{#concept "column matrix" Disambiguation="on a ring" Agda=column-matrix}} of
-length `n` on a [ring](ring-theory.rings.md) `R` is a
+A
+{{#concept "column matrix" Disambiguation="on a ring" Agda=column-matrix-Ring}}
+of length `n` on a [ring](ring-theory.rings.md) `R` is a
 [matrix](linear-algebra.matrices-on-rings.md) on `R` with `n` rows and one
 column.
 
