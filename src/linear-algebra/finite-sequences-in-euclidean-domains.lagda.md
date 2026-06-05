@@ -21,6 +21,7 @@ open import group-theory.monoids
 open import group-theory.semigroups
 
 open import linear-algebra.finite-sequences-in-commutative-rings
+open import linear-algebra.left-modules-commutative-rings
 
 open import lists.finite-sequences
 open import lists.functoriality-finite-sequences
@@ -207,7 +208,7 @@ module _
       ( commutative-ring-Euclidean-Domain R)
 ```
 
-### The abelian group of pointwise addition
+### The left module of finite sequences on a Euclidean domain
 
 ```agda
 module _

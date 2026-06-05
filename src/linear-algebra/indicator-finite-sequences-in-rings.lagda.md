@@ -47,7 +47,7 @@ open import univalent-combinatorics.standard-finite-types
 
 The
 {{#concept "indicator finite sequence" Disambiguation="in a ring" Agda=indicator-fin-sequence-type-Ring}}
-in a ring `R` `χᵢ` for index `i : Fin n` is a
+in a [ring](ring-theory.rings.md) `R` `χᵢ` for index `i : Fin n` is a
 [finite sequence](linear-algebra.finite-sequences-in-rings.md) in `R` `u` such
 that `uᵢ = 1` and `uⱼ = 0` whenever `j ≠ i`.
 
@@ -102,11 +102,11 @@ module _
   (n : ℕ)
   where abstract
 
-  commutative-indicator-fin-sequence-type-Ring :
+  symmetric-indicator-fin-sequence-type-Ring :
     (i j : Fin n) →
     indicator-fin-sequence-type-Ring R n i j ＝
     indicator-fin-sequence-type-Ring R n j i
-  commutative-indicator-fin-sequence-type-Ring i j
+  symmetric-indicator-fin-sequence-type-Ring i j
     with has-decidable-equality-Fin n i j
   ... | inl i=j =
     ap
@@ -249,10 +249,14 @@ module _
 ### Every finite sequence in a ring is a linear combination of indicator sequences
 
 ```agda
-abstract
+module _
+  {l : Level}
+  (R : Ring l)
+  (n : ℕ)
+  (v : fin-sequence-type-Ring R n)
+  where abstract
+
   htpy-linear-combination-indicator-fin-sequence-type-Ring :
-    {l : Level} (R : Ring l) (n : ℕ)
-    (v : fin-sequence-type-Ring R n) →
     sum-fin-sequence-type-left-module-Ring
       ( R)
       ( left-module-fin-sequence-Ring R n)
@@ -262,7 +266,7 @@ abstract
           ( v i)
           ( indicator-fin-sequence-type-Ring R n i)) ~
     v
-  htpy-linear-combination-indicator-fin-sequence-type-Ring R n v k =
+  htpy-linear-combination-indicator-fin-sequence-type-Ring k =
     equational-reasoning
       sum-fin-sequence-type-left-module-Ring R
         ( left-module-fin-sequence-Ring R n) n
@@ -295,13 +299,11 @@ abstract
             ( λ j →
               ap-mul-Ring R
                 ( refl)
-                ( commutative-indicator-fin-sequence-type-Ring R n j k))
+                ( symmetric-indicator-fin-sequence-type-Ring R n j k))
       ＝ v k
         by right-dot-product-indicator-fin-sequence-type-Ring R n k v
 
   eq-linear-combination-indicator-fin-sequence-type-Ring :
-    {l : Level} (R : Ring l) (n : ℕ)
-    (v : fin-sequence-type-Ring R n) →
     sum-fin-sequence-type-left-module-Ring
       ( R)
       ( left-module-fin-sequence-Ring R n)
@@ -311,6 +313,6 @@ abstract
           ( v i)
           ( indicator-fin-sequence-type-Ring R n i)) ＝
     v
-  eq-linear-combination-indicator-fin-sequence-type-Ring R n v =
-    eq-htpy (htpy-linear-combination-indicator-fin-sequence-type-Ring R n v)
+  eq-linear-combination-indicator-fin-sequence-type-Ring =
+    eq-htpy htpy-linear-combination-indicator-fin-sequence-type-Ring
 ```
