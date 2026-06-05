@@ -21,6 +21,12 @@ open import ring-theory.sums-of-finite-sequences-of-elements-rings
 
 ## Idea
 
+The
+{{#concept "dot product" Disambiguation="of finite sequences in rings" Agda=dot-product-fin-sequence-type-Ring}}
+of two [finite sequences](linear-algebra.finite-sequences-in-rings.md) `u` and
+`v` in a [ring](ring-theory.rings.md) is the
+[sum](ring-theory.sums-of-finite-sequences-of-elements-rings.md) `∑ᵢ uᵢvᵢ`.
+
 ## Definition
 
 ```agda
