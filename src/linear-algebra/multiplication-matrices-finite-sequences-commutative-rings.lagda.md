@@ -26,6 +26,7 @@ open import foundation.universe-levels
 open import linear-algebra.column-matrices
 open import linear-algebra.column-matrices-on-commutative-rings
 open import linear-algebra.finite-sequences-in-commutative-rings
+open import linear-algebra.indicator-finite-sequences-in-commutative-rings
 open import linear-algebra.linear-maps-left-modules-commutative-rings
 open import linear-algebra.matrices-on-commutative-rings
 open import linear-algebra.multiplication-matrices-finite-sequences-rings
