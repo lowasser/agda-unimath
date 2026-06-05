@@ -9,16 +9,9 @@ module linear-algebra.finite-sequences-in-rings where
 ```agda
 open import elementary-number-theory.natural-numbers
 
-open import foundation.action-on-identifications-functions
-open import foundation.coproduct-types
-open import foundation.decidable-propositions
 open import foundation.dependent-pair-types
-open import foundation.function-extensionality
 open import foundation.function-types
-open import foundation.homotopies
 open import foundation.identity-types
-open import foundation.propositions
-open import foundation.singleton-subtypes-discrete-types
 open import foundation.unit-type
 open import foundation.unital-binary-operations
 open import foundation.universe-levels
@@ -28,7 +21,6 @@ open import group-theory.commutative-monoids
 open import group-theory.groups
 open import group-theory.monoids
 open import group-theory.semigroups
-open import group-theory.sums-of-finite-families-of-elements-abelian-groups
 open import group-theory.sums-of-finite-sequences-of-elements-abelian-groups
 
 open import linear-algebra.finite-sequences-in-semirings
@@ -43,10 +35,6 @@ open import ring-theory.function-rings
 open import ring-theory.homomorphisms-rings
 open import ring-theory.rings
 
-open import univalent-combinatorics.counting
-open import univalent-combinatorics.decidable-subtypes
-open import univalent-combinatorics.equality-standard-finite-types
-open import univalent-combinatorics.finite-types
 open import univalent-combinatorics.standard-finite-types
 ```
 
@@ -354,146 +342,4 @@ abstract
         ( left-module-ring-Ring R)
         ( coordinate-linear-map-fin-sequence-Ring R n i))
       ( m)
-```
-
-### The indicator sequence at a given index
-
-```agda
-module _
-  {l : Level}
-  (R : Ring l)
-  (n : ℕ)
-  where
-
-  indicator-fin-sequence-type-Ring :
-    (i : Fin n) → fin-sequence-type-Ring R n
-  indicator-fin-sequence-type-Ring i j =
-    rec-coproduct
-      ( λ _ → one-Ring R)
-      ( λ _ → zero-Ring R)
-      ( has-decidable-equality-Fin n i j)
-```
-
-### Every finite sequence in a ring is a linear combination of indicator sequences
-
-```agda
-abstract
-  htpy-linear-combination-indicator-fin-sequence-type-Ring :
-    {l : Level} (R : Ring l) (n : ℕ)
-    (v : fin-sequence-type-Ring R n) →
-    sum-fin-sequence-type-left-module-Ring
-      ( R)
-      ( left-module-fin-sequence-Ring R n)
-      ( n)
-      ( λ i →
-        scalar-mul-fin-sequence-type-Ring R n
-          ( v i)
-          ( indicator-fin-sequence-type-Ring R n i)) ~
-    v
-  htpy-linear-combination-indicator-fin-sequence-type-Ring R n v k =
-    equational-reasoning
-      sum-fin-sequence-type-left-module-Ring R
-        ( left-module-fin-sequence-Ring R n) n
-        ( λ i →
-          scalar-mul-fin-sequence-type-Ring R n (v i)
-            ( indicator-fin-sequence-type-Ring R n i))
-        ( k)
-      ＝
-        sum-fin-sequence-type-Ab
-          ( ab-Ring R)
-          ( n)
-          ( λ j →
-            scalar-mul-fin-sequence-type-Ring R n
-              ( v j)
-              ( indicator-fin-sequence-type-Ring R n j) k)
-        by coordinate-sum-fin-sequence-fin-sequence-type-Ring R n n k _
-      ＝
-        sum-finite-Ab
-          ( ab-Ring R)
-          ( Fin-Finite-Type n)
-          ( λ j →
-            scalar-mul-fin-sequence-type-Ring R n
-              ( v j)
-              ( indicator-fin-sequence-type-Ring R n j) k)
-        by
-          inv
-            ( eq-sum-finite-sum-count-Ab
-              ( ab-Ring R)
-              ( Fin-Finite-Type n)
-              ( count-Fin n)
-              ( _))
-      ＝
-        sum-finite-Ab (pr1 R)
-          ( finite-type-subset-Finite-Type (Fin-Finite-Type n)
-            ( decidable-standard-singleton-subtype-Discrete-Type
-              ( Fin-Discrete-Type n)
-              ( k)))
-          ( λ (i , _) →
-            mul-Ring R (v i) (indicator-fin-sequence-type-Ring R n i k))
-        by
-          vanish-sum-complement-decidable-subset-finite-Ab
-            ( ab-Ring R)
-            ( Fin-Finite-Type n)
-            ( decidable-standard-singleton-subtype-Discrete-Type
-              ( Fin-Discrete-Type n)
-              ( k))
-            ( _)
-            ( λ i i≠k →
-              equational-reasoning
-                mul-Ring R
-                  ( v i)
-                  ( rec-coproduct
-                    ( λ _ → one-Ring R)
-                    ( λ _ → zero-Ring R)
-                    ( has-decidable-equality-Fin n i k))
-                ＝
-                  mul-Ring R
-                    ( v i)
-                    ( zero-Ring R)
-                  by
-                    ap
-                      ( mul-Ring R (v i) ∘ rec-coproduct _ _)
-                      ( eq-is-prop'
-                        ( is-prop-is-decidable (is-set-Fin n i k))
-                        ( has-decidable-equality-Fin n i k)
-                        ( inr i≠k))
-                ＝ zero-Ring R
-                  by right-zero-law-mul-Ring R (v i))
-      ＝ mul-Ring R (v k) (indicator-fin-sequence-type-Ring R n k k)
-        by
-          sum-finite-is-contr-Ab
-            ( ab-Ring R)
-            ( _)
-            ( is-contr-type-decidable-standard-singleton-subtype-Discrete-Type
-              ( Fin-Discrete-Type n)
-              ( k))
-            ( k , refl)
-            ( _)
-      ＝ mul-Ring R (v k) (one-Ring R)
-        by
-          ap-mul-Ring R
-            ( refl)
-            ( ap
-              ( rec-coproduct _ _)
-              ( eq-is-prop'
-                ( is-prop-is-decidable (is-set-Fin n k k))
-                ( has-decidable-equality-Fin n k k)
-                ( inl refl)))
-      ＝ v k
-        by right-unit-law-mul-Ring R (v k)
-
-  eq-linear-combination-indicator-fin-sequence-type-Ring :
-    {l : Level} (R : Ring l) (n : ℕ)
-    (v : fin-sequence-type-Ring R n) →
-    sum-fin-sequence-type-left-module-Ring
-      ( R)
-      ( left-module-fin-sequence-Ring R n)
-      ( n)
-      ( λ i →
-        scalar-mul-fin-sequence-type-Ring R n
-          ( v i)
-          ( indicator-fin-sequence-type-Ring R n i)) ＝
-    v
-  eq-linear-combination-indicator-fin-sequence-type-Ring R n v =
-    eq-htpy (htpy-linear-combination-indicator-fin-sequence-type-Ring R n v)
 ```

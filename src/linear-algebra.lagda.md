@@ -30,6 +30,7 @@ open import linear-algebra.diagonal-matrices-on-rings public
 open import linear-algebra.diagonals-of-square-matrices public
 open import linear-algebra.difference-linear-maps-left-modules-commutative-rings public
 open import linear-algebra.difference-linear-maps-left-modules-rings public
+open import linear-algebra.dot-product-finite-sequences-in-rings public
 open import linear-algebra.dot-product-standard-euclidean-vector-spaces public
 open import linear-algebra.duals-left-modules-commutative-rings public
 open import linear-algebra.finite-sequences-in-abelian-groups public
@@ -51,6 +52,8 @@ open import linear-algebra.grids public
 open import linear-algebra.grids-on-rings public
 open import linear-algebra.identity-matrices-on-commutative-rings public
 open import linear-algebra.identity-matrices-on-rings public
+open import linear-algebra.functoriality-matrices public
+open import linear-algebra.indicator-finite-sequences-in-rings public
 open import linear-algebra.kernels-linear-maps-left-modules-commutative-rings public
 open import linear-algebra.kernels-linear-maps-left-modules-rings public
 open import linear-algebra.kernels-linear-maps-vector-spaces public
@@ -110,7 +113,10 @@ open import linear-algebra.standard-euclidean-vector-spaces public
 open import linear-algebra.subsets-left-modules-commutative-rings public
 open import linear-algebra.subsets-left-modules-rings public
 open import linear-algebra.subspaces-vector-spaces public
+<<<<<<< HEAD
 open import linear-algebra.sums-of-finite-sequences-of-elements-left-modules-commutative-rings public
+=======
+>>>>>>> indicator-sequences-rings
 open import linear-algebra.sums-of-finite-sequences-of-elements-left-modules-rings public
 open import linear-algebra.sums-of-finite-sequences-of-elements-normed-real-vector-spaces public
 open import linear-algebra.symmetric-bilinear-forms-real-vector-spaces public
