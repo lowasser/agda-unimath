@@ -21,7 +21,7 @@ open import linear-algebra.trivial-left-modules-rings
 ## Idea
 
 The
-{{#concept "trivial module" Disambiguation="over a commutative ring" Agda=trivial-left-module-Commutative-Commutative-Ring}}
+{{#concept "trivial module" Disambiguation="over a commutative ring" Agda=trivial-left-module-Commutative-Ring}}
 over a [commutative ring](commutative-algebra.commutative-rings.md) `R` is the
 [left module](linear-algebra.left-modules-commutative-rings.md) over `R`
 consisting of exactly one element, `0`.
