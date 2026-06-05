@@ -44,6 +44,7 @@ open import linear-algebra.function-left-modules-rings public
 open import linear-algebra.function-real-vector-spaces public
 open import linear-algebra.function-vector-spaces public
 open import linear-algebra.functoriality-grids public
+open import linear-algebra.general-linear-groups-finite-degree-rings public
 open import linear-algebra.grids public
 open import linear-algebra.grids-on-rings public
 open import linear-algebra.identity-matrices-on-commutative-rings public
@@ -89,6 +90,7 @@ open import linear-algebra.real-inner-product-spaces public
 open import linear-algebra.real-inner-product-spaces-are-normed public
 open import linear-algebra.real-vector-spaces public
 open import linear-algebra.right-modules-rings public
+open import linear-algebra.rings-of-square-matrices-on-rings public
 open import linear-algebra.scalar-multiplication-grids public
 open import linear-algebra.scalar-multiplication-linear-maps-left-modules-commutative-rings public
 open import linear-algebra.scalar-multiplication-linear-maps-vector-spaces public

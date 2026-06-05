@@ -45,9 +45,10 @@ open import univalent-combinatorics.standard-finite-types
 
 ## Idea
 
-[Square matrices](linear-algebra.square-matrices-on-rings.md) on a
-[ring](ring-theory.rings.md) form a [monoid](group-theory.monoids.md) under
-[multiplication](linear-algebra.multiplication-matrices-on-rings.md).
+This file describes properties of
+[multiplication](linear-algebra.multiplication-matrices-on-rings.md) of
+[square matrices](linear-algebra.square-matrices-on-rings.md) on
+[rings](ring-theory.rings.md).
 
 ## Definition
 
@@ -232,25 +233,7 @@ module _
       eq-binary-htpy _ _ htpy-right-unit-law-mul-square-matrix-Ring
 ```
 
-### The monoid of matrix multiplication on a ring
+## See also
 
-```agda
-module _
-  {l : Level}
-  (R : Ring l)
-  (n : ℕ)
-  where
-
-  semigroup-mul-square-matrix-Ring : Semigroup l
-  semigroup-mul-square-matrix-Ring =
-    ( set-square-matrix-Ring R n ,
-      mul-square-matrix-Ring R n ,
-      associative-mul-square-matrix-Ring R n)
-
-  monoid-mul-square-matrix-Ring : Monoid l
-  monoid-mul-square-matrix-Ring =
-    ( semigroup-mul-square-matrix-Ring ,
-      id-matrix-Ring R n ,
-      left-unit-law-mul-square-matrix-Ring R n ,
-      right-unit-law-mul-square-matrix-Ring R n)
-```
+- [Rings of square matrices on rings](linear-algebra.rings-of-square-matrices-on-rings.md),
+  which shows that square matrices form a ring under multiplication

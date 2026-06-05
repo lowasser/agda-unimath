@@ -12,6 +12,9 @@ open import elementary-number-theory.natural-numbers
 open import foundation.sets
 open import foundation.universe-levels
 
+open import group-theory.abelian-groups
+
+open import linear-algebra.left-modules-rings
 open import linear-algebra.matrices-on-rings
 
 open import ring-theory.rings
@@ -41,4 +44,20 @@ square-matrix-Ring R n = matrix-Ring R n n
 ```agda
 set-square-matrix-Ring : {l : Level} → Ring l → ℕ → Set l
 set-square-matrix-Ring R n = set-matrix-Ring R n n
+```
+
+### Square matrices on a ring form a left module
+
+```agda
+module _
+  {l : Level}
+  (R : Ring l)
+  (n : ℕ)
+  where
+
+  left-module-square-matrix-Ring : left-module-Ring l R
+  left-module-square-matrix-Ring = left-module-matrix-Ring R n n
+
+  ab-square-matrix-Ring : Ab l
+  ab-square-matrix-Ring = ab-matrix-Ring R n n
 ```

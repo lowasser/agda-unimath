@@ -13,6 +13,8 @@ open import foundation.identity-types
 open import foundation.sets
 open import foundation.universe-levels
 
+open import group-theory.abelian-groups
+
 open import linear-algebra.finite-sequences-in-rings
 open import linear-algebra.function-left-modules-rings
 open import linear-algebra.left-modules-rings
@@ -57,6 +59,9 @@ module _
 
   set-matrix-Ring : Set l
   set-matrix-Ring = set-left-module-Ring R left-module-matrix-Ring
+
+  ab-matrix-Ring : Ab l
+  ab-matrix-Ring = ab-left-module-Ring R left-module-matrix-Ring
 
   add-matrix-Ring : matrix-Ring R m n → matrix-Ring R m n → matrix-Ring R m n
   add-matrix-Ring = add-left-module-Ring R left-module-matrix-Ring
