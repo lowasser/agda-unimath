@@ -53,7 +53,6 @@ open import linear-algebra.grids public
 open import linear-algebra.grids-on-rings public
 open import linear-algebra.identity-matrices-on-commutative-rings public
 open import linear-algebra.identity-matrices-on-rings public
-open import linear-algebra.functoriality-matrices public
 open import linear-algebra.indicator-finite-sequences-in-commutative-rings public
 open import linear-algebra.indicator-finite-sequences-in-rings public
 open import linear-algebra.kernels-linear-maps-left-modules-commutative-rings public
