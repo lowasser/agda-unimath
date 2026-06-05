@@ -9,16 +9,9 @@ module linear-algebra.finite-sequences-in-rings where
 ```agda
 open import elementary-number-theory.natural-numbers
 
-open import foundation.action-on-identifications-functions
-open import foundation.coproduct-types
-open import foundation.decidable-propositions
 open import foundation.dependent-pair-types
-open import foundation.function-extensionality
 open import foundation.function-types
-open import foundation.homotopies
 open import foundation.identity-types
-open import foundation.propositions
-open import foundation.singleton-subtypes-discrete-types
 open import foundation.unit-type
 open import foundation.unital-binary-operations
 open import foundation.universe-levels
@@ -28,7 +21,6 @@ open import group-theory.commutative-monoids
 open import group-theory.groups
 open import group-theory.monoids
 open import group-theory.semigroups
-open import group-theory.sums-of-finite-families-of-elements-abelian-groups
 open import group-theory.sums-of-finite-sequences-of-elements-abelian-groups
 
 open import linear-algebra.finite-sequences-in-semirings
@@ -43,10 +35,6 @@ open import ring-theory.function-rings
 open import ring-theory.homomorphisms-rings
 open import ring-theory.rings
 
-open import univalent-combinatorics.counting
-open import univalent-combinatorics.decidable-subtypes
-open import univalent-combinatorics.equality-standard-finite-types
-open import univalent-combinatorics.finite-types
 open import univalent-combinatorics.standard-finite-types
 ```
 
