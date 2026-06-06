@@ -19,6 +19,8 @@ open import linear-algebra.constant-matrices public
 open import linear-algebra.constant-tuples public
 open import linear-algebra.dependent-products-left-modules-commutative-rings public
 open import linear-algebra.dependent-products-left-modules-rings public
+open import linear-algebra.dependent-products-real-vector-spaces public
+open import linear-algebra.dependent-products-vector-spaces public
 open import linear-algebra.diagonal-matrices-on-rings public
 open import linear-algebra.difference-linear-maps-left-modules-commutative-rings public
 open import linear-algebra.difference-linear-maps-left-modules-rings public
@@ -35,6 +37,9 @@ open import linear-algebra.finite-sequences-in-monoids public
 open import linear-algebra.finite-sequences-in-rings public
 open import linear-algebra.finite-sequences-in-semigroups public
 open import linear-algebra.finite-sequences-in-semirings public
+open import linear-algebra.function-left-modules-rings public
+open import linear-algebra.function-real-vector-spaces public
+open import linear-algebra.function-vector-spaces public
 open import linear-algebra.functoriality-matrices public
 open import linear-algebra.kernels-linear-maps-left-modules-commutative-rings public
 open import linear-algebra.kernels-linear-maps-left-modules-rings public
@@ -63,6 +68,9 @@ open import linear-algebra.normed-complex-vector-spaces public
 open import linear-algebra.normed-real-vector-spaces public
 open import linear-algebra.orthogonality-bilinear-forms-real-vector-spaces public
 open import linear-algebra.orthogonality-real-inner-product-spaces public
+open import linear-algebra.precategory-of-left-modules-commutative-rings public
+open import linear-algebra.precategory-of-left-modules-rings public
+open import linear-algebra.precategory-of-vector-spaces public
 open import linear-algebra.preimages-of-left-module-structures-along-homomorphisms-of-rings public
 open import linear-algebra.rational-modules public
 open import linear-algebra.real-inner-product-spaces public
