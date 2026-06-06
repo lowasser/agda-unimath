@@ -1,7 +1,7 @@
-# The universal property of freely generated algebras
+# The universal property of free algebras
 
 ```agda
-module universal-algebra.universal-property-freely-generated-algebras where
+module universal-algebra.universal-property-free-algebras where
 ```
 
 <details><summary>Imports</summary>
@@ -11,6 +11,7 @@ open import foundation.action-on-identifications-functions
 open import foundation.dependent-pair-types
 open import foundation.equivalences
 open import foundation.function-extensionality
+open import foundation.function-extensionality-axiom
 open import foundation.function-types
 open import foundation.identity-types
 open import foundation.injective-maps
@@ -27,13 +28,12 @@ open import universal-algebra.signatures
 
 ## Idea
 
-The universal property of a freely generated
-[algebra](universal-algebra.algebras.md) `A` for an
-[algebraic theory](universal-algebra.algebraic-theories.md) `T` with generator
-type `G` and projection function `i : G → A` states that for any algebra `B` for
-`T`, the map from
-[homomorphisms](universal-algebra.homomorphisms-of-algebras.md) `φ : A → B`,
-`φ ↦ φ ∘ i`, is an [equivalence](foundation.equivalences.md).
+The universal property of a free [algebra](universal-algebra.algebras.md) `A`
+for an [algebraic theory](universal-algebra.algebraic-theories.md) `T` with
+generator type `G` and inclusion function `i : G → A` states that for any
+algebra `B` for `T`, the map `φ ↦ φ ∘ i` from
+[homomorphisms](universal-algebra.homomorphisms-of-algebras.md) `φ : A → B` to
+maps `G → B` is an [equivalence](foundation.equivalences.md).
 
 ## Definition
 
