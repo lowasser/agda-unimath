@@ -13,24 +13,12 @@ open import elementary-number-theory.natural-numbers
 
 open import foundation.action-on-identifications-functions
 open import foundation.dependent-pair-types
-open import foundation.dependent-products-propositions
-open import foundation.equivalence-classes
-open import foundation.equivalence-relations
-open import foundation.equivalences
 open import foundation.function-types
-open import foundation.functoriality-propositional-truncation
 open import foundation.functoriality-set-quotients
 open import foundation.identity-types
-open import foundation.multivariable-functoriality-set-quotients
-open import foundation.multivariable-inputs-set-quotients
-open import foundation.multivariable-operations
-open import foundation.propositional-truncations
-open import foundation.propositions
-open import foundation.raising-universe-levels
 open import foundation.raising-universe-levels-unit-type
 open import foundation.set-quotients
 open import foundation.sets
-open import foundation.unit-type
 open import foundation.universal-property-set-quotients
 open import foundation.universe-levels
 
@@ -164,7 +152,7 @@ module _
       ( compute-is-model-quotient-Algebra op _)
 
     compute-eval-tuple-term-quotient-Algebra empty-tuple v =
-      map-raise star
+      raise-star
     compute-eval-tuple-term-quotient-Algebra (t ∷ ts) v =
       ( compute-eval-term-quotient-Algebra t v ,
         compute-eval-tuple-term-quotient-Algebra ts v)
