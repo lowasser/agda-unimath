@@ -28,7 +28,7 @@ A [homomorphism](universal-algebra.homomorphisms-of-algebras.md) `φ` from an
 [algebra](universal-algebra.algebras.md) `A` to an algebra in the same
 [theory](universal-algebra.algebraic-theories.md) `B` is said to reflect an
 [equivalence relation](foundation.equivalence-relations.md) on `A` if whenever
-`a₁ a₂ : A` are similar relative to the equivalence relation, `φ a₁ = φ b₂`.
+`a₁ a₂ : A` are similar relative to the equivalence relation, then `φ a₁ = φ b₂`.
 
 ## Definition
 
