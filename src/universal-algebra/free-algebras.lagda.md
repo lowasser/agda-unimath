@@ -1,9 +1,9 @@
-# Freely generated algebras
+# Free algebras
 
 ```agda
 {-# OPTIONS --lossy-unification #-}
 
-module universal-algebra.freely-generated-algebras where
+module universal-algebra.free-algebras where
 ```
 
 <details><summary>Imports</summary>
@@ -52,7 +52,7 @@ open import universal-algebra.isomorphisms-of-algebras
 open import universal-algebra.models-of-signatures
 open import universal-algebra.signatures
 open import universal-algebra.terms-over-signatures
-open import universal-algebra.universal-property-freely-generated-algebras
+open import universal-algebra.universal-property-free-algebras
 ```
 
 </details>
@@ -272,7 +272,7 @@ module _
         (k , lhs , rhs) = index-abstract-equation-Algebraic-Theory σ T i
       in
         ind-is-set-quotient
-          ( equivalence-relation-fin-sequence-equivalence-relation
+          ( fin-sequence-equivalence-relation
             ( equivalence-relation-word-free-Algebra)
             ( k))
           ( fin-sequence-Set set-free-Algebra k)
