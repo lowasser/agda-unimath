@@ -26,6 +26,9 @@ open import foundation.sets
 open import foundation.subtypes
 open import foundation.type-arithmetic-dependent-pair-types
 open import foundation.unit-type
+open import foundation.raising-universe-levels-unit-type
+open import foundation.set-quotients
+open import foundation.sets
 open import foundation.universal-property-set-quotients
 open import foundation.universe-levels
 
@@ -164,7 +167,7 @@ module _
       ( compute-is-model-quotient-Algebra op _)
 
     compute-eval-tuple-term-quotient-Algebra empty-tuple v =
-      map-raise star
+      raise-star
     compute-eval-tuple-term-quotient-Algebra (t ∷ ts) v =
       ( compute-eval-term-quotient-Algebra t v ,
         compute-eval-tuple-term-quotient-Algebra ts v)

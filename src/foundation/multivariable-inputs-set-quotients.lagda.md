@@ -1,4 +1,4 @@
-# Set quotients of multivariable inputs
+# Multivariable inputs of set quotients are set quotients of finite sequences
 
 ```agda
 {-# OPTIONS --lossy-unification #-}
@@ -52,7 +52,8 @@ open import univalent-combinatorics.standard-finite-types
 Say we have a [finite sequence](lists.finite-sequences.md) of types `A1`, ...,
 `An` each equipped with an
 [equivalence relation](foundation.equivalence-relations.md) `Ri`. Then, the set
-quotient of this finite sequence is the finite sequence of the
+quotient of this finite sequence is the
+[multivariable input](foundation.multivariable-operations.md) of the
 [set quotients](foundation.set-quotients.md) of each `Ai`.
 
 ## Definition
