@@ -66,8 +66,6 @@ module _
       decide-eq-X x y)
 ```
 
-# <<<<<<< HEAD
-
 ### The standard decidable singleton subtype is contractible
 
 ```agda
@@ -89,5 +87,3 @@ module _
             ( decidable-standard-singleton-subtype-Discrete-Type XD x))
           ( inv x=y))
 ```
-
-> > > > > > > indicator-sequences-rings
