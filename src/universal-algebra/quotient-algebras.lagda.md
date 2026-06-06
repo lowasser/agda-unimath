@@ -19,16 +19,12 @@ open import foundation.function-types
 open import foundation.functoriality-set-quotients
 open import foundation.homotopies
 open import foundation.identity-types
-open import foundation.raising-universe-levels
+open import foundation.raising-universe-levels-unit-type
 open import foundation.reflecting-maps-equivalence-relations
 open import foundation.set-quotients
 open import foundation.sets
 open import foundation.subtypes
 open import foundation.type-arithmetic-dependent-pair-types
-open import foundation.unit-type
-open import foundation.raising-universe-levels-unit-type
-open import foundation.set-quotients
-open import foundation.sets
 open import foundation.universal-property-set-quotients
 open import foundation.universe-levels
 
@@ -45,6 +41,7 @@ open import universal-algebra.algebras
 open import universal-algebra.congruences
 open import universal-algebra.homomorphisms-of-algebras
 open import universal-algebra.models-of-signatures
+open import universal-algebra.reflecting-homomorphisms-congruences
 open import universal-algebra.signatures
 open import universal-algebra.terms-over-signatures
 open import universal-algebra.universal-property-quotient-algebras
