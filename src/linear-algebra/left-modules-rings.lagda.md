@@ -93,6 +93,10 @@ module _
     (x y : type-left-module-Ring) → type-left-module-Ring
   add-left-module-Ring = add-Ab ab-left-module-Ring
 
+  diff-left-module-Ring :
+    (x y : type-left-module-Ring) → type-left-module-Ring
+  diff-left-module-Ring = right-subtraction-Ab ab-left-module-Ring
+
   zero-left-module-Ring : type-left-module-Ring
   zero-left-module-Ring = zero-Ab ab-left-module-Ring
 

@@ -62,6 +62,9 @@ module _
   add-Vector-Space : type-Vector-Space → type-Vector-Space → type-Vector-Space
   add-Vector-Space = add-Ab ab-Vector-Space
 
+  diff-Vector-Space : type-Vector-Space → type-Vector-Space → type-Vector-Space
+  diff-Vector-Space = right-subtraction-Ab ab-Vector-Space
+
   zero-Vector-Space : type-Vector-Space
   zero-Vector-Space = zero-Ab ab-Vector-Space
 
