@@ -183,13 +183,13 @@ linear-leq-Fin (succ-ℕ k) (inl x) (inr y) = inl star
 linear-leq-Fin (succ-ℕ k) (inr x) y = inr star
 ```
 
-### `skip-zero-Fin` preserves inequality
+### `inr-Fin` preserves inequality
 
 ```agda
 abstract
   preserves-order-inr-Fin :
     (n : ℕ) →
-    preserves-order-Poset (Fin-Poset n) (Fin-Poset (succ-ℕ n)) (skip-zero-Fin n)
+    preserves-order-Poset (Fin-Poset n) (Fin-Poset (succ-ℕ n)) (inr-Fin n)
   preserves-order-inr-Fin (succ-ℕ n) (inl x) (inl y) x≤y =
     preserves-order-inr-Fin n x y x≤y
   preserves-order-inr-Fin (succ-ℕ n) (inl x) (inr star) _ = star
