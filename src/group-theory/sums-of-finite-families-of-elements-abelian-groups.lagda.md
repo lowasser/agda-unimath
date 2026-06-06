@@ -23,6 +23,7 @@ open import foundation.unit-type
 open import foundation.universe-levels
 
 open import group-theory.abelian-groups
+open import group-theory.homomorphisms-abelian-groups
 open import group-theory.products-of-finite-families-of-elements-commutative-monoids
 open import group-theory.sums-of-finite-sequences-of-elements-abelian-groups
 
@@ -83,7 +84,7 @@ module _
 ```agda
 module _
   {l : Level} (G : Ab l)
-  where
+  where abstract
 
   htpy-sum-finite-Ab :
     {l2 : Level} (A : Finite-Type l2) →
@@ -98,7 +99,7 @@ module _
 ```agda
 module _
   {l : Level} (G : Ab l)
-  where
+  where abstract
 
   sum-zero-finite-Ab :
     {l2 : Level} (A : Finite-Type l2) →
@@ -113,7 +114,7 @@ module _
 module _
   {l1 l2 l3 : Level} (G : Ab l1) (A : Finite-Type l2) (B : Finite-Type l3)
   (H : equiv-Finite-Type A B)
-  where
+  where abstract
 
   sum-equiv-finite-Ab :
     (f : type-Finite-Type A → type-Ab G) →
@@ -131,7 +132,7 @@ module _
 ```agda
 module _
   {l1 l2 l3 : Level} (G : Ab l1) (A : Finite-Type l2) (B : Finite-Type l3)
-  where
+  where abstract
 
   distributive-sum-coproduct-finite-Ab :
     (f :
@@ -154,7 +155,7 @@ module _
 module _
   {l1 l2 l3 : Level} (G : Ab l1)
   (A : Finite-Type l2) (B : type-Finite-Type A → Finite-Type l3)
-  where
+  where abstract
 
   sum-Σ-finite-Ab :
     (f : (a : type-Finite-Type A) → type-Finite-Type (B a) → type-Ab G) →
@@ -170,7 +171,7 @@ module _
 module _
   {l1 l2 : Level} (G : Ab l1) (A : Finite-Type l2)
   (H : is-empty (type-Finite-Type A))
-  where
+  where abstract
 
   eq-zero-sum-finite-is-empty-Ab :
     (f : type-Finite-Type A → type-Ab G) →
@@ -201,7 +202,7 @@ eq-sum-finite-sum-count-Ab G =
 ```agda
 module _
   {l1 l2 : Level} (G : Ab l1) (A : Finite-Type l2)
-  where
+  where abstract
 
   interchange-sum-add-finite-Ab :
     (f g : type-Finite-Type A → type-Ab G) →
@@ -294,4 +295,20 @@ module _
         ( I)
         ( is-contr-I)
         ( i)
+```
+
+### Abelian group homomorphisms distribute over finite sums
+
+```agda
+abstract
+  distributive-hom-sum-finite-Ab :
+    {l1 l2 l3 : Level} (G : Ab l1) (H : Ab l2) (φ : hom-Ab G H)
+    (I : Finite-Type l3) (u : type-Finite-Type I → type-Ab G) →
+    map-hom-Ab G H φ (sum-finite-Ab G I u) ＝
+    sum-finite-Ab H I (map-hom-Ab G H φ ∘ u)
+  distributive-hom-sum-finite-Ab G H φ =
+    distributive-hom-product-finite-Commutative-Monoid
+      ( commutative-monoid-Ab G)
+      ( commutative-monoid-Ab H)
+      ( hom-commutative-monoid-hom-Ab G H φ)
 ```
