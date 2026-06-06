@@ -51,7 +51,6 @@ open import linear-algebra.grids public
 open import linear-algebra.grids-on-rings public
 open import linear-algebra.identity-matrices-on-commutative-rings public
 open import linear-algebra.identity-matrices-on-rings public
-open import linear-algebra.functoriality-matrices public
 open import linear-algebra.indicator-finite-sequences-in-commutative-rings public
 open import linear-algebra.indicator-finite-sequences-in-rings public
 open import linear-algebra.kernels-linear-maps-left-modules-commutative-rings public
@@ -76,6 +75,7 @@ open import linear-algebra.linear-spans-left-modules-rings public
 open import linear-algebra.matrices public
 open import linear-algebra.matrices-on-commutative-rings public
 open import linear-algebra.matrices-on-rings public
+open import linear-algebra.multiplication-diagonal-matrices-rings public
 open import linear-algebra.multiplication-grids public
 open import linear-algebra.multiplication-matrices-on-commutative-rings public
 open import linear-algebra.multiplication-matrices-on-rings public
@@ -116,7 +116,9 @@ open import linear-algebra.sums-of-finite-sequences-of-elements-left-modules-com
 open import linear-algebra.sums-of-finite-sequences-of-elements-left-modules-rings public
 open import linear-algebra.sums-of-finite-sequences-of-elements-normed-real-vector-spaces public
 open import linear-algebra.symmetric-bilinear-forms-real-vector-spaces public
+open import linear-algebra.symmetric-matrices public
 open import linear-algebra.transposition-grids public
+open import linear-algebra.transposition-matrices public
 open import linear-algebra.tuples-on-commutative-monoids public
 open import linear-algebra.tuples-on-commutative-rings public
 open import linear-algebra.tuples-on-commutative-semirings public

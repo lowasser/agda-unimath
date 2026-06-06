@@ -27,11 +27,14 @@ open import foundation.negated-equality
 open import foundation.propositions
 open import foundation.sets
 open import foundation.subtypes
+open import foundation.transport-along-identifications
 open import foundation.universe-levels
 
 open import linear-algebra.diagonals-of-square-matrices
 open import linear-algebra.finite-sequences-in-rings
 open import linear-algebra.square-matrices-on-rings
+open import linear-algebra.symmetric-matrices
+open import linear-algebra.transposition-matrices
 
 open import ring-theory.rings
 
@@ -208,4 +211,33 @@ module _
   equiv-diagonal-matrix-fin-sequence-type-Ring =
     ( diagonal-matrix-fin-sequence-type-Ring R n ,
       is-equiv-matrix-from-diagonal-fin-sequence-type-Ring)
+```
+
+### The transposition of a diagonal matrix is the diagonal matrix
+
+```agda
+module _
+  {l : Level}
+  (R : Ring l)
+  (n : ℕ)
+  where abstract
+
+  is-symmetric-is-diagonal-square-matrix-Ring :
+    (M : square-matrix-Ring R n) →
+    is-diagonal-square-matrix-Ring R n M → is-symmetric-square-matrix n M
+  is-symmetric-is-diagonal-square-matrix-Ring M H i j
+    with has-decidable-equality-Fin n i j
+  ... | inl i=j =
+    tr (λ k → M k i ＝ M i k) i=j refl
+  ... | inr i≠j =
+    H j i (is-symmetric-nonequal i j i≠j) ∙ inv (H i j i≠j)
+
+  is-symmetric-matrix-from-diagonal-fin-sequence-type-Ring :
+    (d : fin-sequence-type-Ring R n) →
+    is-symmetric-square-matrix n
+      ( matrix-from-diagonal-fin-sequence-type-Ring R n d)
+  is-symmetric-matrix-from-diagonal-fin-sequence-type-Ring d =
+    is-symmetric-is-diagonal-square-matrix-Ring
+      ( matrix-from-diagonal-fin-sequence-type-Ring R n d)
+      ( is-diagonal-matrix-from-diagonal-fin-sequence-type-Ring R n d)
 ```
