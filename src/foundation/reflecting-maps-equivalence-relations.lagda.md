@@ -8,6 +8,7 @@ module foundation.reflecting-maps-equivalence-relations where
 
 ```agda
 open import foundation.dependent-pair-types
+open import foundation.dependent-products-propositions
 open import foundation.effective-maps-equivalence-relations
 open import foundation.fundamental-theorem-of-identity-types
 open import foundation.homotopy-induction
@@ -29,7 +30,8 @@ open import foundation-core.torsorial-type-families
 
 A map `f : A → B` out of a type `A` equipped with an
 [equivalence relation](foundation-core.equivalence-relations.md) `R` is said to
-**reflect** `R` if we have `R x y → f x ＝ f y` for every `x y : A`.
+{{#concept "reflect" Disambiguation="a map reflecting an equivalence relation Agda=reflects-equivalence-relation}}
+`R` if we have `R x y → f x ＝ f y` for every `x y : A`.
 
 ## Definitions
 
