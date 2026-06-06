@@ -24,7 +24,7 @@ open import order-theory.large-preorders
 
 ## Idea
 
-In a [large poset](order-theory.large-posets.lagda.md) `P`, the type of
+In a [large poset](order-theory.large-posets.md) `P`, the type of
 [closed intervals](order-theory.closed-intervals-large-posets.md) itself forms a
 large poset under the containment relation, in which `[a, b]` is contained in
 `[c, d]` if `c ≤ a` and `b ≤ d`.
