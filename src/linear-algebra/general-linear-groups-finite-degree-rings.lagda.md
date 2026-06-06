@@ -24,9 +24,9 @@ open import ring-theory.rings
 ## Idea
 
 The
-{{#concept "general linear group" Disambiguation="of finite degree over a ring" WDID=Q524607 WD="general linear group"}}
+{{#concept "general linear group" Disambiguation="of finite degree over a ring" WDID=Q524607 WD="general linear group" Agda=general-linear-group-Ring}}
 of degree `n : ℕ` over a [ring](ring-theory.rings.md) `R` is the
-[group of units](ring-theory.group-of-units-rings.md) of the
+[group of units](ring-theory.groups-of-units-rings.md) of the
 [ring of `n × n` square matrices](linear-algebra.rings-of-square-matrices-on-rings.md)
 on `R`.
 
