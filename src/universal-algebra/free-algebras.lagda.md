@@ -37,7 +37,7 @@ open import lists.set-quotients-finite-sequences
 open import lists.set-quotients-tuples
 open import lists.tuples
 
-open import univalent-combinatorics.set-quotients-dependent-products-finite-families-equivalence-relations
+open import univalent-combinatorics.finite-families-set-quotients
 
 open import universal-algebra.algebraic-theories
 open import universal-algebra.algebras
@@ -264,7 +264,7 @@ module _
         (k , lhs , rhs) = index-abstract-equation-Algebraic-Theory σ T i
       in
         ind-is-set-quotient
-          ( equivalence-relation-fin-sequence-equivalence-relation
+          ( fin-sequence-equivalence-relation
             ( equivalence-relation-word-free-Algebra)
             ( k))
           ( fin-sequence-Set set-free-Algebra k)
