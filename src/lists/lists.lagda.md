@@ -9,19 +9,19 @@ module lists.lists where
 ```agda
 open import elementary-number-theory.natural-numbers
 
-open import foundation.cartesian-product-types
-open import foundation.coproduct-types
 open import foundation.dependent-pair-types
-open import foundation.empty-types
-open import foundation.equivalences
-open import foundation.function-types
-open import foundation.homotopies
-open import foundation.identity-types
-open import foundation.maybe
-open import foundation.negation
-open import foundation.sets
 open import foundation.unit-type
 open import foundation.universe-levels
+
+open import foundation-core.cartesian-product-types
+open import foundation-core.coproduct-types
+open import foundation-core.empty-types
+open import foundation-core.equivalences
+open import foundation-core.function-types
+open import foundation-core.homotopies
+open import foundation-core.identity-types
+open import foundation-core.maybe
+open import foundation-core.negation
 ```
 
 </details>
