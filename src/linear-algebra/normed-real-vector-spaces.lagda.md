@@ -211,6 +211,12 @@ module _
     nonnegative-dist-Seminormed-ℝ-Vector-Space
       ( seminormed-vector-space-Normed-ℝ-Vector-Space)
 
+  is-nonnegative-dist-Normed-ℝ-Vector-Space :
+    (v w : type-Normed-ℝ-Vector-Space) →
+    is-nonnegative-ℝ (dist-Normed-ℝ-Vector-Space v w)
+  is-nonnegative-dist-Normed-ℝ-Vector-Space v w =
+    is-nonnegative-real-ℝ⁰⁺ (nonnegative-dist-Normed-ℝ-Vector-Space v w)
+
   abstract
     is-extensional-norm-Normed-ℝ-Vector-Space :
       (v : type-Normed-ℝ-Vector-Space) →

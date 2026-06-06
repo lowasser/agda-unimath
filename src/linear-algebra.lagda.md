@@ -7,6 +7,7 @@ module linear-algebra where
 
 open import linear-algebra.addition-linear-maps-left-modules-commutative-rings public
 open import linear-algebra.addition-linear-maps-left-modules-rings public
+open import linear-algebra.apartness-normed-real-vector-spaces public
 open import linear-algebra.bilinear-forms-real-vector-spaces public
 open import linear-algebra.bilinear-maps-left-modules-commutative-rings public
 open import linear-algebra.bilinear-maps-left-modules-rings public
@@ -64,6 +65,7 @@ open import linear-algebra.matrices public
 open import linear-algebra.matrices-on-rings public
 open import linear-algebra.multiplication-matrices public
 open import linear-algebra.negation-linear-maps-left-modules-rings public
+open import linear-algebra.nontrivial-normed-real-vector-spaces public
 open import linear-algebra.normed-complex-vector-spaces public
 open import linear-algebra.normed-real-vector-spaces public
 open import linear-algebra.orthogonality-bilinear-forms-real-vector-spaces public
