@@ -26,6 +26,7 @@ open import real-numbers.binary-minimum-nonnegative-real-numbers public
 open import real-numbers.binary-minimum-real-numbers public
 open import real-numbers.cauchy-completeness-dedekind-real-numbers public
 open import real-numbers.cauchy-sequences-real-numbers public
+open import real-numbers.clamp-function-closed-interval-real-numbers public
 open import real-numbers.closed-intervals-real-numbers public
 open import real-numbers.cofinal-and-coinitial-endomaps-real-numbers public
 open import real-numbers.cofinal-and-coinitial-strictly-increasing-pointwise-epsilon-delta-continuous-endomaps-real-numbers public
@@ -74,6 +75,7 @@ open import real-numbers.local-ring-of-real-numbers public
 open import real-numbers.located-metric-space-of-real-numbers public
 open import real-numbers.lower-dedekind-real-numbers public
 open import real-numbers.macneille-real-numbers public
+open import real-numbers.maps-between-proper-closed-intervals-real-numbers public
 open import real-numbers.maximum-finite-families-nonnegative-real-numbers public
 open import real-numbers.maximum-finite-families-real-numbers public
 open import real-numbers.maximum-inhabited-finitely-enumerable-subsets-real-numbers public
@@ -122,6 +124,7 @@ open import real-numbers.rational-approximates-of-real-numbers public
 open import real-numbers.rational-lower-dedekind-real-numbers public
 open import real-numbers.rational-real-numbers public
 open import real-numbers.rational-upper-dedekind-real-numbers public
+open import real-numbers.real-maps-proper-closed-intervals-real-numbers public
 open import real-numbers.real-numbers-from-lower-dedekind-real-numbers public
 open import real-numbers.real-numbers-from-upper-dedekind-real-numbers public
 open import real-numbers.real-sequences-approximating-zero public
@@ -141,6 +144,7 @@ open import real-numbers.strict-inequality-positive-real-numbers public
 open import real-numbers.strict-inequality-real-numbers public
 open import real-numbers.strictly-increasing-endomaps-real-numbers public
 open import real-numbers.strictly-increasing-pointwise-epsilon-delta-continuous-endomaps-real-numbers public
+open import real-numbers.strictly-increasing-real-maps-proper-closed-intervals-real-numbers public
 open import real-numbers.subsets-real-numbers public
 open import real-numbers.sums-of-finite-sequences-of-nonnegative-real-numbers public
 open import real-numbers.sums-of-finite-sequences-of-real-numbers public

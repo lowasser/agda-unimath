@@ -17,6 +17,7 @@ open import foundation.coproduct-types
 open import foundation.decidable-propositions
 open import foundation.decidable-types
 open import foundation.dependent-pair-types
+open import foundation.dependent-products-propositions
 open import foundation.empty-types
 open import foundation.identity-types
 open import foundation.propositions
@@ -150,12 +151,12 @@ abstract
 
 ```agda
 abstract
-  reverses-leq-nat-Fin-reverse :
+  is-decreasing-nat-Fin-reverse :
     (k : ℕ) (x y : Fin k) → leq-Fin k x y →
     leq-ℕ (nat-Fin-reverse k y) (nat-Fin-reverse k x)
-  reverses-leq-nat-Fin-reverse (succ-ℕ k) x (inr star) x≤y = star
-  reverses-leq-nat-Fin-reverse (succ-ℕ k) (inl x) (inl y) x≤y =
-    reverses-leq-nat-Fin-reverse k x y x≤y
+  is-decreasing-nat-Fin-reverse (succ-ℕ k) x (inr star) x≤y = star
+  is-decreasing-nat-Fin-reverse (succ-ℕ k) (inl x) (inl y) x≤y =
+    is-decreasing-nat-Fin-reverse k x y x≤y
 ```
 
 ### Ordering on the standard finite types is decidable
@@ -182,13 +183,13 @@ linear-leq-Fin (succ-ℕ k) (inl x) (inr y) = inl star
 linear-leq-Fin (succ-ℕ k) (inr x) y = inr star
 ```
 
-### `skip-zero-Fin` preserves inequality
+### `inr-Fin` preserves inequality
 
 ```agda
 abstract
   preserves-order-inr-Fin :
     (n : ℕ) →
-    preserves-order-Poset (Fin-Poset n) (Fin-Poset (succ-ℕ n)) (skip-zero-Fin n)
+    preserves-order-Poset (Fin-Poset n) (Fin-Poset (succ-ℕ n)) (inr-Fin n)
   preserves-order-inr-Fin (succ-ℕ n) (inl x) (inl y) x≤y =
     preserves-order-inr-Fin n x y x≤y
   preserves-order-inr-Fin (succ-ℕ n) (inl x) (inr star) _ = star

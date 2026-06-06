@@ -18,6 +18,7 @@ open import foundation.homotopies
 open import foundation.identity-types
 open import foundation.logical-equivalences
 open import foundation.propositions
+open import foundation.raising-universe-levels-unit-type
 open import foundation.subtypes
 open import foundation.unit-type
 open import foundation.universe-levels

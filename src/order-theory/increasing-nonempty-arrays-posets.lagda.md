@@ -49,7 +49,7 @@ module _
 
   is-increasing-prop-nonempty-array-type-Poset :
     subtype l2 (nonempty-array (type-Poset P))
-  is-increasing-prop-nonempty-array-type-Poset (u , _) =
+  is-increasing-prop-nonempty-array-type-Poset (u , is-nonempty-u) =
     is-increasing-prop-array-type-Poset P u
 
   is-increasing-nonempty-array-type-Poset :
