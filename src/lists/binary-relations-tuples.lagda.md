@@ -17,9 +17,7 @@ open import foundation.functoriality-propositional-truncation
 open import foundation.propositional-truncation-binary-relations
 open import foundation.propositional-truncations
 open import foundation.propositions
-open import foundation.raising-universe-levels
 open import foundation.raising-universe-levels-unit-type
-open import foundation.unit-type
 open import foundation.universe-levels
 
 open import lists.tuples
@@ -84,7 +82,7 @@ module _
 
   refl-rel-tuple-Relation :
     is-reflexive R → (n : ℕ) → is-reflexive (rel-tuple-Relation R n)
-  refl-rel-tuple-Relation refl-R 0 empty-tuple = map-raise star
+  refl-rel-tuple-Relation refl-R 0 empty-tuple = raise-star
   refl-rel-tuple-Relation refl-R (succ-ℕ n) (x ∷ xs) =
     ( refl-R x , refl-rel-tuple-Relation refl-R n xs)
 ```
@@ -100,8 +98,7 @@ module _
 
   symmetric-rel-tuple-Relation :
     is-symmetric R → (n : ℕ) → is-symmetric (rel-tuple-Relation R n)
-  symmetric-rel-tuple-Relation sym-R 0 empty-tuple empty-tuple 0~0 =
-    map-raise star
+  symmetric-rel-tuple-Relation sym-R 0 empty-tuple empty-tuple 0~0 = raise-star
   symmetric-rel-tuple-Relation
     sym-R (succ-ℕ n) (x ∷ xs) (y ∷ ys) (x~y , xs~ys) =
     ( sym-R x y x~y , symmetric-rel-tuple-Relation sym-R n xs ys xs~ys)
@@ -119,8 +116,7 @@ module _
   transitive-rel-tuple-Relation :
     is-transitive R → (n : ℕ) → is-transitive (rel-tuple-Relation R n)
   transitive-rel-tuple-Relation
-    trans-R 0 empty-tuple empty-tuple empty-tuple _ _ =
-    map-raise star
+    trans-R 0 empty-tuple empty-tuple empty-tuple _ _ = raise-star
   transitive-rel-tuple-Relation
     trans-R (succ-ℕ n) (x ∷ xs) (y ∷ ys) (z ∷ zs) (y~z , ys~zs) (x~y , xs~ys) =
     ( trans-R x y z y~z x~y ,
@@ -142,7 +138,7 @@ module _
       rel-tuple-Relation-Prop (trunc-prop-Relation R) n x y →
       type-trunc-prop-Relation (rel-tuple-Relation R n) x y
     choice-rel-tuple-trunc-prop-Relation 0 empty-tuple empty-tuple _ =
-      unit-trunc-Prop (map-raise star)
+      unit-trunc-Prop raise-star
     choice-rel-tuple-trunc-prop-Relation
       (succ-ℕ n) (x ∷ xs) (y ∷ ys) (∥xRy∥ , ∥xsRys∥) =
       map-binary-trunc-Prop

@@ -20,9 +20,11 @@ open import foundation.universe-levels
 
 ## Idea
 
-The dependent product of a family of
-[binary relations](foundation.binary-relations.md) `Rᵢ` on types `Aᵢ` indexed by
-`i : I` is a binary relation on the type `(i : I) → A i`.
+The
+{{#concept "dependent product" Disambiguation="of a family of binary relations" Agda=Π-Relation}}
+of a family of [binary relations](foundation.binary-relations.md) `Rᵢ` on types
+`Aᵢ` indexed by `i : I` is the binary relation `ΠR` on the type `(i : I) → A i`
+defined as `f ΠR g ≔ (i : I) → Rᵢ (f i) (g i)`.
 
 ## Definition
 
