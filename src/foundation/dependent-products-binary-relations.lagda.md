@@ -8,6 +8,7 @@ module foundation.dependent-products-binary-relations where
 
 ```agda
 open import foundation.binary-relations
+open import foundation.dependent-products-propositions
 open import foundation.function-extensionality
 open import foundation.homotopies
 open import foundation.identity-types
