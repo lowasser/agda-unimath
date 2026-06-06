@@ -151,12 +151,12 @@ abstract
 
 ```agda
 abstract
-  reverses-leq-nat-Fin-reverse :
+  is-decreasing-nat-Fin-reverse :
     (k : ℕ) (x y : Fin k) → leq-Fin k x y →
     leq-ℕ (nat-Fin-reverse k y) (nat-Fin-reverse k x)
-  reverses-leq-nat-Fin-reverse (succ-ℕ k) x (inr star) x≤y = star
-  reverses-leq-nat-Fin-reverse (succ-ℕ k) (inl x) (inl y) x≤y =
-    reverses-leq-nat-Fin-reverse k x y x≤y
+  is-decreasing-nat-Fin-reverse (succ-ℕ k) x (inr star) x≤y = star
+  is-decreasing-nat-Fin-reverse (succ-ℕ k) (inl x) (inl y) x≤y =
+    is-decreasing-nat-Fin-reverse k x y x≤y
 ```
 
 ### Ordering on the standard finite types is decidable
