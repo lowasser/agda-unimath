@@ -51,11 +51,8 @@ map taking an element of `Πᵢ Aᵢ` that **inserts** `x` at the `i`th coordina
 
 ```agda
 insert-at-Π-fin-sequence :
-  {l : Level} →
-  (n : ℕ) →
-  (A : fin-sequence (UU l) (succ-ℕ n)) →
-  (i : Fin (succ-ℕ n)) →
-  (x : A i) →
+  {l : Level} (n : ℕ) (A : fin-sequence (UU l) (succ-ℕ n))
+  (i : Fin (succ-ℕ n)) (x : A i) →
   Π-fin-sequence n (remove-at-fin-sequence n i A) →
   Π-fin-sequence (succ-ℕ n) A
 insert-at-Π-fin-sequence zero-ℕ A (inr _) x _ (inr _) = x
@@ -139,11 +136,8 @@ insert-at-two-indices-Π-fin-sequence
 ```agda
 abstract
   compute-elem-at-insert-at-Π-fin-sequence :
-    {l : Level} →
-    (n : ℕ) →
-    (A : Fin (succ-ℕ n) → UU l) →
-    (i : Fin (succ-ℕ n)) →
-    (x : A i) →
+    {l : Level} (n : ℕ) (A : fin-sequence (UU l) (succ-ℕ n))
+    (i : Fin (succ-ℕ n)) (x : A i)
     (u : Π-fin-sequence n (remove-at-fin-sequence n i A)) →
     elem-at-Π-fin-sequence (succ-ℕ n) A i
       ( insert-at-Π-fin-sequence n A i x u) ＝
@@ -254,11 +248,8 @@ abstract
 ```agda
 abstract
   compute-insert-at-remove-at-Π-fin-sequence :
-    {l : Level} →
-    (n : ℕ) →
-    (A : Fin (succ-ℕ n) → UU l) →
-    (i : Fin (succ-ℕ n)) →
-    (u : Π-fin-sequence (succ-ℕ n) A) →
+    {l : Level} (n : ℕ) (A : fin-sequence (UU l) (succ-ℕ n))
+    (i : Fin (succ-ℕ n)) (u : Π-fin-sequence (succ-ℕ n) A) →
     insert-at-Π-fin-sequence
       ( n)
       ( A)
@@ -266,7 +257,8 @@ abstract
       ( elem-at-Π-fin-sequence (succ-ℕ n) A i u)
       ( remove-at-Π-fin-sequence n A i u) ~
     u
-  compute-insert-at-remove-at-Π-fin-sequence zero-ℕ A (inr _) u (inr _) = refl
+  compute-insert-at-remove-at-Π-fin-sequence zero-ℕ A (inr _) u (inr _) =
+    refl
   compute-insert-at-remove-at-Π-fin-sequence (succ-ℕ n) A (inl i) u (inl j) =
     compute-insert-at-remove-at-Π-fin-sequence
       ( n)
@@ -287,19 +279,10 @@ abstract
 ```agda
 abstract
   compute-remove-at-insert-at-Π-fin-sequence :
-    {l : Level} →
-    (n : ℕ) →
-    (A : Fin (succ-ℕ n) → UU l) →
-    (i : Fin (succ-ℕ n)) →
-    (x : A i) →
+    {l : Level} (n : ℕ) (A : fin-sequence (UU l) (succ-ℕ n)) →
+    (i : Fin (succ-ℕ n)) (x : A i)
     (u : Π-fin-sequence n (remove-at-fin-sequence n i A)) →
-    remove-at-Π-fin-sequence
-      ( n)
-      ( A)
-      ( i)
-      ( insert-at-Π-fin-sequence n A i x u) ~
-    u
-  compute-remove-at-insert-at-Π-fin-sequence zero-ℕ A i x u ()
+    remove-at-Π-fin-sequence n A i (insert-at-Π-fin-sequence n A i x u) ~ u
   compute-remove-at-insert-at-Π-fin-sequence (succ-ℕ n) A (inl i) x u (inl j) =
     compute-remove-at-insert-at-Π-fin-sequence
       ( n)
@@ -318,9 +301,8 @@ abstract
 ```agda
 abstract
   compute-insert-at-remove-at-two-indices-Π-fin-sequence :
-    {l : Level} (n : ℕ) (A : fin-sequence (UU l) (n +ℕ 2)) →
-    (i j : Fin (n +ℕ 2)) (i≠j : i ≠ j) →
-    (u : Π-fin-sequence (n +ℕ 2) A) →
+    {l : Level} (n : ℕ) (A : fin-sequence (UU l) (n +ℕ 2))
+    (i j : Fin (n +ℕ 2)) (i≠j : i ≠ j) (u : Π-fin-sequence (n +ℕ 2) A) →
     insert-at-two-indices-Π-fin-sequence
       ( n)
       ( A)
