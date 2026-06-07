@@ -31,7 +31,7 @@ open import real-numbers.similarity-real-numbers
 ## Idea
 
 A
-{{#concept "nonzero element" Disambiguation="of a normed real vector space" Agda=nonzero-type-Normed-ℝ-Vector-Space}}
+{{#concept "nonzero element" Disambiguation="of a normed real vector space" Agda=nonzero-vector-Normed-ℝ-Vector-Space}}
 of a [normed real vector space](linear-algebra.normed-real-vector-spaces.md) is
 a vector with [positive](real-numbers.positive-real-numbers.md) norm.
 
