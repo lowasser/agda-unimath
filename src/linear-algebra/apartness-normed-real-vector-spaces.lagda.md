@@ -36,6 +36,12 @@ open import real-numbers.zero-real-numbers
 
 ## Idea
 
+Two points in a
+[normed real vector space](linear-algebra.normed-real-vector-spaces.md) are
+{{#concept "apart" Disambiguation="in a normed real vector space" Agda=apart-Normed-ℝ-Vector-Space}}
+if the distance between them is
+[positive](real-numbers.positive-real-numbers.md).
+
 ## Definition
 
 ```agda

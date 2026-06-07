@@ -398,6 +398,9 @@ raise-ℝ⁺ : {l1 : Level} (l : Level) → ℝ⁺ l1 → ℝ⁺ (l ⊔ l1)
 raise-ℝ⁺ l (x , 0<x) =
   ( raise-ℝ l x , preserves-is-positive-raise-ℝ l x 0<x)
 
+positive-raise-real-ℚ⁺ : (l : Level) → ℚ⁺ → ℝ⁺ l
+positive-raise-real-ℚ⁺ l q = raise-ℝ⁺ l (positive-real-ℚ⁺ q)
+
 raise-one-ℝ⁺ : (l : Level) → ℝ⁺ l
 raise-one-ℝ⁺ l = raise-ℝ⁺ l one-ℝ⁺
 ```

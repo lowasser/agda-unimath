@@ -20,6 +20,11 @@ open import metric-spaces.located-metric-spaces
 
 ## Idea
 
+A [located metric space](metric-spaces.located-metric-spaces.md) is
+{{#concept "perfect" Disambiguation="located metric space" Agda=is-perfect-Located-Metric-Space}}
+if every one of its points is an
+[accumulation point](metric-spaces.accumulation-points-subsets-located-metric-spaces.md).
+
 ## Definition
 
 ```agda
@@ -40,3 +45,7 @@ Perfect-Metric-Space : (l1 l2 : Level) → UU (lsuc (l1 ⊔ l2))
 Perfect-Metric-Space l1 l2 =
   type-subtype (is-perfect-prop-Located-Metric-Space {l1} {l2})
 ```
+
+## External links
+
+- [Perfect set](https://en.wikipedia.org/wiki/Perfect_set) on Wikipedia

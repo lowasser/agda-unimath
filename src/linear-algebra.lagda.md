@@ -66,6 +66,7 @@ open import linear-algebra.matrices-on-rings public
 open import linear-algebra.multiplication-matrices public
 open import linear-algebra.negation-linear-maps-left-modules-rings public
 open import linear-algebra.nontrivial-normed-real-vector-spaces public
+open import linear-algebra.nonzero-vectors-normed-real-vector-spaces public
 open import linear-algebra.normed-complex-vector-spaces public
 open import linear-algebra.normed-real-vector-spaces public
 open import linear-algebra.orthogonality-bilinear-forms-real-vector-spaces public
@@ -97,6 +98,7 @@ open import linear-algebra.symmetric-bilinear-forms-real-vector-spaces public
 open import linear-algebra.transposition-matrices public
 open import linear-algebra.trivial-left-modules-commutative-rings public
 open import linear-algebra.trivial-left-modules-rings public
+open import linear-algebra.trivial-real-vector-spaces public
 open import linear-algebra.trivial-vector-spaces public
 open import linear-algebra.tuples-on-commutative-monoids public
 open import linear-algebra.tuples-on-commutative-rings public
@@ -105,5 +107,6 @@ open import linear-algebra.tuples-on-euclidean-domains public
 open import linear-algebra.tuples-on-monoids public
 open import linear-algebra.tuples-on-rings public
 open import linear-algebra.tuples-on-semirings public
+open import linear-algebra.unit-vectors-normed-real-vector-spaces public
 open import linear-algebra.vector-spaces public
 ```
