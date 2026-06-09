@@ -12,10 +12,7 @@ module linear-algebra.normed-real-vector-spaces where
 open import foundation.action-on-identifications-functions
 open import foundation.dependent-pair-types
 open import foundation.dependent-products-propositions
-open import elementary-number-theory.multiplication-positive-rational-numbers
-open import elementary-number-theory.multiplicative-group-of-positive-rational-numbers
 open import foundation.identity-types
-open import logic.functoriality-existential-quantification
 open import foundation.logical-equivalences
 open import foundation.propositions
 open import foundation.sets
@@ -34,27 +31,20 @@ open import metric-spaces.lipschitz-maps-metric-spaces
 open import metric-spaces.located-metric-spaces
 open import metric-spaces.metric-spaces
 open import metric-spaces.metrics
-open import foundation.propositional-truncations
 open import metric-spaces.metrics-of-metric-spaces
 
 open import order-theory.large-posets
-open import foundation.existential-quantification
-open import real-numbers.positive-and-negative-real-numbers
-open import real-numbers.positive-real-numbers
-open import real-numbers.strict-inequality-real-numbers
+
 open import real-numbers.absolute-value-real-numbers
 open import real-numbers.addition-real-numbers
-open import real-numbers.multiplication-nonnegative-real-numbers
 open import real-numbers.dedekind-real-numbers
-open import real-numbers.multiplication-real-numbers
+open import real-numbers.difference-real-numbers
 open import real-numbers.distance-real-numbers
 open import real-numbers.inequality-real-numbers
 open import real-numbers.metric-space-of-real-numbers
+open import real-numbers.multiplication-real-numbers
 open import real-numbers.nonnegative-real-numbers
-open import real-numbers.raising-universe-levels-real-numbers
-open import real-numbers.difference-real-numbers
 open import real-numbers.rational-real-numbers
-open import real-numbers.saturation-inequality-nonnegative-real-numbers
 open import real-numbers.similarity-real-numbers
 open import real-numbers.zero-real-numbers
 ```
@@ -555,103 +545,6 @@ module _
       ( map-norm-Normed-ℝ-Vector-Space V)
       ( inv (left-distributive-mul-diff-Normed-ℝ-Vector-Space V c v w))) ∙
     ( is-absolutely-homogeneous-norm-Normed-ℝ-Vector-Space V c _)
-
-```
-
-### Given a constant `c`, `v ↦ cv` is Lipschitz continuous
-
-```agda
-module _
-  {l1 l2 : Level}
-  (V : Normed-ℝ-Vector-Space l1 l2)
-  (c : ℝ l1)
-  where abstract
-
-  is-lipschitz-left-mul-Normed-ℝ-Vector-Space :
-    is-lipschitz-map-Metric-Space
-      ( metric-space-Normed-ℝ-Vector-Space V)
-      ( metric-space-Normed-ℝ-Vector-Space V)
-      ( mul-Normed-ℝ-Vector-Space V c)
-  is-lipschitz-left-mul-Normed-ℝ-Vector-Space =
-    let
-      open inequality-reasoning-Large-Poset ℝ-Large-Poset
-      dist-V = dist-Normed-ℝ-Vector-Space V
-      _*V_ = mul-Normed-ℝ-Vector-Space V
-    in
-      map-tot-exists
-        ( λ q |c|<q d v w dvw≤d →
-          chain-of-inequalities
-            dist-V (c *V v) (c *V w)
-            ≤ abs-ℝ c *ℝ dist-V v w
-              by leq-eq-ℝ (multiplicative-dist-Normed-ℝ-Vector-Space V c v w)
-            ≤ real-ℚ⁺ q *ℝ real-ℚ⁺ d
-              by
-                preserves-leq-mul-ℝ⁰⁺
-                  ( nonnegative-abs-ℝ c)
-                  ( nonnegative-real-ℚ⁺ q)
-                  ( nonnegative-dist-Normed-ℝ-Vector-Space V v w)
-                  ( nonnegative-real-ℚ⁺ d)
-                  ( leq-le-ℝ |c|<q)
-                  ( dvw≤d)
-            ≤ real-ℚ⁺ (q *ℚ⁺ d)
-              by leq-eq-ℝ (mul-real-ℚ _ _))
-        ( exists-greater-positive-rational-ℝ (abs-ℝ c))
-```
-
-### Given a constant vector `v`, `c ↦ cv` is Lipschitz continuous
-
-```agda
-module _
-  {l1 l2 : Level}
-  (V : Normed-ℝ-Vector-Space l1 l2)
-  (v : type-Normed-ℝ-Vector-Space V)
-  where abstract
-
-  is-lipschitz-right-mul-Normed-ℝ-Vector-Space :
-    is-lipschitz-map-Metric-Space
-      ( metric-space-ℝ l1)
-      ( metric-space-Normed-ℝ-Vector-Space V)
-      ( λ c → mul-Normed-ℝ-Vector-Space V c v)
-  is-lipschitz-right-mul-Normed-ℝ-Vector-Space =
-    let
-      open inequality-reasoning-Large-Poset ℝ-Large-Poset
-      dist-V = dist-Normed-ℝ-Vector-Space V
-      norm-V = map-norm-Normed-ℝ-Vector-Space V
-      _*V_ = mul-Normed-ℝ-Vector-Space V
-      _-V_ = diff-Normed-ℝ-Vector-Space V
-    in
-      map-tot-exists
-        ( λ q |v|<q d x y dxy≤d →
-          chain-of-inequalities
-            dist-V (x *V v) (y *V v)
-            ≤ norm-V ((x -ℝ y) *V v)
-              by
-                leq-eq-ℝ
-                  ( ap
-                    ( norm-V)
-                    ( inv
-                      ( right-distributive-mul-diff-Normed-ℝ-Vector-Space V
-                        ( x)
-                        ( y)
-                        ( v))))
-            ≤ dist-ℝ x y *ℝ norm-V v
-              by
-                leq-eq-ℝ
-                  ( is-absolutely-homogeneous-norm-Normed-ℝ-Vector-Space V _ _)
-            ≤ real-ℚ⁺ d *ℝ real-ℚ⁺ q
-              by
-                preserves-leq-mul-ℝ⁰⁺
-                  ( nonnegative-dist-ℝ x y)
-                  ( nonnegative-real-ℚ⁺ d)
-                  ( nonnegative-norm-Normed-ℝ-Vector-Space V v)
-                  ( nonnegative-real-ℚ⁺ q)
-                  ( leq-dist-neighborhood-ℝ d x y dxy≤d)
-                  ( leq-le-ℝ |v|<q)
-            ≤ real-ℚ⁺ q *ℝ real-ℚ⁺ d
-              by leq-eq-ℝ (commutative-mul-ℝ _ _)
-            ≤ real-ℚ⁺ (q *ℚ⁺ d)
-              by leq-eq-ℝ (mul-real-ℚ _ _))
-        ( exists-greater-positive-rational-ℝ (norm-V v))
 ```
 
 ### The real numbers are a normed vector space over themselves with norm `x ↦ |x|`
