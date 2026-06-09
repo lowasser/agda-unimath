@@ -65,4 +65,13 @@ module _
     diff-ℝ-Algebra A (mul-ℝ-Algebra A x y) (mul-ℝ-Algebra A x z)
   left-distributive-mul-diff-ℝ-Algebra =
     left-distributive-mul-diff-algebra-Commutative-Ring R A
+
+  right-distributive-mul-diff-ℝ-Algebra :
+    (x y z : type-ℝ-Algebra A) →
+    mul-ℝ-Algebra A (diff-ℝ-Algebra A x y) z ＝
+    diff-ℝ-Algebra A
+      ( mul-ℝ-Algebra A x z)
+      ( mul-ℝ-Algebra A y z)
+  right-distributive-mul-diff-ℝ-Algebra =
+    right-distributive-mul-diff-algebra-Commutative-Ring R A
 ```

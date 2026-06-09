@@ -19,6 +19,8 @@ open import foundation.universe-levels
 
 open import group-theory.abelian-groups
 
+open import linear-algebra.lipschitz-continuity-scalar-multiplication-normed-real-vector-spaces
+open import linear-algebra.lipschitz-maps-normed-real-vector-spaces
 open import linear-algebra.normed-real-vector-spaces
 open import linear-algebra.real-algebras
 open import linear-algebra.real-vector-spaces
@@ -168,6 +170,15 @@ module _
         ( mul-Normed-ℝ-Algebra x z)
     left-distributive-mul-diff-Normed-ℝ-Algebra =
       left-distributive-mul-diff-ℝ-Algebra algebra-A
+
+    right-distributive-mul-diff-Normed-ℝ-Algebra :
+      (x y z : type-Normed-ℝ-Algebra A) →
+      mul-Normed-ℝ-Algebra (diff-Normed-ℝ-Algebra A x y) z ＝
+      diff-Normed-ℝ-Algebra A
+        ( mul-Normed-ℝ-Algebra x z)
+        ( mul-Normed-ℝ-Algebra y z)
+    right-distributive-mul-diff-Normed-ℝ-Algebra =
+      right-distributive-mul-diff-ℝ-Algebra algebra-A
 ```
 
 ### Properties inherited from the normed real vector space structure
@@ -255,6 +266,7 @@ module _
   (A : Normed-ℝ-Algebra l1 l2)
   (x : type-Normed-ℝ-Algebra A)
   (let algebra-A = algebra-Normed-ℝ-Algebra A)
+  (let normed-vector-space-A = normed-vector-space-Normed-ℝ-Algebra A)
   where abstract
 
   is-lipschitz-left-mul-Normed-ℝ-Algebra :
@@ -270,8 +282,12 @@ module _
       _-A_ = diff-Normed-ℝ-Algebra A
       open inequality-reasoning-Large-Poset ℝ-Large-Poset
     in
-      map-tot-exists
-        ( λ q |x|<q d y z dyz≤d →
+      is-lipschitz-real-constant-map-Normed-ℝ-Vector-Space
+        ( normed-vector-space-A)
+        ( normed-vector-space-A)
+        ( mul-Normed-ℝ-Algebra A x)
+        ( nonnegative-norm-Normed-ℝ-Algebra A x)
+        ( λ y z →
           chain-of-inequalities
             dist-A (x *A y) (x *A z)
             ≤ norm-A (x *A (y -A z))
@@ -280,19 +296,55 @@ module _
                   ( ap
                     ( norm-A)
                     ( inv
-                      ( left-distributive-mul-diff-ℝ-Algebra algebra-A x y z)))
+                      ( left-distributive-mul-diff-Normed-ℝ-Algebra A x y z)))
             ≤ norm-A x *ℝ dist-A y z
-              by is-submultiplicative-norm-Normed-ℝ-Algebra A x (y -A z)
-            ≤ real-ℚ⁺ q *ℝ real-ℚ⁺ d
+              by is-submultiplicative-norm-Normed-ℝ-Algebra A _ _)
+```
+
+### Right multiplication by a constant is Lipschitz continuous
+
+```agda
+module _
+  {l1 l2 : Level}
+  (A : Normed-ℝ-Algebra l1 l2)
+  (y : type-Normed-ℝ-Algebra A)
+  (let algebra-A = algebra-Normed-ℝ-Algebra A)
+  (let normed-vector-space-A = normed-vector-space-Normed-ℝ-Algebra A)
+  where abstract
+
+  is-lipschitz-right-mul-Normed-ℝ-Algebra :
+    is-lipschitz-map-Metric-Space
+      ( metric-space-Normed-ℝ-Algebra A)
+      ( metric-space-Normed-ℝ-Algebra A)
+      ( λ x → mul-Normed-ℝ-Algebra A x y)
+  is-lipschitz-right-mul-Normed-ℝ-Algebra =
+    let
+      norm-A = map-norm-Normed-ℝ-Algebra A
+      dist-A = dist-Normed-ℝ-Algebra A
+      _*A_ = mul-Normed-ℝ-Algebra A
+      _-A_ = diff-Normed-ℝ-Algebra A
+      open inequality-reasoning-Large-Poset ℝ-Large-Poset
+    in
+      is-lipschitz-real-constant-map-Normed-ℝ-Vector-Space
+        ( normed-vector-space-A)
+        ( normed-vector-space-A)
+        ( λ x → mul-Normed-ℝ-Algebra A x y)
+        ( nonnegative-norm-Normed-ℝ-Algebra A y)
+        ( λ x1 x2 →
+          chain-of-inequalities
+            dist-A (x1 *A y) (x2 *A y)
+            ≤ norm-A ((x1 -A x2) *A y)
               by
-                preserves-leq-mul-ℝ⁰⁺
-                  ( nonnegative-norm-Normed-ℝ-Algebra A x)
-                  ( nonnegative-real-ℚ⁺ q)
-                  ( nonnegative-dist-Normed-ℝ-Algebra A y z)
-                  ( nonnegative-real-ℚ⁺ d)
-                  ( leq-le-ℝ |x|<q)
-                  ( dyz≤d)
-            ≤ real-ℚ⁺ (q *ℚ⁺ d)
-              by leq-eq-ℝ (mul-real-ℚ _ _))
-        ( exists-greater-positive-rational-ℝ (norm-A x))
+                leq-eq-ℝ
+                  ( ap
+                    ( norm-A)
+                    ( inv
+                      ( right-distributive-mul-diff-Normed-ℝ-Algebra A
+                        ( x1)
+                        ( x2)
+                        ( y))))
+            ≤ dist-A x1 x2 *ℝ norm-A y
+              by is-submultiplicative-norm-Normed-ℝ-Algebra A _ _
+            ≤ norm-A y *ℝ dist-A x1 x2
+              by leq-eq-ℝ (commutative-mul-ℝ _ _))
 ```
