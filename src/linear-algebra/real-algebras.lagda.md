@@ -21,7 +21,10 @@ open import real-numbers.large-ring-of-real-numbers
 
 ## Idea
 
-A {{#concept "real algebra" Agda=ℝ-Algebra}} is an [algebra](
+A {{#concept "real algebra" Agda=ℝ-Algebra}} is an
+[algebra](commutative-algebra.algebras-commutative-rings.md) over the
+[commutative ring](real-numbers.large-ring-of-real-numbers.md) of
+[real numbers](real-numbers.dedekind-real-numbers.md).
 
 ## Definition
 
