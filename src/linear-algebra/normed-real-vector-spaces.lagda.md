@@ -146,6 +146,17 @@ module _
   diff-Normed-ℝ-Vector-Space =
     diff-ℝ-Vector-Space vector-space-Normed-ℝ-Vector-Space
 
+  interchange-add-diff-Normed-ℝ-Vector-Space :
+    (x y z w : type-Normed-ℝ-Vector-Space) →
+    diff-Normed-ℝ-Vector-Space
+      ( add-Normed-ℝ-Vector-Space x y)
+      ( add-Normed-ℝ-Vector-Space z w) ＝
+    add-Normed-ℝ-Vector-Space
+      ( diff-Normed-ℝ-Vector-Space x z)
+      ( diff-Normed-ℝ-Vector-Space y w)
+  interchange-add-diff-Normed-ℝ-Vector-Space =
+    interchange-add-diff-ℝ-Vector-Space vector-space-Normed-ℝ-Vector-Space
+
   neg-Normed-ℝ-Vector-Space :
     type-Normed-ℝ-Vector-Space → type-Normed-ℝ-Vector-Space
   neg-Normed-ℝ-Vector-Space =
@@ -212,6 +223,22 @@ module _
   associative-mul-Normed-ℝ-Vector-Space =
     associative-mul-ℝ-Vector-Space vector-space-Normed-ℝ-Vector-Space
 
+  right-zero-law-mul-Normed-ℝ-Vector-Space :
+    (r : ℝ l1) →
+    mul-Normed-ℝ-Vector-Space r zero-Normed-ℝ-Vector-Space ＝
+    zero-Normed-ℝ-Vector-Space
+  right-zero-law-mul-Normed-ℝ-Vector-Space =
+    right-zero-law-mul-ℝ-Vector-Space vector-space-Normed-ℝ-Vector-Space
+
+  left-distributive-mul-add-Normed-ℝ-Vector-Space :
+    (r : ℝ l1) (v w : type-Normed-ℝ-Vector-Space) →
+    mul-Normed-ℝ-Vector-Space r (add-Normed-ℝ-Vector-Space v w) ＝
+    add-Normed-ℝ-Vector-Space
+      ( mul-Normed-ℝ-Vector-Space r v)
+      ( mul-Normed-ℝ-Vector-Space r w)
+  left-distributive-mul-add-Normed-ℝ-Vector-Space =
+    left-distributive-mul-add-ℝ-Vector-Space vector-space-Normed-ℝ-Vector-Space
+
   left-distributive-mul-diff-Normed-ℝ-Vector-Space :
     (r : ℝ l1) (v w : type-Normed-ℝ-Vector-Space) →
     mul-Normed-ℝ-Vector-Space r (diff-Normed-ℝ-Vector-Space v w) ＝
@@ -220,6 +247,13 @@ module _
       ( mul-Normed-ℝ-Vector-Space r w)
   left-distributive-mul-diff-Normed-ℝ-Vector-Space =
     left-distributive-mul-diff-ℝ-Vector-Space vector-space-Normed-ℝ-Vector-Space
+
+  left-swap-mul-Normed-ℝ-Vector-Space :
+    (r s : ℝ l1) (v : type-Normed-ℝ-Vector-Space) →
+    mul-Normed-ℝ-Vector-Space r (mul-Normed-ℝ-Vector-Space s v) ＝
+    mul-Normed-ℝ-Vector-Space s (mul-Normed-ℝ-Vector-Space r v)
+  left-swap-mul-Normed-ℝ-Vector-Space =
+    left-swap-mul-ℝ-Vector-Space vector-space-Normed-ℝ-Vector-Space
 
   map-norm-Normed-ℝ-Vector-Space : type-Normed-ℝ-Vector-Space → ℝ l1
   map-norm-Normed-ℝ-Vector-Space = pr1 (pr1 norm-Normed-ℝ-Vector-Space)

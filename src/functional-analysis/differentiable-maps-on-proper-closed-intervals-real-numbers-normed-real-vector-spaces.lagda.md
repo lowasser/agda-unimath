@@ -63,7 +63,7 @@ is a
 of `f` if there [exists](foundation.existential-quantification.md) a modulus
 function `μ` such that for `ε : ℚ⁺` and any `x` and `y` in `[a, b]` within a
 `μ(ε)`-[neighborhood](real-numbers.metric-space-of-real-numbers.md) of each
-other, we have $$∥f(y) - f(x) - g(x)(y - x)∥ ≤ ε|y - x|.$$
+other, we have $$∥f(y) - f(x) - (y - x)g(x)∥ ≤ ε|y - x|.$$
 
 ## Definition
 

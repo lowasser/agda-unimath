@@ -218,6 +218,27 @@ module _
       interchange-add-add-Ab (ab-left-module-Ring R M)
 ```
 
+### Interchange laws of addition and differences
+
+```agda
+module _
+  {l1 l2 : Level}
+  (R : Ring l1)
+  (M : left-module-Ring l2 R)
+  where abstract
+
+  interchange-add-diff-left-module-Ring :
+    (x y z w : type-left-module-Ring R M) →
+    diff-left-module-Ring R M
+      ( add-left-module-Ring R M x y)
+      ( add-left-module-Ring R M z w) ＝
+    add-left-module-Ring R M
+      ( diff-left-module-Ring R M x z)
+      ( diff-left-module-Ring R M y w)
+  interchange-add-diff-left-module-Ring =
+    interchange-add-right-subtraction-Ab (ab-left-module-Ring R M)
+```
+
 ### Negation distributes over addition
 
 ```agda

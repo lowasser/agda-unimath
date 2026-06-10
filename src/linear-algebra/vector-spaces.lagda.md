@@ -110,6 +110,13 @@ module _
     (v w : type-Vector-Space) → add-Vector-Space v w ＝ add-Vector-Space w v
   commutative-add-Vector-Space = commutative-add-Ab ab-Vector-Space
 
+  interchange-add-diff-Vector-Space :
+    (x y z w : type-Vector-Space) →
+    diff-Vector-Space (add-Vector-Space x y) (add-Vector-Space z w) ＝
+    add-Vector-Space (diff-Vector-Space x z) (diff-Vector-Space y w)
+  interchange-add-diff-Vector-Space =
+    interchange-add-diff-left-module-Ring (ring-Heyting-Field R) V
+
   left-unit-law-mul-Vector-Space :
     (v : type-Vector-Space) →
     mul-Vector-Space (one-Heyting-Field R) v ＝ v
@@ -151,6 +158,15 @@ module _
     mul-Vector-Space r (mul-Vector-Space s v)
   associative-mul-Vector-Space =
     associative-mul-left-module-Commutative-Ring
+      ( commutative-ring-Heyting-Field R)
+      ( V)
+
+  left-swap-mul-Vector-Space :
+    (r s : type-Heyting-Field R) (v : type-Vector-Space) →
+    mul-Vector-Space r (mul-Vector-Space s v) ＝
+    mul-Vector-Space s (mul-Vector-Space r v)
+  left-swap-mul-Vector-Space =
+    left-swap-mul-left-module-Commutative-Ring
       ( commutative-ring-Heyting-Field R)
       ( V)
 
