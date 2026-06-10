@@ -86,6 +86,18 @@ lower-bound-closed-interval-ℝ : {l1 l2 : Level} → closed-interval-ℝ l1 l2 
 lower-bound-closed-interval-ℝ =
   lower-bound-closed-interval-Large-Poset ℝ-Large-Poset
 
+lower-bound-type-closed-interval-ℝ :
+  {l1 l2 : Level} ([a,b] : closed-interval-ℝ l1 l2) →
+  type-closed-interval-ℝ l1 [a,b]
+lower-bound-type-closed-interval-ℝ =
+  lower-bound-type-closed-interval-Large-Poset ℝ-Large-Poset
+
+upper-bound-type-closed-interval-ℝ :
+  {l1 l2 : Level} ([a,b] : closed-interval-ℝ l1 l2) →
+  type-closed-interval-ℝ l2 [a,b]
+upper-bound-type-closed-interval-ℝ =
+  upper-bound-type-closed-interval-Large-Poset ℝ-Large-Poset
+
 upper-bound-closed-interval-ℝ : {l1 l2 : Level} → closed-interval-ℝ l1 l2 → ℝ l2
 upper-bound-closed-interval-ℝ =
   upper-bound-closed-interval-Large-Poset ℝ-Large-Poset

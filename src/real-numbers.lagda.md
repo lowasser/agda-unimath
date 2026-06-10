@@ -149,6 +149,7 @@ open import real-numbers.subsets-real-numbers public
 open import real-numbers.sums-of-finite-sequences-of-nonnegative-real-numbers public
 open import real-numbers.sums-of-finite-sequences-of-real-numbers public
 open import real-numbers.suprema-families-real-numbers public
+open import real-numbers.tagged-partitions-closed-intervals-real-numbers public
 open import real-numbers.totally-bounded-subsets-real-numbers public
 open import real-numbers.transposition-addition-subtraction-cuts-dedekind-real-numbers public
 open import real-numbers.uniform-homeomorphism-unit-interval-proper-closed-interval-real-numbers public

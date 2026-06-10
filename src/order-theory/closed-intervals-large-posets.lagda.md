@@ -73,6 +73,18 @@ module _
     {l1 l2 : Level} → closed-interval-Large-Poset l1 l2 → type-Large-Poset P l2
   upper-bound-closed-interval-Large-Poset ((a , b) , _) = b
 
+  lower-bound-type-closed-interval-Large-Poset :
+    {l1 l2 : Level} ([a,b] : closed-interval-Large-Poset l1 l2) →
+    type-closed-interval-Large-Poset l1 [a,b]
+  lower-bound-type-closed-interval-Large-Poset ((a , b) , a≤b) =
+    ( a , refl-leq-Large-Poset P a , a≤b)
+
+  upper-bound-type-closed-interval-Large-Poset :
+    {l1 l2 : Level} ([a,b] : closed-interval-Large-Poset l1 l2) →
+    type-closed-interval-Large-Poset l2 [a,b]
+  upper-bound-type-closed-interval-Large-Poset ((a , b) , a≤b) =
+    ( b , a≤b , refl-leq-Large-Poset P b)
+
   singleton-closed-interval-Large-Poset :
     {l : Level} → type-Large-Poset P l → closed-interval-Large-Poset l l
   singleton-closed-interval-Large-Poset x =
