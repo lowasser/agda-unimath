@@ -24,8 +24,8 @@ open import linear-algebra.vector-spaces
 
 open import real-numbers.addition-real-numbers
 open import real-numbers.dedekind-real-numbers
-open import real-numbers.field-of-real-numbers
 open import real-numbers.difference-real-numbers
+open import real-numbers.field-of-real-numbers
 open import real-numbers.multiplication-real-numbers
 open import real-numbers.negation-real-numbers
 open import real-numbers.raising-universe-levels-real-numbers
