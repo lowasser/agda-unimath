@@ -7,16 +7,19 @@ module functional-analysis.riemann-sums-tagged-partitions-closed-intervals-real-
 <details><summary>Imports</summary>
 
 ```agda
-open import linear-algebra.sums-of-finite-sequences-of-elements-normed-real-vector-spaces
-open import real-numbers.tagged-partitions-closed-intervals-real-numbers
-open import real-numbers.dedekind-real-numbers
-open import real-numbers.closed-intervals-real-numbers
-open import lists.finite-sequences
+open import foundation.dependent-pair-types
 open import foundation.function-types
 open import foundation.universe-levels
+
 open import linear-algebra.normed-real-vector-spaces
+open import linear-algebra.sums-of-finite-sequences-of-elements-normed-real-vector-spaces
+
+open import lists.finite-sequences
+
+open import real-numbers.closed-intervals-real-numbers
+open import real-numbers.dedekind-real-numbers
 open import real-numbers.partitions-closed-intervals-real-numbers
-open import foundation.dependent-pair-types
+open import real-numbers.tagged-partitions-closed-intervals-real-numbers
 ```
 
 </details>

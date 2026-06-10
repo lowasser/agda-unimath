@@ -17,11 +17,11 @@ open import foundation.universe-levels
 
 open import lists.finite-sequences
 open import lists.finite-sequences-of-types
-open import real-numbers.nonnegative-real-numbers
 
 open import real-numbers.closed-intervals-real-numbers
 open import real-numbers.dedekind-real-numbers
 open import real-numbers.large-poset-closed-intervals-real-numbers
+open import real-numbers.nonnegative-real-numbers
 open import real-numbers.partitions-closed-intervals-real-numbers
 
 open import univalent-combinatorics.standard-finite-types
