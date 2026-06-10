@@ -48,7 +48,7 @@ open import real-numbers.strict-inequality-real-numbers
 ## Idea
 
 A {{#concept "normed real algebra" Agda=Normed-ℝ-Algebra}} is an
-[algebra over ℝ](functional-analysis.real-algebras.md) `A` equipped with a
+[algebra over ℝ](linear-algebra.real-algebras.md) `A` equipped with a
 [norm](linear-algebra.normed-real-vector-spaces.md) with the property that for
 any `x y : A`, the norm of `xy` is
 [less than or equal to](real-numbers.inequality-real-numbers.md) the
