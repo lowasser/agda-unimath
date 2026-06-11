@@ -7,7 +7,10 @@ module functional-analysis.riemann-integrable-maps-closed-intervals-real-numbers
 <details><summary>Imports</summary>
 
 ```agda
+open import elementary-number-theory.inequality-natural-numbers
+open import elementary-number-theory.nonzero-natural-numbers
 open import elementary-number-theory.positive-rational-numbers
+open import elementary-number-theory.unit-fractions-rational-numbers
 
 open import foundation.dependent-pair-types
 open import foundation.dependent-products-propositions
@@ -20,10 +23,13 @@ open import functional-analysis.riemann-sums-tagged-partitions-closed-intervals-
 
 open import linear-algebra.normed-real-vector-spaces
 
+open import metric-spaces.limits-of-sequences-metric-spaces
+
 open import real-numbers.closed-intervals-real-numbers
 open import real-numbers.inequality-nonnegative-real-numbers
 open import real-numbers.nonnegative-real-numbers
 open import real-numbers.rational-real-numbers
+open import real-numbers.standard-uniform-partitions-closed-intervals-real-numbers
 open import real-numbers.tagged-partitions-closed-intervals-real-numbers
 ```
 
@@ -88,3 +94,48 @@ module _
 ## Properties
 
 ### If a function is Riemann integrable, the integral is the limit as `n → ∞` of the Riemann sum on the standard uniform partition
+
+```agda
+module _
+  {l1 l2 : Level}
+  (V : Normed-ℝ-Vector-Space l1 l2)
+  ([a,b] : closed-interval-ℝ l1 l1)
+  (f : type-closed-interval-ℝ l1 [a,b] → type-Normed-ℝ-Vector-Space V)
+  ((S , is-integral-S) :
+    is-riemann-integrable-map-closed-interval-real-Normed-ℝ-Vector-Space
+      ( V)
+      ( [a,b])
+      ( f))
+  where abstract
+
+  is-limit-riemann-sum-tag-lower-bound-standard-uniform-partition-is-riemann-integral-map-closed-interval-real-Normed-ℝ-Vector-Space :
+    is-limit-sequence-Metric-Space
+      ( metric-space-Normed-ℝ-Vector-Space V)
+      ( riemann-sum-tag-lower-bound-standard-uniform-partition-closed-interval-ℝ
+        ( V)
+        ( [a,b])
+        ( f))
+      ( S)
+  is-limit-riemann-sum-tag-lower-bound-standard-uniform-partition-is-riemann-integral-map-closed-interval-real-Normed-ℝ-Vector-Space =
+    elim-exists
+      ( is-limit-prop-sequence-Metric-Space
+        ( metric-space-Normed-ℝ-Vector-Space V)
+        ( riemann-sum-tag-lower-bound-standard-uniform-partition-closed-interval-ℝ
+          ( V)
+          ( [a,b])
+          ( f))
+        ( S))
+      ( λ μ is-mod-μ →
+        intro-exists
+          ( λ ε → pred-nonzero-ℕ (pr1 (smaller-reciprocal-ℚ⁺ (μ ε))))
+          ( λ ε n N≤n →
+            is-mod-μ
+              ( ε)
+              ( tag-lower-bounds-partition-closed-interval-ℝ
+                ( [a,b])
+                ( partition-standard-uniform-partition-closed-interval-ℝ
+                  ( [a,b])
+                  ( n)))
+              {!   !}))
+      ( is-integral-S)
+```

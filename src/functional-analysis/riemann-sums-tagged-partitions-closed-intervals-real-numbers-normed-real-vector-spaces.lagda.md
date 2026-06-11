@@ -7,6 +7,8 @@ module functional-analysis.riemann-sums-tagged-partitions-closed-intervals-real-
 <details><summary>Imports</summary>
 
 ```agda
+open import elementary-number-theory.natural-numbers
+
 open import foundation.dependent-pair-types
 open import foundation.function-types
 open import foundation.universe-levels
@@ -19,6 +21,7 @@ open import lists.finite-sequences
 open import real-numbers.closed-intervals-real-numbers
 open import real-numbers.dedekind-real-numbers
 open import real-numbers.partitions-closed-intervals-real-numbers
+open import real-numbers.standard-uniform-partitions-closed-intervals-real-numbers
 open import real-numbers.tagged-partitions-closed-intervals-real-numbers
 ```
 
@@ -71,4 +74,29 @@ module _
             ( i))
           ( fin-sequence-values-riemann-sum-tagged-partition-map-closed-interval-real-ℝ-Vector-Space
             ( i)))
+```
+
+## Properties
+
+### Riemann sums over the standard uniform partition of an interval, with partitions tagged with their lower bounds
+
+```agda
+module _
+  {l1 l2 : Level}
+  (V : Normed-ℝ-Vector-Space l1 l2)
+  ([a,b] : closed-interval-ℝ l1 l1)
+  (f : type-closed-interval-ℝ l1 [a,b] → type-Normed-ℝ-Vector-Space V)
+  (n : ℕ)
+  where
+
+  riemann-sum-tag-lower-bound-standard-uniform-partition-closed-interval-ℝ :
+    type-Normed-ℝ-Vector-Space V
+  riemann-sum-tag-lower-bound-standard-uniform-partition-closed-interval-ℝ =
+    riemann-sum-tagged-partition-map-closed-interval-real-ℝ-Vector-Space
+      ( V)
+      ( [a,b])
+      ( f)
+      ( tag-lower-bounds-partition-closed-interval-ℝ
+        ( [a,b])
+        ( partition-standard-uniform-partition-closed-interval-ℝ [a,b] n))
 ```
