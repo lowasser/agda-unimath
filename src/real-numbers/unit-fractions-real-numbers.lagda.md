@@ -41,6 +41,10 @@ positive-reciprocal-real-ℕ⁺ : ℕ⁺ → ℝ⁺ lzero
 positive-reciprocal-real-ℕ⁺ n =
   positive-real-ℚ⁺ (positive-reciprocal-rational-ℕ⁺ n)
 
+nonnegative-reciprocal-real-ℕ⁺ : ℕ⁺ → ℝ⁰⁺ lzero
+nonnegative-reciprocal-real-ℕ⁺ n =
+  nonnegative-ℝ⁺ (positive-reciprocal-real-ℕ⁺ n)
+
 reciprocal-real-ℕ⁺ : ℕ⁺ → ℝ lzero
 reciprocal-real-ℕ⁺ n = real-ℝ⁺ (positive-reciprocal-real-ℕ⁺ n)
 
