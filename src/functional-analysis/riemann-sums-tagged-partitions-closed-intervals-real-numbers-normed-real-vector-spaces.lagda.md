@@ -26,6 +26,16 @@ open import real-numbers.tagged-partitions-closed-intervals-real-numbers
 
 ## Idea
 
+Given a [closed interval](real-numbers.closed-intervals-real-numbers.md)
+`[a, b]` in the [real numbers](real-numbers.dedekind-real-numbers.md), a
+[tagged partition](real-numbers.tagged-partitions-closed-intervals-real-numbers.md)
+`p` of `[a, b]`, a
+[normed real vector space](linear-algebra.normed-real-vector-spaces.md) `V`, and
+a function `f : [a, b] → V`, the
+{{#concept "Riemann sum" Disambiguation="of a function from a closed interval into a normed real vector space, on a tagged partition of the interval"}}
+of `f` on `p` is the sum over the tagged partitions in `p` (with tag `tᵢ` for
+interval `[aᵢ, bᵢ]`) of `(bᵢ - aᵢ) * f tᵢ`.
+
 ## Definition
 
 ```agda

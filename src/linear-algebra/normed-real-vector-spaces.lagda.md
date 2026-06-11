@@ -9,7 +9,10 @@ module linear-algebra.normed-real-vector-spaces where
 <details><summary>Imports</summary>
 
 ```agda
+open import elementary-number-theory.positive-rational-numbers
+
 open import foundation.action-on-identifications-functions
+open import foundation.binary-relations
 open import foundation.dependent-pair-types
 open import foundation.dependent-products-propositions
 open import foundation.identity-types
@@ -31,6 +34,7 @@ open import metric-spaces.located-metric-spaces
 open import metric-spaces.metric-spaces
 open import metric-spaces.metrics
 open import metric-spaces.metrics-of-metric-spaces
+open import metric-spaces.rational-neighborhood-relations
 
 open import real-numbers.absolute-value-real-numbers
 open import real-numbers.addition-real-numbers
@@ -295,6 +299,16 @@ module _
     metric-space-Metric
       ( set-Normed-ℝ-Vector-Space V)
       ( metric-Normed-ℝ-Vector-Space)
+
+  neighborhood-prop-Normed-ℝ-Vector-Space :
+    Rational-Neighborhood-Relation l1 (type-Normed-ℝ-Vector-Space V)
+  neighborhood-prop-Normed-ℝ-Vector-Space =
+    neighborhood-prop-Metric-Space metric-space-Normed-ℝ-Vector-Space
+
+  neighborhood-Normed-ℝ-Vector-Space :
+    ℚ⁺ → Relation l1 (type-Normed-ℝ-Vector-Space V)
+  neighborhood-Normed-ℝ-Vector-Space =
+    neighborhood-Metric-Space metric-space-Normed-ℝ-Vector-Space
 
   located-metric-space-Normed-ℝ-Vector-Space : Located-Metric-Space l2 l1
   located-metric-space-Normed-ℝ-Vector-Space =
