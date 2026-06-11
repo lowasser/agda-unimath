@@ -37,6 +37,7 @@ open import real-numbers.difference-real-numbers
 open import real-numbers.inequalities-addition-and-subtraction-real-numbers
 open import real-numbers.inequality-real-numbers
 open import real-numbers.large-additive-group-of-real-numbers
+open import real-numbers.maximum-finite-families-nonnegative-real-numbers
 open import real-numbers.multiplication-nonnegative-real-numbers
 open import real-numbers.multiplication-real-numbers
 open import real-numbers.nonnegative-real-numbers
@@ -156,8 +157,8 @@ module _
       is-lower-bound-last-fin-sequence-standard-uniform-partition-closed-interval-ℝ ,
       is-upper-bound-head-fin-sequence-standard-uniform-partition-closed-interval-ℝ)
 
-  nonnegative-width-standard-uniform-partition-closed-interval-ℝ : ℝ⁰⁺ l
-  nonnegative-width-standard-uniform-partition-closed-interval-ℝ =
+  mesh-standard-uniform-partition-closed-interval-ℝ : ℝ⁰⁺ l
+  mesh-standard-uniform-partition-closed-interval-ℝ =
     nonnegative-width-closed-interval-ℝ [a,b] *ℝ⁰⁺
     nonnegative-reciprocal-real-succ-ℕ n
 
@@ -224,7 +225,7 @@ module _
         ( [a,b])
         ( partition-standard-uniform-partition-closed-interval-ℝ))
   is-null-homotopic-map-diffs-partition-standard-uniform-partition-closed-interval-ℝ =
-    ( nonnegative-width-standard-uniform-partition-closed-interval-ℝ ,
+    ( mesh-standard-uniform-partition-closed-interval-ℝ ,
       compute-diffs-partition-standard-uniform-partition-closed-interval-ℝ)
 
   is-uniform-partition-standard-uniform-partition-closed-interval-ℝ :
@@ -242,6 +243,25 @@ module _
   standard-uniform-partition-closed-interval-ℝ =
     ( partition-standard-uniform-partition-closed-interval-ℝ ,
       is-uniform-partition-standard-uniform-partition-closed-interval-ℝ)
+
+  abstract
+    compute-mesh-standard-uniform-partition-closed-interval-ℝ :
+      mesh-uniform-partition-closed-interval-ℝ
+        ( [a,b])
+        ( standard-uniform-partition-closed-interval-ℝ) ＝
+      mesh-standard-uniform-partition-closed-interval-ℝ
+    compute-mesh-standard-uniform-partition-closed-interval-ℝ =
+      max-weakly-constant-fin-sequence-ℝ⁰⁺
+        ( succ-ℕ n)
+        ( diffs-partition-closed-interval-ℝ
+          ( [a,b])
+          ( partition-standard-uniform-partition-closed-interval-ℝ))
+        ( is-weakly-constant-fin-sequence-nonnegative-width-closed-interval-uniform-partition-closed-interval-ℝ
+          ( [a,b])
+          ( standard-uniform-partition-closed-interval-ℝ))
+        ( neg-one-Fin n) ∙
+      compute-diffs-partition-standard-uniform-partition-closed-interval-ℝ
+        ( neg-one-Fin n)
 ```
 
 ## Properties

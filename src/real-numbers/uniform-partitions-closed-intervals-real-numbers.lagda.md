@@ -131,13 +131,13 @@ module _
     uniform-partition-closed-interval-ℝ [a,b])
   where
 
-  nonnegative-width-interval-uniform-partition-closed-interval-ℝ : ℝ⁰⁺ l
-  nonnegative-width-interval-uniform-partition-closed-interval-ℝ =
+  mesh-uniform-partition-closed-interval-ℝ : ℝ⁰⁺ l
+  mesh-uniform-partition-closed-interval-ℝ =
     mesh-partition-closed-interval-ℝ [a,b] p
 
-  width-interval-uniform-partition-closed-interval-ℝ : ℝ l
-  width-interval-uniform-partition-closed-interval-ℝ =
-    real-ℝ⁰⁺ nonnegative-width-interval-uniform-partition-closed-interval-ℝ
+  real-mesh-interval-uniform-partition-closed-interval-ℝ : ℝ l
+  real-mesh-interval-uniform-partition-closed-interval-ℝ =
+    real-ℝ⁰⁺ mesh-uniform-partition-closed-interval-ℝ
 
   is-null-homotopic-fin-sequence-nonnegative-width-closed-interval-uniform-partition-closed-interval-ℝ :
     is-null-homotopic-map
@@ -146,7 +146,7 @@ module _
         ( up))
   pr1
     is-null-homotopic-fin-sequence-nonnegative-width-closed-interval-uniform-partition-closed-interval-ℝ =
-    nonnegative-width-interval-uniform-partition-closed-interval-ℝ
+    mesh-uniform-partition-closed-interval-ℝ
   pr2
     is-null-homotopic-fin-sequence-nonnegative-width-closed-interval-uniform-partition-closed-interval-ℝ
     i =
