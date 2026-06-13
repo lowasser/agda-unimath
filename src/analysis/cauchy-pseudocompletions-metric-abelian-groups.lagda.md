@@ -29,7 +29,7 @@ open import metric-spaces.similarity-of-elements-pseudometric-spaces
 
 The
 {{#concept "Cauchy pseudocompletion" Disambiguation="of a metric abelian group" Agda=cauchy-pseudocompletion-Metric-Ab}}
-of a [metric abelian group](group-theory.metric-abelian-groups.md) is the
+of a [metric abelian group](analysis.metric-abelian-groups.md) is the
 [Cauchy pseudocompletion](metric-spaces.cauchy-pseudocompletions-of-metric-spaces.md)
 of the underlying [metric space](metric-spaces.metric-spaces.md).
 
