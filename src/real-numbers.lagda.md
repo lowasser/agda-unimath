@@ -8,6 +8,7 @@ module real-numbers where
 open import real-numbers.absolute-value-closed-intervals-real-numbers public
 open import real-numbers.absolute-value-real-numbers public
 open import real-numbers.accumulation-points-subsets-real-numbers public
+open import real-numbers.addition-cauchy-real-numbers public
 open import real-numbers.addition-lower-dedekind-real-numbers public
 open import real-numbers.addition-negative-real-numbers public
 open import real-numbers.addition-nonnegative-real-numbers public
@@ -25,6 +26,7 @@ open import real-numbers.binary-mean-real-numbers public
 open import real-numbers.binary-minimum-nonnegative-real-numbers public
 open import real-numbers.binary-minimum-real-numbers public
 open import real-numbers.cauchy-completeness-dedekind-real-numbers public
+open import real-numbers.cauchy-real-numbers public
 open import real-numbers.cauchy-sequences-real-numbers public
 open import real-numbers.clamp-function-closed-interval-real-numbers public
 open import real-numbers.closed-intervals-real-numbers public
