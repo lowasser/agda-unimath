@@ -9,26 +9,26 @@ module analysis.metric-quotients-cauchy-pseudocompletions-metric-abelian-groups 
 <details><summary>Imports</summary>
 
 ```agda
+open import analysis.cauchy-approximations-metric-abelian-groups
 open import analysis.cauchy-pseudocompletions-metric-abelian-groups
 open import analysis.metric-abelian-groups
-open import analysis.cauchy-approximations-metric-abelian-groups
-open import metric-spaces.unit-map-metric-quotients-of-pseudometric-spaces
 
 open import elementary-number-theory.positive-rational-numbers
-open import metric-spaces.cauchy-pseudocompletions-of-metric-spaces
 
-open import foundation.embeddings
 open import foundation.binary-relations
 open import foundation.dependent-pair-types
+open import foundation.embeddings
 open import foundation.sets
 open import foundation.universe-levels
-open import metric-spaces.pseudometric-spaces
 
+open import metric-spaces.cauchy-pseudocompletions-of-metric-spaces
 open import metric-spaces.isometries-metric-spaces
+open import metric-spaces.isometries-pseudometric-spaces
 open import metric-spaces.metric-quotients-of-pseudometric-spaces
 open import metric-spaces.metric-spaces
-open import metric-spaces.isometries-pseudometric-spaces
+open import metric-spaces.pseudometric-spaces
 open import metric-spaces.rational-neighborhood-relations
+open import metric-spaces.unit-map-metric-quotients-of-pseudometric-spaces
 ```
 
 </details>

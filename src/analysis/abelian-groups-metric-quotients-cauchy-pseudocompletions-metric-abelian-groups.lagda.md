@@ -22,15 +22,9 @@ open import elementary-number-theory.positive-rational-numbers
 open import foundation.action-on-identifications-binary-functions
 open import foundation.action-on-identifications-functions
 open import foundation.binary-functoriality-set-quotients
-open import foundation.binary-relations
-open import foundation.binary-transport
 open import foundation.dependent-pair-types
-open import foundation.embeddings
-open import foundation.equivalence-relations
 open import foundation.functoriality-set-quotients
 open import foundation.identity-types
-open import foundation.injective-maps
-open import foundation.propositional-truncations
 open import foundation.set-quotients
 open import foundation.sets
 open import foundation.transport-along-identifications
@@ -41,15 +35,7 @@ open import group-theory.groups
 open import group-theory.monoids
 open import group-theory.semigroups
 
-open import metric-spaces.cauchy-approximations-metric-spaces
-open import metric-spaces.cauchy-pseudocompletions-of-metric-spaces
-open import metric-spaces.isometries-metric-spaces
-open import metric-spaces.metric-quotients-of-pseudometric-spaces
-open import metric-spaces.metric-spaces
-open import metric-spaces.pseudometric-spaces
-open import metric-spaces.rational-neighborhood-relations
 open import metric-spaces.similarity-of-elements-pseudometric-spaces
-open import metric-spaces.unit-map-metric-quotients-of-pseudometric-spaces
 ```
 
 </details>
