@@ -22,15 +22,9 @@ open import elementary-number-theory.positive-rational-numbers
 open import foundation.action-on-identifications-binary-functions
 open import foundation.action-on-identifications-functions
 open import foundation.binary-functoriality-set-quotients
-open import foundation.binary-relations
-open import foundation.binary-transport
 open import foundation.dependent-pair-types
-open import foundation.embeddings
-open import foundation.equivalence-relations
 open import foundation.functoriality-set-quotients
 open import foundation.identity-types
-open import foundation.injective-maps
-open import foundation.propositional-truncations
 open import foundation.set-quotients
 open import foundation.sets
 open import foundation.transport-along-identifications
@@ -41,15 +35,7 @@ open import group-theory.groups
 open import group-theory.monoids
 open import group-theory.semigroups
 
-open import metric-spaces.cauchy-approximations-metric-spaces
-open import metric-spaces.cauchy-pseudocompletions-of-metric-spaces
-open import metric-spaces.isometries-metric-spaces
-open import metric-spaces.metric-quotients-of-pseudometric-spaces
-open import metric-spaces.metric-spaces
-open import metric-spaces.pseudometric-spaces
-open import metric-spaces.rational-neighborhood-relations
 open import metric-spaces.similarity-of-elements-pseudometric-spaces
-open import metric-spaces.unit-map-metric-quotients-of-pseudometric-spaces
 ```
 
 </details>
@@ -92,60 +78,6 @@ module _
       ( equivalence-relation-sim-cauchy-pseudocompletion-Metric-Ab G)
       ( equivalence-relation-sim-cauchy-pseudocompletion-Metric-Ab G)
       ( binary-hom-add-cauchy-pseudocompletion-Metric-Ab)
-```
-
-### The embedding of elements of a metric abelian group in the metric quotient of its Cauchy pseudocompletion
-
-```agda
-module _
-  {l1 l2 : Level}
-  (G : Metric-Ab l1 l2)
-  where
-
-  in-approximation-metric-quotient-cauchy-pseudocompletion-Metric-Ab :
-    cauchy-approximation-Metric-Ab G →
-    type-metric-quotient-cauchy-pseudocompletion-Metric-Ab G
-  in-approximation-metric-quotient-cauchy-pseudocompletion-Metric-Ab =
-    quotient-map
-      ( equivalence-relation-sim-cauchy-pseudocompletion-Metric-Ab G)
-
-  in-metric-quotient-cauchy-pseudocompletion-Metric-Ab :
-    type-Metric-Ab G → type-metric-quotient-cauchy-pseudocompletion-Metric-Ab G
-  in-metric-quotient-cauchy-pseudocompletion-Metric-Ab x =
-    in-approximation-metric-quotient-cauchy-pseudocompletion-Metric-Ab
-      ( const-cauchy-approximation-Metric-Ab G x)
-
-  abstract
-    is-injective-in-metric-quotient-cauchy-pseudocompletion-Metric-Ab :
-      is-injective in-metric-quotient-cauchy-pseudocompletion-Metric-Ab
-    is-injective-in-metric-quotient-cauchy-pseudocompletion-Metric-Ab
-      {x} {y} inx=iny =
-      eq-sim-const-cauchy-approximation-cauchy-pseudocompletion-Metric-Ab
-        ( G)
-        ( x)
-        ( y)
-        ( apply-effectiveness-quotient-map
-          ( equivalence-relation-sim-cauchy-pseudocompletion-Metric-Ab G)
-          ( inx=iny))
-
-    is-emb-in-metric-quotient-cauchy-pseudocompletion-Metric-Ab :
-      is-emb in-metric-quotient-cauchy-pseudocompletion-Metric-Ab
-    is-emb-in-metric-quotient-cauchy-pseudocompletion-Metric-Ab =
-      is-emb-is-injective
-        ( is-set-type-Metric-Space
-          ( metric-quotient-cauchy-pseudocompletion-Metric-Ab G))
-        is-injective-in-metric-quotient-cauchy-pseudocompletion-Metric-Ab
-
-  emb-metric-quotient-cauchy-pseudocompletion-Metric-Ab :
-    type-Metric-Ab G ↪ type-metric-quotient-cauchy-pseudocompletion-Metric-Ab G
-  emb-metric-quotient-cauchy-pseudocompletion-Metric-Ab =
-    ( in-metric-quotient-cauchy-pseudocompletion-Metric-Ab ,
-      is-emb-in-metric-quotient-cauchy-pseudocompletion-Metric-Ab)
-
-  zero-metric-quotient-cauchy-pseudocompletion-Metric-Ab :
-    type-metric-quotient-cauchy-pseudocompletion-Metric-Ab G
-  zero-metric-quotient-cauchy-pseudocompletion-Metric-Ab =
-    in-metric-quotient-cauchy-pseudocompletion-Metric-Ab (zero-Metric-Ab G)
 ```
 
 ## Properties
