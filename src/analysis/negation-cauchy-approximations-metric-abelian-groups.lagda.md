@@ -13,11 +13,13 @@ open import analysis.metric-abelian-groups
 
 open import foundation.dependent-pair-types
 open import foundation.function-extensionality
+open import analysis.cauchy-pseudocompletions-metric-abelian-groups
 open import foundation.identity-types
 open import foundation.subtypes
 open import foundation.universe-levels
 
 open import metric-spaces.action-on-cauchy-approximations-isometries-metric-spaces
+open import metric-spaces.isometries-pseudometric-spaces
 ```
 
 </details>
@@ -46,7 +48,19 @@ module _
 ### Negation is an isometry in the Cauchy pseudocompletion of metric abelian groups
 
 ```agda
+module _
+  {l1 l2 : Level}
+  (G : Metric-Ab l1 l2)
+  where
 
+  abstract
+    is-isometry-neg-cauchy-pseudocompletion-Metric-Ab :
+      is-isometry-Pseudometric-Space
+        ( cauchy-pseudocompletion-Metric-Ab G)
+        ( cauchy-pseudocompletion-Metric-Ab G)
+        ( neg-cauchy-approximation-Metric-Ab G)
+    is-isometry-neg-cauchy-pseudocompletion-Metric-Ab =
+      {! is-isometry-map  !}
 ```
 
 ### Inverse laws of addition of Cauchy approximations
