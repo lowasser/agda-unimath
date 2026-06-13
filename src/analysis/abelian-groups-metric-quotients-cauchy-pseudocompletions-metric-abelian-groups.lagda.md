@@ -1,9 +1,9 @@
-# The abelian group of the metric quotient of Cauchy pseudocompletions of metric abelian groups
+# The abelian groups of the metric quotients of Cauchy pseudocompletions of metric abelian groups
 
 ```agda
 {-# OPTIONS --lossy-unification #-}
 
-module analysis.abelian-group-metric-quotient-cauchy-pseudocompletion-metric-abelian-groups where
+module analysis.abelian-groups-metric-quotients-cauchy-pseudocompletions-metric-abelian-groups where
 ```
 
 <details><summary>Imports</summary>
@@ -13,6 +13,7 @@ open import analysis.addition-cauchy-approximations-metric-abelian-groups
 open import analysis.cauchy-approximations-metric-abelian-groups
 open import analysis.cauchy-pseudocompletions-metric-abelian-groups
 open import analysis.metric-abelian-groups
+open import analysis.negation-cauchy-approximations-metric-abelian-groups
 
 open import elementary-number-theory.addition-positive-rational-numbers
 open import elementary-number-theory.positive-rational-numbers
@@ -428,7 +429,12 @@ module _
       ( equivalence-relation-sim-cauchy-pseudocompletion-Metric-Ab G)
   hom-neg-cauchy-pseudocompletion-Metric-Ab =
     ( neg-cauchy-approximation-Metric-Ab G ,
-      preserves-sim-neg-cauchy-approximation-Metric-Ab G _ _)
+      preserves-sim-map-isometry-Pseudometric-Space
+        ( cauchy-pseudocompletion-Metric-Ab G)
+        ( cauchy-pseudocompletion-Metric-Ab G)
+        ( isometry-neg-cauchy-pseudocompletion-Metric-Ab G)
+        ( _)
+        ( _))
 
   neg-metric-quotient-cauchy-pseudocompletion-Metric-Ab :
     type-metric-quotient-cauchy-pseudocompletion-Metric-Ab G →

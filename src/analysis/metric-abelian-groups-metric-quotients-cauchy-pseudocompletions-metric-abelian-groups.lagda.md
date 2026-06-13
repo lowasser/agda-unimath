@@ -3,13 +3,13 @@
 ```agda
 {-# OPTIONS --lossy-unification #-}
 
-module analysis.metric-abelian-group-metric-quotient-cauchy-pseudocompletion-metric-abelian-groups where
+module analysis.metric-abelian-groups-metric-quotients-cauchy-pseudocompletions-metric-abelian-groups where
 ```
 
 <details><summary>Imports</summary>
 
 ```agda
-open import analysis.abelian-group-metric-quotient-cauchy-pseudocompletion-metric-abelian-groups
+open import analysis.abelian-groups-metric-quotients-cauchy-pseudocompletions-metric-abelian-groups
 open import analysis.addition-cauchy-approximations-metric-abelian-groups
 open import analysis.cauchy-pseudocompletions-metric-abelian-groups
 open import analysis.metric-abelian-groups
