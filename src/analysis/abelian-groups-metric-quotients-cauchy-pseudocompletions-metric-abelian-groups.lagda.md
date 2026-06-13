@@ -94,60 +94,6 @@ module _
       ( binary-hom-add-cauchy-pseudocompletion-Metric-Ab)
 ```
 
-### The embedding of elements of a metric abelian group in the metric quotient of its Cauchy pseudocompletion
-
-```agda
-module _
-  {l1 l2 : Level}
-  (G : Metric-Ab l1 l2)
-  where
-
-  in-approximation-metric-quotient-cauchy-pseudocompletion-Metric-Ab :
-    cauchy-approximation-Metric-Ab G →
-    type-metric-quotient-cauchy-pseudocompletion-Metric-Ab G
-  in-approximation-metric-quotient-cauchy-pseudocompletion-Metric-Ab =
-    quotient-map
-      ( equivalence-relation-sim-cauchy-pseudocompletion-Metric-Ab G)
-
-  in-metric-quotient-cauchy-pseudocompletion-Metric-Ab :
-    type-Metric-Ab G → type-metric-quotient-cauchy-pseudocompletion-Metric-Ab G
-  in-metric-quotient-cauchy-pseudocompletion-Metric-Ab x =
-    in-approximation-metric-quotient-cauchy-pseudocompletion-Metric-Ab
-      ( const-cauchy-approximation-Metric-Ab G x)
-
-  abstract
-    is-injective-in-metric-quotient-cauchy-pseudocompletion-Metric-Ab :
-      is-injective in-metric-quotient-cauchy-pseudocompletion-Metric-Ab
-    is-injective-in-metric-quotient-cauchy-pseudocompletion-Metric-Ab
-      {x} {y} inx=iny =
-      eq-sim-const-cauchy-approximation-cauchy-pseudocompletion-Metric-Ab
-        ( G)
-        ( x)
-        ( y)
-        ( apply-effectiveness-quotient-map
-          ( equivalence-relation-sim-cauchy-pseudocompletion-Metric-Ab G)
-          ( inx=iny))
-
-    is-emb-in-metric-quotient-cauchy-pseudocompletion-Metric-Ab :
-      is-emb in-metric-quotient-cauchy-pseudocompletion-Metric-Ab
-    is-emb-in-metric-quotient-cauchy-pseudocompletion-Metric-Ab =
-      is-emb-is-injective
-        ( is-set-type-Metric-Space
-          ( metric-quotient-cauchy-pseudocompletion-Metric-Ab G))
-        is-injective-in-metric-quotient-cauchy-pseudocompletion-Metric-Ab
-
-  emb-metric-quotient-cauchy-pseudocompletion-Metric-Ab :
-    type-Metric-Ab G ↪ type-metric-quotient-cauchy-pseudocompletion-Metric-Ab G
-  emb-metric-quotient-cauchy-pseudocompletion-Metric-Ab =
-    ( in-metric-quotient-cauchy-pseudocompletion-Metric-Ab ,
-      is-emb-in-metric-quotient-cauchy-pseudocompletion-Metric-Ab)
-
-  zero-metric-quotient-cauchy-pseudocompletion-Metric-Ab :
-    type-metric-quotient-cauchy-pseudocompletion-Metric-Ab G
-  zero-metric-quotient-cauchy-pseudocompletion-Metric-Ab =
-    in-metric-quotient-cauchy-pseudocompletion-Metric-Ab (zero-Metric-Ab G)
-```
-
 ## Properties
 
 ### The embedding in the metric quotient of the Cauchy pseudocompletion preserves addition
