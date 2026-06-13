@@ -13,6 +13,7 @@ open import analysis.abelian-groups-metric-quotients-cauchy-pseudocompletions-me
 open import analysis.addition-cauchy-approximations-metric-abelian-groups
 open import analysis.cauchy-pseudocompletions-metric-abelian-groups
 open import analysis.metric-abelian-groups
+open import analysis.metric-quotients-cauchy-pseudocompletions-metric-abelian-groups
 
 open import elementary-number-theory.positive-rational-numbers
 
@@ -29,11 +30,11 @@ open import group-theory.abelian-groups
 open import group-theory.homomorphisms-abelian-groups
 
 open import metric-spaces.action-on-cauchy-approximations-isometries-metric-spaces
+open import metric-spaces.cauchy-pseudocompletions-of-metric-spaces
 open import metric-spaces.isometries-metric-spaces
 open import metric-spaces.isometries-pseudometric-spaces
 open import metric-spaces.metric-spaces
 open import metric-spaces.short-maps-metric-spaces
-open import metric-spaces.cauchy-pseudocompletions-of-metric-spaces
 open import metric-spaces.short-maps-pseudometric-spaces
 open import metric-spaces.unit-map-metric-quotients-of-pseudometric-spaces
 ```
@@ -261,7 +262,7 @@ module _
       ( cauchy-pseudocompletion-Metric-Ab G)
       ( pseudometric-Metric-Space
         ( metric-quotient-cauchy-pseudocompletion-Metric-Ab G))
-      ( isometry-in-approx-metric-quotient-cauchy-pseudocompletion-Metric-Ab )
+      ( isometry-in-approx-metric-quotient-cauchy-pseudocompletion-Metric-Ab)
       ( isometry-unit-cauchy-pseudocompletion-Metric-Space
         ( metric-space-Metric-Ab G))
 ```
