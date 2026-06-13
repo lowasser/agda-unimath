@@ -41,3 +41,11 @@ add-cauchy-ℝ = add-Ab ab-add-cauchy-ℝ
 ## Properties
 
 ### Abelian group properties of addition
+
+```agda
+abstract
+  left-unit-law-add-cauchy-ℝ :
+    (x : cauchy-ℝ) → add-cauchy-ℝ zero-cauchy-ℝ x ＝ x
+  left-unit-law-add-cauchy-ℝ =
+    ?
+```
