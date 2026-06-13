@@ -7,6 +7,7 @@ module analysis.metric-abelian-groups where
 <details><summary>Imports</summary>
 
 ```agda
+open import elementary-number-theory.addition-positive-rational-numbers
 open import elementary-number-theory.positive-rational-numbers
 
 open import foundation.action-on-identifications-binary-functions
@@ -17,6 +18,7 @@ open import foundation.dependent-pair-types
 open import foundation.dependent-products-propositions
 open import foundation.function-extensionality
 open import foundation.identity-types
+open import foundation.logical-equivalences
 open import foundation.propositions
 open import foundation.transport-along-identifications
 open import foundation.universe-levels
@@ -29,8 +31,11 @@ open import metric-spaces.isometries-metric-spaces
 open import metric-spaces.isometries-pseudometric-spaces
 open import metric-spaces.metric-spaces
 open import metric-spaces.modulated-uniformly-continuous-maps-metric-spaces
+open import metric-spaces.monotonic-rational-neighborhood-relations
 open import metric-spaces.pseudometric-spaces
 open import metric-spaces.rational-neighborhood-relations
+open import metric-spaces.reflexive-rational-neighborhood-relations
+open import metric-spaces.triangular-rational-neighborhood-relations
 open import metric-spaces.uniformly-continuous-maps-metric-spaces
 ```
 
@@ -89,32 +94,52 @@ module _
 ```agda
 module _
   {l1 l2 : Level} (MG : Metric-Ab l1 l2)
+  (let ab-MG = ab-Metric-Ab MG)
   where
 
   zero-Metric-Ab : type-Metric-Ab MG
-  zero-Metric-Ab = zero-Ab (ab-Metric-Ab MG)
+  zero-Metric-Ab = zero-Ab ab-MG
 
   add-Metric-Ab : type-Metric-Ab MG → type-Metric-Ab MG → type-Metric-Ab MG
-  add-Metric-Ab = add-Ab (ab-Metric-Ab MG)
+  add-Metric-Ab = add-Ab ab-MG
 
   add-Metric-Ab' : type-Metric-Ab MG → type-Metric-Ab MG → type-Metric-Ab MG
-  add-Metric-Ab' = add-Ab' (ab-Metric-Ab MG)
+  add-Metric-Ab' = add-Ab' ab-MG
 
   ap-add-Metric-Ab :
     {x x' y y' : type-Metric-Ab MG} → x ＝ x' → y ＝ y' →
     add-Metric-Ab x y ＝ add-Metric-Ab x' y'
-  ap-add-Metric-Ab = ap-add-Ab (ab-Metric-Ab MG)
+  ap-add-Metric-Ab = ap-add-Ab ab-MG
 
   neg-Metric-Ab : type-Metric-Ab MG → type-Metric-Ab MG
-  neg-Metric-Ab = neg-Ab (ab-Metric-Ab MG)
+  neg-Metric-Ab = neg-Ab ab-MG
 
   abstract
+    left-unit-law-add-Metric-Ab :
+      (x : type-Metric-Ab MG) → add-Metric-Ab zero-Metric-Ab x ＝ x
+    left-unit-law-add-Metric-Ab = left-unit-law-add-Ab ab-MG
+
+    associative-add-Metric-Ab :
+      (x y z : type-Metric-Ab MG) →
+      add-Metric-Ab (add-Metric-Ab x y) z ＝ add-Metric-Ab x (add-Metric-Ab y z)
+    associative-add-Metric-Ab = associative-add-Ab ab-MG
+
+    left-inverse-law-add-Metric-Ab :
+      (x : type-Metric-Ab MG) →
+      add-Metric-Ab (neg-Metric-Ab x) x ＝ zero-Metric-Ab
+    left-inverse-law-add-Metric-Ab = left-inverse-law-add-Ab ab-MG
+
+    right-inverse-law-add-Metric-Ab :
+      (x : type-Metric-Ab MG) →
+      add-Metric-Ab x (neg-Metric-Ab x) ＝ zero-Metric-Ab
+    right-inverse-law-add-Metric-Ab = right-inverse-law-add-Ab ab-MG
+
     neg-zero-Metric-Ab : neg-Metric-Ab zero-Metric-Ab ＝ zero-Metric-Ab
-    neg-zero-Metric-Ab = neg-zero-Ab (ab-Metric-Ab MG)
+    neg-zero-Metric-Ab = neg-zero-Ab ab-MG
 
     neg-neg-Metric-Ab :
       (x : type-Metric-Ab MG) → neg-Metric-Ab (neg-Metric-Ab x) ＝ x
-    neg-neg-Metric-Ab = neg-neg-Ab (ab-Metric-Ab MG)
+    neg-neg-Metric-Ab = neg-neg-Ab ab-MG
 
   diff-Metric-Ab : type-Metric-Ab MG → type-Metric-Ab MG → type-Metric-Ab MG
   diff-Metric-Ab x y = add-Metric-Ab x (neg-Metric-Ab y)
@@ -122,16 +147,16 @@ module _
   ap-diff-Metric-Ab :
     {x x' y y' : type-Metric-Ab MG} → x ＝ x' → y ＝ y' →
     diff-Metric-Ab x y ＝ diff-Metric-Ab x' y'
-  ap-diff-Metric-Ab = ap-right-subtraction-Ab (ab-Metric-Ab MG)
+  ap-diff-Metric-Ab = ap-right-subtraction-Ab ab-MG
 
   commutative-add-Metric-Ab :
     (x y : type-Metric-Ab MG) → add-Metric-Ab x y ＝ add-Metric-Ab y x
-  commutative-add-Metric-Ab = commutative-add-Ab (ab-Metric-Ab MG)
+  commutative-add-Metric-Ab = commutative-add-Ab ab-MG
 
   is-identity-right-conjugation-Metric-Ab :
     (x y : type-Metric-Ab MG) → add-Metric-Ab x (diff-Metric-Ab y x) ＝ y
   is-identity-right-conjugation-Metric-Ab =
-    is-identity-right-conjugation-Ab (ab-Metric-Ab MG)
+    is-identity-right-conjugation-Ab ab-MG
 ```
 
 ### Metric properties of metric abelian groups
@@ -161,6 +186,21 @@ module _
 
   neighborhood-Metric-Ab : ℚ⁺ → Relation l2 (type-Metric-Ab MG)
   neighborhood-Metric-Ab = neighborhood-Metric-Space metric-space-Metric-Ab
+
+  refl-neighborhood-Metric-Ab :
+    is-reflexive-Rational-Neighborhood-Relation neighborhood-prop-Metric-Ab
+  refl-neighborhood-Metric-Ab =
+    refl-neighborhood-Metric-Space metric-space-Metric-Ab
+
+  monotonic-neighborhood-Metric-Ab :
+    is-monotonic-Rational-Neighborhood-Relation neighborhood-prop-Metric-Ab
+  monotonic-neighborhood-Metric-Ab =
+    monotonic-neighborhood-Metric-Space metric-space-Metric-Ab
+
+  triangular-neighborhood-Metric-Ab :
+    is-triangular-Rational-Neighborhood-Relation neighborhood-prop-Metric-Ab
+  triangular-neighborhood-Metric-Ab =
+    triangular-neighborhood-Metric-Space metric-space-Metric-Ab
 
   is-isometry-add-Metric-Ab :
     (x : type-Metric-Ab MG) →
@@ -252,4 +292,36 @@ module _
         ( metric-space-Metric-Ab G))
       ( metric-space-Metric-Ab G)
       ( modulated-uniformly-continuous-map-add-pair-Metric-Ab)
+```
+
+### Neighborhoods of sums in metric abelian groups
+
+```agda
+module _
+  {l1 l2 : Level}
+  (G : Metric-Ab l1 l2)
+  (dxx' dyy' : ℚ⁺)
+  (x x' y y' : type-Metric-Ab G)
+  where abstract
+
+  neighborhood-add-Metric-Ab :
+    neighborhood-Metric-Ab G dxx' x x' →
+    neighborhood-Metric-Ab G dyy' y y' →
+    neighborhood-Metric-Ab G
+      ( dxx' +ℚ⁺ dyy')
+      ( add-Metric-Ab G x y)
+      ( add-Metric-Ab G x' y')
+  neighborhood-add-Metric-Ab Nxx' Nyy' =
+    triangular-neighborhood-Metric-Ab G
+      ( add-Metric-Ab G x y)
+      ( add-Metric-Ab G x' y)
+      ( add-Metric-Ab G x' y')
+      ( dxx')
+      ( dyy')
+      ( forward-implication
+        ( is-isometry-add-Metric-Ab G x' dyy' y y')
+        ( Nyy'))
+      ( forward-implication
+        ( is-isometry-add-Metric-Ab' G y dxx' x x')
+        ( Nxx'))
 ```
