@@ -19,6 +19,7 @@ open import foundation.action-on-identifications-functions
 open import foundation.binary-relations
 open import foundation.dependent-pair-types
 open import foundation.dependent-products-propositions
+open import foundation.equivalence-relations
 open import foundation.function-types
 open import foundation.identity-types
 open import foundation.propositions
@@ -277,6 +278,30 @@ module _
       is-symmetric-neighborhood-cauchy-pseudocompletion-Pseudometric-Space M ,
       is-triangular-neighborhood-cauchy-pseudocompletion-Pseudometric-Space M ,
       is-saturated-neighborhood-cauchy-pseudocompletion-Pseudometric-Space M)
+```
+
+### The similarity equivalence relation in the Cauchy pseudocompletion of a pseudometric space
+
+```agda
+module _
+  {l1 l2 : Level} (M : Pseudometric-Space l1 l2)
+  where
+
+  equivalence-relation-sim-cauchy-pseudocompletion-Pseudometric-Space :
+    equivalence-relation l2 (cauchy-approximation-Pseudometric-Space M)
+  equivalence-relation-sim-cauchy-pseudocompletion-Pseudometric-Space =
+    equivalence-relation-sim-Pseudometric-Space
+      ( cauchy-pseudocompletion-Pseudometric-Space M)
+
+  sim-prop-cauchy-pseudocompletion-Pseudometric-Space :
+    Relation-Prop l2 (cauchy-approximation-Pseudometric-Space M)
+  sim-prop-cauchy-pseudocompletion-Pseudometric-Space =
+    sim-prop-Pseudometric-Space (cauchy-pseudocompletion-Pseudometric-Space M)
+
+  sim-cauchy-pseudocompletion-Pseudometric-Space :
+    Relation l2 (cauchy-approximation-Pseudometric-Space M)
+  sim-cauchy-pseudocompletion-Pseudometric-Space =
+    sim-Pseudometric-Space (cauchy-pseudocompletion-Pseudometric-Space M)
 ```
 
 ### The isometry from a pseudometric space to its Cauchy pseudocompletion
