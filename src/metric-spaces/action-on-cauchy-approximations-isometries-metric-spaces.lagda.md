@@ -58,6 +58,18 @@ module _
   (f : isometry-Metric-Space X Y)
   where
 
+  abstract
+    is-isometry-cauchy-pseudocompletion-isometry-Metric-Space :
+      is-isometry-Pseudometric-Space
+        ( cauchy-pseudocompletion-Metric-Space X)
+        ( cauchy-pseudocompletion-Metric-Space Y)
+        ( map-isometry-cauchy-approximation-Metric-Space X Y f)
+    is-isometry-cauchy-pseudocompletion-isometry-Metric-Space =
+      is-isometry-cauchy-pseudocompletion-isometry-Pseudometric-Space
+        ( pseudometric-Metric-Space X)
+        ( pseudometric-Metric-Space Y)
+        ( f)
+
   isometry-cauchy-pseudocompletion-isometry-Metric-Space :
     isometry-Pseudometric-Space
       ( cauchy-pseudocompletion-Metric-Space X)
