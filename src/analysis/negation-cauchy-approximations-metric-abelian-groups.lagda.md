@@ -9,11 +9,11 @@ module analysis.negation-cauchy-approximations-metric-abelian-groups where
 ```agda
 open import analysis.addition-cauchy-approximations-metric-abelian-groups
 open import analysis.cauchy-approximations-metric-abelian-groups
+open import analysis.cauchy-pseudocompletions-metric-abelian-groups
 open import analysis.metric-abelian-groups
 
 open import foundation.dependent-pair-types
 open import foundation.function-extensionality
-open import analysis.cauchy-pseudocompletions-metric-abelian-groups
 open import foundation.identity-types
 open import foundation.subtypes
 open import foundation.universe-levels
@@ -25,6 +25,12 @@ open import metric-spaces.isometries-pseudometric-spaces
 </details>
 
 ## Idea
+
+Negation of
+[Cauchy approximations](analysis.cauchy-approximations-metric-abelian-groups.md)
+in [metric abelian groups](analysis.metric-abelian-groups.md) is the inverse
+operation for
+[addition](analysis.addition-cauchy-approximations-metric-abelian-groups.md).
 
 ## Definition
 
