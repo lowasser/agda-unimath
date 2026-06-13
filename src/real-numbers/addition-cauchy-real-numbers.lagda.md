@@ -13,8 +13,8 @@ open import analysis.metric-abelian-groups
 open import analysis.metric-abelian-groups-metric-quotients-cauchy-pseudocompletions-metric-abelian-groups
 open import analysis.metric-additive-group-of-rational-numbers
 
-open import foundation.universe-levels
 open import foundation.identity-types
+open import foundation.universe-levels
 
 open import group-theory.abelian-groups
 
