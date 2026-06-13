@@ -10,6 +10,7 @@ module analysis.metric-abelian-groups-metric-quotients-cauchy-pseudocompletions-
 
 ```agda
 open import analysis.abelian-groups-metric-quotients-cauchy-pseudocompletions-metric-abelian-groups
+open import analysis.metric-quotients-cauchy-pseudocompletions-metric-abelian-groups
 open import analysis.addition-cauchy-approximations-metric-abelian-groups
 open import analysis.cauchy-pseudocompletions-metric-abelian-groups
 open import analysis.metric-abelian-groups
