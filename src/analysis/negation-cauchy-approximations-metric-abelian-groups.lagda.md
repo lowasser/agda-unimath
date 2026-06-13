@@ -60,7 +60,18 @@ module _
         ( cauchy-pseudocompletion-Metric-Ab G)
         ( neg-cauchy-approximation-Metric-Ab G)
     is-isometry-neg-cauchy-pseudocompletion-Metric-Ab =
-      {! is-isometry-map  !}
+      is-isometry-cauchy-pseudocompletion-isometry-Metric-Space
+        ( metric-space-Metric-Ab G)
+        ( metric-space-Metric-Ab G)
+        ( isometry-neg-Metric-Ab G)
+
+  isometry-neg-cauchy-pseudocompletion-Metric-Ab :
+    isometry-Pseudometric-Space
+      ( cauchy-pseudocompletion-Metric-Ab G)
+      ( cauchy-pseudocompletion-Metric-Ab G)
+  isometry-neg-cauchy-pseudocompletion-Metric-Ab =
+    ( neg-cauchy-approximation-Metric-Ab G ,
+      is-isometry-neg-cauchy-pseudocompletion-Metric-Ab)
 ```
 
 ### Inverse laws of addition of Cauchy approximations
