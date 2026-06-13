@@ -216,13 +216,13 @@ module _
       ( equivalence-relation-sim-cauchy-pseudocompletion-Metric-Ab G)
       ( binary-hom-add-cauchy-pseudocompletion-Metric-Ab G)
 
-  preserves-add-in-metric-quotient-cauchy-pseudocompletion-Metric-Ab :
+  add-in-metric-quotient-cauchy-pseudocompletion-Metric-Ab :
     (x y : type-Metric-Ab G) →
     add-metric-quotient-cauchy-pseudocompletion-Metric-Ab G
       ( in-metric-quotient-cauchy-pseudocompletion-Metric-Ab G x)
       ( in-metric-quotient-cauchy-pseudocompletion-Metric-Ab G y) ＝
     in-metric-quotient-cauchy-pseudocompletion-Metric-Ab G (add-Metric-Ab G x y)
-  preserves-add-in-metric-quotient-cauchy-pseudocompletion-Metric-Ab x y =
+  add-in-metric-quotient-cauchy-pseudocompletion-Metric-Ab x y =
     add-in-approximation-metric-quotient-cauchy-pseudocompletion-Metric-Ab
       ( const-cauchy-approximation-Metric-Ab G x)
       ( const-cauchy-approximation-Metric-Ab G y) ∙

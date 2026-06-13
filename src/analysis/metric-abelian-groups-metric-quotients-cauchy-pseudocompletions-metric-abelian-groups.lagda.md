@@ -26,12 +26,14 @@ open import foundation.set-quotients
 open import foundation.universe-levels
 
 open import group-theory.abelian-groups
+open import group-theory.homomorphisms-abelian-groups
 
 open import metric-spaces.action-on-cauchy-approximations-isometries-metric-spaces
 open import metric-spaces.isometries-metric-spaces
 open import metric-spaces.isometries-pseudometric-spaces
 open import metric-spaces.metric-spaces
 open import metric-spaces.short-maps-metric-spaces
+open import metric-spaces.cauchy-pseudocompletions-of-metric-spaces
 open import metric-spaces.short-maps-pseudometric-spaces
 open import metric-spaces.unit-map-metric-quotients-of-pseudometric-spaces
 ```
@@ -228,4 +230,55 @@ module _
         ( metric-quotient-cauchy-pseudocompletion-Metric-Ab G) ,
       is-short-map-neg-metric-quotient-cauchy-pseudocompletion-Metric-Ab G ,
       is-short-map-left-add-metric-quotient-cauchy-pseudocompletion-Metric-Ab G)
+```
+
+## Properties
+
+### The embedding of the metric abelian group into the metric abelian group of the metric quotient of its Cauchy pseudocompletion is an isometry
+
+```agda
+module _
+  {l1 l2 : Level}
+  (G : Metric-Ab l1 l2)
+  where
+
+  isometry-in-approx-metric-quotient-cauchy-pseudocompletion-Metric-Ab :
+    isometry-Pseudometric-Space
+      ( cauchy-pseudocompletion-Metric-Ab G)
+      ( pseudometric-space-Metric-Ab
+        ( metric-ab-metric-quotient-cauchy-pseudocompletion-Metric-Ab G))
+  isometry-in-approx-metric-quotient-cauchy-pseudocompletion-Metric-Ab =
+    isometry-unit-metric-quotient-Pseudometric-Space
+      ( cauchy-pseudocompletion-Metric-Ab G)
+
+  isometry-in-metric-quotient-cauchy-pseudocompletion-Metric-Ab :
+    isometry-Metric-Space
+      ( metric-space-Metric-Ab G)
+      ( metric-quotient-cauchy-pseudocompletion-Metric-Ab G)
+  isometry-in-metric-quotient-cauchy-pseudocompletion-Metric-Ab =
+    comp-isometry-Pseudometric-Space
+      ( pseudometric-space-Metric-Ab G)
+      ( cauchy-pseudocompletion-Metric-Ab G)
+      ( pseudometric-Metric-Space
+        ( metric-quotient-cauchy-pseudocompletion-Metric-Ab G))
+      ( isometry-in-approx-metric-quotient-cauchy-pseudocompletion-Metric-Ab )
+      ( isometry-unit-cauchy-pseudocompletion-Metric-Space
+        ( metric-space-Metric-Ab G))
+```
+
+### The embedding of the metric abelian group into the metric abelian group of the metric quotient of its Cauchy pseudocompletion is an Abelian group homomorphism
+
+```agda
+module _
+  {l1 l2 : Level}
+  (G : Metric-Ab l1 l2)
+  where
+
+  hom-in-metric-quotient-cauchy-pseudocompletion-Metric-Ab :
+    hom-Ab
+      ( ab-Metric-Ab G)
+      ( ab-metric-quotient-cauchy-pseudocompletion-Metric-Ab G)
+  hom-in-metric-quotient-cauchy-pseudocompletion-Metric-Ab =
+    ( in-metric-quotient-cauchy-pseudocompletion-Metric-Ab G ,
+      inv (add-in-metric-quotient-cauchy-pseudocompletion-Metric-Ab G _ _))
 ```
