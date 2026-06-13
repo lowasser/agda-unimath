@@ -11,14 +11,12 @@ open import elementary-number-theory.addition-positive-rational-numbers
 open import elementary-number-theory.positive-rational-numbers
 
 open import foundation.dependent-pair-types
-open import foundation.functoriality-set-quotients
 open import foundation.universe-levels
 
 open import metric-spaces.cauchy-approximations-pseudometric-spaces
 open import metric-spaces.cauchy-pseudocompletions-of-pseudometric-spaces
 open import metric-spaces.pseudometric-spaces
 open import metric-spaces.short-maps-pseudometric-spaces
-open import metric-spaces.similarity-of-elements-pseudometric-spaces
 ```
 
 </details>
@@ -64,7 +62,7 @@ module _
 
 ## Properties
 
-### Short maps preserve neighborhoods in the Cauchy pseudocompletion of a pseudometric space
+### The induced action of a short map on Cauchy approximations is short in the Cauchy pseudocompletion of a pseudometric space
 
 ```agda
 module _
@@ -91,28 +89,4 @@ module _
   short-map-cauchy-pseudocompletion-short-map-Pseudometric-Space =
     ( map-short-map-cauchy-approximation-Pseudometric-Space X Y f ,
       is-short-map-cauchy-pseudocompletion-short-map-Pseudometric-Space)
-```
-
-### Short maps preserve similarity in the Cauchy pseudocompletion of a pseudometric space
-
-```agda
-module _
-  {l1 l2 l3 l4 : Level}
-  (X : Pseudometric-Space l1 l2)
-  (Y : Pseudometric-Space l3 l4)
-  (f : short-map-Pseudometric-Space X Y)
-  where abstract
-
-  preserves-sim-short-map-cauchy-pseudocompletion-Pseudometric-Space :
-    preserves-sim-equivalence-relation
-      ( equivalence-relation-sim-cauchy-pseudocompletion-Pseudometric-Space X)
-      ( equivalence-relation-sim-cauchy-pseudocompletion-Pseudometric-Space Y)
-      ( map-short-map-cauchy-approximation-Pseudometric-Space X Y f)
-  preserves-sim-short-map-cauchy-pseudocompletion-Pseudometric-Space {x} {y} =
-    preserves-sim-map-short-map-Pseudometric-Space
-      ( cauchy-pseudocompletion-Pseudometric-Space X)
-      ( cauchy-pseudocompletion-Pseudometric-Space Y)
-      ( short-map-cauchy-pseudocompletion-short-map-Pseudometric-Space X Y f)
-      ( x)
-      ( y)
 ```
