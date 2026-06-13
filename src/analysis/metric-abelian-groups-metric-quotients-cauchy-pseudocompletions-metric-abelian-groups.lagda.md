@@ -235,38 +235,6 @@ module _
 
 ## Properties
 
-### The embedding of the metric abelian group into the metric abelian group of the metric quotient of its Cauchy pseudocompletion is an isometry
-
-```agda
-module _
-  {l1 l2 : Level}
-  (G : Metric-Ab l1 l2)
-  where
-
-  isometry-in-approx-metric-quotient-cauchy-pseudocompletion-Metric-Ab :
-    isometry-Pseudometric-Space
-      ( cauchy-pseudocompletion-Metric-Ab G)
-      ( pseudometric-space-Metric-Ab
-        ( metric-ab-metric-quotient-cauchy-pseudocompletion-Metric-Ab G))
-  isometry-in-approx-metric-quotient-cauchy-pseudocompletion-Metric-Ab =
-    isometry-unit-metric-quotient-Pseudometric-Space
-      ( cauchy-pseudocompletion-Metric-Ab G)
-
-  isometry-in-metric-quotient-cauchy-pseudocompletion-Metric-Ab :
-    isometry-Metric-Space
-      ( metric-space-Metric-Ab G)
-      ( metric-quotient-cauchy-pseudocompletion-Metric-Ab G)
-  isometry-in-metric-quotient-cauchy-pseudocompletion-Metric-Ab =
-    comp-isometry-Pseudometric-Space
-      ( pseudometric-space-Metric-Ab G)
-      ( cauchy-pseudocompletion-Metric-Ab G)
-      ( pseudometric-Metric-Space
-        ( metric-quotient-cauchy-pseudocompletion-Metric-Ab G))
-      ( isometry-in-approx-metric-quotient-cauchy-pseudocompletion-Metric-Ab)
-      ( isometry-unit-cauchy-pseudocompletion-Metric-Space
-        ( metric-space-Metric-Ab G))
-```
-
 ### The embedding of the metric abelian group into the metric abelian group of the metric quotient of its Cauchy pseudocompletion is an Abelian group homomorphism
 
 ```agda
