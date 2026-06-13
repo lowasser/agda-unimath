@@ -13,6 +13,7 @@ open import analysis.addition-cauchy-approximations-metric-abelian-groups
 open import analysis.cauchy-approximations-metric-abelian-groups
 open import analysis.cauchy-pseudocompletions-metric-abelian-groups
 open import analysis.metric-abelian-groups
+open import analysis.metric-quotients-cauchy-pseudocompletions-metric-abelian-groups
 open import analysis.negation-cauchy-approximations-metric-abelian-groups
 
 open import elementary-number-theory.addition-positive-rational-numbers
@@ -58,50 +59,10 @@ open import metric-spaces.unit-map-metric-quotients-of-pseudometric-spaces
 The [metric quotient](metric-spaces.metric-quotients-of-pseudometric-spaces.md)
 of the
 [Cauchy pseudocompletion](analysis.cauchy-pseudocompletions-metric-abelian-groups.md)
-of a [metric abelian group](analysis.metric-abelian-groups.md) itself forms a
-metric abelian group.
-
-This construction is precisely analogous to the definition of the Cauchy real
-numbers and their definition of addition.
+of a [metric abelian group](analysis.metric-abelian-groups.md) forms an
+[abelian group](group-theory.abelian-groups.md).
 
 ## Definition
-
-### The metric space of the metric quotient
-
-```agda
-module _
-  {l1 l2 : Level}
-  (G : Metric-Ab l1 l2)
-  where
-
-  metric-quotient-cauchy-pseudocompletion-Metric-Ab :
-    Metric-Space (l1 ⊔ l2) (l1 ⊔ l2)
-  metric-quotient-cauchy-pseudocompletion-Metric-Ab =
-    metric-quotient-Pseudometric-Space (cauchy-pseudocompletion-Metric-Ab G)
-
-  set-metric-quotient-cauchy-pseudocompletion-Metric-Ab : Set (l1 ⊔ l2)
-  set-metric-quotient-cauchy-pseudocompletion-Metric-Ab =
-    set-Metric-Space metric-quotient-cauchy-pseudocompletion-Metric-Ab
-
-  type-metric-quotient-cauchy-pseudocompletion-Metric-Ab : UU (l1 ⊔ l2)
-  type-metric-quotient-cauchy-pseudocompletion-Metric-Ab =
-    type-Set set-metric-quotient-cauchy-pseudocompletion-Metric-Ab
-
-  neighborhood-prop-metric-quotient-cauchy-pseudocompletion-Metric-Ab :
-    Rational-Neighborhood-Relation
-      ( l1 ⊔ l2)
-      ( type-metric-quotient-cauchy-pseudocompletion-Metric-Ab)
-  neighborhood-prop-metric-quotient-cauchy-pseudocompletion-Metric-Ab =
-    neighborhood-prop-Metric-Space
-      ( metric-quotient-cauchy-pseudocompletion-Metric-Ab)
-
-  neighborhood-metric-quotient-cauchy-pseudocompletion-Metric-Ab :
-    ℚ⁺ →
-    Relation (l1 ⊔ l2) type-metric-quotient-cauchy-pseudocompletion-Metric-Ab
-  neighborhood-metric-quotient-cauchy-pseudocompletion-Metric-Ab =
-    neighborhood-Metric-Space
-      ( metric-quotient-cauchy-pseudocompletion-Metric-Ab)
-```
 
 ### Addition in the metric quotient
 
