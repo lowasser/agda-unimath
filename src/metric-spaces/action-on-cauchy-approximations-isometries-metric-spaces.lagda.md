@@ -10,10 +10,11 @@ module metric-spaces.action-on-cauchy-approximations-isometries-metric-spaces wh
 open import foundation.functoriality-set-quotients
 open import foundation.universe-levels
 
-open import metric-spaces.action-on-cauchy-approximations-short-maps-metric-spaces
+open import metric-spaces.action-on-cauchy-approximations-isometries-pseudometric-spaces
 open import metric-spaces.cauchy-approximations-metric-spaces
 open import metric-spaces.cauchy-pseudocompletions-of-metric-spaces
 open import metric-spaces.isometries-metric-spaces
+open import metric-spaces.isometries-pseudometric-spaces
 open import metric-spaces.metric-spaces
 ```
 
@@ -39,15 +40,15 @@ module _
     cauchy-approximation-Metric-Space X →
     cauchy-approximation-Metric-Space Y
   map-isometry-cauchy-approximation-Metric-Space =
-    map-short-map-cauchy-approximation-Metric-Space
-      ( X)
-      ( Y)
-      ( short-map-isometry-Metric-Space X Y f)
+    map-isometry-cauchy-approximation-Pseudometric-Space
+      ( pseudometric-Metric-Space X)
+      ( pseudometric-Metric-Space Y)
+      ( f)
 ```
 
 ## Properties
 
-### Isometries preserve similarity in the Cauchy pseudocompletion of a metric space
+### An isometry on metric spaces induces an isometry on the Cauchy pseudocompletions of the metric spaces
 
 ```agda
 module _
@@ -55,18 +56,15 @@ module _
   (X : Metric-Space l1 l2)
   (Y : Metric-Space l3 l4)
   (f : isometry-Metric-Space X Y)
-  where abstract
+  where
 
-  preserves-sim-isometry-cauchy-pseudocompletion-Metric-Space :
-    preserves-sim-equivalence-relation
-      ( equivalence-relation-sim-cauchy-pseudocompletion-Metric-Space X)
-      ( equivalence-relation-sim-cauchy-pseudocompletion-Metric-Space Y)
-      ( map-isometry-cauchy-approximation-Metric-Space X Y f)
-  preserves-sim-isometry-cauchy-pseudocompletion-Metric-Space {x} {y} =
-    preserves-sim-short-map-cauchy-pseudocompletion-Metric-Space
-      ( X)
-      ( Y)
-      ( short-map-isometry-Metric-Space X Y f)
-      { x}
-      { y}
+  isometry-cauchy-pseudocompletion-isometry-Metric-Space :
+    isometry-Pseudometric-Space
+      ( cauchy-pseudocompletion-Metric-Space X)
+      ( cauchy-pseudocompletion-Metric-Space Y)
+  isometry-cauchy-pseudocompletion-isometry-Metric-Space =
+    isometry-cauchy-pseudocompletion-isometry-Pseudometric-Space
+      ( pseudometric-Metric-Space X)
+      ( pseudometric-Metric-Space Y)
+      ( f)
 ```

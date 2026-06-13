@@ -3,6 +3,7 @@
 ```agda
 module analysis where
 
+open import analysis.abelian-group-metric-quotient-cauchy-pseudocompletion-metric-abelian-groups public
 open import analysis.addition-cauchy-approximations-metric-abelian-groups public
 open import analysis.alternation-sequences-metric-abelian-groups public
 open import analysis.cauchy-approximations-metric-abelian-groups public

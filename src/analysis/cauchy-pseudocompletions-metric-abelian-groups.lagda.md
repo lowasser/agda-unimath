@@ -10,6 +10,8 @@ module analysis.cauchy-pseudocompletions-metric-abelian-groups where
 open import analysis.cauchy-approximations-metric-abelian-groups
 open import analysis.metric-abelian-groups
 
+open import elementary-number-theory.positive-rational-numbers
+
 open import foundation.binary-relations
 open import foundation.equivalence-relations
 open import foundation.identity-types
@@ -17,6 +19,7 @@ open import foundation.universe-levels
 
 open import metric-spaces.cauchy-pseudocompletions-of-metric-spaces
 open import metric-spaces.pseudometric-spaces
+open import metric-spaces.rational-neighborhood-relations
 open import metric-spaces.similarity-of-elements-pseudometric-spaces
 ```
 
@@ -41,6 +44,16 @@ module _
   cauchy-pseudocompletion-Metric-Ab : Pseudometric-Space (l1 ⊔ l2) l2
   cauchy-pseudocompletion-Metric-Ab =
     cauchy-pseudocompletion-Metric-Space (metric-space-Metric-Ab G)
+
+  neighborhood-prop-cauchy-pseudocompletion-Metric-Ab :
+    Rational-Neighborhood-Relation l2 (cauchy-approximation-Metric-Ab G)
+  neighborhood-prop-cauchy-pseudocompletion-Metric-Ab =
+    neighborhood-prop-Pseudometric-Space cauchy-pseudocompletion-Metric-Ab
+
+  neighborhood-cauchy-pseudocompletion-Metric-Ab :
+    ℚ⁺ → Relation l2 (cauchy-approximation-Metric-Ab G)
+  neighborhood-cauchy-pseudocompletion-Metric-Ab =
+    neighborhood-Pseudometric-Space cauchy-pseudocompletion-Metric-Ab
 
   equivalence-relation-sim-cauchy-pseudocompletion-Metric-Ab :
     equivalence-relation l2 (cauchy-approximation-Metric-Ab G)

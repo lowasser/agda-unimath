@@ -1,4 +1,4 @@
-# The metric abelian group formed by the metric quotient of Cauchy pseudocompletions of metric abelian groups
+# The metric abelian group of the metric quotient of the Cauchy pseudocompletion of metric abelian groups
 
 ```agda
 {-# OPTIONS --lossy-unification #-}
@@ -9,38 +9,31 @@ module analysis.metric-abelian-group-metric-quotient-cauchy-pseudocompletion-met
 <details><summary>Imports</summary>
 
 ```agda
+open import analysis.abelian-group-metric-quotient-cauchy-pseudocompletion-metric-abelian-groups
 open import analysis.addition-cauchy-approximations-metric-abelian-groups
-open import analysis.cauchy-approximations-metric-abelian-groups
 open import analysis.cauchy-pseudocompletions-metric-abelian-groups
 open import analysis.metric-abelian-groups
 
-open import elementary-number-theory.addition-positive-rational-numbers
+open import elementary-number-theory.positive-rational-numbers
 
 open import foundation.action-on-identifications-binary-functions
 open import foundation.action-on-identifications-functions
-open import foundation.binary-functoriality-set-quotients
+open import foundation.binary-transport
 open import foundation.dependent-pair-types
-open import foundation.embeddings
-open import foundation.equivalence-relations
-open import foundation.functoriality-set-quotients
 open import foundation.identity-types
-open import foundation.injective-maps
+open import foundation.propositional-truncations
 open import foundation.set-quotients
-open import foundation.sets
-open import foundation.transport-along-identifications
 open import foundation.universe-levels
 
 open import group-theory.abelian-groups
-open import group-theory.groups
-open import group-theory.monoids
-open import group-theory.semigroups
 
-open import metric-spaces.cauchy-approximations-metric-spaces
-open import metric-spaces.cauchy-pseudocompletions-of-metric-spaces
-open import metric-spaces.metric-quotients-of-pseudometric-spaces
+open import metric-spaces.action-on-cauchy-approximations-isometries-metric-spaces
+open import metric-spaces.isometries-metric-spaces
+open import metric-spaces.isometries-pseudometric-spaces
 open import metric-spaces.metric-spaces
-open import metric-spaces.pseudometric-spaces
-open import metric-spaces.similarity-of-elements-pseudometric-spaces
+open import metric-spaces.short-maps-metric-spaces
+open import metric-spaces.short-maps-pseudometric-spaces
+open import metric-spaces.unit-map-metric-quotients-of-pseudometric-spaces
 ```
 
 </details>
@@ -50,491 +43,189 @@ open import metric-spaces.similarity-of-elements-pseudometric-spaces
 The [metric quotient](metric-spaces.metric-quotients-of-pseudometric-spaces.md)
 of the
 [Cauchy pseudocompletion](analysis.cauchy-pseudocompletions-metric-abelian-groups.md)
-of a [metric abelian group](analysis.metric-abelian-groups.md) itself forms a
+of a [metric abelian group](analysis.metric-abelian-groups.md) is itself a
 metric abelian group.
 
-This construction is precisely analogous to the definition of the Cauchy real
-numbers and their definition of addition.
+## Proof
+
+### Negation is a short map
+
+```agda
+module _
+  {l1 l2 : Level}
+  (G : Metric-Ab l1 l2)
+  where abstract
+
+  is-short-map-neg-metric-quotient-cauchy-pseudocompletion-Metric-Ab :
+    is-short-map-Metric-Space
+      ( metric-quotient-cauchy-pseudocompletion-Metric-Ab G)
+      ( metric-quotient-cauchy-pseudocompletion-Metric-Ab G)
+      ( neg-metric-quotient-cauchy-pseudocompletion-Metric-Ab G)
+  is-short-map-neg-metric-quotient-cauchy-pseudocompletion-Metric-Ab
+    d x y Ndxy =
+    let
+      open
+        do-syntax-trunc-Prop
+          ( neighborhood-prop-metric-quotient-cauchy-pseudocompletion-Metric-Ab
+            ( G)
+            ( d)
+            ( neg-metric-quotient-cauchy-pseudocompletion-Metric-Ab G x)
+            ( neg-metric-quotient-cauchy-pseudocompletion-Metric-Ab G y))
+    in do
+      (x' , ux'=x) ←
+        is-surjective-quotient-map
+          ( equivalence-relation-sim-cauchy-pseudocompletion-Metric-Ab G)
+          ( x)
+      (y' , uy'=y) ←
+        is-surjective-quotient-map
+          ( equivalence-relation-sim-cauchy-pseudocompletion-Metric-Ab G)
+          ( y)
+      binary-tr
+        ( neighborhood-metric-quotient-cauchy-pseudocompletion-Metric-Ab G d)
+        ( ( inv
+            ( neg-in-approximation-metric-quotient-cauchy-pseudocompletion-Metric-Ab
+              ( G)
+              ( x'))) ∙
+          ( ap (neg-metric-quotient-cauchy-pseudocompletion-Metric-Ab G) ux'=x))
+        ( ( inv
+            ( neg-in-approximation-metric-quotient-cauchy-pseudocompletion-Metric-Ab
+              ( G)
+              ( y'))) ∙
+          ( ap (neg-metric-quotient-cauchy-pseudocompletion-Metric-Ab G) uy'=y))
+        ( preserves-neighborhoods-map-isometry-Pseudometric-Space
+          ( cauchy-pseudocompletion-Metric-Ab G)
+          ( pseudometric-Metric-Space
+            ( metric-quotient-cauchy-pseudocompletion-Metric-Ab G))
+          ( comp-isometry-Pseudometric-Space
+            ( cauchy-pseudocompletion-Metric-Ab G)
+            ( cauchy-pseudocompletion-Metric-Ab G)
+            ( pseudometric-Metric-Space
+              ( metric-quotient-cauchy-pseudocompletion-Metric-Ab G))
+            ( isometry-unit-metric-quotient-Pseudometric-Space
+              ( cauchy-pseudocompletion-Metric-Ab G))
+            ( isometry-cauchy-pseudocompletion-isometry-Metric-Space
+              ( metric-space-Metric-Ab G)
+              ( metric-space-Metric-Ab G)
+              ( isometry-neg-Metric-Ab G)))
+          ( d)
+          ( x')
+          ( y')
+          ( reflects-neighborhoods-map-unit-metric-quotient-Pseudometric-Space
+            ( cauchy-pseudocompletion-Metric-Ab G)
+            ( d)
+            ( x')
+            ( y')
+            ( binary-tr
+              ( neighborhood-metric-quotient-cauchy-pseudocompletion-Metric-Ab
+                ( G)
+                ( d))
+              ( inv ux'=x)
+              ( inv uy'=y)
+              ( Ndxy))))
+```
+
+### Left addition is a short map on the metric quotient of the Cauchy pseudocompletion of a metric abelian group
+
+```agda
+module _
+  {l1 l2 : Level}
+  (G : Metric-Ab l1 l2)
+  where abstract
+
+  is-short-map-left-add-metric-quotient-cauchy-pseudocompletion-Metric-Ab :
+    (x : type-metric-quotient-cauchy-pseudocompletion-Metric-Ab G) →
+    is-short-map-Metric-Space
+      ( metric-quotient-cauchy-pseudocompletion-Metric-Ab G)
+      ( metric-quotient-cauchy-pseudocompletion-Metric-Ab G)
+      ( add-metric-quotient-cauchy-pseudocompletion-Metric-Ab G x)
+  is-short-map-left-add-metric-quotient-cauchy-pseudocompletion-Metric-Ab
+    x d y z Ndyz =
+    let
+      open
+        do-syntax-trunc-Prop
+          ( neighborhood-prop-metric-quotient-cauchy-pseudocompletion-Metric-Ab
+            ( G)
+            ( d)
+            ( add-metric-quotient-cauchy-pseudocompletion-Metric-Ab G x y)
+            ( add-metric-quotient-cauchy-pseudocompletion-Metric-Ab G x z))
+    in do
+      (x' , ux'=x) ←
+        is-surjective-quotient-map
+          ( equivalence-relation-sim-cauchy-pseudocompletion-Metric-Ab G)
+          ( x)
+      (y' , uy'=y) ←
+        is-surjective-quotient-map
+          ( equivalence-relation-sim-cauchy-pseudocompletion-Metric-Ab G)
+          ( y)
+      (z' , uz'=z) ←
+        is-surjective-quotient-map
+          ( equivalence-relation-sim-cauchy-pseudocompletion-Metric-Ab G)
+          ( z)
+      binary-tr
+        ( neighborhood-metric-quotient-cauchy-pseudocompletion-Metric-Ab G d)
+        ( ( inv
+            ( add-in-approximation-metric-quotient-cauchy-pseudocompletion-Metric-Ab
+              ( G)
+              ( x')
+              ( y'))) ∙
+          ( ap-binary
+            ( add-metric-quotient-cauchy-pseudocompletion-Metric-Ab G)
+            ( ux'=x)
+            ( uy'=y)))
+        ( ( inv
+            ( add-in-approximation-metric-quotient-cauchy-pseudocompletion-Metric-Ab
+              ( G)
+              ( x')
+              ( z'))) ∙
+          ( ap-binary
+            ( add-metric-quotient-cauchy-pseudocompletion-Metric-Ab G)
+            ( ux'=x)
+            ( uz'=z)))
+        ( is-short-map-short-map-Pseudometric-Space
+          ( cauchy-pseudocompletion-Metric-Ab G)
+          ( pseudometric-Metric-Space
+            ( metric-quotient-cauchy-pseudocompletion-Metric-Ab G))
+          ( comp-short-map-Pseudometric-Space
+            ( cauchy-pseudocompletion-Metric-Ab G)
+            ( cauchy-pseudocompletion-Metric-Ab G)
+            ( pseudometric-Metric-Space
+              ( metric-quotient-cauchy-pseudocompletion-Metric-Ab G))
+            ( short-map-unit-metric-quotient-Pseudometric-Space
+              ( cauchy-pseudocompletion-Metric-Ab G))
+            ( short-map-left-add-cauchy-pseudocompletion-Metric-Ab G x'))
+          ( d)
+          ( y')
+          ( z')
+          ( reflects-neighborhoods-map-unit-metric-quotient-Pseudometric-Space
+            ( cauchy-pseudocompletion-Metric-Ab G)
+            ( d)
+            ( y')
+            ( z')
+            ( binary-tr
+              ( neighborhood-metric-quotient-cauchy-pseudocompletion-Metric-Ab
+                ( G)
+                ( d))
+              ( inv uy'=y)
+              ( inv uz'=z)
+              ( Ndyz))))
+```
 
 ## Definition
 
-### The metric space of the metric quotient
-
 ```agda
 module _
   {l1 l2 : Level}
   (G : Metric-Ab l1 l2)
   where
 
-  metric-quotient-cauchy-pseudocompletion-Metric-Ab :
-    Metric-Space (l1 ⊔ l2) (l1 ⊔ l2)
-  metric-quotient-cauchy-pseudocompletion-Metric-Ab =
-    metric-quotient-Pseudometric-Space (cauchy-pseudocompletion-Metric-Ab G)
-
-  set-metric-quotient-cauchy-pseudocompletion-Metric-Ab : Set (l1 ⊔ l2)
-  set-metric-quotient-cauchy-pseudocompletion-Metric-Ab =
-    set-Metric-Space metric-quotient-cauchy-pseudocompletion-Metric-Ab
-
-  type-metric-quotient-cauchy-pseudocompletion-Metric-Ab : UU (l1 ⊔ l2)
-  type-metric-quotient-cauchy-pseudocompletion-Metric-Ab =
-    type-Set set-metric-quotient-cauchy-pseudocompletion-Metric-Ab
-```
-
-### Addition in the metric quotient
-
-```agda
-module _
-  {l1 l2 : Level}
-  (G : Metric-Ab l1 l2)
-  where
-
-  binary-hom-add-cauchy-pseudocompletion-Metric-Ab :
-    binary-hom-equivalence-relation
-      ( equivalence-relation-sim-cauchy-pseudocompletion-Metric-Ab G)
-      ( equivalence-relation-sim-cauchy-pseudocompletion-Metric-Ab G)
-      ( equivalence-relation-sim-cauchy-pseudocompletion-Metric-Ab G)
-  binary-hom-add-cauchy-pseudocompletion-Metric-Ab =
-    ( add-cauchy-approximation-Metric-Ab G ,
-      λ {x} {x'} {y} {y'} →
-        preserves-sim-add-cauchy-approximation-Metric-Ab G {x} {x'} {y} {y'})
-
-  add-metric-quotient-cauchy-pseudocompletion-Metric-Ab :
-    type-metric-quotient-cauchy-pseudocompletion-Metric-Ab G →
-    type-metric-quotient-cauchy-pseudocompletion-Metric-Ab G →
-    type-metric-quotient-cauchy-pseudocompletion-Metric-Ab G
-  add-metric-quotient-cauchy-pseudocompletion-Metric-Ab =
-    binary-map-set-quotient
-      ( equivalence-relation-sim-cauchy-pseudocompletion-Metric-Ab G)
-      ( equivalence-relation-sim-cauchy-pseudocompletion-Metric-Ab G)
-      ( equivalence-relation-sim-cauchy-pseudocompletion-Metric-Ab G)
-      ( binary-hom-add-cauchy-pseudocompletion-Metric-Ab)
-```
-
-### The embedding of elements of a metric abelian group in the metric quotient of its Cauchy pseudocompletion
-
-```agda
-module _
-  {l1 l2 : Level}
-  (G : Metric-Ab l1 l2)
-  where
-
-  in-approximation-metric-quotient-cauchy-pseudocompletion-Metric-Ab :
-    cauchy-approximation-Metric-Ab G →
-    type-metric-quotient-cauchy-pseudocompletion-Metric-Ab G
-  in-approximation-metric-quotient-cauchy-pseudocompletion-Metric-Ab =
-    quotient-map
-      ( equivalence-relation-sim-cauchy-pseudocompletion-Metric-Ab G)
-
-  in-metric-quotient-cauchy-pseudocompletion-Metric-Ab :
-    type-Metric-Ab G → type-metric-quotient-cauchy-pseudocompletion-Metric-Ab G
-  in-metric-quotient-cauchy-pseudocompletion-Metric-Ab x =
-    in-approximation-metric-quotient-cauchy-pseudocompletion-Metric-Ab
-      ( const-cauchy-approximation-Metric-Ab G x)
-
-  abstract
-    is-injective-in-metric-quotient-cauchy-pseudocompletion-Metric-Ab :
-      is-injective in-metric-quotient-cauchy-pseudocompletion-Metric-Ab
-    is-injective-in-metric-quotient-cauchy-pseudocompletion-Metric-Ab
-      {x} {y} inx=iny =
-      eq-sim-const-cauchy-approximation-cauchy-pseudocompletion-Metric-Ab
-        ( G)
-        ( x)
-        ( y)
-        ( apply-effectiveness-quotient-map
-          ( equivalence-relation-sim-cauchy-pseudocompletion-Metric-Ab G)
-          ( inx=iny))
-
-    is-emb-in-metric-quotient-cauchy-pseudocompletion-Metric-Ab :
-      is-emb in-metric-quotient-cauchy-pseudocompletion-Metric-Ab
-    is-emb-in-metric-quotient-cauchy-pseudocompletion-Metric-Ab =
-      is-emb-is-injective
-        ( is-set-type-Metric-Space
-          ( metric-quotient-cauchy-pseudocompletion-Metric-Ab G))
-        is-injective-in-metric-quotient-cauchy-pseudocompletion-Metric-Ab
-
-  emb-metric-quotient-cauchy-pseudocompletion-Metric-Ab :
-    type-Metric-Ab G ↪ type-metric-quotient-cauchy-pseudocompletion-Metric-Ab G
-  emb-metric-quotient-cauchy-pseudocompletion-Metric-Ab =
-    ( in-metric-quotient-cauchy-pseudocompletion-Metric-Ab ,
-      is-emb-in-metric-quotient-cauchy-pseudocompletion-Metric-Ab)
-
-  zero-metric-quotient-cauchy-pseudocompletion-Metric-Ab :
-    type-metric-quotient-cauchy-pseudocompletion-Metric-Ab G
-  zero-metric-quotient-cauchy-pseudocompletion-Metric-Ab =
-    in-metric-quotient-cauchy-pseudocompletion-Metric-Ab (zero-Metric-Ab G)
-```
-
-## Properties
-
-### The embedding in the metric quotient of the Cauchy pseudocompletion preserves addition
-
-```agda
-module _
-  {l1 l2 : Level}
-  (G : Metric-Ab l1 l2)
-  where abstract
-
-  add-in-approximation-metric-quotient-cauchy-pseudocompletion-Metric-Ab :
-    (x y : cauchy-approximation-Metric-Ab G) →
-    add-metric-quotient-cauchy-pseudocompletion-Metric-Ab G
-      ( in-approximation-metric-quotient-cauchy-pseudocompletion-Metric-Ab
-        ( G)
-        ( x))
-      ( in-approximation-metric-quotient-cauchy-pseudocompletion-Metric-Ab
-        ( G)
-        ( y)) ＝
-    in-approximation-metric-quotient-cauchy-pseudocompletion-Metric-Ab
-      ( G)
-      ( add-cauchy-approximation-Metric-Ab G x y)
-  add-in-approximation-metric-quotient-cauchy-pseudocompletion-Metric-Ab =
-    compute-binary-map-set-quotient
-      ( equivalence-relation-sim-cauchy-pseudocompletion-Metric-Ab G)
-      ( equivalence-relation-sim-cauchy-pseudocompletion-Metric-Ab G)
-      ( equivalence-relation-sim-cauchy-pseudocompletion-Metric-Ab G)
-      ( binary-hom-add-cauchy-pseudocompletion-Metric-Ab G)
-
-  preserves-add-in-metric-quotient-cauchy-pseudocompletion-Metric-Ab :
-    (x y : type-Metric-Ab G) →
-    add-metric-quotient-cauchy-pseudocompletion-Metric-Ab G
-      ( in-metric-quotient-cauchy-pseudocompletion-Metric-Ab G x)
-      ( in-metric-quotient-cauchy-pseudocompletion-Metric-Ab G y) ＝
-    in-metric-quotient-cauchy-pseudocompletion-Metric-Ab G (add-Metric-Ab G x y)
-  preserves-add-in-metric-quotient-cauchy-pseudocompletion-Metric-Ab x y =
-    add-in-approximation-metric-quotient-cauchy-pseudocompletion-Metric-Ab
-      ( const-cauchy-approximation-Metric-Ab G x)
-      ( const-cauchy-approximation-Metric-Ab G y) ∙
-    apply-effectiveness-quotient-map'
-      ( equivalence-relation-sim-cauchy-pseudocompletion-Metric-Ab G)
-      ( sim-add-const-cauchy-approximation-Metric-Ab G x y)
-```
-
-### Addition in the metric quotient of the Cauchy pseudocompletion is associative
-
-```agda
-module _
-  {l1 l2 : Level}
-  (G : Metric-Ab l1 l2)
-  where abstract
-
-  associative-add-metric-quotient-cauchy-pseudocompletion-Metric-Ab :
-    (x y z : type-metric-quotient-cauchy-pseudocompletion-Metric-Ab G) →
-    add-metric-quotient-cauchy-pseudocompletion-Metric-Ab G
-      ( add-metric-quotient-cauchy-pseudocompletion-Metric-Ab G x y)
-      ( z) ＝
-    add-metric-quotient-cauchy-pseudocompletion-Metric-Ab G
-      ( x)
-      ( add-metric-quotient-cauchy-pseudocompletion-Metric-Ab G y z)
-  associative-add-metric-quotient-cauchy-pseudocompletion-Metric-Ab =
-    triple-induction-set-quotient'
-      ( equivalence-relation-sim-cauchy-pseudocompletion-Metric-Ab G)
-      ( λ x y z →
-        Id-Prop
-          ( set-metric-quotient-cauchy-pseudocompletion-Metric-Ab G)
-          ( add-metric-quotient-cauchy-pseudocompletion-Metric-Ab G
-            ( add-metric-quotient-cauchy-pseudocompletion-Metric-Ab G x y)
-            ( z))
-          ( add-metric-quotient-cauchy-pseudocompletion-Metric-Ab G
-            ( x)
-            ( add-metric-quotient-cauchy-pseudocompletion-Metric-Ab G y z)))
-      ( λ x y z →
-        let
-          in-approx-G =
-            in-approximation-metric-quotient-cauchy-pseudocompletion-Metric-Ab G
-          _+~G_ = add-cauchy-approximation-Metric-Ab G
-          _+∙G_ = add-metric-quotient-cauchy-pseudocompletion-Metric-Ab G
-        in
-          equational-reasoning
-            (in-approx-G x +∙G in-approx-G y) +∙G in-approx-G z
-            ＝ in-approx-G (x +~G y) +∙G in-approx-G z
-              by
-                ap-binary
-                  ( _+∙G_)
-                  ( add-in-approximation-metric-quotient-cauchy-pseudocompletion-Metric-Ab
-                    ( G)
-                    ( x)
-                    ( y))
-                  ( refl)
-            ＝ in-approx-G ((x +~G y) +~G z)
-              by
-                add-in-approximation-metric-quotient-cauchy-pseudocompletion-Metric-Ab
-                  ( G)
-                  ( x +~G y)
-                  ( z)
-            ＝ in-approx-G (x +~G (y +~G z))
-              by
-                apply-effectiveness-quotient-map'
-                  ( equivalence-relation-sim-cauchy-pseudocompletion-Metric-Ab
-                    ( G))
-                  ( sim-associative-add-cauchy-approximation-Metric-Ab G x y z)
-            ＝ in-approx-G x +∙G in-approx-G (y +~G z)
-              by
-                inv
-                  ( add-in-approximation-metric-quotient-cauchy-pseudocompletion-Metric-Ab
-                    ( G)
-                    ( x)
-                    ( y +~G z))
-            ＝ in-approx-G x +∙G (in-approx-G y +∙G in-approx-G z)
-              by
-                ap-binary
-                  ( _+∙G_)
-                  ( refl)
-                  ( inv
-                    ( add-in-approximation-metric-quotient-cauchy-pseudocompletion-Metric-Ab
-                      ( G)
-                      ( y)
-                      ( z))))
-```
-
-### Addition in the metric quotient of the Cauchy pseudocompletion is commutative
-
-```agda
-module _
-  {l1 l2 : Level}
-  (G : Metric-Ab l1 l2)
-  where abstract
-
-  commutative-add-metric-quotient-cauchy-pseudocompletion-Metric-Ab :
-    (x y : type-metric-quotient-cauchy-pseudocompletion-Metric-Ab G) →
-    add-metric-quotient-cauchy-pseudocompletion-Metric-Ab G x y ＝
-    add-metric-quotient-cauchy-pseudocompletion-Metric-Ab G y x
-  commutative-add-metric-quotient-cauchy-pseudocompletion-Metric-Ab =
-    double-induction-set-quotient'
-      ( equivalence-relation-sim-cauchy-pseudocompletion-Metric-Ab G)
-      ( λ x y →
-        Id-Prop
-          ( set-metric-quotient-cauchy-pseudocompletion-Metric-Ab G)
-          ( add-metric-quotient-cauchy-pseudocompletion-Metric-Ab G x y)
-          ( add-metric-quotient-cauchy-pseudocompletion-Metric-Ab G y x))
-      ( λ x y →
-        let
-          in-approx-G =
-            in-approximation-metric-quotient-cauchy-pseudocompletion-Metric-Ab G
-          _+~G_ = add-cauchy-approximation-Metric-Ab G
-          _+∙G_ = add-metric-quotient-cauchy-pseudocompletion-Metric-Ab G
-        in
-          equational-reasoning
-            in-approx-G x +∙G in-approx-G y
-            ＝ in-approx-G (x +~G y)
-              by
-                add-in-approximation-metric-quotient-cauchy-pseudocompletion-Metric-Ab
-                  ( G)
-                  ( x)
-                  ( y)
-            ＝ in-approx-G (y +~G x)
-              by
-                ap
-                  ( in-approx-G)
-                  ( commutative-add-cauchy-approximation-Metric-Ab G x y)
-            ＝ in-approx-G y +∙G in-approx-G x
-              by
-                inv
-                  ( add-in-approximation-metric-quotient-cauchy-pseudocompletion-Metric-Ab
-                    ( G)
-                    ( y)
-                    ( x)))
-```
-
-### Unit laws of addition in the metric quotient of the Cauchy pseudocompletion
-
-```agda
-module _
-  {l1 l2 : Level}
-  (G : Metric-Ab l1 l2)
-  where abstract
-
-  left-unit-law-add-metric-quotient-cauchy-pseudocompletion-Metric-Ab :
-    (x : type-metric-quotient-cauchy-pseudocompletion-Metric-Ab G) →
-    add-metric-quotient-cauchy-pseudocompletion-Metric-Ab G
-      ( zero-metric-quotient-cauchy-pseudocompletion-Metric-Ab G)
-      ( x) ＝
-    x
-  left-unit-law-add-metric-quotient-cauchy-pseudocompletion-Metric-Ab =
-    induction-set-quotient
-      ( equivalence-relation-sim-cauchy-pseudocompletion-Metric-Ab G)
-      ( λ x →
-        Id-Prop
-          ( set-metric-quotient-cauchy-pseudocompletion-Metric-Ab G)
-          ( add-metric-quotient-cauchy-pseudocompletion-Metric-Ab G
-            ( zero-metric-quotient-cauchy-pseudocompletion-Metric-Ab G)
-            ( x))
-          ( x))
-      ( λ x →
-        let
-          in-approx-G =
-            in-approximation-metric-quotient-cauchy-pseudocompletion-Metric-Ab G
-          _+~G_ = add-cauchy-approximation-Metric-Ab G
-          _+∙G_ = add-metric-quotient-cauchy-pseudocompletion-Metric-Ab G
-          0-approx-G = zero-cauchy-approximation-Metric-Ab G
-        in
-          equational-reasoning
-            in-approx-G 0-approx-G +∙G in-approx-G x
-            ＝ in-approx-G (0-approx-G +~G x)
-              by
-                add-in-approximation-metric-quotient-cauchy-pseudocompletion-Metric-Ab
-                  ( G)
-                  ( 0-approx-G)
-                  ( x)
-            ＝ in-approx-G x
-              by
-                apply-effectiveness-quotient-map'
-                  ( equivalence-relation-sim-cauchy-pseudocompletion-Metric-Ab
-                    ( G))
-                  ( sim-left-unit-law-add-cauchy-approximation-Metric-Ab G x))
-
-  right-unit-law-add-metric-quotient-cauchy-pseudocompletion-Metric-Ab :
-    (x : type-metric-quotient-cauchy-pseudocompletion-Metric-Ab G) →
-    add-metric-quotient-cauchy-pseudocompletion-Metric-Ab G
-      ( x)
-      ( zero-metric-quotient-cauchy-pseudocompletion-Metric-Ab G) ＝
-    x
-  right-unit-law-add-metric-quotient-cauchy-pseudocompletion-Metric-Ab x =
-    commutative-add-metric-quotient-cauchy-pseudocompletion-Metric-Ab G _ _ ∙
-    left-unit-law-add-metric-quotient-cauchy-pseudocompletion-Metric-Ab x
-```
-
-### Negation in the metric quotient of the Cauchy pseudocompletion
-
-```agda
-module _
-  {l1 l2 : Level}
-  (G : Metric-Ab l1 l2)
-  where abstract
-
-  hom-neg-cauchy-pseudocompletion-Metric-Ab :
-    hom-equivalence-relation
-      ( equivalence-relation-sim-cauchy-pseudocompletion-Metric-Ab G)
-      ( equivalence-relation-sim-cauchy-pseudocompletion-Metric-Ab G)
-  hom-neg-cauchy-pseudocompletion-Metric-Ab =
-    ( neg-cauchy-approximation-Metric-Ab G ,
-      preserves-sim-neg-cauchy-approximation-Metric-Ab G _ _)
-
-  neg-metric-quotient-cauchy-pseudocompletion-Metric-Ab :
-    type-metric-quotient-cauchy-pseudocompletion-Metric-Ab G →
-    type-metric-quotient-cauchy-pseudocompletion-Metric-Ab G
-  neg-metric-quotient-cauchy-pseudocompletion-Metric-Ab =
-    map-set-quotient
-      ( equivalence-relation-sim-cauchy-pseudocompletion-Metric-Ab G)
-      ( equivalence-relation-sim-cauchy-pseudocompletion-Metric-Ab G)
-      ( hom-neg-cauchy-pseudocompletion-Metric-Ab)
-
-  abstract
-    neg-in-approximation-metric-quotient-cauchy-pseudocompletion-Metric-Ab :
-      (x : cauchy-approximation-Metric-Ab G) →
-      neg-metric-quotient-cauchy-pseudocompletion-Metric-Ab
-        ( in-approximation-metric-quotient-cauchy-pseudocompletion-Metric-Ab
-          ( G)
-          ( x)) ＝
-      in-approximation-metric-quotient-cauchy-pseudocompletion-Metric-Ab
-        ( G)
-        ( neg-cauchy-approximation-Metric-Ab G x)
-    neg-in-approximation-metric-quotient-cauchy-pseudocompletion-Metric-Ab =
-      coherence-square-map-set-quotient
-        ( equivalence-relation-sim-cauchy-pseudocompletion-Metric-Ab G)
-        ( equivalence-relation-sim-cauchy-pseudocompletion-Metric-Ab G)
-        ( hom-neg-cauchy-pseudocompletion-Metric-Ab)
-```
-
-### Inverse laws of addition in the metric quotient of the Cauchy pseudocompletion
-
-```agda
-module _
-  {l1 l2 : Level}
-  (G : Metric-Ab l1 l2)
-  where abstract
-
-  left-inverse-law-add-metric-quotient-cauchy-pseudocompletion-Metric-Ab :
-    (x : type-metric-quotient-cauchy-pseudocompletion-Metric-Ab G) →
-    add-metric-quotient-cauchy-pseudocompletion-Metric-Ab G
-      ( neg-metric-quotient-cauchy-pseudocompletion-Metric-Ab G x)
-      ( x) ＝
-    zero-metric-quotient-cauchy-pseudocompletion-Metric-Ab G
-  left-inverse-law-add-metric-quotient-cauchy-pseudocompletion-Metric-Ab =
-    induction-set-quotient
-      ( equivalence-relation-sim-cauchy-pseudocompletion-Metric-Ab G)
-      ( λ x →
-        Id-Prop
-          ( set-metric-quotient-cauchy-pseudocompletion-Metric-Ab G)
-          ( add-metric-quotient-cauchy-pseudocompletion-Metric-Ab G
-            ( neg-metric-quotient-cauchy-pseudocompletion-Metric-Ab G x)
-            ( x))
-          ( zero-metric-quotient-cauchy-pseudocompletion-Metric-Ab G))
-      ( λ x →
-        let
-          in-approx-G =
-            in-approximation-metric-quotient-cauchy-pseudocompletion-Metric-Ab G
-          _+~G_ = add-cauchy-approximation-Metric-Ab G
-          _+∙G_ = add-metric-quotient-cauchy-pseudocompletion-Metric-Ab G
-          neg-∙G = neg-metric-quotient-cauchy-pseudocompletion-Metric-Ab G
-          neg-G = neg-cauchy-approximation-Metric-Ab G
-          0-approx-G = zero-cauchy-approximation-Metric-Ab G
-        in
-          equational-reasoning
-            neg-∙G (in-approx-G x) +∙G in-approx-G x
-            ＝ in-approx-G (neg-G x) +∙G in-approx-G x
-              by
-                ap-binary
-                  ( _+∙G_)
-                  ( neg-in-approximation-metric-quotient-cauchy-pseudocompletion-Metric-Ab
-                    ( G)
-                    ( x))
-                  ( refl)
-            ＝ in-approx-G (neg-G x +~G x)
-              by
-                add-in-approximation-metric-quotient-cauchy-pseudocompletion-Metric-Ab
-                  ( G)
-                  ( neg-G x)
-                  ( x)
-            ＝ in-approx-G 0-approx-G
-              by
-                ap
-                  ( in-approx-G)
-                  ( left-inverse-law-add-cauchy-approximation-Metric-Ab G x))
-
-  right-inverse-law-add-metric-quotient-cauchy-pseudocompletion-Metric-Ab :
-    (x : type-metric-quotient-cauchy-pseudocompletion-Metric-Ab G) →
-    add-metric-quotient-cauchy-pseudocompletion-Metric-Ab G
-      ( x)
-      ( neg-metric-quotient-cauchy-pseudocompletion-Metric-Ab G x) ＝
-    zero-metric-quotient-cauchy-pseudocompletion-Metric-Ab G
-  right-inverse-law-add-metric-quotient-cauchy-pseudocompletion-Metric-Ab x =
-    commutative-add-metric-quotient-cauchy-pseudocompletion-Metric-Ab G _ _ ∙
-    left-inverse-law-add-metric-quotient-cauchy-pseudocompletion-Metric-Ab x
-```
-
-### The metric quotient of the Cauchy pseudocompletion forms an abelian group
-
-```agda
-module _
-  {l1 l2 : Level}
-  (G : Metric-Ab l1 l2)
-  where
-
-  semigroup-metric-quotient-cauchy-pseudocompletion-Metric-Ab :
-    Semigroup (l1 ⊔ l2)
-  semigroup-metric-quotient-cauchy-pseudocompletion-Metric-Ab =
-    ( set-metric-quotient-cauchy-pseudocompletion-Metric-Ab G ,
-      add-metric-quotient-cauchy-pseudocompletion-Metric-Ab G ,
-      associative-add-metric-quotient-cauchy-pseudocompletion-Metric-Ab G)
-
-  is-unital-semigroup-metric-quotient-cauchy-pseudocompletion-Metric-Ab :
-    is-unital-Semigroup
-      ( semigroup-metric-quotient-cauchy-pseudocompletion-Metric-Ab)
-  is-unital-semigroup-metric-quotient-cauchy-pseudocompletion-Metric-Ab =
-    ( zero-metric-quotient-cauchy-pseudocompletion-Metric-Ab G ,
-      left-unit-law-add-metric-quotient-cauchy-pseudocompletion-Metric-Ab G ,
-      right-unit-law-add-metric-quotient-cauchy-pseudocompletion-Metric-Ab G)
-
-  group-metric-quotient-cauchy-pseudocompletion-Metric-Ab :
-    Group (l1 ⊔ l2)
-  group-metric-quotient-cauchy-pseudocompletion-Metric-Ab =
-    ( semigroup-metric-quotient-cauchy-pseudocompletion-Metric-Ab ,
-      is-unital-semigroup-metric-quotient-cauchy-pseudocompletion-Metric-Ab ,
-      neg-metric-quotient-cauchy-pseudocompletion-Metric-Ab G ,
-      left-inverse-law-add-metric-quotient-cauchy-pseudocompletion-Metric-Ab G ,
-      right-inverse-law-add-metric-quotient-cauchy-pseudocompletion-Metric-Ab G)
-
-  ab-metric-quotient-cauchy-pseudocompletion-Metric-Ab : Ab (l1 ⊔ l2)
-  ab-metric-quotient-cauchy-pseudocompletion-Metric-Ab =
-    ( group-metric-quotient-cauchy-pseudocompletion-Metric-Ab ,
-      commutative-add-metric-quotient-cauchy-pseudocompletion-Metric-Ab G)
+  metric-ab-metric-quotient-cauchy-pseudocompletion-Metric-Ab :
+    Metric-Ab (l1 ⊔ l2) (l1 ⊔ l2)
+  metric-ab-metric-quotient-cauchy-pseudocompletion-Metric-Ab =
+    ( ab-metric-quotient-cauchy-pseudocompletion-Metric-Ab G ,
+      pseudometric-structure-Metric-Space
+        ( metric-quotient-cauchy-pseudocompletion-Metric-Ab G) ,
+      is-extensional-pseudometric-Metric-Space
+        ( metric-quotient-cauchy-pseudocompletion-Metric-Ab G) ,
+      is-short-map-neg-metric-quotient-cauchy-pseudocompletion-Metric-Ab G ,
+      is-short-map-left-add-metric-quotient-cauchy-pseudocompletion-Metric-Ab G)
 ```

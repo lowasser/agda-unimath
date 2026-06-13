@@ -12,6 +12,7 @@ open import elementary-number-theory.positive-rational-numbers
 
 open import foundation.action-on-identifications-binary-functions
 open import foundation.binary-relations
+open import foundation.binary-transport
 open import foundation.cartesian-product-types
 open import foundation.conjunction
 open import foundation.dependent-pair-types
@@ -28,13 +29,14 @@ open import group-theory.abelian-groups
 open import metric-spaces.cartesian-products-metric-spaces
 open import metric-spaces.extensionality-pseudometric-spaces
 open import metric-spaces.isometries-metric-spaces
-open import metric-spaces.isometries-pseudometric-spaces
 open import metric-spaces.metric-spaces
 open import metric-spaces.modulated-uniformly-continuous-maps-metric-spaces
 open import metric-spaces.monotonic-rational-neighborhood-relations
 open import metric-spaces.pseudometric-spaces
 open import metric-spaces.rational-neighborhood-relations
 open import metric-spaces.reflexive-rational-neighborhood-relations
+open import metric-spaces.short-maps-metric-spaces
+open import metric-spaces.short-maps-pseudometric-spaces
 open import metric-spaces.triangular-rational-neighborhood-relations
 open import metric-spaces.uniformly-continuous-maps-metric-spaces
 ```
@@ -46,8 +48,9 @@ open import metric-spaces.uniformly-continuous-maps-metric-spaces
 A {{#concept "metric abelian group" Agda=Metric-Ab}} is an
 [abelian group](group-theory.abelian-groups.md) endowed with the structure of a
 [metric space](metric-spaces.metric-spaces.md) such that the addition operation
-and negation operation are
-[isometries](metric-spaces.isometries-metric-spaces.md).
+and negation operation are [short](metric-spaces.short-maps-metric-spaces.md)
+(which, together with the group operations, implies they are
+[isometries](metric-spaces.isometries-metric-spaces.md)).
 
 ## Definition
 
@@ -60,10 +63,10 @@ is-metric-ab-prop-Ab-Pseudometric-Structure G M =
     MS = (type-Ab G , M)
   in
     is-extensional-prop-Pseudometric-Space MS ∧
-    is-isometry-prop-Pseudometric-Space MS MS (neg-Ab G) ∧
+    is-short-map-prop-Pseudometric-Space MS MS (neg-Ab G) ∧
     Π-Prop
       ( type-Ab G)
-      ( λ x → is-isometry-prop-Pseudometric-Space MS MS (add-Ab G x))
+      ( λ x → is-short-map-prop-Pseudometric-Space MS MS (add-Ab G x))
 
 is-metric-ab-Ab-Pseudometric-Structure :
   {l1 l2 : Level} (G : Ab l1) (M : Pseudometric-Structure l2 (type-Ab G)) →
@@ -202,13 +205,40 @@ module _
   triangular-neighborhood-Metric-Ab =
     triangular-neighborhood-Metric-Space metric-space-Metric-Ab
 
+  is-short-map-add-Metric-Ab :
+    (x : type-Metric-Ab MG) →
+    is-short-map-Metric-Space
+      ( metric-space-Metric-Ab)
+      ( metric-space-Metric-Ab)
+      ( add-Metric-Ab MG x)
+  is-short-map-add-Metric-Ab = pr2 (pr2 (pr2 (pr2 MG)))
+
+  abstract
+    reflects-neighborhoods-left-add-Metric-Ab :
+      (x : type-Metric-Ab MG)
+      (d : ℚ⁺)
+      (y z : type-Metric-Ab MG) →
+      neighborhood-Metric-Ab
+        ( d)
+        ( add-Metric-Ab MG x y)
+        ( add-Metric-Ab MG x z) →
+      neighborhood-Metric-Ab d y z
+    reflects-neighborhoods-left-add-Metric-Ab x d y z Nd⟨x+y⟩⟨x+z⟩ =
+      binary-tr
+        ( neighborhood-Metric-Ab d)
+        ( is-retraction-left-subtraction-Ab (ab-Metric-Ab MG) x y)
+        ( is-retraction-left-subtraction-Ab (ab-Metric-Ab MG) x z)
+        ( is-short-map-add-Metric-Ab (neg-Metric-Ab MG x) d _ _ Nd⟨x+y⟩⟨x+z⟩)
+
   is-isometry-add-Metric-Ab :
     (x : type-Metric-Ab MG) →
     is-isometry-Metric-Space
       ( metric-space-Metric-Ab)
       ( metric-space-Metric-Ab)
       ( add-Metric-Ab MG x)
-  is-isometry-add-Metric-Ab = pr2 (pr2 (pr2 (pr2 MG)))
+  is-isometry-add-Metric-Ab x d y z =
+    ( is-short-map-add-Metric-Ab x d y z ,
+      reflects-neighborhoods-left-add-Metric-Ab x d y z)
 
   isometry-add-Metric-Ab :
     (x : type-Metric-Ab MG) →
@@ -240,12 +270,33 @@ module _
   isometry-add-Metric-Ab' x =
     ( add-Metric-Ab' MG x , is-isometry-add-Metric-Ab' x)
 
+  is-short-map-neg-Metric-Ab :
+    is-short-map-Metric-Space
+      ( metric-space-Metric-Ab)
+      ( metric-space-Metric-Ab)
+      ( neg-Metric-Ab MG)
+  is-short-map-neg-Metric-Ab = pr1 (pr2 (pr2 (pr2 MG)))
+
+  abstract
+    reflects-neighborhoods-neg-Metric-Ab :
+      (d : ℚ⁺) (x y : type-Metric-Ab MG) →
+      neighborhood-Metric-Ab d (neg-Metric-Ab MG x) (neg-Metric-Ab MG y) →
+      neighborhood-Metric-Ab d x y
+    reflects-neighborhoods-neg-Metric-Ab d x y Nd⟨-x⟩⟨-y⟩ =
+      binary-tr
+        ( neighborhood-Metric-Ab d)
+        ( neg-neg-Metric-Ab MG x)
+        ( neg-neg-Metric-Ab MG y)
+        ( is-short-map-neg-Metric-Ab d _ _ Nd⟨-x⟩⟨-y⟩)
+
   is-isometry-neg-Metric-Ab :
     is-isometry-Metric-Space
       ( metric-space-Metric-Ab)
       ( metric-space-Metric-Ab)
       ( neg-Metric-Ab MG)
-  is-isometry-neg-Metric-Ab = pr1 (pr2 (pr2 (pr2 MG)))
+  is-isometry-neg-Metric-Ab d x y =
+    ( is-short-map-neg-Metric-Ab d x y ,
+      reflects-neighborhoods-neg-Metric-Ab d x y)
 
   isometry-neg-Metric-Ab :
     isometry-Metric-Space

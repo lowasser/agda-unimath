@@ -18,6 +18,7 @@ open import metric-spaces.cauchy-approximations-pseudometric-spaces
 open import metric-spaces.cauchy-pseudocompletions-of-pseudometric-spaces
 open import metric-spaces.pseudometric-spaces
 open import metric-spaces.short-maps-pseudometric-spaces
+open import metric-spaces.similarity-of-elements-pseudometric-spaces
 ```
 
 </details>
@@ -63,7 +64,7 @@ module _
 
 ## Properties
 
-### Short maps preserve similarity in the Cauchy pseudocompletion of a pseudometric space
+### Short maps preserve neighborhoods in the Cauchy pseudocompletion of a pseudometric space
 
 ```agda
 module _
@@ -71,6 +72,35 @@ module _
   (X : Pseudometric-Space l1 l2)
   (Y : Pseudometric-Space l3 l4)
   (f@(map-f , is-short-f) : short-map-Pseudometric-Space X Y)
+  where
+
+  abstract
+    is-short-map-cauchy-pseudocompletion-short-map-Pseudometric-Space :
+      is-short-map-Pseudometric-Space
+        ( cauchy-pseudocompletion-Pseudometric-Space X)
+        ( cauchy-pseudocompletion-Pseudometric-Space Y)
+        ( map-short-map-cauchy-approximation-Pseudometric-Space X Y f)
+    is-short-map-cauchy-pseudocompletion-short-map-Pseudometric-Space
+      d (x , _) (y , _) Ndxy δ ε =
+      is-short-f (δ +ℚ⁺ ε +ℚ⁺ d) (x δ) (y ε) (Ndxy δ ε)
+
+  short-map-cauchy-pseudocompletion-short-map-Pseudometric-Space :
+    short-map-Pseudometric-Space
+      ( cauchy-pseudocompletion-Pseudometric-Space X)
+      ( cauchy-pseudocompletion-Pseudometric-Space Y)
+  short-map-cauchy-pseudocompletion-short-map-Pseudometric-Space =
+    ( map-short-map-cauchy-approximation-Pseudometric-Space X Y f ,
+      is-short-map-cauchy-pseudocompletion-short-map-Pseudometric-Space)
+```
+
+### Short maps preserve similarity in the Cauchy pseudocompletion of a pseudometric space
+
+```agda
+module _
+  {l1 l2 l3 l4 : Level}
+  (X : Pseudometric-Space l1 l2)
+  (Y : Pseudometric-Space l3 l4)
+  (f : short-map-Pseudometric-Space X Y)
   where abstract
 
   preserves-sim-short-map-cauchy-pseudocompletion-Pseudometric-Space :
@@ -78,7 +108,11 @@ module _
       ( equivalence-relation-sim-cauchy-pseudocompletion-Pseudometric-Space X)
       ( equivalence-relation-sim-cauchy-pseudocompletion-Pseudometric-Space Y)
       ( map-short-map-cauchy-approximation-Pseudometric-Space X Y f)
-  preserves-sim-short-map-cauchy-pseudocompletion-Pseudometric-Space
-    {x , is-approx-x} {y , is-approx-y} x~y δ ε θ =
-    is-short-f (ε +ℚ⁺ θ +ℚ⁺ δ) (x ε) (y θ) (x~y δ ε θ)
+  preserves-sim-short-map-cauchy-pseudocompletion-Pseudometric-Space {x} {y} =
+    preserves-sim-map-short-map-Pseudometric-Space
+      ( cauchy-pseudocompletion-Pseudometric-Space X)
+      ( cauchy-pseudocompletion-Pseudometric-Space Y)
+      ( short-map-cauchy-pseudocompletion-short-map-Pseudometric-Space X Y f)
+      ( x)
+      ( y)
 ```

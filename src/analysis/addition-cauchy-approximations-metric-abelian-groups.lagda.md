@@ -28,8 +28,10 @@ open import foundation.universe-levels
 open import metric-spaces.action-on-cauchy-approximations-isometries-metric-spaces
 open import metric-spaces.cauchy-approximations-metric-spaces
 open import metric-spaces.cauchy-pseudocompletions-of-metric-spaces
+open import metric-spaces.isometries-metric-spaces
 open import metric-spaces.metric-quotients-of-pseudometric-spaces
 open import metric-spaces.metric-spaces
+open import metric-spaces.short-maps-pseudometric-spaces
 open import metric-spaces.similarity-of-elements-pseudometric-spaces
 ```
 
@@ -386,11 +388,69 @@ module _
     sim-cauchy-pseudocompletion-Metric-Ab G
       ( neg-cauchy-approximation-Metric-Ab G x)
       ( neg-cauchy-approximation-Metric-Ab G y)
-  preserves-sim-neg-cauchy-approximation-Metric-Ab x y =
-    preserves-sim-isometry-cauchy-pseudocompletion-Metric-Space
-      ( metric-space-Metric-Ab G)
-      ( metric-space-Metric-Ab G)
-      ( isometry-neg-Metric-Ab G)
-      { x}
-      { y}
+  preserves-sim-neg-cauchy-approximation-Metric-Ab =
+    preserves-sim-map-isometry-Pseudometric-Space
+      ( cauchy-pseudocompletion-Metric-Ab G)
+      ( cauchy-pseudocompletion-Metric-Ab G)
+      ( isometry-cauchy-pseudocompletion-isometry-Metric-Space
+        ( metric-space-Metric-Ab G)
+        ( metric-space-Metric-Ab G)
+        ( isometry-neg-Metric-Ab G))
+```
+
+### Left addition preserves neighborhoods
+
+```agda
+module _
+  {l1 l2 : Level}
+  (G : Metric-Ab l1 l2)
+  where
+
+  abstract opaque
+    unfolding map-add-cauchy-approximation-Metric-Ab
+
+    preserves-neighborhood-left-add-cauchy-approximation-Metric-Ab :
+      (x : cauchy-approximation-Metric-Ab G) →
+      is-short-map-Pseudometric-Space
+        ( cauchy-pseudocompletion-Metric-Ab G)
+        ( cauchy-pseudocompletion-Metric-Ab G)
+        ( add-cauchy-approximation-Metric-Ab G x)
+    preserves-neighborhood-left-add-cauchy-approximation-Metric-Ab
+      (x , is-approx-x) d (y , is-approx-y) (z , is-approx-z) Ndyz δ ε =
+      let
+        (δ' , 2δ'<δ) = bound-double-le-ℚ⁺ δ
+        (ε' , 2ε'<ε) = bound-double-le-ℚ⁺ ε
+      in
+        monotonic-neighborhood-Metric-Ab G
+          ( add-Metric-Ab G (x δ') (y δ'))
+          ( add-Metric-Ab G (x ε') (z ε'))
+          ( (δ' +ℚ⁺ ε') +ℚ⁺ (δ' +ℚ⁺ ε' +ℚ⁺ d))
+          ( δ +ℚ⁺ ε +ℚ⁺ d)
+          ( concat-eq-le-ℚ⁺
+            { z = δ +ℚ⁺ ε +ℚ⁺ d}
+            ( equational-reasoning
+              (δ' +ℚ⁺ ε') +ℚ⁺ (δ' +ℚ⁺ ε' +ℚ⁺ d)
+              ＝ (δ' +ℚ⁺ ε') +ℚ⁺ (δ' +ℚ⁺ ε') +ℚ⁺ d
+                by inv (associative-add-ℚ⁺ _ _ _)
+              ＝ (δ' +ℚ⁺ δ') +ℚ⁺ (ε' +ℚ⁺ ε') +ℚ⁺ d
+                by ap-add-ℚ⁺ (interchange-law-add-add-ℚ⁺ _ _ _ _) refl)
+            ( preserves-le-left-add-ℚ _ _ _ (preserves-le-add-ℚ 2δ'<δ 2ε'<ε)))
+          ( neighborhood-add-Metric-Ab G
+            ( δ' +ℚ⁺ ε')
+            ( δ' +ℚ⁺ ε' +ℚ⁺ d)
+            ( x δ')
+            ( x ε')
+            ( y δ')
+            ( z ε')
+            ( is-approx-x δ' ε')
+            ( Ndyz δ' ε'))
+
+  short-map-left-add-cauchy-pseudocompletion-Metric-Ab :
+    (x : cauchy-approximation-Metric-Ab G) →
+    short-map-Pseudometric-Space
+      ( cauchy-pseudocompletion-Metric-Ab G)
+      ( cauchy-pseudocompletion-Metric-Ab G)
+  short-map-left-add-cauchy-pseudocompletion-Metric-Ab x =
+    ( add-cauchy-approximation-Metric-Ab G x ,
+      preserves-neighborhood-left-add-cauchy-approximation-Metric-Ab x)
 ```
