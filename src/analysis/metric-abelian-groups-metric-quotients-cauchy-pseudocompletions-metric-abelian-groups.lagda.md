@@ -29,7 +29,7 @@ open import foundation.universe-levels
 open import group-theory.abelian-groups
 open import group-theory.homomorphisms-abelian-groups
 
-open import metric-spaces.action-on-cauchy-approximations-isometries-metric-spaces
+open import metric-spaces.functoriality-isometries-cauchy-pseudocompletions-of-metric-spaces
 open import metric-spaces.cauchy-pseudocompletions-of-metric-spaces
 open import metric-spaces.isometries-metric-spaces
 open import metric-spaces.isometries-pseudometric-spaces
@@ -106,7 +106,7 @@ module _
               ( metric-quotient-cauchy-pseudocompletion-Metric-Ab G))
             ( isometry-unit-metric-quotient-Pseudometric-Space
               ( cauchy-pseudocompletion-Metric-Ab G))
-            ( isometry-cauchy-pseudocompletion-isometry-Metric-Space
+            ( isometry-cauchy-pseudocompletion-Metric-Space
               ( metric-space-Metric-Ab G)
               ( metric-space-Metric-Ab G)
               ( isometry-neg-Metric-Ab G)))

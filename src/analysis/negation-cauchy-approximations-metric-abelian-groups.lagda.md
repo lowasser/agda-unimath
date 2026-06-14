@@ -18,7 +18,7 @@ open import foundation.identity-types
 open import foundation.subtypes
 open import foundation.universe-levels
 
-open import metric-spaces.action-on-cauchy-approximations-isometries-metric-spaces
+open import metric-spaces.functoriality-isometries-cauchy-pseudocompletions-of-metric-spaces
 open import metric-spaces.isometries-pseudometric-spaces
 ```
 
@@ -43,7 +43,7 @@ module _
   neg-cauchy-approximation-Metric-Ab :
     cauchy-approximation-Metric-Ab G → cauchy-approximation-Metric-Ab G
   neg-cauchy-approximation-Metric-Ab =
-    map-isometry-cauchy-approximation-Metric-Space
+    map-isometry-cauchy-pseudocompletion-Metric-Space
       ( metric-space-Metric-Ab G)
       ( metric-space-Metric-Ab G)
       ( isometry-neg-Metric-Ab G)
@@ -59,6 +59,16 @@ module _
   (G : Metric-Ab l1 l2)
   where
 
+  isometry-neg-cauchy-pseudocompletion-Metric-Ab :
+    isometry-Pseudometric-Space
+      ( cauchy-pseudocompletion-Metric-Ab G)
+      ( cauchy-pseudocompletion-Metric-Ab G)
+  isometry-neg-cauchy-pseudocompletion-Metric-Ab =
+    isometry-cauchy-pseudocompletion-Metric-Space
+      ( metric-space-Metric-Ab G)
+      ( metric-space-Metric-Ab G)
+      ( isometry-neg-Metric-Ab G)
+
   abstract
     is-isometry-neg-cauchy-pseudocompletion-Metric-Ab :
       is-isometry-Pseudometric-Space
@@ -66,18 +76,10 @@ module _
         ( cauchy-pseudocompletion-Metric-Ab G)
         ( neg-cauchy-approximation-Metric-Ab G)
     is-isometry-neg-cauchy-pseudocompletion-Metric-Ab =
-      is-isometry-cauchy-pseudocompletion-isometry-Metric-Space
-        ( metric-space-Metric-Ab G)
-        ( metric-space-Metric-Ab G)
-        ( isometry-neg-Metric-Ab G)
-
-  isometry-neg-cauchy-pseudocompletion-Metric-Ab :
-    isometry-Pseudometric-Space
-      ( cauchy-pseudocompletion-Metric-Ab G)
-      ( cauchy-pseudocompletion-Metric-Ab G)
-  isometry-neg-cauchy-pseudocompletion-Metric-Ab =
-    ( neg-cauchy-approximation-Metric-Ab G ,
-      is-isometry-neg-cauchy-pseudocompletion-Metric-Ab)
+      is-isometry-map-isometry-Pseudometric-Space
+        ( cauchy-pseudocompletion-Metric-Ab G)
+        ( cauchy-pseudocompletion-Metric-Ab G)
+        ( isometry-neg-cauchy-pseudocompletion-Metric-Ab)
 ```
 
 ### Inverse laws of addition of Cauchy approximations
