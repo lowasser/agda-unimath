@@ -20,12 +20,16 @@ open import foundation.embeddings
 open import foundation.sets
 open import foundation.universe-levels
 
+open import metric-spaces.cauchy-approximations-metric-spaces
 open import metric-spaces.cauchy-pseudocompletions-of-metric-spaces
 open import metric-spaces.isometries-metric-spaces
+open import metric-spaces.isometries-pseudometric-spaces
 open import metric-spaces.metric-quotients-of-pseudometric-spaces
 open import metric-spaces.metric-space-of-rational-numbers
 open import metric-spaces.metric-spaces
+open import metric-spaces.pseudometric-spaces
 open import metric-spaces.rational-neighborhood-relations
+open import metric-spaces.similarity-of-elements-pseudometric-spaces
 ```
 
 </details>
@@ -47,9 +51,36 @@ standard definition of ℝ.
 ## Definition
 
 ```agda
+cauchy-approximation-metric-space-ℚ : UU lzero
+cauchy-approximation-metric-space-ℚ =
+  cauchy-approximation-Metric-Space metric-space-ℚ
+
+cauchy-pseudocompletion-metric-space-ℚ : Pseudometric-Space lzero lzero
+cauchy-pseudocompletion-metric-space-ℚ =
+  cauchy-pseudocompletion-Metric-Space metric-space-ℚ
+
+sim-prop-cauchy-pseudocompletion-metric-space-ℚ :
+  Relation-Prop lzero cauchy-approximation-metric-space-ℚ
+sim-prop-cauchy-pseudocompletion-metric-space-ℚ =
+  sim-prop-Pseudometric-Space cauchy-pseudocompletion-metric-space-ℚ
+
+sim-cauchy-pseudocompletion-metric-space-ℚ :
+  Relation lzero cauchy-approximation-metric-space-ℚ
+sim-cauchy-pseudocompletion-metric-space-ℚ =
+  sim-Pseudometric-Space cauchy-pseudocompletion-metric-space-ℚ
+
+neighborhood-cauchy-pseudocompletion-metric-space-ℚ :
+  ℚ⁺ → Relation lzero cauchy-approximation-metric-space-ℚ
+neighborhood-cauchy-pseudocompletion-metric-space-ℚ =
+  neighborhood-Pseudometric-Space cauchy-pseudocompletion-metric-space-ℚ
+
 metric-space-cauchy-ℝ : Metric-Space lzero lzero
 metric-space-cauchy-ℝ =
   metric-quotient-cauchy-pseudocompletion-Metric-Ab metric-ab-add-ℚ
+
+pseudometric-space-cauchy-ℝ : Pseudometric-Space lzero lzero
+pseudometric-space-cauchy-ℝ =
+  pseudometric-Metric-Space metric-space-cauchy-ℝ
 
 set-cauchy-ℝ : Set lzero
 set-cauchy-ℝ = set-Metric-Space metric-space-cauchy-ℝ
@@ -93,4 +124,24 @@ zero-cauchy-ℝ = cauchy-real-ℚ zero-ℚ
 
 one-cauchy-ℝ : cauchy-ℝ
 one-cauchy-ℝ = cauchy-real-ℚ one-ℚ
+```
+
+### The map from Cauchy approximations in ℚ to the Cauchy real numbers
+
+```agda
+isometry-cauchy-real-cauchy-approximation-ℚ :
+  isometry-Pseudometric-Space
+    ( cauchy-pseudocompletion-Metric-Space metric-space-ℚ)
+    ( pseudometric-space-cauchy-ℝ)
+isometry-cauchy-real-cauchy-approximation-ℚ =
+  isometry-in-approximation-metric-quotient-cauchy-pseudocompletion-Metric-Ab
+    ( metric-ab-add-ℚ)
+
+cauchy-real-cauchy-approximation-ℚ :
+  cauchy-approximation-Metric-Space metric-space-ℚ → cauchy-ℝ
+cauchy-real-cauchy-approximation-ℚ =
+  map-isometry-Pseudometric-Space
+    ( cauchy-pseudocompletion-Metric-Space metric-space-ℚ)
+    ( pseudometric-space-cauchy-ℝ)
+    ( isometry-cauchy-real-cauchy-approximation-ℚ)
 ```

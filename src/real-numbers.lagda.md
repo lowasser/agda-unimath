@@ -62,6 +62,7 @@ open import real-numbers.integer-powers-positive-real-numbers public
 open import real-numbers.irrational-real-numbers public
 open import real-numbers.irrationality-square-root-of-two public
 open import real-numbers.isometry-addition-real-numbers public
+open import real-numbers.isometry-cauchy-dedekind-real-numbers public
 open import real-numbers.isometry-difference-real-numbers public
 open import real-numbers.isometry-negation-real-numbers public
 open import real-numbers.iterated-halving-difference-real-numbers public
