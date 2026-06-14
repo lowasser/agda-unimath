@@ -10,8 +10,10 @@ module metric-spaces.limits-of-cauchy-approximations-metric-spaces where
 open import elementary-number-theory.addition-positive-rational-numbers
 open import elementary-number-theory.positive-rational-numbers
 
+open import foundation.dependent-pair-types
 open import foundation.function-types
 open import foundation.identity-types
+open import foundation.logical-equivalences
 open import foundation.propositions
 open import foundation.universe-levels
 
@@ -245,6 +247,33 @@ module _
       ( is-lim-v-y)
 ```
 
+### Cauchy approximations with limits are similar if and only if the limits are equal
+
+```agda
+module _
+  {l1 l2 : Level}
+  (M : Metric-Space l1 l2)
+  (u v : cauchy-approximation-Metric-Space M)
+  {x y : type-Metric-Space M}
+  (is-lim-u-x : is-limit-cauchy-approximation-Metric-Space M u x)
+  (is-lim-v-y : is-limit-cauchy-approximation-Metric-Space M v y)
+  where
+
+  eq-limit-iff-sim-cauchy-pseudocompletion-Metric-Space :
+    sim-cauchy-pseudocompletion-Metric-Space M u v ↔ (x ＝ y)
+  pr1 eq-limit-iff-sim-cauchy-pseudocompletion-Metric-Space u~v =
+    eq-limit-sim-cauchy-pseudocompletion-Metric-Space M
+      ( u)
+      ( v)
+      ( u~v)
+      ( x)
+      ( y)
+      ( is-lim-u-x)
+      ( is-lim-v-y)
+  pr2 eq-limit-iff-sim-cauchy-pseudocompletion-Metric-Space refl =
+    sim-is-limit-cauchy-approximation-Metric-Space M u v x is-lim-u-x is-lim-v-y
+```
+
 ### Homotopic Cauchy approximations have the same limits
 
 ```agda
@@ -278,65 +307,58 @@ module _
   (x y : type-Metric-Space X)
   (is-lim-f-x : is-limit-cauchy-approximation-Metric-Space X f x)
   (is-lim-g-y : is-limit-cauchy-approximation-Metric-Space X g y)
-  where abstract
+  where
+
+  abstract
+    same-neighborhoods-limits-cauchy-pseudocompletion-Metric-Space :
+      neighborhood-cauchy-pseudocompletion-Metric-Space X d f g ↔
+      neighborhood-Metric-Space X d x y
+    same-neighborhoods-limits-cauchy-pseudocompletion-Metric-Space =
+      logical-equivalence-reasoning
+        neighborhood-cauchy-pseudocompletion-Metric-Space X d f g
+        ↔ neighborhood-cauchy-pseudocompletion-Metric-Space X
+            ( d)
+            ( const-cauchy-approximation-Metric-Space X x)
+            ( const-cauchy-approximation-Metric-Space X y)
+          by
+            preserves-and-reflects-neighborhoods-sim-Pseudometric-Space
+              ( cauchy-pseudocompletion-Metric-Space X)
+              { x = f}
+              { x' = const-cauchy-approximation-Metric-Space X x}
+              { y = g}
+              { y' = const-cauchy-approximation-Metric-Space X y}
+              ( sim-const-is-limit-cauchy-approximation-Metric-Space X
+                ( f)
+                ( x)
+                ( is-lim-f-x))
+              ( sim-const-is-limit-cauchy-approximation-Metric-Space
+                ( X)
+                ( g)
+                ( y)
+                ( is-lim-g-y))
+              ( d)
+        ↔ neighborhood-Metric-Space X d x y
+          by
+            inv-iff
+              ( is-isometry-map-unit-cauchy-pseudocompletion-Metric-Space
+                ( X)
+                ( d)
+                ( x)
+                ( y))
 
   preserves-neighborhoods-limits-cauchy-approximation-Metric-Space :
     neighborhood-cauchy-pseudocompletion-Metric-Space X d f g →
     neighborhood-Metric-Space X d x y
-  preserves-neighborhoods-limits-cauchy-approximation-Metric-Space Ndfg =
-    reflects-neighborhoods-map-isometry-Pseudometric-Space
-      ( pseudometric-Metric-Space X)
-      ( cauchy-pseudocompletion-Metric-Space X)
-      ( isometry-unit-cauchy-pseudocompletion-Metric-Space X)
-      ( d)
-      ( x)
-      ( y)
-      ( preserves-neighborhoods-sim-Pseudometric-Space
-        ( cauchy-pseudocompletion-Metric-Space X)
-        { x = f}
-        { x' = const-cauchy-approximation-Metric-Space X x}
-        { y = g}
-        { y' = const-cauchy-approximation-Metric-Space X y}
-        ( sim-const-is-limit-cauchy-approximation-Metric-Space X f x is-lim-f-x)
-        ( sim-const-is-limit-cauchy-approximation-Metric-Space X g y is-lim-g-y)
-        ( d)
-        ( Ndfg))
+  preserves-neighborhoods-limits-cauchy-approximation-Metric-Space =
+    forward-implication
+      ( same-neighborhoods-limits-cauchy-pseudocompletion-Metric-Space)
 
   reflects-neighborhoods-limits-cauchy-approximation-Metric-Space :
     neighborhood-Metric-Space X d x y →
     neighborhood-cauchy-pseudocompletion-Metric-Space X d f g
-  reflects-neighborhoods-limits-cauchy-approximation-Metric-Space Ndxy =
-    preserves-neighborhoods-sim-Pseudometric-Space
-      ( cauchy-pseudocompletion-Metric-Space X)
-      { x = const-cauchy-approximation-Metric-Space X x}
-      { x' = f}
-      { y = const-cauchy-approximation-Metric-Space X y}
-      { y' = g}
-      ( symmetric-sim-Pseudometric-Space
-        ( cauchy-pseudocompletion-Metric-Space X)
-        ( f)
-        ( const-cauchy-approximation-Metric-Space X x)
-        ( sim-const-is-limit-cauchy-approximation-Metric-Space X
-          ( f)
-          ( x)
-          ( is-lim-f-x)))
-      ( symmetric-sim-Pseudometric-Space
-        ( cauchy-pseudocompletion-Metric-Space X)
-        ( g)
-        ( const-cauchy-approximation-Metric-Space X y)
-        ( sim-const-is-limit-cauchy-approximation-Metric-Space X
-          ( g)
-          ( y)
-          ( is-lim-g-y)))
-      ( d)
-      ( preserves-neighborhoods-map-isometry-Pseudometric-Space
-        ( pseudometric-Metric-Space X)
-        ( cauchy-pseudocompletion-Metric-Space X)
-        ( isometry-unit-cauchy-pseudocompletion-Metric-Space X)
-        ( d)
-        ( x)
-        ( y)
-        ( Ndxy))
+  reflects-neighborhoods-limits-cauchy-approximation-Metric-Space =
+    backward-implication
+      ( same-neighborhoods-limits-cauchy-pseudocompletion-Metric-Space)
 ```
 
 ## See also

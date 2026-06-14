@@ -43,10 +43,11 @@ the
 of the
 [metric space of rational numbers](metric-spaces.metric-space-of-rational-numbers.md).
 
-Note that constructively, the Cauchy real numbers are not themselves
-[complete](metric-spaces.complete-metric-spaces.md). As a result, the
-[Dedekind real numbers](real-numbers.dedekind-real-numbers.md) are instead the
-standard definition of ℝ.
+The Cauchy real numbers are equivalent to the
+[Dedekind real numbers](real-numbers.dedekind-real-numbers.md) in the presence
+of [excluded middle](foundation.law-of-excluded-middle.md) or
+[countable choice](foundation.axiom-of-countable-choice.md) equivalent
+(Corollary 11.4.3 of {{#cite UF13}}), but not necessarily otherwise.
 
 ## Definition
 
@@ -131,7 +132,7 @@ one-cauchy-ℝ = cauchy-real-ℚ one-ℚ
 ```agda
 isometry-cauchy-real-cauchy-approximation-ℚ :
   isometry-Pseudometric-Space
-    ( cauchy-pseudocompletion-Metric-Space metric-space-ℚ)
+    ( cauchy-pseudocompletion-metric-space-ℚ)
     ( pseudometric-space-cauchy-ℝ)
 isometry-cauchy-real-cauchy-approximation-ℚ =
   isometry-in-approximation-metric-quotient-cauchy-pseudocompletion-Metric-Ab
@@ -141,6 +142,17 @@ cauchy-real-cauchy-approximation-ℚ :
   cauchy-approximation-Metric-Space metric-space-ℚ → cauchy-ℝ
 cauchy-real-cauchy-approximation-ℚ =
   map-isometry-Pseudometric-Space
+    ( cauchy-pseudocompletion-Metric-Space metric-space-ℚ)
+    ( pseudometric-space-cauchy-ℝ)
+    ( isometry-cauchy-real-cauchy-approximation-ℚ)
+
+is-isometry-cauchy-real-cauchy-approximation-ℚ :
+  is-isometry-Pseudometric-Space
+    ( cauchy-pseudocompletion-metric-space-ℚ)
+    ( pseudometric-space-cauchy-ℝ)
+    ( cauchy-real-cauchy-approximation-ℚ)
+is-isometry-cauchy-real-cauchy-approximation-ℚ =
+  is-isometry-map-isometry-Pseudometric-Space
     ( cauchy-pseudocompletion-Metric-Space metric-space-ℚ)
     ( pseudometric-space-cauchy-ℝ)
     ( isometry-cauchy-real-cauchy-approximation-ℚ)
