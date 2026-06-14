@@ -150,6 +150,10 @@ module _
     type-Normed-ℝ-Vector-Space V
   diff-Normed-ℝ-Vector-Space = right-subtraction-Ab ab-V
 
+  neg-Normed-ℝ-Vector-Space :
+    type-Normed-ℝ-Vector-Space V → type-Normed-ℝ-Vector-Space V
+  neg-Normed-ℝ-Vector-Space = neg-Ab ab-V
+
   zero-Normed-ℝ-Vector-Space : type-Normed-ℝ-Vector-Space V
   zero-Normed-ℝ-Vector-Space = zero-Ab ab-V
 
@@ -158,142 +162,6 @@ module _
 
   is-zero-Normed-ℝ-Vector-Space : type-Normed-ℝ-Vector-Space V → UU l2
   is-zero-Normed-ℝ-Vector-Space = is-zero-Ab ab-V
-
-  interchange-add-diff-Normed-ℝ-Vector-Space :
-    (x y z w : type-Normed-ℝ-Vector-Space) →
-    diff-Normed-ℝ-Vector-Space
-      ( add-Normed-ℝ-Vector-Space x y)
-      ( add-Normed-ℝ-Vector-Space z w) ＝
-    add-Normed-ℝ-Vector-Space
-      ( diff-Normed-ℝ-Vector-Space x z)
-      ( diff-Normed-ℝ-Vector-Space y w)
-  interchange-add-diff-Normed-ℝ-Vector-Space =
-    interchange-add-diff-ℝ-Vector-Space vector-space-Normed-ℝ-Vector-Space
-
-  neg-Normed-ℝ-Vector-Space :
-    type-Normed-ℝ-Vector-Space → type-Normed-ℝ-Vector-Space
-  neg-Normed-ℝ-Vector-Space =
-    neg-ℝ-Vector-Space vector-space-Normed-ℝ-Vector-Space
-
-  neg-neg-Normed-ℝ-Vector-Space :
-    (v : type-Normed-ℝ-Vector-Space) →
-    neg-Normed-ℝ-Vector-Space (neg-Normed-ℝ-Vector-Space v) ＝ v
-  neg-neg-Normed-ℝ-Vector-Space =
-    neg-neg-ℝ-Vector-Space vector-space-Normed-ℝ-Vector-Space
-
-  distributive-neg-add-Normed-ℝ-Vector-Space :
-    (v w : type-Normed-ℝ-Vector-Space) →
-    neg-Normed-ℝ-Vector-Space (add-Normed-ℝ-Vector-Space v w) ＝
-    add-Normed-ℝ-Vector-Space
-      ( neg-Normed-ℝ-Vector-Space v)
-      ( neg-Normed-ℝ-Vector-Space w)
-  distributive-neg-add-Normed-ℝ-Vector-Space =
-    distributive-neg-add-Ab ab-Normed-ℝ-Vector-Space
-
-  interchange-add-add-Normed-ℝ-Vector-Space :
-    (u v w x : type-Normed-ℝ-Vector-Space) →
-    add-Normed-ℝ-Vector-Space
-      ( add-Normed-ℝ-Vector-Space u v)
-      ( add-Normed-ℝ-Vector-Space w x) ＝
-    add-Normed-ℝ-Vector-Space
-      ( add-Normed-ℝ-Vector-Space u w)
-      ( add-Normed-ℝ-Vector-Space v x)
-  interchange-add-add-Normed-ℝ-Vector-Space =
-    interchange-add-add-Ab ab-Normed-ℝ-Vector-Space
-
-  zero-Normed-ℝ-Vector-Space : type-Normed-ℝ-Vector-Space
-  zero-Normed-ℝ-Vector-Space =
-    zero-ℝ-Vector-Space vector-space-Normed-ℝ-Vector-Space
-
-  left-unit-law-add-Normed-ℝ-Vector-Space :
-    (v : type-Normed-ℝ-Vector-Space) →
-    add-Normed-ℝ-Vector-Space zero-Normed-ℝ-Vector-Space v ＝ v
-  left-unit-law-add-Normed-ℝ-Vector-Space =
-    left-unit-law-add-Ab ab-Normed-ℝ-Vector-Space
-
-  right-inverse-law-add-Normed-ℝ-Vector-Space :
-    (v : type-Normed-ℝ-Vector-Space) →
-    diff-Normed-ℝ-Vector-Space v v ＝ zero-Normed-ℝ-Vector-Space
-  right-inverse-law-add-Normed-ℝ-Vector-Space =
-    right-inverse-law-add-Ab ab-Normed-ℝ-Vector-Space
-
-  mul-Normed-ℝ-Vector-Space :
-    ℝ l1 → type-Normed-ℝ-Vector-Space → type-Normed-ℝ-Vector-Space
-  mul-Normed-ℝ-Vector-Space =
-    mul-ℝ-Vector-Space vector-space-Normed-ℝ-Vector-Space
-
-  left-unit-law-mul-Normed-ℝ-Vector-Space :
-    (v : type-Normed-ℝ-Vector-Space) →
-    mul-Normed-ℝ-Vector-Space (raise-one-ℝ l1) v ＝ v
-  left-unit-law-mul-Normed-ℝ-Vector-Space =
-    left-unit-law-mul-ℝ-Vector-Space
-      ( vector-space-Normed-ℝ-Vector-Space)
-
-  associative-mul-Normed-ℝ-Vector-Space :
-    (r s : ℝ l1) (v : type-Normed-ℝ-Vector-Space) →
-    mul-Normed-ℝ-Vector-Space (r *ℝ s) v ＝
-    mul-Normed-ℝ-Vector-Space r (mul-Normed-ℝ-Vector-Space s v)
-  associative-mul-Normed-ℝ-Vector-Space =
-    associative-mul-ℝ-Vector-Space vector-space-Normed-ℝ-Vector-Space
-
-  right-zero-law-mul-Normed-ℝ-Vector-Space :
-    (r : ℝ l1) →
-    mul-Normed-ℝ-Vector-Space r zero-Normed-ℝ-Vector-Space ＝
-    zero-Normed-ℝ-Vector-Space
-  right-zero-law-mul-Normed-ℝ-Vector-Space =
-    right-zero-law-mul-ℝ-Vector-Space vector-space-Normed-ℝ-Vector-Space
-
-  left-distributive-mul-add-Normed-ℝ-Vector-Space :
-    (r : ℝ l1) (v w : type-Normed-ℝ-Vector-Space) →
-    mul-Normed-ℝ-Vector-Space r (add-Normed-ℝ-Vector-Space v w) ＝
-    add-Normed-ℝ-Vector-Space
-      ( mul-Normed-ℝ-Vector-Space r v)
-      ( mul-Normed-ℝ-Vector-Space r w)
-  left-distributive-mul-add-Normed-ℝ-Vector-Space =
-    left-distributive-mul-add-ℝ-Vector-Space vector-space-Normed-ℝ-Vector-Space
-
-  left-distributive-mul-diff-Normed-ℝ-Vector-Space :
-    (r : ℝ l1) (v w : type-Normed-ℝ-Vector-Space) →
-    mul-Normed-ℝ-Vector-Space r (diff-Normed-ℝ-Vector-Space v w) ＝
-    diff-Normed-ℝ-Vector-Space
-      ( mul-Normed-ℝ-Vector-Space r v)
-      ( mul-Normed-ℝ-Vector-Space r w)
-  left-distributive-mul-diff-Normed-ℝ-Vector-Space =
-    left-distributive-mul-diff-ℝ-Vector-Space vector-space-Normed-ℝ-Vector-Space
-
-  left-swap-mul-Normed-ℝ-Vector-Space :
-    (r s : ℝ l1) (v : type-Normed-ℝ-Vector-Space) →
-    mul-Normed-ℝ-Vector-Space r (mul-Normed-ℝ-Vector-Space s v) ＝
-    mul-Normed-ℝ-Vector-Space s (mul-Normed-ℝ-Vector-Space r v)
-  left-swap-mul-Normed-ℝ-Vector-Space =
-    left-swap-mul-ℝ-Vector-Space vector-space-Normed-ℝ-Vector-Space
-
-  map-norm-Normed-ℝ-Vector-Space : type-Normed-ℝ-Vector-Space → ℝ l1
-  map-norm-Normed-ℝ-Vector-Space = pr1 (pr1 norm-Normed-ℝ-Vector-Space)
-
-  nonnegative-norm-Normed-ℝ-Vector-Space : type-Normed-ℝ-Vector-Space → ℝ⁰⁺ l1
-  nonnegative-norm-Normed-ℝ-Vector-Space =
-    nonnegative-seminorm-Seminormed-ℝ-Vector-Space
-      ( seminormed-vector-space-Normed-ℝ-Vector-Space)
-
-  dist-Normed-ℝ-Vector-Space :
-    type-Normed-ℝ-Vector-Space → type-Normed-ℝ-Vector-Space → ℝ l1
-  dist-Normed-ℝ-Vector-Space =
-    dist-Seminormed-ℝ-Vector-Space seminormed-vector-space-Normed-ℝ-Vector-Space
-
-  nonnegative-dist-Normed-ℝ-Vector-Space :
-    type-Normed-ℝ-Vector-Space → type-Normed-ℝ-Vector-Space → ℝ⁰⁺ l1
-  nonnegative-dist-Normed-ℝ-Vector-Space =
-    nonnegative-dist-Seminormed-ℝ-Vector-Space
-      ( seminormed-vector-space-Normed-ℝ-Vector-Space)
-
-  is-absolutely-homogeneous-norm-Normed-ℝ-Vector-Space :
-    (c : ℝ l1) (v : type-Normed-ℝ-Vector-Space) →
-    map-norm-Normed-ℝ-Vector-Space (mul-Normed-ℝ-Vector-Space c v) ＝
-    abs-ℝ c *ℝ map-norm-Normed-ℝ-Vector-Space v
-  is-absolutely-homogeneous-norm-Normed-ℝ-Vector-Space =
-    is-absolutely-homogeneous-seminorm-Seminormed-ℝ-Vector-Space
-      ( seminormed-vector-space-Normed-ℝ-Vector-Space)
 
   abstract
     associative-add-Normed-ℝ-Vector-Space :
@@ -364,6 +232,17 @@ module _
       u ＝ v
     eq-is-zero-diff-Normed-ℝ-Vector-Space =
       eq-is-zero-right-subtraction-Ab ab-V
+
+    interchange-add-diff-Normed-ℝ-Vector-Space :
+      (x y z w : type-Normed-ℝ-Vector-Space V) →
+      diff-Normed-ℝ-Vector-Space
+        ( add-Normed-ℝ-Vector-Space x y)
+        ( add-Normed-ℝ-Vector-Space z w) ＝
+      add-Normed-ℝ-Vector-Space
+        ( diff-Normed-ℝ-Vector-Space x z)
+        ( diff-Normed-ℝ-Vector-Space y w)
+    interchange-add-diff-Normed-ℝ-Vector-Space =
+      interchange-add-right-subtraction-Ab ab-V
 ```
 
 ### Properties inherited from the vector space structure
