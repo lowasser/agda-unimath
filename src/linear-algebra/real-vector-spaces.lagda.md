@@ -24,6 +24,7 @@ open import linear-algebra.vector-spaces
 
 open import real-numbers.addition-real-numbers
 open import real-numbers.dedekind-real-numbers
+open import real-numbers.difference-real-numbers
 open import real-numbers.field-of-real-numbers
 open import real-numbers.multiplication-real-numbers
 open import real-numbers.negation-real-numbers
@@ -160,6 +161,13 @@ module _
     add-ℝ-Vector-Space (mul-ℝ-Vector-Space r v) (mul-ℝ-Vector-Space s v)
   right-distributive-mul-add-ℝ-Vector-Space =
     right-distributive-mul-add-Vector-Space (heyting-field-ℝ l1) V
+
+  right-distributive-mul-diff-ℝ-Vector-Space :
+    (r s : ℝ l1) (v : type-ℝ-Vector-Space) →
+    mul-ℝ-Vector-Space (r -ℝ s) v ＝
+    diff-ℝ-Vector-Space (mul-ℝ-Vector-Space r v) (mul-ℝ-Vector-Space s v)
+  right-distributive-mul-diff-ℝ-Vector-Space =
+    right-distributive-mul-diff-Vector-Space (heyting-field-ℝ l1) V
 
   associative-mul-ℝ-Vector-Space :
     (r s : ℝ l1) (v : type-ℝ-Vector-Space) →

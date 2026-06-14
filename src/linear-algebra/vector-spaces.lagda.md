@@ -152,6 +152,15 @@ module _
       ( commutative-ring-Heyting-Field R)
       ( V)
 
+  right-distributive-mul-diff-Vector-Space :
+    (r s : type-Heyting-Field R) (v : type-Vector-Space) →
+    mul-Vector-Space (diff-Heyting-Field R r s) v ＝
+    diff-Vector-Space (mul-Vector-Space r v) (mul-Vector-Space s v)
+  right-distributive-mul-diff-Vector-Space =
+    right-distributive-mul-diff-left-module-Ring
+      ( ring-Heyting-Field R)
+      ( V)
+
   associative-mul-Vector-Space :
     (r s : type-Heyting-Field R) (v : type-Vector-Space) →
     mul-Vector-Space (mul-Heyting-Field R r s) v ＝
