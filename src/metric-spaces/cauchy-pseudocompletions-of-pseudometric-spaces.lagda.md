@@ -433,7 +433,7 @@ module _
   {l1 l2 : Level} (M : Pseudometric-Space l1 l2)
   (u v : cauchy-approximation-Pseudometric-Space M)
   (x : type-Pseudometric-Space M)
-  where
+  where abstract
 
   has-same-limit-sim-cauchy-approximation-Pseudometric-Space :
     sim-Pseudometric-Space
