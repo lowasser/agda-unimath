@@ -29,8 +29,8 @@ open import foundation.universe-levels
 open import group-theory.abelian-groups
 open import group-theory.homomorphisms-abelian-groups
 
-open import metric-spaces.functoriality-isometries-cauchy-pseudocompletions-of-metric-spaces
 open import metric-spaces.cauchy-pseudocompletions-of-metric-spaces
+open import metric-spaces.functoriality-isometries-cauchy-pseudocompletions-of-metric-spaces
 open import metric-spaces.isometries-metric-spaces
 open import metric-spaces.isometries-pseudometric-spaces
 open import metric-spaces.metric-spaces
