@@ -218,6 +218,27 @@ module _
       interchange-add-add-Ab (ab-left-module-Ring R M)
 ```
 
+### Interchange laws of addition and differences
+
+```agda
+module _
+  {l1 l2 : Level}
+  (R : Ring l1)
+  (M : left-module-Ring l2 R)
+  where abstract
+
+  interchange-add-diff-left-module-Ring :
+    (x y z w : type-left-module-Ring R M) →
+    diff-left-module-Ring R M
+      ( add-left-module-Ring R M x y)
+      ( add-left-module-Ring R M z w) ＝
+    add-left-module-Ring R M
+      ( diff-left-module-Ring R M x z)
+      ( diff-left-module-Ring R M y w)
+  interchange-add-diff-left-module-Ring =
+    interchange-add-right-subtraction-Ab (ab-left-module-Ring R M)
+```
+
 ### Negation distributes over addition
 
 ```agda
@@ -569,7 +590,7 @@ module _
     left-module-hom-left-module-Ring R S h (left-module-ring-Ring S)
 ```
 
-### Scalar multiplication is distributive over subtraction
+### Left distributivity of scalar multiplication over differences
 
 ```agda
 module _
@@ -592,6 +613,28 @@ module _
     ( ap-add-left-module-Ring R M
       ( refl)
       ( right-negative-law-mul-left-module-Ring R M r y))
+```
+
+### Right distributivity of scalar multiplication over differences
+
+```agda
+module _
+  {l1 l2 : Level}
+  (R : Ring l1)
+  (M : left-module-Ring l2 R)
+  where abstract
+
+  right-distributive-mul-diff-left-module-Ring :
+    (r s : type-Ring R) (x : type-left-module-Ring R M) →
+    mul-left-module-Ring R M (diff-Ring R r s) x ＝
+    diff-left-module-Ring R M
+      ( mul-left-module-Ring R M r x)
+      ( mul-left-module-Ring R M s x)
+  right-distributive-mul-diff-left-module-Ring r s x =
+    ( right-distributive-mul-add-left-module-Ring R M r (neg-Ring R s) x) ∙
+    ( ap-add-left-module-Ring R M
+      ( refl)
+      ( left-negative-law-mul-left-module-Ring R M s x))
 ```
 
 ## See also
