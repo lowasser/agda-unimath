@@ -35,6 +35,16 @@ open import real-numbers.uniformly-continuous-real-maps-proper-closed-intervals-
 
 ## Idea
 
+A map `f` from a
+[proper closed interval](real-numbers.proper-closed-intervals-real-numbers.md)
+`[a, b]` in the [real numbers](real-numbers.dedekind-real-numbers.md) to a
+[normed real vector space](linear-algebra.normed-real-vector-spaces.md) `V` is
+{{#concept "uniformly continuous" Disambiguation="uniformly continuous map from a proper closed interval in ℝ to a normed real vector space" Agda=uniformly-continuous-map-proper-closed-interval-real-Normed-ℝ-Vector-Space}}
+if it is
+[uniformly continuous](metric-spaces.uniformly-continuous-maps-metric-spaces.md)
+as a map from the [metric space](metric-spaces.metric-spaces.md) of `[a, b]` to
+the metric space of `V`.
+
 ## Definition
 
 ```agda
@@ -160,3 +170,7 @@ module _
             ( |||fx|||≤b x)
             ( leq-abs-ℝ (map-norm-Normed-ℝ-Vector-Space V (f x))))
 ```
+
+## See also
+
+- [Modulated uniformly continuous maps from proper closed intervals in ℝ to normed real vector spaces](functional-analysis.modulated-uniformly-continuous-maps-on-proper-closed-intervals-real-numbers-normed-real-vector-spaces.md)

@@ -36,6 +36,16 @@ open import real-numbers.rational-real-numbers
 
 ## Idea
 
+Given a map `f` from a
+[proper closed interval](real-numbers.proper-closed-intervals-real-numbers.md)
+`[a, b]` in the [real numbers](real-numbers.dedekind-real-numbers.md) to a
+[normed real vector space](linear-algebra.normed-real-vector-spaces.md) `V`, a
+{{#concept "modulus of uniform continuity" Disambiguation="for a map from a proper closed interval in ℝ to a normed real vector space" Agda=is-modulus-of-uniform-continuity-map-proper-closed-interval-real-Normed-ℝ-Vector-Space}}
+for `f` is a
+[modulus of uniform continuity](metric-spaces.modulated-uniformly-continuous-maps-metric-spaces.md)
+of `f` from the [metric space](metric-spaces.metric-spaces.md) of `[a, b]` to
+the metric space of `V`.
+
 ## Definition
 
 ```agda
