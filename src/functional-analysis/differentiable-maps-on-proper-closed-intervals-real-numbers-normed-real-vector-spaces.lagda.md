@@ -42,8 +42,6 @@ open import linear-algebra.normed-real-vector-spaces
 open import lists.sequences
 
 open import metric-spaces.limits-of-sequences-metric-spaces
-open import metric-spaces.modulated-uniformly-continuous-maps-metric-spaces
-open import metric-spaces.uniformly-continuous-maps-metric-spaces
 
 open import order-theory.large-posets
 
@@ -67,7 +65,6 @@ open import real-numbers.nonzero-real-numbers
 open import real-numbers.proper-closed-intervals-real-numbers
 open import real-numbers.rational-real-numbers
 open import real-numbers.strict-inequality-real-numbers
-open import real-numbers.uniformly-continuous-real-maps-proper-closed-intervals-real-numbers
 ```
 
 </details>
