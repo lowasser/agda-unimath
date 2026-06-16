@@ -9,9 +9,13 @@ module linear-algebra.normed-real-vector-spaces where
 <details><summary>Imports</summary>
 
 ```agda
+open import elementary-number-theory.positive-rational-numbers
+
 open import foundation.action-on-identifications-functions
+open import foundation.binary-relations
 open import foundation.dependent-pair-types
 open import foundation.dependent-products-propositions
+open import foundation.function-extensionality
 open import foundation.identity-types
 open import foundation.logical-equivalences
 open import foundation.propositions
@@ -25,6 +29,7 @@ open import group-theory.abelian-groups
 open import linear-algebra.real-vector-spaces
 open import linear-algebra.seminormed-real-vector-spaces
 
+open import metric-spaces.cartesian-products-metric-spaces
 open import metric-spaces.equality-of-metric-spaces
 open import metric-spaces.isometries-metric-spaces
 open import metric-spaces.lipschitz-maps-metric-spaces
@@ -32,6 +37,10 @@ open import metric-spaces.located-metric-spaces
 open import metric-spaces.metric-spaces
 open import metric-spaces.metrics
 open import metric-spaces.metrics-of-metric-spaces
+open import metric-spaces.metrics-of-metric-spaces-are-uniformly-continuous
+open import metric-spaces.rational-neighborhood-relations
+open import metric-spaces.subspaces-metric-spaces
+open import metric-spaces.uniformly-continuous-maps-metric-spaces
 
 open import order-theory.large-posets
 
@@ -41,8 +50,10 @@ open import real-numbers.dedekind-real-numbers
 open import real-numbers.difference-real-numbers
 open import real-numbers.distance-real-numbers
 open import real-numbers.inequality-real-numbers
+open import real-numbers.metric-space-of-nonnegative-real-numbers
 open import real-numbers.metric-space-of-real-numbers
 open import real-numbers.multiplication-real-numbers
+open import real-numbers.negation-real-numbers
 open import real-numbers.nonnegative-real-numbers
 open import real-numbers.rational-real-numbers
 open import real-numbers.similarity-real-numbers
@@ -307,6 +318,13 @@ module _
       mul-Normed-ℝ-Vector-Space (raise-one-ℝ l1) v ＝ v
     left-unit-law-mul-Normed-ℝ-Vector-Space =
       left-unit-law-mul-ℝ-Vector-Space vector-space-V
+
+    left-negative-law-mul-Normed-ℝ-Vector-Space :
+      (c : ℝ l1) (v : type-Normed-ℝ-Vector-Space V) →
+      mul-Normed-ℝ-Vector-Space (neg-ℝ c) v ＝
+      neg-Normed-ℝ-Vector-Space V (mul-Normed-ℝ-Vector-Space c v)
+    left-negative-law-mul-Normed-ℝ-Vector-Space =
+      left-negative-law-mul-ℝ-Vector-Space vector-space-V
 ```
 
 ### Norms and distances in a normed vector space
@@ -340,6 +358,13 @@ module _
     abs-ℝ c *ℝ map-norm-Normed-ℝ-Vector-Space v
   is-absolutely-homogeneous-norm-Normed-ℝ-Vector-Space =
     is-absolutely-homogeneous-seminorm-Seminormed-ℝ-Vector-Space seminormed-V
+
+  right-zero-law-dist-Normed-ℝ-Vector-Space :
+    (v : type-Normed-ℝ-Vector-Space V) →
+    dist-Normed-ℝ-Vector-Space v (zero-Normed-ℝ-Vector-Space V) ＝
+    map-norm-Normed-ℝ-Vector-Space v
+  right-zero-law-dist-Normed-ℝ-Vector-Space =
+    right-zero-law-dist-Seminormed-ℝ-Vector-Space seminormed-V
 ```
 
 ### The distance function in a normed vector space satisfies the properties of a metric
@@ -433,6 +458,16 @@ module _
     located-metric-space-Metric
       ( set-Normed-ℝ-Vector-Space V)
       ( metric-Normed-ℝ-Vector-Space)
+
+  neighborhood-prop-Normed-ℝ-Vector-Space :
+    Rational-Neighborhood-Relation l1 (type-Normed-ℝ-Vector-Space V)
+  neighborhood-prop-Normed-ℝ-Vector-Space =
+    neighborhood-prop-Metric-Space metric-space-Normed-ℝ-Vector-Space
+
+  neighborhood-Normed-ℝ-Vector-Space :
+    ℚ⁺ → Relation l1 (type-Normed-ℝ-Vector-Space V)
+  neighborhood-Normed-ℝ-Vector-Space =
+    neighborhood-Metric-Space metric-space-Normed-ℝ-Vector-Space
 ```
 
 ### Negation is an isometry in the metric space of a normed vector space
@@ -440,44 +475,49 @@ module _
 ```agda
 module _
   {l1 l2 : Level} (V : Normed-ℝ-Vector-Space l1 l2)
-  where
+  where abstract
 
-  abstract
-    is-isometry-neg-Normed-ℝ-Vector-Space :
-      is-isometry-Metric-Space
-        ( metric-space-Normed-ℝ-Vector-Space V)
-        ( metric-space-Normed-ℝ-Vector-Space V)
-        ( neg-Normed-ℝ-Vector-Space V)
-    is-isometry-neg-Normed-ℝ-Vector-Space =
-      is-isometry-sim-metric-Metric-Space
-        ( metric-space-Normed-ℝ-Vector-Space V)
-        ( metric-space-Normed-ℝ-Vector-Space V)
-        ( nonnegative-dist-Normed-ℝ-Vector-Space V)
-        ( nonnegative-dist-Normed-ℝ-Vector-Space V)
-        ( is-metric-metric-space-Metric
-          ( set-Normed-ℝ-Vector-Space V)
-          ( metric-Normed-ℝ-Vector-Space V))
-        ( is-metric-metric-space-Metric
-          ( set-Normed-ℝ-Vector-Space V)
-          ( metric-Normed-ℝ-Vector-Space V))
-        ( neg-Normed-ℝ-Vector-Space V)
-        ( λ x y →
-          sim-eq-ℝ
-            ( inv
-              ( equational-reasoning
-                dist-Normed-ℝ-Vector-Space V
-                  ( neg-Normed-ℝ-Vector-Space V x)
-                  ( neg-Normed-ℝ-Vector-Space V y)
-                ＝ dist-Normed-ℝ-Vector-Space V y x
-                  by
-                    ap
-                      ( map-norm-Normed-ℝ-Vector-Space V)
-                      ( right-subtraction-neg-Ab
-                        ( ab-Normed-ℝ-Vector-Space V)
-                        ( _)
-                        ( _))
-                ＝ dist-Normed-ℝ-Vector-Space V x y
-                  by symmetric-dist-Normed-ℝ-Vector-Space V y x)))
+  dist-neg-Normed-ℝ-Vector-Space :
+    (x y : type-Normed-ℝ-Vector-Space V) →
+    dist-Normed-ℝ-Vector-Space V
+      ( neg-Normed-ℝ-Vector-Space V x)
+      ( neg-Normed-ℝ-Vector-Space V y) ＝
+    dist-Normed-ℝ-Vector-Space V x y
+  dist-neg-Normed-ℝ-Vector-Space x y =
+    equational-reasoning
+      dist-Normed-ℝ-Vector-Space V
+        ( neg-Normed-ℝ-Vector-Space V x)
+        ( neg-Normed-ℝ-Vector-Space V y)
+      ＝ dist-Normed-ℝ-Vector-Space V y x
+        by
+          ap
+            ( map-norm-Normed-ℝ-Vector-Space V)
+            ( right-subtraction-neg-Ab
+              ( ab-Normed-ℝ-Vector-Space V)
+              ( _)
+              ( _))
+      ＝ dist-Normed-ℝ-Vector-Space V x y
+        by symmetric-dist-Normed-ℝ-Vector-Space V y x
+
+  is-isometry-neg-Normed-ℝ-Vector-Space :
+    is-isometry-Metric-Space
+      ( metric-space-Normed-ℝ-Vector-Space V)
+      ( metric-space-Normed-ℝ-Vector-Space V)
+      ( neg-Normed-ℝ-Vector-Space V)
+  is-isometry-neg-Normed-ℝ-Vector-Space =
+    is-isometry-sim-metric-Metric-Space
+      ( metric-space-Normed-ℝ-Vector-Space V)
+      ( metric-space-Normed-ℝ-Vector-Space V)
+      ( nonnegative-dist-Normed-ℝ-Vector-Space V)
+      ( nonnegative-dist-Normed-ℝ-Vector-Space V)
+      ( is-metric-metric-space-Metric
+        ( set-Normed-ℝ-Vector-Space V)
+        ( metric-Normed-ℝ-Vector-Space V))
+      ( is-metric-metric-space-Metric
+        ( set-Normed-ℝ-Vector-Space V)
+        ( metric-Normed-ℝ-Vector-Space V))
+      ( neg-Normed-ℝ-Vector-Space V)
+      ( λ x y → sim-eq-ℝ (inv (dist-neg-Normed-ℝ-Vector-Space x y)))
 ```
 
 ### Left addition is an isometry in the metric space of a normed vector space
@@ -597,6 +637,121 @@ module _
     ( ap
       ( map-norm-Normed-ℝ-Vector-Space V)
       ( left-distributive-mul-diff-Normed-ℝ-Vector-Space V c x y))
+```
+
+### The distance function is a uniformly continuous map from the product metric space to the nonnegative real numbers
+
+```agda
+module _
+  {l1 l2 : Level}
+  (V : Normed-ℝ-Vector-Space l1 l2)
+  where
+
+  abstract
+    is-uniformly-continuous-map-nonnegative-dist-Normed-ℝ-Vector-Space :
+      is-uniformly-continuous-map-Metric-Space
+        ( product-Metric-Space
+          ( metric-space-Normed-ℝ-Vector-Space V)
+          ( metric-space-Normed-ℝ-Vector-Space V))
+        ( metric-space-ℝ⁰⁺ l1)
+        ( ind-Σ (nonnegative-dist-Normed-ℝ-Vector-Space V))
+    is-uniformly-continuous-map-nonnegative-dist-Normed-ℝ-Vector-Space =
+      is-uniformly-continuous-map-metric-of-Metric-Space
+        ( metric-space-Normed-ℝ-Vector-Space V)
+        ( nonnegative-dist-Normed-ℝ-Vector-Space V)
+        ( is-metric-metric-space-Metric
+          ( set-Normed-ℝ-Vector-Space V)
+          ( metric-Normed-ℝ-Vector-Space V))
+
+    is-uniformly-continuous-map-nonnegative-norm-Normed-ℝ-Vector-Space :
+      is-uniformly-continuous-map-Metric-Space
+        ( metric-space-Normed-ℝ-Vector-Space V)
+        ( metric-space-ℝ⁰⁺ l1)
+        ( nonnegative-norm-Normed-ℝ-Vector-Space V)
+    is-uniformly-continuous-map-nonnegative-norm-Normed-ℝ-Vector-Space =
+      tr
+        ( is-uniformly-continuous-map-Metric-Space
+          ( metric-space-Normed-ℝ-Vector-Space V)
+          ( metric-space-ℝ⁰⁺ l1))
+        ( eq-htpy
+          ( λ v → eq-ℝ⁰⁺ _ _ (right-zero-law-dist-Normed-ℝ-Vector-Space V v)))
+        ( is-uniformly-continuous-map-comp-Metric-Space
+          ( metric-space-Normed-ℝ-Vector-Space V)
+          ( product-Metric-Space
+            ( metric-space-Normed-ℝ-Vector-Space V)
+            ( metric-space-Normed-ℝ-Vector-Space V))
+          ( metric-space-ℝ⁰⁺ l1)
+          ( ind-Σ (nonnegative-dist-Normed-ℝ-Vector-Space V))
+          ( _, zero-Normed-ℝ-Vector-Space V)
+          ( is-uniformly-continuous-map-nonnegative-dist-Normed-ℝ-Vector-Space)
+          ( is-uniformly-continuous-map-is-isometry-Metric-Space
+            ( metric-space-Normed-ℝ-Vector-Space V)
+            ( product-Metric-Space
+              ( metric-space-Normed-ℝ-Vector-Space V)
+              ( metric-space-Normed-ℝ-Vector-Space V))
+            ( _, zero-Normed-ℝ-Vector-Space V)
+            ( is-isometry-right-pair-Metric-Space
+              ( metric-space-Normed-ℝ-Vector-Space V)
+              ( metric-space-Normed-ℝ-Vector-Space V)
+              ( zero-Normed-ℝ-Vector-Space V))))
+
+  uniformly-continuous-map-nonnegative-norm-Normed-ℝ-Vector-Space :
+    uniformly-continuous-map-Metric-Space
+      ( metric-space-Normed-ℝ-Vector-Space V)
+      ( metric-space-ℝ⁰⁺ l1)
+  uniformly-continuous-map-nonnegative-norm-Normed-ℝ-Vector-Space =
+    ( nonnegative-norm-Normed-ℝ-Vector-Space V ,
+      is-uniformly-continuous-map-nonnegative-norm-Normed-ℝ-Vector-Space)
+
+  uniformly-continuous-map-norm-Normed-ℝ-Vector-Space :
+    uniformly-continuous-map-Metric-Space
+      ( metric-space-Normed-ℝ-Vector-Space V)
+      ( metric-space-ℝ l1)
+  uniformly-continuous-map-norm-Normed-ℝ-Vector-Space =
+    comp-uniformly-continuous-map-Metric-Space
+      ( metric-space-Normed-ℝ-Vector-Space V)
+      ( metric-space-ℝ⁰⁺ l1)
+      ( metric-space-ℝ l1)
+      ( uniformly-continuous-inclusion-subspace-Metric-Space
+        ( metric-space-ℝ l1)
+        ( is-nonnegative-prop-ℝ))
+      ( uniformly-continuous-map-nonnegative-norm-Normed-ℝ-Vector-Space)
+```
+
+### For any `x y : V`, `∥x∥ ≤ ∥y∥ + ∥x - y∥`
+
+```agda
+module _
+  {l1 l2 : Level}
+  (V : Normed-ℝ-Vector-Space l1 l2)
+  (x y : type-Normed-ℝ-Vector-Space V)
+  (let _+V_ = add-Normed-ℝ-Vector-Space V)
+  (let _-V_ = diff-Normed-ℝ-Vector-Space V)
+  where abstract
+
+  open inequality-reasoning-Large-Poset ℝ-Large-Poset
+
+  leq-norm-add-norm-dist-Normed-ℝ-Vector-Space :
+    leq-ℝ
+      ( map-norm-Normed-ℝ-Vector-Space V x)
+      ( map-norm-Normed-ℝ-Vector-Space V y +ℝ
+        dist-Normed-ℝ-Vector-Space V x y)
+  leq-norm-add-norm-dist-Normed-ℝ-Vector-Space =
+    chain-of-inequalities
+      map-norm-Normed-ℝ-Vector-Space V x
+      ≤ map-norm-Normed-ℝ-Vector-Space V (y +V (x -V y))
+        by
+          leq-eq-ℝ
+            ( ap
+              ( map-norm-Normed-ℝ-Vector-Space V)
+              ( inv
+                ( is-identity-right-conjugation-Ab
+                  ( ab-Normed-ℝ-Vector-Space V)
+                  ( y)
+                  ( x))))
+      ≤ map-norm-Normed-ℝ-Vector-Space V y +ℝ
+        dist-Normed-ℝ-Vector-Space V x y
+        by triangular-norm-Normed-ℝ-Vector-Space V _ _
 ```
 
 ## See also

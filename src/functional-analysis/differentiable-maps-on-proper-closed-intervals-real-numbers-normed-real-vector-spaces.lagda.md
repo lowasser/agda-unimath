@@ -9,9 +9,15 @@ module functional-analysis.differentiable-maps-on-proper-closed-intervals-real-n
 <details><summary>Imports</summary>
 
 ```agda
+open import elementary-number-theory.addition-positive-rational-numbers
+open import elementary-number-theory.minimum-positive-rational-numbers
+open import elementary-number-theory.multiplication-positive-rational-numbers
+open import elementary-number-theory.multiplicative-group-of-positive-rational-numbers
 open import elementary-number-theory.positive-rational-numbers
+open import elementary-number-theory.strict-inequality-rational-numbers
 
 open import foundation.action-on-identifications-binary-functions
+open import foundation.action-on-identifications-functions
 open import foundation.dependent-pair-types
 open import foundation.dependent-products-propositions
 open import foundation.existential-quantification
@@ -26,28 +32,42 @@ open import foundation.sets
 open import foundation.subtypes
 open import foundation.universe-levels
 
+open import functional-analysis.modulated-uniformly-continuous-maps-on-proper-closed-intervals-real-numbers-normed-real-vector-spaces
+open import functional-analysis.uniformly-continuous-maps-on-proper-closed-intervals-real-numbers-normed-real-vector-spaces
+
+open import group-theory.abelian-groups
+
 open import linear-algebra.normed-real-vector-spaces
 
 open import lists.sequences
 
 open import metric-spaces.limits-of-sequences-metric-spaces
+open import metric-spaces.modulated-uniformly-continuous-maps-metric-spaces
+open import metric-spaces.uniformly-continuous-maps-metric-spaces
 
 open import order-theory.large-posets
 
 open import real-numbers.absolute-value-real-numbers
 open import real-numbers.accumulation-points-subsets-real-numbers
+open import real-numbers.addition-nonnegative-real-numbers
+open import real-numbers.addition-real-numbers
 open import real-numbers.apartness-real-numbers
 open import real-numbers.difference-real-numbers
 open import real-numbers.distance-real-numbers
+open import real-numbers.inequalities-addition-and-subtraction-real-numbers
 open import real-numbers.inequality-real-numbers
 open import real-numbers.metric-space-of-real-numbers
 open import real-numbers.multiplication-nonnegative-real-numbers
+open import real-numbers.multiplication-positive-real-numbers
 open import real-numbers.multiplication-real-numbers
 open import real-numbers.multiplicative-inverses-nonzero-real-numbers
+open import real-numbers.negation-real-numbers
 open import real-numbers.nonnegative-real-numbers
 open import real-numbers.nonzero-real-numbers
 open import real-numbers.proper-closed-intervals-real-numbers
 open import real-numbers.rational-real-numbers
+open import real-numbers.strict-inequality-real-numbers
+open import real-numbers.uniformly-continuous-real-maps-proper-closed-intervals-real-numbers
 ```
 
 </details>
@@ -503,4 +523,327 @@ module _
         ( [a,b])
         ( f) ,
       is-prop-is-differentiable-map-proper-closed-interval-real-Normed-ℝ-Vector-Space)
+```
+
+### A derivative of a map from a proper closed interval to a normed real vector space is uniformly continuous
+
+```agda
+module _
+  {l1 l2 : Level}
+  (V : Normed-ℝ-Vector-Space l1 l2)
+  ([a,b] : proper-closed-interval-ℝ l1 l1)
+  (f f' : type-proper-closed-interval-ℝ l1 [a,b] → type-Normed-ℝ-Vector-Space V)
+  (δf : ℚ⁺ → ℚ⁺)
+  (is-mod-derivative-f-f'-δf :
+    is-modulus-of-derivative-map-proper-closed-interval-real-Normed-ℝ-Vector-Space
+      ( V)
+      ( [a,b])
+      ( f)
+      ( f')
+      ( δf))
+  where abstract
+
+  apart-modulus-is-modulus-of-derivative-map-proper-closed-interval-real-Normed-ℝ-Vector-Space :
+    ℚ⁺ → ℚ⁺
+  apart-modulus-is-modulus-of-derivative-map-proper-closed-interval-real-Normed-ℝ-Vector-Space =
+    δf ∘ modulus-le-double-le-ℚ⁺
+
+  is-apart-modulus-is-modulus-of-derivative-map-proper-closed-interval-real-Normed-ℝ-Vector-Space :
+    (ε : ℚ⁺) (x y : type-proper-closed-interval-ℝ l1 [a,b]) →
+    apart-ℝ (pr1 x) (pr1 y) →
+    neighborhood-ℝ _
+      ( apart-modulus-is-modulus-of-derivative-map-proper-closed-interval-real-Normed-ℝ-Vector-Space
+        ( ε))
+      ( pr1 x)
+      ( pr1 y) →
+    neighborhood-Normed-ℝ-Vector-Space V ε (f' x) (f' y)
+  is-apart-modulus-is-modulus-of-derivative-map-proper-closed-interval-real-Normed-ℝ-Vector-Space
+    ε x@(xℝ , _) y@(yℝ , _) x#y Nμεxy =
+    let
+      (ε' , ε'+ε'<ε) = bound-double-le-ℚ⁺ ε
+      open inequality-reasoning-Large-Poset ℝ-Large-Poset
+      dist-V = dist-Normed-ℝ-Vector-Space V
+      _*V_ = mul-Normed-ℝ-Vector-Space V
+      _-V_ = diff-Normed-ℝ-Vector-Space V
+      neg-V = neg-Normed-ℝ-Vector-Space V
+    in
+      reflects-leq-left-mul-ℝ⁺
+        ( dist-ℝ xℝ yℝ , is-positive-dist-apart-ℝ x#y)
+        ( _)
+        ( _)
+        ( chain-of-inequalities
+          dist-ℝ xℝ yℝ *ℝ dist-V (f' x) (f' y)
+          ≤ dist-V ((xℝ -ℝ yℝ) *V f' x) ((xℝ -ℝ yℝ) *V f' y)
+            by
+              leq-eq-ℝ
+                ( left-distributive-abs-mul-dist-Normed-ℝ-Vector-Space V
+                  ( xℝ -ℝ yℝ)
+                  ( f' x)
+                  ( f' y))
+          ≤ dist-V ((xℝ -ℝ yℝ) *V f' x) (f x -V f y) +ℝ
+            dist-V (f x -V f y) ((xℝ -ℝ yℝ) *V f' y)
+            by triangular-dist-Normed-ℝ-Vector-Space V _ _ _
+          ≤ dist-V (f x -V f y) ((xℝ -ℝ yℝ) *V f' x) +ℝ
+            dist-V (f x -V f y) ((xℝ -ℝ yℝ) *V f' y)
+            by
+              leq-eq-ℝ
+                ( ap-add-ℝ (symmetric-dist-Normed-ℝ-Vector-Space V _ _) refl)
+          ≤ dist-V (neg-V (f x -V f y)) (neg-V ((xℝ -ℝ yℝ) *V f' x)) +ℝ
+            dist-V (f x -V f y) ((xℝ -ℝ yℝ) *V f' y)
+            by
+              leq-eq-ℝ
+                ( ap-add-ℝ (inv (dist-neg-Normed-ℝ-Vector-Space V _ _)) refl)
+          ≤ dist-V (f y -V f x) (neg-ℝ (xℝ -ℝ yℝ) *V f' x) +ℝ
+            dist-V (f x -V f y) ((xℝ -ℝ yℝ) *V f' y)
+            by
+              leq-eq-ℝ
+                ( ap-add-ℝ
+                  ( ap-binary
+                    ( dist-V)
+                    ( neg-right-subtraction-Ab
+                      ( ab-Normed-ℝ-Vector-Space V)
+                      ( f x)
+                      ( f y))
+                    ( inv (left-negative-law-mul-Normed-ℝ-Vector-Space V _ _)))
+                  ( refl))
+          ≤ dist-V (f y -V f x) ((yℝ -ℝ xℝ) *V f' x) +ℝ
+            dist-V (f x -V f y) ((xℝ -ℝ yℝ) *V f' y)
+            by
+              leq-eq-ℝ
+                ( ap-add-ℝ
+                  ( ap-binary
+                    ( dist-V)
+                    ( refl)
+                    ( ap-binary _*V_ (distributive-neg-diff-ℝ xℝ yℝ) refl))
+                  ( refl))
+          ≤ ( real-ℚ⁺ ε' *ℝ dist-ℝ yℝ xℝ) +ℝ
+            ( real-ℚ⁺ ε' *ℝ dist-ℝ xℝ yℝ)
+            by
+              preserves-leq-add-ℝ
+                ( is-mod-derivative-f-f'-δf ε' x y Nμεxy)
+                ( is-mod-derivative-f-f'-δf ε' y x
+                  ( is-symmetric-neighborhood-ℝ (δf ε') xℝ yℝ Nμεxy))
+          ≤ ( real-ℚ⁺ ε' *ℝ dist-ℝ xℝ yℝ) +ℝ
+            ( real-ℚ⁺ ε' *ℝ dist-ℝ xℝ yℝ)
+            by
+              leq-eq-ℝ
+                ( ap-add-ℝ (ap-mul-ℝ refl (commutative-dist-ℝ yℝ xℝ)) refl)
+          ≤ (real-ℚ⁺ ε' +ℝ real-ℚ⁺ ε') *ℝ dist-ℝ xℝ yℝ
+            by leq-eq-ℝ (inv (right-distributive-mul-add-ℝ _ _ _))
+          ≤ real-ℚ⁺ (ε' +ℚ⁺ ε') *ℝ dist-ℝ xℝ yℝ
+            by leq-eq-ℝ (ap-mul-ℝ (add-real-ℚ _ _) refl)
+          ≤ real-ℚ⁺ ε *ℝ dist-ℝ xℝ yℝ
+            by
+              preserves-leq-right-mul-ℝ⁰⁺
+                ( nonnegative-dist-ℝ xℝ yℝ)
+                ( preserves-leq-real-ℚ (leq-le-ℚ ε'+ε'<ε))
+          ≤ dist-ℝ xℝ yℝ *ℝ real-ℚ⁺ ε
+            by leq-eq-ℝ (commutative-mul-ℝ _ _))
+
+  is-uniformly-continuous-derivative-is-modulus-of-derivative-map-proper-closed-interval-real-Normed-ℝ-Vector-Space :
+    is-uniformly-continuous-map-proper-closed-interval-real-Normed-ℝ-Vector-Space
+      ( V)
+      ( [a,b])
+      ( f')
+  is-uniformly-continuous-derivative-is-modulus-of-derivative-map-proper-closed-interval-real-Normed-ℝ-Vector-Space =
+    is-uniformly-continuous-modulus-apart-map-proper-closed-interval-real-Normed-ℝ-Vector-Space
+      { l5 = l1}
+      ( V)
+      ( [a,b])
+      ( f')
+      ( apart-modulus-is-modulus-of-derivative-map-proper-closed-interval-real-Normed-ℝ-Vector-Space)
+      ( is-apart-modulus-is-modulus-of-derivative-map-proper-closed-interval-real-Normed-ℝ-Vector-Space)
+
+module _
+  {l1 l2 : Level}
+  (V : Normed-ℝ-Vector-Space l1 l2)
+  ([a,b] : proper-closed-interval-ℝ l1 l1)
+  (df@(f , f' , Df) :
+    differentiable-map-proper-closed-interval-real-Normed-ℝ-Vector-Space
+      ( V)
+      ( [a,b]))
+  where
+
+  abstract
+    is-uniformly-continuous-map-derivative-differentiable-map-proper-closed-interval-real-Normed-ℝ-Vector-Space :
+      is-uniformly-continuous-map-proper-closed-interval-real-Normed-ℝ-Vector-Space
+        ( V)
+        ( [a,b])
+        ( map-derivative-differentiable-map-proper-closed-interval-real-Normed-ℝ-Vector-Space
+          ( V)
+          ( [a,b])
+          ( df))
+    is-uniformly-continuous-map-derivative-differentiable-map-proper-closed-interval-real-Normed-ℝ-Vector-Space =
+      elim-exists
+        ( is-uniformly-continuous-prop-map-proper-closed-interval-real-Normed-ℝ-Vector-Space
+          ( V)
+          ( [a,b])
+          ( f'))
+        ( is-uniformly-continuous-derivative-is-modulus-of-derivative-map-proper-closed-interval-real-Normed-ℝ-Vector-Space
+          ( V)
+          ( [a,b])
+          ( f)
+          ( f'))
+        ( Df)
+
+  uniformly-continuous-map-derivative-differentiable-map-proper-closed-interval-real-Normed-ℝ-Vector-Space :
+    uniformly-continuous-map-proper-closed-interval-real-Normed-ℝ-Vector-Space
+      ( l1)
+      ( V)
+      ( [a,b])
+  uniformly-continuous-map-derivative-differentiable-map-proper-closed-interval-real-Normed-ℝ-Vector-Space =
+    ( f' ,
+      is-uniformly-continuous-map-derivative-differentiable-map-proper-closed-interval-real-Normed-ℝ-Vector-Space)
+```
+
+### A differentiable map from a proper closed interval to a normed real vector space is uniformly continuous
+
+```agda
+module _
+  {l1 l2 : Level}
+  (V : Normed-ℝ-Vector-Space l1 l2)
+  ([a,b] : proper-closed-interval-ℝ l1 l1)
+  (f : type-proper-closed-interval-ℝ l1 [a,b] → type-Normed-ℝ-Vector-Space V)
+  ((f' , Df) :
+    is-differentiable-map-proper-closed-interval-real-Normed-ℝ-Vector-Space
+      ( V)
+      ( [a,b])
+      ( f))
+  where abstract
+
+  is-uniformly-continuous-is-differentiable-map-proper-closed-interval-real-Normed-ℝ-Vector-Space :
+    is-uniformly-continuous-map-proper-closed-interval-real-Normed-ℝ-Vector-Space
+      ( V)
+      ( [a,b])
+      ( f)
+  is-uniformly-continuous-is-differentiable-map-proper-closed-interval-real-Normed-ℝ-Vector-Space =
+    let
+      open
+        do-syntax-trunc-Prop
+          ( is-uniformly-continuous-prop-map-proper-closed-interval-real-Normed-ℝ-Vector-Space
+            ( V)
+            ( [a,b])
+            ( f))
+      open inequality-reasoning-Large-Poset ℝ-Large-Poset
+      dist-V = dist-Normed-ℝ-Vector-Space V
+      norm-V = map-norm-Normed-ℝ-Vector-Space V
+      _-V_ = diff-Normed-ℝ-Vector-Space V
+      _*V_ = mul-Normed-ℝ-Vector-Space V
+      (max-|f'|⁰⁺@(max-|f'| , 0≤max-|f'|) , is-max-|f'|) =
+        nonnegative-upper-bound-norm-im-uniformly-continuous-map-proper-closed-interval-real-Normed-ℝ-Vector-Space
+          ( V)
+          ( [a,b])
+          ( uniformly-continuous-map-derivative-differentiable-map-proper-closed-interval-real-Normed-ℝ-Vector-Space
+            ( V)
+            ( [a,b])
+            ( f , f' , Df))
+    in do
+      (q , |f'|+1<q) ← exists-greater-positive-rational-ℝ (max-|f'| +ℝ one-ℝ)
+      (δf' , is-mod-δf') ← Df
+      let
+        ωf ε = min-ℚ⁺ (inv-ℚ⁺ q *ℚ⁺ ε) (δf' one-ℚ⁺)
+        is-mod-ωf :
+          is-modulus-of-uniform-continuity-map-proper-closed-interval-real-Normed-ℝ-Vector-Space
+            ( V)
+            ( [a,b])
+            ( f)
+            ( ωf)
+        is-mod-ωf x ε y Nxy =
+          chain-of-inequalities
+            dist-V (f x) (f y)
+            ≤ norm-V ((pr1 x -ℝ pr1 y) *V f' y) +ℝ
+              dist-V (f x -V f y) ((pr1 x -ℝ pr1 y) *V f' y)
+              by
+                leq-norm-add-norm-dist-Normed-ℝ-Vector-Space
+                  ( V)
+                  ( f x -V f y)
+                  ( (pr1 x -ℝ pr1 y) *V f' y)
+            ≤ dist-ℝ (pr1 x) (pr1 y) *ℝ norm-V (f' y) +ℝ
+              one-ℝ *ℝ dist-ℝ (pr1 x) (pr1 y)
+              by
+                preserves-leq-add-ℝ
+                  ( leq-eq-ℝ
+                    ( is-absolutely-homogeneous-norm-Normed-ℝ-Vector-Space V
+                      ( _)
+                      ( _)))
+                  ( is-mod-δf'
+                    ( one-ℚ⁺)
+                    ( y)
+                    ( x)
+                    ( weakly-monotonic-neighborhood-ℝ
+                      ( pr1 y)
+                      ( pr1 x)
+                      ( ωf ε)
+                      ( δf' one-ℚ⁺)
+                      ( leq-right-min-ℚ⁺ (inv-ℚ⁺ q *ℚ⁺ ε) (δf' one-ℚ⁺))
+                      ( is-symmetric-neighborhood-ℝ
+                        ( ωf ε)
+                        ( pr1 x)
+                        ( pr1 y)
+                        ( Nxy))))
+            ≤ norm-V (f' y) *ℝ dist-ℝ (pr1 x) (pr1 y) +ℝ
+              one-ℝ *ℝ dist-ℝ (pr1 x) (pr1 y)
+              by leq-eq-ℝ (ap-add-ℝ (commutative-mul-ℝ _ _) refl)
+            ≤ (norm-V (f' y) +ℝ one-ℝ) *ℝ dist-ℝ (pr1 x) (pr1 y)
+              by leq-eq-ℝ (inv (right-distributive-mul-add-ℝ _ _ _))
+            ≤ (max-|f'| +ℝ one-ℝ) *ℝ real-ℚ⁺ (ωf ε)
+              by
+                preserves-leq-mul-ℝ⁰⁺
+                  ( nonnegative-norm-Normed-ℝ-Vector-Space V (f' y) +ℝ⁰⁺
+                    one-ℝ⁰⁺)
+                  ( max-|f'|⁰⁺ +ℝ⁰⁺ one-ℝ⁰⁺)
+                  ( nonnegative-dist-ℝ (pr1 x) (pr1 y))
+                  ( nonnegative-real-ℚ⁺ (ωf ε))
+                  ( preserves-leq-right-add-ℝ _ _ _ (is-max-|f'| y))
+                  ( leq-dist-neighborhood-ℝ (ωf ε) (pr1 x) (pr1 y) Nxy)
+            ≤ real-ℚ⁺ q *ℝ real-ℚ⁺ (inv-ℚ⁺ q *ℚ⁺ ε)
+              by
+                preserves-leq-mul-ℝ⁰⁺
+                  ( max-|f'|⁰⁺ +ℝ⁰⁺ one-ℝ⁰⁺)
+                  ( nonnegative-real-ℚ⁺ q)
+                  ( nonnegative-real-ℚ⁺ (ωf ε))
+                  ( nonnegative-real-ℚ⁺ (inv-ℚ⁺ q *ℚ⁺ ε))
+                  ( leq-le-ℝ |f'|+1<q)
+                  ( preserves-leq-real-ℚ
+                    ( leq-left-min-ℚ⁺ (inv-ℚ⁺ q *ℚ⁺ ε) (δf' one-ℚ⁺)))
+            ≤ real-ℚ⁺ (q *ℚ⁺ (inv-ℚ⁺ q *ℚ⁺ ε))
+              by leq-eq-ℝ (mul-real-ℚ _ _)
+            ≤ real-ℚ⁺ ε
+              by leq-eq-ℝ (ap real-ℚ (is-section-left-div-ℚ⁺ q _))
+      intro-exists ωf is-mod-ωf
+
+module _
+  {l1 l2 : Level}
+  (V : Normed-ℝ-Vector-Space l1 l2)
+  ([a,b] : proper-closed-interval-ℝ l1 l1)
+  (df@(f , Df) :
+    differentiable-map-proper-closed-interval-real-Normed-ℝ-Vector-Space
+      ( V)
+      ( [a,b]))
+  where
+
+  abstract
+    is-uniformly-continuous-map-differentiable-map-proper-closed-interval-real-Normed-ℝ-Vector-Space :
+      is-uniformly-continuous-map-proper-closed-interval-real-Normed-ℝ-Vector-Space
+        ( V)
+        ( [a,b])
+        ( map-differentiable-map-proper-closed-interval-real-Normed-ℝ-Vector-Space
+          ( V)
+          ( [a,b])
+          ( df))
+    is-uniformly-continuous-map-differentiable-map-proper-closed-interval-real-Normed-ℝ-Vector-Space =
+      is-uniformly-continuous-is-differentiable-map-proper-closed-interval-real-Normed-ℝ-Vector-Space
+        ( V)
+        ( [a,b])
+        ( f)
+        ( Df)
+
+  uniformly-continuous-map-differentiable-map-proper-closed-interval-real-Normed-ℝ-Vector-Space :
+    uniformly-continuous-map-proper-closed-interval-real-Normed-ℝ-Vector-Space
+      ( l1)
+      ( V)
+      ( [a,b])
+  uniformly-continuous-map-differentiable-map-proper-closed-interval-real-Normed-ℝ-Vector-Space =
+    ( f ,
+      is-uniformly-continuous-map-differentiable-map-proper-closed-interval-real-Normed-ℝ-Vector-Space)
 ```
