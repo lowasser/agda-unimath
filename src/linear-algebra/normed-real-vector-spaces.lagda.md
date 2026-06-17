@@ -11,6 +11,7 @@ module linear-algebra.normed-real-vector-spaces where
 ```agda
 open import elementary-number-theory.positive-rational-numbers
 
+open import foundation.action-on-identifications-binary-functions
 open import foundation.action-on-identifications-functions
 open import foundation.binary-relations
 open import foundation.dependent-pair-types
@@ -254,6 +255,12 @@ module _
         ( diff-Normed-ℝ-Vector-Space y w)
     interchange-add-diff-Normed-ℝ-Vector-Space =
       interchange-add-right-subtraction-Ab ab-V
+
+    right-swap-add-Normed-ℝ-Vector-Space :
+      (x y z : type-Normed-ℝ-Vector-Space V) →
+      add-Normed-ℝ-Vector-Space (add-Normed-ℝ-Vector-Space x y) z ＝
+      add-Normed-ℝ-Vector-Space (add-Normed-ℝ-Vector-Space x z) y
+    right-swap-add-Normed-ℝ-Vector-Space = right-swap-add-Ab ab-V
 ```
 
 ### Properties inherited from the vector space structure
@@ -325,6 +332,20 @@ module _
       neg-Normed-ℝ-Vector-Space V (mul-Normed-ℝ-Vector-Space c v)
     left-negative-law-mul-Normed-ℝ-Vector-Space =
       left-negative-law-mul-ℝ-Vector-Space vector-space-V
+
+    right-zero-law-mul-Normed-ℝ-Vector-Space :
+      (c : ℝ l1) →
+      mul-Normed-ℝ-Vector-Space c (zero-Normed-ℝ-Vector-Space V) ＝
+      zero-Normed-ℝ-Vector-Space V
+    right-zero-law-mul-Normed-ℝ-Vector-Space =
+      right-zero-law-mul-ℝ-Vector-Space vector-space-V
+
+    left-swap-mul-Normed-ℝ-Vector-Space :
+      (c d : ℝ l1) (v : type-Normed-ℝ-Vector-Space V) →
+      mul-Normed-ℝ-Vector-Space c (mul-Normed-ℝ-Vector-Space d v) ＝
+      mul-Normed-ℝ-Vector-Space d (mul-Normed-ℝ-Vector-Space c v)
+    left-swap-mul-Normed-ℝ-Vector-Space =
+      left-swap-mul-ℝ-Vector-Space vector-space-V
 ```
 
 ### Norms and distances in a normed vector space
@@ -527,37 +548,63 @@ module _
   {l1 l2 : Level}
   (V : Normed-ℝ-Vector-Space l1 l2)
   (u : type-Normed-ℝ-Vector-Space V)
-  where
+  where abstract
 
-  abstract
-    is-isometry-left-add-Normed-ℝ-Vector-Space :
-      is-isometry-Metric-Space
-        ( metric-space-Normed-ℝ-Vector-Space V)
-        ( metric-space-Normed-ℝ-Vector-Space V)
-        ( add-Normed-ℝ-Vector-Space V u)
-    is-isometry-left-add-Normed-ℝ-Vector-Space =
-      is-isometry-sim-metric-Metric-Space
-        ( metric-space-Normed-ℝ-Vector-Space V)
-        ( metric-space-Normed-ℝ-Vector-Space V)
-        ( nonnegative-dist-Normed-ℝ-Vector-Space V)
-        ( nonnegative-dist-Normed-ℝ-Vector-Space V)
-        ( is-metric-metric-space-Metric
-          ( set-Normed-ℝ-Vector-Space V)
-          ( metric-Normed-ℝ-Vector-Space V))
-        ( is-metric-metric-space-Metric
-          ( set-Normed-ℝ-Vector-Space V)
-          ( metric-Normed-ℝ-Vector-Space V))
-        ( add-Normed-ℝ-Vector-Space V u)
-        ( λ v w →
-          sim-eq-ℝ
-            ( ap
-              ( map-norm-Normed-ℝ-Vector-Space V)
-              ( inv
-                ( right-subtraction-left-add-Ab
-                  ( ab-Normed-ℝ-Vector-Space V)
-                  ( u)
-                  ( v)
-                  ( w)))))
+  dist-left-add-Normed-ℝ-Vector-Space :
+    (v w : type-Normed-ℝ-Vector-Space V) →
+    dist-Normed-ℝ-Vector-Space
+      ( V)
+      ( add-Normed-ℝ-Vector-Space V u v)
+      ( add-Normed-ℝ-Vector-Space V u w) ＝
+    dist-Normed-ℝ-Vector-Space V v w
+  dist-left-add-Normed-ℝ-Vector-Space v w =
+    ap
+      ( map-norm-Normed-ℝ-Vector-Space V)
+      ( right-subtraction-left-add-Ab (ab-Normed-ℝ-Vector-Space V) u v w)
+
+  is-isometry-left-add-Normed-ℝ-Vector-Space :
+    is-isometry-Metric-Space
+      ( metric-space-Normed-ℝ-Vector-Space V)
+      ( metric-space-Normed-ℝ-Vector-Space V)
+      ( add-Normed-ℝ-Vector-Space V u)
+  is-isometry-left-add-Normed-ℝ-Vector-Space =
+    is-isometry-sim-metric-Metric-Space
+      ( metric-space-Normed-ℝ-Vector-Space V)
+      ( metric-space-Normed-ℝ-Vector-Space V)
+      ( nonnegative-dist-Normed-ℝ-Vector-Space V)
+      ( nonnegative-dist-Normed-ℝ-Vector-Space V)
+      ( is-metric-metric-space-Metric
+        ( set-Normed-ℝ-Vector-Space V)
+        ( metric-Normed-ℝ-Vector-Space V))
+      ( is-metric-metric-space-Metric
+        ( set-Normed-ℝ-Vector-Space V)
+        ( metric-Normed-ℝ-Vector-Space V))
+      ( add-Normed-ℝ-Vector-Space V u)
+      ( λ v w → sim-eq-ℝ (inv (dist-left-add-Normed-ℝ-Vector-Space v w)))
+```
+
+### Right addition is an isometry in the metric space of a normed vector space
+
+```agda
+module _
+  {l1 l2 : Level}
+  (V : Normed-ℝ-Vector-Space l1 l2)
+  (u : type-Normed-ℝ-Vector-Space V)
+  where abstract
+
+  dist-right-add-Normed-ℝ-Vector-Space :
+    (v w : type-Normed-ℝ-Vector-Space V) →
+    dist-Normed-ℝ-Vector-Space
+      ( V)
+      ( add-Normed-ℝ-Vector-Space V v u)
+      ( add-Normed-ℝ-Vector-Space V w u) ＝
+    dist-Normed-ℝ-Vector-Space V v w
+  dist-right-add-Normed-ℝ-Vector-Space v w =
+    ( ap-binary
+      ( dist-Normed-ℝ-Vector-Space V)
+      ( commutative-add-Normed-ℝ-Vector-Space V v u)
+      ( commutative-add-Normed-ℝ-Vector-Space V w u)) ∙
+    ( dist-left-add-Normed-ℝ-Vector-Space V u v w)
 ```
 
 ### The norm of the zero vector is zero
