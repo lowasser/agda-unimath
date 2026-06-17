@@ -34,8 +34,10 @@ open import metric-spaces.metrics
 
 open import order-theory.large-posets
 
+open import real-numbers.absolute-value-real-numbers
 open import real-numbers.dedekind-real-numbers
 open import real-numbers.inequality-real-numbers
+open import real-numbers.metric-space-of-real-numbers
 open import real-numbers.multiplication-nonnegative-real-numbers
 open import real-numbers.multiplication-real-numbers
 open import real-numbers.nonnegative-real-numbers
@@ -347,4 +349,22 @@ module _
               by is-submultiplicative-norm-Normed-ℝ-Algebra A _ _
             ≤ norm-A y *ℝ dist-A x1 x2
               by leq-eq-ℝ (commutative-mul-ℝ _ _))
+```
+
+### The real numbers are a normed algebra over themselves
+
+```agda
+normed-real-algebra-ℝ : (l : Level) → Normed-ℝ-Algebra l (lsuc l)
+normed-real-algebra-ℝ l =
+  ( real-algebra-ℝ l ,
+    norm-Normed-ℝ-Vector-Space (normed-real-vector-space-ℝ l) ,
+    λ x y → leq-eq-ℝ (abs-mul-ℝ x y))
+
+abstract
+  eq-metric-space-normed-algebra-metric-space-ℝ :
+    (l : Level) →
+    metric-space-Normed-ℝ-Algebra (normed-real-algebra-ℝ l) ＝
+    metric-space-ℝ l
+  eq-metric-space-normed-algebra-metric-space-ℝ =
+    eq-metric-space-normed-real-vector-space-metric-space-ℝ
 ```

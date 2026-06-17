@@ -78,3 +78,11 @@ module _
   right-distributive-mul-diff-ℝ-Algebra =
     right-distributive-mul-diff-algebra-Commutative-Ring R A
 ```
+
+### The real numbers are an algebra over themselves
+
+```agda
+real-algebra-ℝ : (l : Level) → ℝ-Algebra l (lsuc l)
+real-algebra-ℝ l =
+  algebra-commutative-ring-Commutative-Ring (commutative-ring-ℝ l)
+```
