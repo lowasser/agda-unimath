@@ -15,6 +15,7 @@ open import foundation.dependent-products-propositions
 open import foundation.identity-types
 open import foundation.sets
 open import foundation.subtypes
+open import foundation.transport-along-identifications
 open import foundation.universe-levels
 
 open import group-theory.abelian-groups
@@ -34,6 +35,8 @@ open import metric-spaces.metrics
 
 open import order-theory.large-posets
 
+open import real-numbers.absolute-value-real-numbers
+open import real-numbers.addition-real-numbers
 open import real-numbers.dedekind-real-numbers
 open import real-numbers.inequality-real-numbers
 open import real-numbers.multiplication-nonnegative-real-numbers
@@ -132,6 +135,44 @@ module _
   diff-Normed-ℝ-Algebra :
     type-Normed-ℝ-Algebra A → type-Normed-ℝ-Algebra A → type-Normed-ℝ-Algebra A
   diff-Normed-ℝ-Algebra = right-subtraction-Ab ab-A
+
+  neg-Normed-ℝ-Algebra : type-Normed-ℝ-Algebra A → type-Normed-ℝ-Algebra A
+  neg-Normed-ℝ-Algebra = neg-Ab ab-A
+
+  abstract
+    commutative-add-Normed-ℝ-Algebra :
+      (x y : type-Normed-ℝ-Algebra A) →
+      add-Normed-ℝ-Algebra x y ＝ add-Normed-ℝ-Algebra y x
+    commutative-add-Normed-ℝ-Algebra = commutative-add-Ab ab-A
+
+    distributive-neg-add-Normed-ℝ-Algebra :
+      (x y : type-Normed-ℝ-Algebra A) →
+      neg-Normed-ℝ-Algebra (add-Normed-ℝ-Algebra x y) ＝
+      add-Normed-ℝ-Algebra (neg-Normed-ℝ-Algebra x) (neg-Normed-ℝ-Algebra y)
+    distributive-neg-add-Normed-ℝ-Algebra = distributive-neg-add-Ab ab-A
+
+    interchange-add-diff-Normed-ℝ-Algebra :
+      (x y z w : type-Normed-ℝ-Algebra A) →
+      diff-Normed-ℝ-Algebra
+        ( add-Normed-ℝ-Algebra x y)
+        ( add-Normed-ℝ-Algebra z w) ＝
+      add-Normed-ℝ-Algebra
+        ( diff-Normed-ℝ-Algebra x z)
+        ( diff-Normed-ℝ-Algebra y w)
+    interchange-add-diff-Normed-ℝ-Algebra =
+      interchange-add-right-subtraction-Ab ab-A
+
+    right-swap-add-Normed-ℝ-Algebra :
+      (x y z : type-Normed-ℝ-Algebra A) →
+      add-Normed-ℝ-Algebra (add-Normed-ℝ-Algebra x y) z ＝
+      add-Normed-ℝ-Algebra (add-Normed-ℝ-Algebra x z) y
+    right-swap-add-Normed-ℝ-Algebra = right-swap-add-Ab ab-A
+
+    neg-diff-Normed-ℝ-Algebra :
+      (x y : type-Normed-ℝ-Algebra A) →
+      neg-Normed-ℝ-Algebra (diff-Normed-ℝ-Algebra x y) ＝
+      diff-Normed-ℝ-Algebra y x
+    neg-diff-Normed-ℝ-Algebra = neg-right-subtraction-Ab ab-A
 ```
 
 ### Properties inherited from the vector space structure
@@ -140,12 +181,22 @@ module _
 module _
   {l1 l2 : Level}
   (A : Normed-ℝ-Algebra l1 l2)
+  (let vs-A = vector-space-Normed-ℝ-Algebra A)
   where
 
   scalar-mul-Normed-ℝ-Algebra :
     ℝ l1 → type-Normed-ℝ-Algebra A → type-Normed-ℝ-Algebra A
-  scalar-mul-Normed-ℝ-Algebra =
-    mul-ℝ-Vector-Space (vector-space-Normed-ℝ-Algebra A)
+  scalar-mul-Normed-ℝ-Algebra = mul-ℝ-Vector-Space vs-A
+
+  abstract
+    left-distributive-scalar-mul-add-Normed-ℝ-Algebra :
+      (c : ℝ l1) (x y : type-Normed-ℝ-Algebra A) →
+      scalar-mul-Normed-ℝ-Algebra c (add-Normed-ℝ-Algebra A x y) ＝
+      add-Normed-ℝ-Algebra A
+        ( scalar-mul-Normed-ℝ-Algebra c x)
+        ( scalar-mul-Normed-ℝ-Algebra c y)
+    left-distributive-scalar-mul-add-Normed-ℝ-Algebra =
+      left-distributive-mul-add-ℝ-Vector-Space vs-A
 ```
 
 ### Properties inherited from the algebra structure
@@ -171,6 +222,15 @@ module _
     left-distributive-mul-diff-Normed-ℝ-Algebra =
       left-distributive-mul-diff-ℝ-Algebra algebra-A
 
+    right-distributive-mul-add-Normed-ℝ-Algebra :
+      (x y z : type-Normed-ℝ-Algebra A) →
+      mul-Normed-ℝ-Algebra (add-Normed-ℝ-Algebra A x y) z ＝
+      add-Normed-ℝ-Algebra A
+        ( mul-Normed-ℝ-Algebra x z)
+        ( mul-Normed-ℝ-Algebra y z)
+    right-distributive-mul-add-Normed-ℝ-Algebra =
+      right-distributive-mul-add-ℝ-Algebra algebra-A
+
     right-distributive-mul-diff-Normed-ℝ-Algebra :
       (x y z : type-Normed-ℝ-Algebra A) →
       mul-Normed-ℝ-Algebra (diff-Normed-ℝ-Algebra A x y) z ＝
@@ -179,6 +239,34 @@ module _
         ( mul-Normed-ℝ-Algebra y z)
     right-distributive-mul-diff-Normed-ℝ-Algebra =
       right-distributive-mul-diff-ℝ-Algebra algebra-A
+
+    left-negative-law-mul-Normed-ℝ-Algebra :
+      (x y : type-Normed-ℝ-Algebra A) →
+      mul-Normed-ℝ-Algebra (neg-Normed-ℝ-Algebra A x) y ＝
+      neg-Normed-ℝ-Algebra A (mul-Normed-ℝ-Algebra x y)
+    left-negative-law-mul-Normed-ℝ-Algebra =
+      left-negative-law-mul-ℝ-Algebra algebra-A
+
+    right-negative-law-mul-Normed-ℝ-Algebra :
+      (x y : type-Normed-ℝ-Algebra A) →
+      mul-Normed-ℝ-Algebra x (neg-Normed-ℝ-Algebra A y) ＝
+      neg-Normed-ℝ-Algebra A (mul-Normed-ℝ-Algebra x y)
+    right-negative-law-mul-Normed-ℝ-Algebra =
+      right-negative-law-mul-ℝ-Algebra algebra-A
+
+    left-swap-scalar-mul-mul-Normed-ℝ-Algebra :
+      (c : ℝ l1) (x y : type-Normed-ℝ-Algebra A) →
+      scalar-mul-Normed-ℝ-Algebra A c (mul-Normed-ℝ-Algebra x y) ＝
+      mul-Normed-ℝ-Algebra x (scalar-mul-Normed-ℝ-Algebra A c y)
+    left-swap-scalar-mul-mul-Normed-ℝ-Algebra =
+      left-swap-scalar-mul-mul-ℝ-Algebra algebra-A
+
+    associative-scalar-mul-mul-Normed-ℝ-Algebra :
+      (c : ℝ l1) (x y : type-Normed-ℝ-Algebra A) →
+      mul-Normed-ℝ-Algebra (scalar-mul-Normed-ℝ-Algebra A c x) y ＝
+      scalar-mul-Normed-ℝ-Algebra A c (mul-Normed-ℝ-Algebra x y)
+    associative-scalar-mul-mul-Normed-ℝ-Algebra =
+      associative-scalar-mul-mul-ℝ-Algebra algebra-A
 ```
 
 ### Properties inherited from the normed real vector space structure
@@ -219,6 +307,48 @@ module _
   located-metric-space-Normed-ℝ-Algebra : Located-Metric-Space l2 l1
   located-metric-space-Normed-ℝ-Algebra =
     located-metric-space-Normed-ℝ-Vector-Space normed-vector-space-A
+
+  abstract
+    dist-left-add-Normed-ℝ-Algebra :
+      (u v w : type-Normed-ℝ-Algebra A) →
+      dist-Normed-ℝ-Algebra
+        ( add-Normed-ℝ-Algebra A u v)
+        ( add-Normed-ℝ-Algebra A u w) ＝
+      dist-Normed-ℝ-Algebra v w
+    dist-left-add-Normed-ℝ-Algebra =
+      dist-left-add-Normed-ℝ-Vector-Space normed-vector-space-A
+
+    dist-right-add-Normed-ℝ-Algebra :
+      (u v w : type-Normed-ℝ-Algebra A) →
+      dist-Normed-ℝ-Algebra
+        ( add-Normed-ℝ-Algebra A v u)
+        ( add-Normed-ℝ-Algebra A w u) ＝
+      dist-Normed-ℝ-Algebra v w
+    dist-right-add-Normed-ℝ-Algebra =
+      dist-right-add-Normed-ℝ-Vector-Space normed-vector-space-A
+
+    triangular-norm-Normed-ℝ-Algebra :
+      (v w : type-Normed-ℝ-Algebra A) →
+      leq-ℝ
+        ( map-norm-Normed-ℝ-Algebra (add-Normed-ℝ-Algebra A v w))
+        ( map-norm-Normed-ℝ-Algebra v +ℝ map-norm-Normed-ℝ-Algebra w)
+    triangular-norm-Normed-ℝ-Algebra =
+      triangular-norm-Normed-ℝ-Vector-Space normed-vector-space-A
+
+    triangular-dist-Normed-ℝ-Algebra :
+      (u v w : type-Normed-ℝ-Algebra A) →
+      leq-ℝ
+        ( dist-Normed-ℝ-Algebra u w)
+        ( dist-Normed-ℝ-Algebra u v +ℝ dist-Normed-ℝ-Algebra v w)
+    triangular-dist-Normed-ℝ-Algebra =
+      triangular-dist-Normed-ℝ-Vector-Space normed-vector-space-A
+
+    is-absolutely-homogeneous-norm-Normed-ℝ-Algebra :
+      (c : ℝ l1) (v : type-Normed-ℝ-Algebra A) →
+      map-norm-Normed-ℝ-Algebra (scalar-mul-Normed-ℝ-Algebra A c v) ＝
+      abs-ℝ c *ℝ map-norm-Normed-ℝ-Algebra v
+    is-absolutely-homogeneous-norm-Normed-ℝ-Algebra =
+      is-absolutely-homogeneous-norm-Normed-ℝ-Vector-Space normed-vector-space-A
 ```
 
 ### Additional definitional properties of the normed real algebra
@@ -347,4 +477,45 @@ module _
               by is-submultiplicative-norm-Normed-ℝ-Algebra A _ _
             ≤ norm-A y *ℝ dist-A x1 x2
               by leq-eq-ℝ (commutative-mul-ℝ _ _))
+```
+
+### Submultiplicativity of distances
+
+```agda
+module _
+  {l1 l2 : Level}
+  (A : Normed-ℝ-Algebra l1 l2)
+  where abstract
+
+  leq-dist-left-mul-Normed-ℝ-Algebra :
+    (x y z : type-Normed-ℝ-Algebra A) →
+    leq-ℝ
+      ( dist-Normed-ℝ-Algebra A
+        ( mul-Normed-ℝ-Algebra A x y)
+        ( mul-Normed-ℝ-Algebra A x z))
+      ( map-norm-Normed-ℝ-Algebra A x *ℝ dist-Normed-ℝ-Algebra A y z)
+  leq-dist-left-mul-Normed-ℝ-Algebra x y z =
+    tr
+      ( λ w →
+        leq-ℝ
+          ( map-norm-Normed-ℝ-Algebra A w)
+          ( map-norm-Normed-ℝ-Algebra A x *ℝ dist-Normed-ℝ-Algebra A y z))
+      ( left-distributive-mul-diff-Normed-ℝ-Algebra A x y z)
+      ( is-submultiplicative-norm-Normed-ℝ-Algebra A _ _)
+
+  leq-dist-right-mul-Normed-ℝ-Algebra :
+    (x y z : type-Normed-ℝ-Algebra A) →
+    leq-ℝ
+      ( dist-Normed-ℝ-Algebra A
+        ( mul-Normed-ℝ-Algebra A x z)
+        ( mul-Normed-ℝ-Algebra A y z))
+      ( dist-Normed-ℝ-Algebra A x y *ℝ map-norm-Normed-ℝ-Algebra A z)
+  leq-dist-right-mul-Normed-ℝ-Algebra x y z =
+    tr
+      ( λ w →
+        leq-ℝ
+          ( map-norm-Normed-ℝ-Algebra A w)
+          ( dist-Normed-ℝ-Algebra A x y *ℝ map-norm-Normed-ℝ-Algebra A z))
+      ( right-distributive-mul-diff-Normed-ℝ-Algebra A x y z)
+      ( is-submultiplicative-norm-Normed-ℝ-Algebra A _ _)
 ```

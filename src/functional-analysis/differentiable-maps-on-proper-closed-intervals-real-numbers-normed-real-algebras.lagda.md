@@ -9,6 +9,7 @@ module functional-analysis.differentiable-maps-on-proper-closed-intervals-real-n
 ```agda
 open import elementary-number-theory.positive-rational-numbers
 
+open import foundation.dependent-pair-types
 open import foundation.propositions
 open import foundation.subtypes
 open import foundation.universe-levels
@@ -16,6 +17,8 @@ open import foundation.universe-levels
 open import functional-analysis.differentiable-maps-on-proper-closed-intervals-real-numbers-normed-real-vector-spaces
 
 open import linear-algebra.normed-real-algebras
+
+open import metric-spaces.uniformly-continuous-maps-metric-spaces
 
 open import real-numbers.proper-closed-intervals-real-numbers
 ```
@@ -101,4 +104,60 @@ module _
   differentiable-map-proper-closed-interval-real-Normed-ℝ-Algebra =
     type-subtype
       ( is-differentiable-prop-map-proper-closed-interval-real-Normed-ℝ-Algebra)
+
+module _
+  {l1 l2 : Level}
+  (A : Normed-ℝ-Algebra l1 l2)
+  (let vec-space-A = normed-vector-space-Normed-ℝ-Algebra A)
+  ([a,b] : proper-closed-interval-ℝ l1 l1)
+  ((f , f' , Df) :
+    differentiable-map-proper-closed-interval-real-Normed-ℝ-Algebra A [a,b])
+  where
+
+  map-differentiable-map-proper-closed-interval-real-Normed-ℝ-Algebra :
+    type-proper-closed-interval-ℝ l1 [a,b] → type-Normed-ℝ-Algebra A
+  map-differentiable-map-proper-closed-interval-real-Normed-ℝ-Algebra = f
+
+  uniformly-continuous-map-differentiable-map-proper-closed-interval-real-Normed-ℝ-Algebra :
+    uniformly-continuous-map-Metric-Space
+      ( metric-space-proper-closed-interval-ℝ l1 [a,b])
+      ( metric-space-Normed-ℝ-Algebra A)
+  uniformly-continuous-map-differentiable-map-proper-closed-interval-real-Normed-ℝ-Algebra =
+    uniformly-continuous-map-differentiable-map-proper-closed-interval-real-Normed-ℝ-Vector-Space
+      ( vec-space-A)
+      ( [a,b])
+      ( f , f' , Df)
+
+  is-uniformly-continuous-map-differentiable-map-proper-closed-interval-real-Normed-ℝ-Algebra :
+    is-uniformly-continuous-map-Metric-Space
+      ( metric-space-proper-closed-interval-ℝ l1 [a,b])
+      ( metric-space-Normed-ℝ-Algebra A)
+      ( map-differentiable-map-proper-closed-interval-real-Normed-ℝ-Algebra)
+  is-uniformly-continuous-map-differentiable-map-proper-closed-interval-real-Normed-ℝ-Algebra =
+    pr2
+      ( uniformly-continuous-map-differentiable-map-proper-closed-interval-real-Normed-ℝ-Algebra)
+
+  map-derivative-differentiable-map-proper-closed-interval-real-Normed-ℝ-Algebra :
+    type-proper-closed-interval-ℝ l1 [a,b] → type-Normed-ℝ-Algebra A
+  map-derivative-differentiable-map-proper-closed-interval-real-Normed-ℝ-Algebra =
+    f'
+
+  uniformly-continuous-map-derivative-differentiable-map-proper-closed-interval-real-Normed-ℝ-Algebra :
+    uniformly-continuous-map-Metric-Space
+      ( metric-space-proper-closed-interval-ℝ l1 [a,b])
+      ( metric-space-Normed-ℝ-Algebra A)
+  uniformly-continuous-map-derivative-differentiable-map-proper-closed-interval-real-Normed-ℝ-Algebra =
+    uniformly-continuous-map-derivative-differentiable-map-proper-closed-interval-real-Normed-ℝ-Vector-Space
+      ( vec-space-A)
+      ( [a,b])
+      ( f , f' , Df)
+
+  is-uniformly-continuous-map-derivative-differentiable-map-proper-closed-interval-real-Normed-ℝ-Algebra :
+    is-uniformly-continuous-map-Metric-Space
+      ( metric-space-proper-closed-interval-ℝ l1 [a,b])
+      ( metric-space-Normed-ℝ-Algebra A)
+      ( map-derivative-differentiable-map-proper-closed-interval-real-Normed-ℝ-Algebra)
+  is-uniformly-continuous-map-derivative-differentiable-map-proper-closed-interval-real-Normed-ℝ-Algebra =
+    pr2
+      ( uniformly-continuous-map-derivative-differentiable-map-proper-closed-interval-real-Normed-ℝ-Algebra)
 ```

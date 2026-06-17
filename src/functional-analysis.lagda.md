@@ -12,6 +12,7 @@ open import functional-analysis.differentiable-maps-on-proper-closed-intervals-r
 open import functional-analysis.differentiable-maps-on-proper-closed-intervals-real-numbers-normed-real-vector-spaces public
 open import functional-analysis.metric-abelian-groups-normed-real-vector-spaces public
 open import functional-analysis.modulated-uniformly-continuous-maps-on-proper-closed-intervals-real-numbers-normed-real-vector-spaces public
+open import functional-analysis.multiplication-differentiable-maps-on-proper-closed-intervals-real-numbers-normed-real-algebras public
 open import functional-analysis.ratio-test-series-real-banach-spaces public
 open import functional-analysis.real-banach-spaces public
 open import functional-analysis.real-hilbert-spaces public
