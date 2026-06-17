@@ -137,6 +137,14 @@ module _
     pr2
       ( uniformly-continuous-map-differentiable-map-proper-closed-interval-real-Normed-ℝ-Algebra)
 
+  is-differentiable-map-differentiable-map-proper-closed-interval-real-Normed-ℝ-Algebra :
+    is-differentiable-map-proper-closed-interval-real-Normed-ℝ-Algebra
+      ( A)
+      ( [a,b])
+      ( map-differentiable-map-proper-closed-interval-real-Normed-ℝ-Algebra)
+  is-differentiable-map-differentiable-map-proper-closed-interval-real-Normed-ℝ-Algebra =
+    ( f' , Df)
+
   map-derivative-differentiable-map-proper-closed-interval-real-Normed-ℝ-Algebra :
     type-proper-closed-interval-ℝ l1 [a,b] → type-Normed-ℝ-Algebra A
   map-derivative-differentiable-map-proper-closed-interval-real-Normed-ℝ-Algebra =
