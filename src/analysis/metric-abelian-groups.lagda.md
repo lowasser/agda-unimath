@@ -132,6 +132,11 @@ module _
     (x y : type-Metric-Ab MG) → add-Metric-Ab x (diff-Metric-Ab y x) ＝ y
   is-identity-right-conjugation-Metric-Ab =
     is-identity-right-conjugation-Ab (ab-Metric-Ab MG)
+
+  right-zero-law-diff-Metric-Ab :
+    (x : type-Metric-Ab MG) → diff-Metric-Ab x zero-Metric-Ab ＝ x
+  right-zero-law-diff-Metric-Ab =
+    right-zero-law-right-subtraction-Ab (ab-Metric-Ab MG)
 ```
 
 ### Metric properties of metric abelian groups

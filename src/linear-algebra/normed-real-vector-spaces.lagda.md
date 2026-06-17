@@ -12,6 +12,7 @@ module linear-algebra.normed-real-vector-spaces where
 open import foundation.action-on-identifications-functions
 open import foundation.dependent-pair-types
 open import foundation.dependent-products-propositions
+open import foundation.function-extensionality
 open import foundation.identity-types
 open import foundation.logical-equivalences
 open import foundation.propositions
@@ -25,18 +26,23 @@ open import group-theory.abelian-groups
 open import linear-algebra.real-vector-spaces
 open import linear-algebra.seminormed-real-vector-spaces
 
+open import metric-spaces.cartesian-products-metric-spaces
 open import metric-spaces.equality-of-metric-spaces
 open import metric-spaces.isometries-metric-spaces
 open import metric-spaces.located-metric-spaces
 open import metric-spaces.metric-spaces
 open import metric-spaces.metrics
 open import metric-spaces.metrics-of-metric-spaces
+open import metric-spaces.metrics-of-metric-spaces-are-uniformly-continuous
+open import metric-spaces.subspaces-metric-spaces
+open import metric-spaces.uniformly-continuous-maps-metric-spaces
 
 open import real-numbers.absolute-value-real-numbers
 open import real-numbers.addition-real-numbers
 open import real-numbers.dedekind-real-numbers
 open import real-numbers.distance-real-numbers
 open import real-numbers.inequality-real-numbers
+open import real-numbers.metric-space-of-nonnegative-real-numbers
 open import real-numbers.metric-space-of-real-numbers
 open import real-numbers.nonnegative-real-numbers
 open import real-numbers.raising-universe-levels-real-numbers
@@ -260,6 +266,14 @@ module _
     triangular-dist-Normed-ℝ-Vector-Space =
       triangular-dist-Seminormed-ℝ-Vector-Space
         ( seminormed-vector-space-Normed-ℝ-Vector-Space)
+
+    right-zero-law-dist-Normed-ℝ-Vector-Space :
+      (v : type-Normed-ℝ-Vector-Space) →
+      dist-Normed-ℝ-Vector-Space v zero-Normed-ℝ-Vector-Space ＝
+      map-norm-Normed-ℝ-Vector-Space v
+    right-zero-law-dist-Normed-ℝ-Vector-Space =
+      right-zero-law-dist-Seminormed-ℝ-Vector-Space
+        ( seminormed-vector-space-Normed-ℝ-Vector-Space)
 ```
 
 ### The metric space of a normed vector space
@@ -414,12 +428,91 @@ module _
   where
 
   abstract
-    eq-zero-norm-zero-Normed-ℝ-Vector-Space :
+    norm-zero-Normed-ℝ-Vector-Space :
       map-norm-Normed-ℝ-Vector-Space V (zero-Normed-ℝ-Vector-Space V) ＝
       raise-ℝ l1 zero-ℝ
-    eq-zero-norm-zero-Normed-ℝ-Vector-Space =
-      eq-zero-seminorm-zero-Seminormed-ℝ-Vector-Space
+    norm-zero-Normed-ℝ-Vector-Space =
+      seminorm-zero-Seminormed-ℝ-Vector-Space
         ( seminormed-vector-space-Normed-ℝ-Vector-Space V)
+```
+
+### The distance function is a uniformly continuous map from the product metric space to the nonnegative real numbers
+
+```agda
+module _
+  {l1 l2 : Level}
+  (V : Normed-ℝ-Vector-Space l1 l2)
+  where
+
+  abstract
+    is-uniformly-continuous-map-nonnegative-dist-Normed-ℝ-Vector-Space :
+      is-uniformly-continuous-map-Metric-Space
+        ( product-Metric-Space
+          ( metric-space-Normed-ℝ-Vector-Space V)
+          ( metric-space-Normed-ℝ-Vector-Space V))
+        ( metric-space-ℝ⁰⁺ l1)
+        ( ind-Σ (nonnegative-dist-Normed-ℝ-Vector-Space V))
+    is-uniformly-continuous-map-nonnegative-dist-Normed-ℝ-Vector-Space =
+      is-uniformly-continuous-map-metric-of-Metric-Space
+        ( metric-space-Normed-ℝ-Vector-Space V)
+        ( nonnegative-dist-Normed-ℝ-Vector-Space V)
+        ( is-metric-metric-space-Metric
+          ( set-Normed-ℝ-Vector-Space V)
+          ( metric-Normed-ℝ-Vector-Space V))
+
+    is-uniformly-continuous-map-nonnegative-norm-Normed-ℝ-Vector-Space :
+      is-uniformly-continuous-map-Metric-Space
+        ( metric-space-Normed-ℝ-Vector-Space V)
+        ( metric-space-ℝ⁰⁺ l1)
+        ( nonnegative-norm-Normed-ℝ-Vector-Space V)
+    is-uniformly-continuous-map-nonnegative-norm-Normed-ℝ-Vector-Space =
+      tr
+        ( is-uniformly-continuous-map-Metric-Space
+          ( metric-space-Normed-ℝ-Vector-Space V)
+          ( metric-space-ℝ⁰⁺ l1))
+        ( eq-htpy
+          ( λ v → eq-ℝ⁰⁺ _ _ (right-zero-law-dist-Normed-ℝ-Vector-Space V v)))
+        ( is-uniformly-continuous-map-comp-Metric-Space
+          ( metric-space-Normed-ℝ-Vector-Space V)
+          ( product-Metric-Space
+            ( metric-space-Normed-ℝ-Vector-Space V)
+            ( metric-space-Normed-ℝ-Vector-Space V))
+          ( metric-space-ℝ⁰⁺ l1)
+          ( ind-Σ (nonnegative-dist-Normed-ℝ-Vector-Space V))
+          ( _, zero-Normed-ℝ-Vector-Space V)
+          ( is-uniformly-continuous-map-nonnegative-dist-Normed-ℝ-Vector-Space)
+          ( is-uniformly-continuous-map-is-isometry-Metric-Space
+            ( metric-space-Normed-ℝ-Vector-Space V)
+            ( product-Metric-Space
+              ( metric-space-Normed-ℝ-Vector-Space V)
+              ( metric-space-Normed-ℝ-Vector-Space V))
+            ( _, zero-Normed-ℝ-Vector-Space V)
+            ( is-isometry-right-pair-Metric-Space
+              ( metric-space-Normed-ℝ-Vector-Space V)
+              ( metric-space-Normed-ℝ-Vector-Space V)
+              ( zero-Normed-ℝ-Vector-Space V))))
+
+  uniformly-continuous-map-nonnegative-norm-Normed-ℝ-Vector-Space :
+    uniformly-continuous-map-Metric-Space
+      ( metric-space-Normed-ℝ-Vector-Space V)
+      ( metric-space-ℝ⁰⁺ l1)
+  uniformly-continuous-map-nonnegative-norm-Normed-ℝ-Vector-Space =
+    ( nonnegative-norm-Normed-ℝ-Vector-Space V ,
+      is-uniformly-continuous-map-nonnegative-norm-Normed-ℝ-Vector-Space)
+
+  uniformly-continuous-map-norm-Normed-ℝ-Vector-Space :
+    uniformly-continuous-map-Metric-Space
+      ( metric-space-Normed-ℝ-Vector-Space V)
+      ( metric-space-ℝ l1)
+  uniformly-continuous-map-norm-Normed-ℝ-Vector-Space =
+    comp-uniformly-continuous-map-Metric-Space
+      ( metric-space-Normed-ℝ-Vector-Space V)
+      ( metric-space-ℝ⁰⁺ l1)
+      ( metric-space-ℝ l1)
+      ( uniformly-continuous-inclusion-subspace-Metric-Space
+        ( metric-space-ℝ l1)
+        ( is-nonnegative-prop-ℝ))
+      ( uniformly-continuous-map-nonnegative-norm-Normed-ℝ-Vector-Space)
 ```
 
 ## See also
