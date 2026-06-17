@@ -332,6 +332,20 @@ module _
       neg-Normed-ℝ-Vector-Space V (mul-Normed-ℝ-Vector-Space c v)
     left-negative-law-mul-Normed-ℝ-Vector-Space =
       left-negative-law-mul-ℝ-Vector-Space vector-space-V
+
+    right-zero-law-mul-Normed-ℝ-Vector-Space :
+      (c : ℝ l1) →
+      mul-Normed-ℝ-Vector-Space c (zero-Normed-ℝ-Vector-Space V) ＝
+      zero-Normed-ℝ-Vector-Space V
+    right-zero-law-mul-Normed-ℝ-Vector-Space =
+      right-zero-law-mul-ℝ-Vector-Space vector-space-V
+
+    left-swap-mul-Normed-ℝ-Vector-Space :
+      (c d : ℝ l1) (v : type-Normed-ℝ-Vector-Space V) →
+      mul-Normed-ℝ-Vector-Space c (mul-Normed-ℝ-Vector-Space d v) ＝
+      mul-Normed-ℝ-Vector-Space d (mul-Normed-ℝ-Vector-Space c v)
+    left-swap-mul-Normed-ℝ-Vector-Space =
+      left-swap-mul-ℝ-Vector-Space vector-space-V
 ```
 
 ### Norms and distances in a normed vector space
