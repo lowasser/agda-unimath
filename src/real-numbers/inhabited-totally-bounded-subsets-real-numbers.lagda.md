@@ -75,6 +75,8 @@ if it is an
 of the
 [metric space of real numbers](real-numbers.metric-space-of-real-numbers.md).
 
+## Definition
+
 ```agda
 inhabited-totally-bounded-subset-ℝ :
   (l1 l2 l3 : Level) → UU (lsuc l1 ⊔ lsuc l2 ⊔ lsuc l3)

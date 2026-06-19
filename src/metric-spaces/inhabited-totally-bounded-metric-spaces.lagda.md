@@ -24,6 +24,10 @@ open import metric-spaces.uniformly-continuous-maps-metric-spaces
 
 ## Idea
 
+A [metric space](metric-spaces.metric-spaces.md) may be both
+[inhabited](foundation.inhabited-types.md) and
+[totally bounded](metric-spaces.totally-bounded-metric-spaces.md).
+
 ## Definition
 
 ```agda

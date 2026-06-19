@@ -19,6 +19,10 @@ open import foundation.universe-levels
 
 ## Idea
 
+If `S` is a [subtype](foundation-core.subtypes.md) of `X`, and `T` is a subtype
+of the type of `S`, then `T` is [equivalent](foundation-core.equivalences.md) to
+a subtype of `X`.
+
 ## Definition
 
 ```agda
