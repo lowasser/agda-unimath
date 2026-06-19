@@ -32,9 +32,8 @@ open import real-numbers.totally-bounded-subsets-real-numbers
 
 ## Idea
 
-A
-[subset of the nonnegative real numbers](real-numbers.subsets-nonnegative-real-numbers.md)
-is
+A [subset](foundation.subtypes.md) of the
+[nonnegative real numbers](real-numbers.nonnegative-real-numbers.md) is
 {{#concept "inhabited and totally bounded" Disambiguation="subset of the nonnegative-real numbers" Agda=inhabited-totally-bounded-subset-ℝ⁰⁺}}
 if it is an
 [inhabited, totally bounded subspace](metric-spaces.inhabited-totally-bounded-subspaces-metric-spaces.md)
