@@ -555,9 +555,9 @@ module _
   right-zero-law-right-subtraction-Ab =
     right-unit-law-right-div-Group (group-Ab G) x
 
-  left-unit-law-right-subtraction-Ab :
+  left-zero-law-right-subtraction-Ab :
     right-subtraction-Ab G (zero-Ab G) x ＝ neg-Ab G x
-  left-unit-law-right-subtraction-Ab =
+  left-zero-law-right-subtraction-Ab =
     left-unit-law-right-div-Group (group-Ab G) x
 ```
 
