@@ -3,7 +3,7 @@
 ```agda
 {-# OPTIONS --lossy-unification #-}
 
-module functional-analysis.supremum-of-norms-uniformly-continuous-maps-inhabited-totally-bounded-metric-spaces-normed-real-vector-spaces where
+module functional-analysis.supremum-norm-uniformly-continuous-maps-inhabited-totally-bounded-metric-spaces-normed-real-vector-spaces where
 ```
 
 <details><summary>Imports</summary>

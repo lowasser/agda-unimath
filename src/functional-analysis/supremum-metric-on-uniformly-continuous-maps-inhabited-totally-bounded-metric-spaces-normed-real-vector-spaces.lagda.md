@@ -14,7 +14,7 @@ open import foundation.universe-levels
 
 open import functional-analysis.metric-abelian-group-of-uniformly-continuous-maps-inhabited-totally-bounded-metric-spaces-normed-real-vector-spaces
 open import functional-analysis.metric-space-of-uniformly-continuous-maps-inhabited-totally-bounded-metric-spaces-normed-real-vector-spaces
-open import functional-analysis.supremum-of-norms-uniformly-continuous-maps-inhabited-totally-bounded-metric-spaces-normed-real-vector-spaces
+open import functional-analysis.supremum-norm-uniformly-continuous-maps-inhabited-totally-bounded-metric-spaces-normed-real-vector-spaces
 
 open import group-theory.abelian-groups
 
