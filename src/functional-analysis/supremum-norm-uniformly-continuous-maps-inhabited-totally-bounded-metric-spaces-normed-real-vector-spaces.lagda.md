@@ -43,8 +43,8 @@ generally denoted $\lVert f \rVert_X$.
 
 We will call this the
 {{#concept "supremum norm" WDID=Q1202673 WD="uniform norm" Disambiguation="on uniformly continuous maps from inhabited totally bounded metric spaces to normed real vector spaces"}},
-as it
-[is actually a norm on such maps](functional-analysis.supremum-norm-maps-inhabited-totally-bounded-metric-spaces-normed-real-vector-spaces.md),
+as it is a
+[norm on such maps](functional-analysis.normed-real-vector-space-of-uniformly-continuous-maps-inhabited-totally-bounded-metric-spaces-normed-real-vector-spaces.md).
 
 ## Definition
 

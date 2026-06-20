@@ -1,7 +1,7 @@
-# The supremum metric on maps from inhabited, totally bounded metric spaces to normed real vector spaces
+# The supremum metric on uniformly continuous maps from inhabited, totally bounded metric spaces to normed real vector spaces
 
 ```agda
-module functional-analysis.supremum-metric-maps-inhabited-totally-bounded-metric-spaces-normed-real-vector-spaces where
+module functional-analysis.supremum-metric-on-uniformly-continuous-maps-inhabited-totally-bounded-metric-spaces-normed-real-vector-spaces where
 ```
 
 <details><summary>Imports</summary>

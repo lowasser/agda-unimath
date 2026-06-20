@@ -1,9 +1,9 @@
-# The supremum norm on maps from inhabited totally bounded metric spaces to normed real vector spaces
+# The normed real vector space of uniformly continuous maps from inhabited, totally bounded metric spaces to normed real vector spaces
 
 ```agda
 {-# OPTIONS --lossy-unification #-}
 
-module functional-analysis.supremum-norm-maps-inhabited-totally-bounded-metric-spaces-normed-real-vector-spaces where
+module functional-analysis.normed-real-vector-space-of-uniformly-continuous-maps-inhabited-totally-bounded-metric-spaces-normed-real-vector-spaces where
 ```
 
 <details><summary>Imports</summary>
