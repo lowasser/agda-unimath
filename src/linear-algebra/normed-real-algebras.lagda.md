@@ -31,12 +31,15 @@ open import metric-spaces.lipschitz-maps-metric-spaces
 open import metric-spaces.located-metric-spaces
 open import metric-spaces.metric-spaces
 open import metric-spaces.metrics
+open import metric-spaces.uniformly-continuous-maps-metric-spaces
 
 open import order-theory.large-posets
 
 open import real-numbers.absolute-value-real-numbers
+open import real-numbers.addition-real-numbers
 open import real-numbers.dedekind-real-numbers
 open import real-numbers.inequality-real-numbers
+open import real-numbers.metric-space-of-nonnegative-real-numbers
 open import real-numbers.metric-space-of-real-numbers
 open import real-numbers.multiplication-nonnegative-real-numbers
 open import real-numbers.multiplication-real-numbers
@@ -74,6 +77,12 @@ is-submultiplicative-prop-norm-vector-space-ℝ-Algebra A n =
             norm = map-norm-Normed-ℝ-Vector-Space (vector-space-ℝ-Algebra A , n)
           in
             leq-prop-ℝ (norm (mul-ℝ-Algebra A x y)) (norm x *ℝ norm y)))
+
+is-submultiplicative-norm-vector-space-ℝ-Algebra :
+  {l1 l2 : Level} (A : ℝ-Algebra l1 l2) →
+  norm-ℝ-Vector-Space (vector-space-ℝ-Algebra A) → UU (l1 ⊔ l2)
+is-submultiplicative-norm-vector-space-ℝ-Algebra A =
+  is-in-subtype (is-submultiplicative-prop-norm-vector-space-ℝ-Algebra A)
 
 norm-ℝ-Algebra : {l1 l2 : Level} → ℝ-Algebra l1 l2 → UU (lsuc l1 ⊔ l2)
 norm-ℝ-Algebra A =
@@ -221,6 +230,15 @@ module _
   located-metric-space-Normed-ℝ-Algebra : Located-Metric-Space l2 l1
   located-metric-space-Normed-ℝ-Algebra =
     located-metric-space-Normed-ℝ-Vector-Space normed-vector-space-A
+
+  abstract
+    triangular-dist-Normed-ℝ-Algebra :
+      (x y z : type-Normed-ℝ-Algebra A) →
+      leq-ℝ
+        ( dist-Normed-ℝ-Algebra x z)
+        ( dist-Normed-ℝ-Algebra x y +ℝ dist-Normed-ℝ-Algebra y z)
+    triangular-dist-Normed-ℝ-Algebra =
+      is-triangular-dist-Metric (set-Normed-ℝ-Algebra A) metric-Normed-ℝ-Algebra
 ```
 
 ### Additional definitional properties of the normed real algebra
@@ -349,6 +367,23 @@ module _
               by is-submultiplicative-norm-Normed-ℝ-Algebra A _ _
             ≤ norm-A y *ℝ dist-A x1 x2
               by leq-eq-ℝ (commutative-mul-ℝ _ _))
+```
+
+### The norm function is a uniformly continuous map to the nonnegative real numbers
+
+```agda
+module _
+  {l1 l2 : Level}
+  (A : Normed-ℝ-Algebra l1 l2)
+  where
+
+  uniformly-continuous-map-nonnegative-norm-Normed-ℝ-Algebra :
+    uniformly-continuous-map-Metric-Space
+      ( metric-space-Normed-ℝ-Algebra A)
+      ( metric-space-ℝ⁰⁺ l1)
+  uniformly-continuous-map-nonnegative-norm-Normed-ℝ-Algebra =
+    uniformly-continuous-map-nonnegative-norm-Normed-ℝ-Vector-Space
+      ( normed-vector-space-Normed-ℝ-Algebra A)
 ```
 
 ### The real numbers are a normed algebra over themselves

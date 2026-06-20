@@ -206,6 +206,18 @@ module _
       ( real-ℝ⁰⁺ x)
       ( is-sup-x)
       ( real-ℝ⁰⁺ z)
+
+  is-upper-bound-is-supremum-family-ℝ⁰⁺ :
+    is-upper-bound-family-of-elements-Large-Poset
+      ( large-poset-ℝ⁰⁺)
+      ( y)
+      ( x)
+  is-upper-bound-is-supremum-family-ℝ⁰⁺ =
+    is-upper-bound-is-least-upper-bound-family-of-elements-Large-Poset
+      ( large-poset-ℝ⁰⁺)
+      { x = y}
+      { y = x}
+      ( is-least-upper-bound-is-supremum-family-ℝ⁰⁺)
 ```
 
 ### The supremum of any family of nonnegative real numbers is nonnegative
@@ -392,4 +404,27 @@ module _
   has-supremum-mul-has-supremum-family-ℝ⁰⁺ =
     ( mul-sup-has-supremum-family-ℝ⁰⁺ ,
       is-supremum-mul-sup-has-supremum-family-ℝ⁰⁺)
+```
+
+### If families `f` and `g` of nonnegative real numbers have suprema `sup f` and `sup g`, and `f` is everywhere less than or equal to `g`, then `sup f ≤ sup g`
+
+```agda
+module _
+  {l1 l2 l3 l4 l5 : Level}
+  {I : UU l1}
+  (f : I → ℝ⁰⁺ l2)
+  (g : I → ℝ⁰⁺ l3)
+  ((supf , is-sup-f) : has-supremum-family-ℝ⁰⁺ l4 f)
+  ((supg , is-sup-g) : has-supremum-family-ℝ⁰⁺ l5 g)
+  where abstract
+
+  leq-supremum-leq-family-ℝ⁰⁺ :
+    ((i : I) → leq-ℝ⁰⁺ (f i) (g i)) →
+    leq-ℝ⁰⁺ supf supg
+  leq-supremum-leq-family-ℝ⁰⁺ =
+    leq-supremum-leq-family-ℝ
+      ( real-ℝ⁰⁺ ∘ f)
+      ( real-ℝ⁰⁺ ∘ g)
+      ( real-ℝ⁰⁺ supf , is-sup-f)
+      ( real-ℝ⁰⁺ supg , is-sup-g)
 ```

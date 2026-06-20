@@ -29,7 +29,6 @@ open import foundation.propositional-truncations
 open import foundation.propositions
 open import foundation.subtypes
 open import foundation.transport-along-identifications
-open import foundation.inhabited-types
 open import foundation.unit-type
 open import foundation.universe-levels
 

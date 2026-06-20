@@ -20,7 +20,12 @@ open import metric-spaces.inhabited-totally-bounded-metric-spaces
 open import metric-spaces.inhabited-totally-bounded-subspaces-metric-spaces
 open import metric-spaces.uniformly-continuous-maps-metric-spaces
 
+open import order-theory.large-posets
+open import order-theory.least-upper-bounds-large-posets
+open import order-theory.upper-bounds-large-posets
+
 open import real-numbers.dedekind-real-numbers
+open import real-numbers.inequality-nonnegative-real-numbers
 open import real-numbers.inhabited-totally-bounded-subsets-nonnegative-real-numbers
 open import real-numbers.metric-space-of-nonnegative-real-numbers
 open import real-numbers.nonnegative-real-numbers
@@ -112,4 +117,26 @@ module _
   is-supremum-sup-norm-map-uniformly-continuous-map-inhabited-totally-bounded-metric-space-Normed-ℝ-Vector-Space =
     pr2
       ( has-supremum-nonnegative-norm-map-uniformly-continuous-map-inhabited-totally-bounded-metric-space-Normed-ℝ-Vector-Space)
+
+  is-least-upper-bound-sup-norm-map-uniformly-continuous-map-inhabited-totally-bounded-metric-space-Normed-ℝ-Vector-Space :
+    is-least-upper-bound-family-of-elements-Large-Poset
+      ( large-poset-ℝ⁰⁺)
+      ( nonnegative-norm-map-uniformly-continuous-map-inhabited-totally-bounded-metric-space-Normed-ℝ-Vector-Space)
+      ( sup-norm-map-uniformly-continuous-map-inhabited-totally-bounded-metric-space-Normed-ℝ-Vector-Space)
+  is-least-upper-bound-sup-norm-map-uniformly-continuous-map-inhabited-totally-bounded-metric-space-Normed-ℝ-Vector-Space =
+    is-least-upper-bound-is-supremum-family-ℝ⁰⁺
+      ( nonnegative-norm-map-uniformly-continuous-map-inhabited-totally-bounded-metric-space-Normed-ℝ-Vector-Space)
+      ( sup-norm-map-uniformly-continuous-map-inhabited-totally-bounded-metric-space-Normed-ℝ-Vector-Space)
+      ( is-supremum-sup-norm-map-uniformly-continuous-map-inhabited-totally-bounded-metric-space-Normed-ℝ-Vector-Space)
+
+  is-upper-bound-sup-norm-map-uniformly-continuous-map-inhabited-totally-bounded-metric-space-Normed-ℝ-Vector-Space :
+    is-upper-bound-family-of-elements-Large-Poset
+      ( large-poset-ℝ⁰⁺)
+      ( nonnegative-norm-map-uniformly-continuous-map-inhabited-totally-bounded-metric-space-Normed-ℝ-Vector-Space)
+      ( sup-norm-map-uniformly-continuous-map-inhabited-totally-bounded-metric-space-Normed-ℝ-Vector-Space)
+  is-upper-bound-sup-norm-map-uniformly-continuous-map-inhabited-totally-bounded-metric-space-Normed-ℝ-Vector-Space =
+    is-upper-bound-is-supremum-family-ℝ⁰⁺
+      ( nonnegative-norm-map-uniformly-continuous-map-inhabited-totally-bounded-metric-space-Normed-ℝ-Vector-Space)
+      ( sup-norm-map-uniformly-continuous-map-inhabited-totally-bounded-metric-space-Normed-ℝ-Vector-Space)
+      ( is-supremum-sup-norm-map-uniformly-continuous-map-inhabited-totally-bounded-metric-space-Normed-ℝ-Vector-Space)
 ```

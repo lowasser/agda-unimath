@@ -32,6 +32,11 @@ open import real-numbers.totally-bounded-subsets-real-numbers
 
 ## Idea
 
+[Inhabited, totally bounded](metric-spaces.inhabited-totally-bounded-subspaces-metric-spaces.md)
+subsets of the
+[nonnegative real numbers](real-numbers.nonnegative-real-numbers.md) have
+[suprema](real-numbers.suprema-families-nonnegative-real-numbers.md).
+
 ## Definition
 
 ```agda
